@@ -27,34 +27,10 @@ def __write_json(json_file, cc_dep, resource, patches):
 
     write_file(json_file, json.dumps(json_def, indent=4))
     
-def __write_top_level_json(json_file, group, target):
+def __write_top_level_json(json_file, group, target, lang):
 
-    template_file = os.path.join(TEMPLATE_BASE_DIR, "repo_json", "cpp", "top_level.json.jinja2")
+    template_file = os.path.join(TEMPLATE_BASE_DIR, "repo_json", lang, "top_level.json.jinja2")
     render_template(template_file, json_file, group=group, target=target)
-    # deps = []
-    # if isinstance(cc_dep, CcDependency):
-    #     print("its c")
-    #     deps = []
-
-    # json_def = {
-    #     "build_file": None,
-    #     "build_targets": ['X'],
-    #     "compatibility_level": "1",
-    #     "deps": [],
-    #     "module_dot_bazel": None,
-    #     "name": f"{cc_dep.name}",
-    #     "patch_strip": 0,
-    #     "patches": [],
-    #     "presubmit_yml": None,
-    #     "strip_prefix": strip_prefix,
-    #     "test_module_build_targets": [],
-    #     "test_module_path": None,
-    #     "test_module_test_targets": [],
-    #     "url": url,
-    #     "version": cc_dep.version
-    # }
-
-    # write_file(json_file, json.dumps(json_def, indent=4))
 
 
 def generate_json(central_registery_location, group):
@@ -76,14 +52,16 @@ def generate_json(central_registery_location, group):
 
     if group.repository_url:
         for java_dep in group.java_deps:
-            json_file = os.path.join(output_directory, java_dep.version, java_dep.name + ".json")
-            json_files.append(json_file)
-            __write_top_level_json(json_file, group, java_dep)
+            # module_file = os.path.join(output_directory, java_dep.version, java_dep.name + ".json")
+            module_file = os.path.join(central_registery_location, "modules", java_dep.name, java_dep.version, "MODULE.bazel")
+            
+            template_file = os.path.join(TEMPLATE_BASE_DIR, "repo_json", "java", "MODULE.bazel.jinja2")
+            render_template(template_file, module_file, group=group, target=java_dep)
 
         for cc_dep in group.cc_deps:
             json_file = os.path.join(output_directory, cc_dep.version, cc_dep.name + ".json")
             json_files.append(json_file)
-            __write_top_level_json(json_file, group, cc_dep)
+            __write_top_level_json(json_file, group, cc_dep, "cpp")
 
     run_json_stuff(central_registery_location, json_files)
 
@@ -94,5 +72,5 @@ def run_json_stuff(central_registery_location, json_gen_files):
         args = ["python", './tools/add_module.py', '--input', def_file]
         # args = ["python", './tools/add_module.py']
         print("  ".join(args))
-        # subprocess.check_call(args)
+        subprocess.check_call(args)
             
