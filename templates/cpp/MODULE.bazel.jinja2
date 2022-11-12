@@ -1,5 +1,5 @@
 module(
-    name = "{{target.name}}",
+    name = "{{target.name.lower()}}",
     version = "{{target.version}}",
 )
 
@@ -14,8 +14,8 @@ bazel_dep(name = "{{d.name}}", version = "{{d.version}}")
 {% endfor %}
 
 {%- for resource in target.resources %}
-bazel_dep(name = "{{target.name}}-{{resource}}", version = "{{target.version}}")
+bazel_dep(name = "{{target.name.lower()}}-{{resource}}", version = "{{target.version}}")
 {%- endfor %}
 {%- if target.headers %}
-bazel_dep(name = "{{target.name}}-{{target.headers}}", version = "{{target.version}}")
+bazel_dep(name = "{{target.name.lower()}}-{{target.headers}}", version = "{{target.version}}")
 {% endif %}

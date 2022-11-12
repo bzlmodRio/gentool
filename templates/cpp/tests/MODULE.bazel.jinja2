@@ -1,15 +1,15 @@
 
-bazel_dep(name = "{{target.name}}", repo_name = "{{target.name}}", version = "")
+bazel_dep(name = "{{target.name.lower()}}", repo_name = "{{target.name.lower()}}", version = "")
 
 local_path_override(
-    module_name = "{{target.name}}",
+    module_name = "{{target.name.lower()}}",
     path = "..",
 )
 
 {%- for dep in target.dependencies -%}
 {%- if "opencv" not in dep.parent_folder %}
 local_path_override(
-    module_name = "{{dep.name}}",
+    module_name = "{{dep.name.lower()}}",
     path = "../../../{{dep.parent_folder}}/{{dep.name}}"
 )
 {%- endif %}

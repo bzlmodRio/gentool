@@ -1,8 +1,8 @@
 
-bazel_dep(name = "{{target.name}}", repo_name = "{{target.name}}", version = "")
+bazel_dep(name = "{{target.name.lower()}}", repo_name = "{{target.name}}", version = "")
 
 local_path_override(
-    module_name = "{{target.name}}",
+    module_name = "{{target.name.lower()}}",
     path = "..",
 )
 

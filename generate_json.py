@@ -13,7 +13,7 @@ def __write_json(json_file, cc_dep, resource, patches):
         "compatibility_level": "1",
         "deps": [],
         "module_dot_bazel": None,
-        "name": f"{cc_dep.name}-{resource}",
+        "name": f"{cc_dep.name}-{resource}".lower(),
         "patch_strip": 0,
         "patches": patches,
         "presubmit_yml": None,
@@ -25,6 +25,7 @@ def __write_json(json_file, cc_dep, resource, patches):
         "version": cc_dep.version
     }
 
+    print(json_file)
     write_file(json_file, json.dumps(json_def, indent=4))
     
 def __write_top_level_json(json_file, group, target, lang):
@@ -38,16 +39,16 @@ def generate_json(central_registery_location, group):
 
     json_files = []
 
-    for cc_dep in group.cc_deps:
-        if cc_dep.headers:
-            json_file = os.path.join(output_directory, cc_dep.version, cc_dep.name, cc_dep.headers + ".json")
-            json_files.append(json_file)
-            __write_json(json_file, cc_dep, cc_dep.headers, [os.path.join(SCRIPT_DIR, "patches", "headers", "add_build_file.patch")])
+    # for cc_dep in group.cc_deps:
+    #     if cc_dep.headers:
+    #         json_file = os.path.join(output_directory, cc_dep.version, cc_dep.name, cc_dep.headers + ".json")
+    #         json_files.append(json_file)
+    #         __write_json(json_file, cc_dep, cc_dep.headers, [os.path.join(SCRIPT_DIR, "patches", "headers", "add_build_file.patch")])
 
-        for resource in cc_dep.resources:
-            json_file = os.path.join(output_directory, cc_dep.version, cc_dep.name, resource + ".json")
-            json_files.append(json_file)
-            __write_json(json_file, cc_dep, resource, [os.path.join(SCRIPT_DIR, "patches", "libraries", "add_build_file.patch")])
+    #     for resource in cc_dep.resources:
+    #         json_file = os.path.join(output_directory, cc_dep.version, cc_dep.name, resource + ".json")
+    #         json_files.append(json_file)
+    #         __write_json(json_file, cc_dep, resource, [os.path.join(SCRIPT_DIR, "patches", "libraries", "add_build_file.patch")])
     
 
     if group.repository_url:
@@ -61,7 +62,7 @@ def generate_json(central_registery_location, group):
         for cc_dep in group.cc_deps:
             json_file = os.path.join(output_directory, cc_dep.version, cc_dep.name + ".json")
             json_files.append(json_file)
-            __write_top_level_json(json_file, group, cc_dep, "cpp")
+            # __write_top_level_json(json_file, group, cc_dep, "cpp")
 
     run_json_stuff(central_registery_location, json_files)
 

@@ -2,11 +2,11 @@ cc_library(
     name = "{{target.parent_folder}}",
     linkstatic = 1,
     visibility = ["//visibility:public"],
-    deps = [{% for dep in target.dependencies %}"@{{dep.name}}//:{{dep.parent_folder}}"{% if not loop.last %}, {% endif %}{% endfor %}] + {% if target.headers %}["@{{target.name}}-headers//:headers"] + {% endif %}select({
-        "@bazel_tools//src/conditions:windows": ["@{{target.name}}-windowsx86-64//:shared_libs"],
-        "@bazel_tools//src/conditions:linux_x86_64": ["@{{target.name}}-linuxx86-64//:shared_libs"],
-        "@bazel_tools//src/conditions:darwin": ["@{{target.name}}-osxx86-64//:shared_libs"],
-        # "//constraints/is_roborio:roborio": ["@{{target.name}}-linuxathena//:shared_libs"],
+    deps = [{% for dep in target.dependencies %}"@{{dep.name}}//:{{dep.parent_folder}}"{% if not loop.last %}, {% endif %}{% endfor %}] + {% if target.headers %}["@{{target.name.lower()}}-headers//:headers"] + {% endif %}select({
+        "@bazel_tools//src/conditions:windows": ["@{{target.name.lower()}}-windowsx86-64//:shared_libs"],
+        "@bazel_tools//src/conditions:linux_x86_64": ["@{{target.name.lower()}}-linuxx86-64//:shared_libs"],
+        "@bazel_tools//src/conditions:darwin": ["@{{target.name.lower()}}-osxx86-64//:shared_libs"],
+        # "//constraints/is_roborio:roborio": ["@{{target.name.lower()}}-linuxathena//:shared_libs"],
     }),
 )
 {% if target.has_jni %}

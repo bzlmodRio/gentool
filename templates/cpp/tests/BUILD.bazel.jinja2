@@ -5,13 +5,13 @@ halsim_cc_binary(
     name = "main",
     srcs = ["main.cpp"],
     # deps = ["@com_github_google_glog//:glog"],
-    halsim_deps = ["@{{target.name}}//:{{target.parent_folder}}"],
+    halsim_deps = ["@{{target.name.lower()}}//:{{target.parent_folder}}"],
 )
 {%- else -%}
 cc_binary(
     name = "main",
     srcs = ["main.cpp"],
     # deps = ["@com_github_google_glog//:glog"],
-    deps = ["@{{target.name}}//:{{target.parent_folder}}"],
+    deps = ["@{{target.name.lower()}}//:{{target.parent_folder}}"],
 )
 {%- endif %}

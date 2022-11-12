@@ -14,7 +14,9 @@ class DependencyContainer:
         self.repository_url = None
         self.strip_prefix = None
 
-    def create_cc_dependency(self, name, dependencies=[], **kwargs):
+    def create_cc_dependency(self, name, dependencies=[], version=None, **kwargs):
+        if version is None:
+            version = self.version
         dependencies = [self.dep_lookup[d] for d in dependencies]
         dep = CcDependency(name=name, maven_url=self.maven_url, version=self.version, dependencies=dependencies, **kwargs)
 
