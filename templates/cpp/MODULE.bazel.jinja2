@@ -1,0 +1,21 @@
+module(
+    name = "{{target.name}}",
+    version = "{{target.version}}",
+)
+
+bazel_dep(name = "platforms", version = "0.0.4")
+
+{%- if False %}
+bazel_dep(name = "rules_bazelrio", version = "0.0.1")
+{% endif %}
+
+{% for d in target.dependencies -%}
+bazel_dep(name = "{{d.name}}", version = "{{d.version}}")
+{% endfor %}
+
+{%- for resource in target.resources %}
+bazel_dep(name = "{{target.name}}-{{resource}}", version = "{{target.version}}")
+{%- endfor %}
+{%- if target.headers %}
+bazel_dep(name = "{{target.name}}-{{target.headers}}", version = "{{target.version}}")
+{% endif %}

@@ -1,0 +1,37 @@
+
+module(
+    name = "{{target.name}}",
+    version = "{{target.version}}",
+)
+
+bazel_dep(name = "bazel_skylib", version = "1.1.1")
+bazel_dep(name = "platforms", version = "0.0.4")
+bazel_dep(name = "rules_cc", version = "0.0.2")
+bazel_dep(name = "rules_java", version = "5.1.0")
+bazel_dep(name = "rules_python", version = "0.12.0")
+bazel_dep(name = "rules_jvm_external", version = "4.4.2")
+
+bazel_dep(name = "rules_bazelrio", version = "0.0.1")
+{% for dep in target.dependencies %}
+bazel_dep(name = "{{dep.name}}", version = "{{dep.version}}")
+{%- endfor %}
+
+maven = use_extension("@rules_jvm_external//:extensions.bzl", "maven")
+
+maven.install(
+    artifacts = [
+        "{{target.group_id}}:{{target.name}}:{{target.version}}",
+        {%- for maven_dep in target.maven_deps %}
+        "{{maven_dep[0]}}:{{maven_dep[1]}}",
+        {%- endfor %}
+    ],
+    repositories = [
+        "https://frcmaven.wpi.edu/release",
+    ]
+    # lock_file = "//:maven_install.json",
+)
+
+use_repo(
+    maven,
+    "maven",
+)

@@ -1,0 +1,25 @@
+
+bazel_dep(name = "{{target.name}}", repo_name = "{{target.name}}", version = "")
+
+local_path_override(
+    module_name = "{{target.name}}",
+    path = "..",
+)
+
+{%- for dep in target.dependencies -%}
+{%- if "opencv" not in dep.parent_folder %}
+local_path_override(
+    module_name = "{{dep.name}}",
+    path = "../../../{{dep.parent_folder}}/{{dep.name}}"
+)
+{%- endif %}
+{%- endfor %}
+
+bazel_dep(name = "rules_bazelrio", version = "0.0.1")
+{%- if False %}
+local_path_override(
+    module_name = "rules_bazelrio",
+    path = "../../../../rules_bazelrio"
+)
+{%- endif %}
+bazel_dep(name = "rules_cc", version = "0.0.2")

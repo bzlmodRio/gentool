@@ -1,0 +1,14 @@
+load("@rules_bazelrio//:java_rules.bzl", "bazelrio_java_binary")
+
+bazelrio_java_binary(
+    name = "main",
+    srcs = ["Main.java"],
+    deps = [
+        "@{{target.name}}//:{{target.parent_folder}}",
+    ],
+    main_class = "bazelrio_test.Main",
+    
+    jvm_flags = [
+        "-Djava.library.path=.",
+    ],
+)

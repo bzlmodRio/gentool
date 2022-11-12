@@ -1,0 +1,21 @@
+load("@rules_jvm_external//:defs.bzl", "artifact")
+
+
+java_library(
+    name = "{{target.parent_folder}}",
+    visibility = ["//visibility:public"],
+    exports = [
+        artifact("{{target.group_id}}:{{target.name}}"),
+{%- for dep in target.dependencies %}
+{%- if dep.has_jni %}
+        "@{{dep.parent_folder}}-cpp//:jni",
+{%- elif "java" in dep.name %}
+        "@{{dep.name}}//:{{dep.parent_folder}}",
+{%- endif %}
+{%- endfor %}
+{%- for maven_dep in target.maven_deps %}
+        artifact("{{maven_dep[0]}}"),
+{%- endfor %}
+    ],
+)
+
