@@ -4,11 +4,7 @@
         "X"
     ],
     "compatibility_level": "1",
-    "deps": [
-        {%- for dep in deps %}
-                ["{{dep[0]}}", "{{dep[1]}}"]{% if not loop.last %},{% endif %}
-        {%- endfor %}
-    ],
+    "deps": [],
     "module_dot_bazel": null,
     "name": "{{target.name}}",
     "patch_strip": 0,

@@ -22,7 +22,6 @@ local_path_override(
     module_name = "rules_bazelrio",
     path = "../../../../rules_bazelrio"
 )
-{%- endif %}
 
 {% for dep in target.dependencies -%}
 {%- if "opencv" not in dep.name or "opencv" in target.name %}
@@ -32,6 +31,7 @@ local_path_override(
 )
 {%- endif %}
 {% endfor %}
+{%- endif %}
 
 maven = use_extension("@rules_jvm_external//:extensions.bzl", "maven")
 

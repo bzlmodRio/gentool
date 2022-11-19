@@ -25,13 +25,12 @@ def __write_json(json_file, cc_dep, resource, patches):
         "version": cc_dep.version
     }
 
-    print(json_file)
     write_file(json_file, json.dumps(json_def, indent=4))
     
-def __write_top_level_json(json_file, group, target, lang):
+def __write_top_level_json(json_file, group, target, lang, deps):
 
     template_file = os.path.join(TEMPLATE_BASE_DIR, "repo_json", lang, "top_level.json.jinja2")
-    render_template(template_file, json_file, group=group, target=target)
+    render_template(template_file, json_file, group=group, target=target, deps=deps)
 
 
 def generate_json(central_registery_location, group):
@@ -53,18 +52,36 @@ def generate_json(central_registery_location, group):
 
     if group.repository_url:
         for java_dep in group.java_deps:
-            # module_file = os.path.join(output_directory, java_dep.version, java_dep.name + ".json")
+            json_file = os.path.join(output_directory, java_dep.version, java_dep.name + ".json")
+            json_files.append(json_file)
+            __write_top_level_json(json_file, group, java_dep, "java", deps=[])
+
+        for cc_dep in group.cc_deps:
+            json_file = os.path.join(output_directory, cc_dep.version, cc_dep.name + ".json")
+
+            deps = []
+
+            if cc_dep.headers:
+                deps.append([f"{cc_dep.name}-{cc_dep.headers}", f"{cc_dep.version}"])
+
+            for resource in cc_dep.resources:
+                deps.append([f"{cc_dep.name}-{resource}", f"{cc_dep.version}"])
+
+            for dep in cc_dep.dependencies:
+                deps.append([dep.name, dep.version])
+
+            json_files.append(json_file)
+            __write_top_level_json(json_file, group, cc_dep, "cpp", deps)
+
+    run_json_stuff(central_registery_location, json_files)
+    
+    if group.repository_url:
+        for java_dep in group.java_deps:
             module_file = os.path.join(central_registery_location, "modules", java_dep.name, java_dep.version, "MODULE.bazel")
             
             template_file = os.path.join(TEMPLATE_BASE_DIR, "repo_json", "java", "MODULE.bazel.jinja2")
             render_template(template_file, module_file, group=group, target=java_dep)
 
-        for cc_dep in group.cc_deps:
-            json_file = os.path.join(output_directory, cc_dep.version, cc_dep.name + ".json")
-            json_files.append(json_file)
-            # __write_top_level_json(json_file, group, cc_dep, "cpp")
-
-    run_json_stuff(central_registery_location, json_files)
 
     
 def run_json_stuff(central_registery_location, json_gen_files):

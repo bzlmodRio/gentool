@@ -6,6 +6,15 @@ local_path_override(
     path = "..",
 )
 
+bazel_dep(name = "rules_bazelrio", version = "0.0.1")
+bazel_dep(name = "rules_cc", version = "0.0.2")
+
+
+{%- if False %}
+local_path_override(
+    module_name = "rules_bazelrio",
+    path = "../../../../rules_bazelrio"
+)
 {%- for dep in target.dependencies -%}
 {%- if "opencv" not in dep.parent_folder %}
 local_path_override(
@@ -14,12 +23,4 @@ local_path_override(
 )
 {%- endif %}
 {%- endfor %}
-
-bazel_dep(name = "rules_bazelrio", version = "0.0.1")
-{%- if False %}
-local_path_override(
-    module_name = "rules_bazelrio",
-    path = "../../../../rules_bazelrio"
-)
 {%- endif %}
-bazel_dep(name = "rules_cc", version = "0.0.2")
