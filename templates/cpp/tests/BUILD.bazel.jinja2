@@ -12,6 +12,6 @@ cc_binary(
     name = "main",
     srcs = ["main.cpp"],
     # deps = ["@com_github_google_glog//:glog"],
-    deps = ["@{{target.name.lower()}}//:{{target.parent_folder}}"],
+    deps = ["@allwpilib//dependencies/cpp/{{target.parent_folder}}"],
 )
 {%- endif %}

@@ -8,9 +8,17 @@ java_library(
         artifact("{{target.group_id}}:{{target.name}}"),
 {%- for dep in target.dependencies %}
 {%- if dep.has_jni %}
-        "@{{dep.parent_folder}}-cpp//:jni",
+{%- if "opencv" in dep.parent_folder %}
+        "@opencv-cpp//:jni",
+{%- else %}
+        "@allwpilib//dependencies/cpp/{{dep.parent_folder}}:jni",
+{%- endif %}
 {%- elif "java" in dep.name %}
-        "@{{dep.name}}//:{{dep.parent_folder}}",
+{%- if "opencv" in dep.parent_folder %}
+        "@opencv-java//:opencv",
+{%- else %}
+        "@allwpilib//dependencies/java/{{dep.parent_folder}}",
+{%- endif %}
 {%- endif %}
 {%- endfor %}
 {%- for maven_dep in target.maven_deps %}

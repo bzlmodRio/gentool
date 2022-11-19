@@ -1,10 +1,11 @@
-load("@rules_bazelrio//:java_rules.bzl", "bazelrio_java_binary")
+# load("@rules_bazelrio//:java_rules.bzl", "bazelrio_java_binary")
 
-bazelrio_java_binary(
+# bazelrio_java_binary(
+java_binary(
     name = "main",
     srcs = ["Main.java"],
     deps = [
-        "@{{target.name}}//:{{target.parent_folder}}",
+        "@allwpilib//dependencies/java/{{target.parent_folder}}",
     ],
     main_class = "bazelrio_test.Main",
     
