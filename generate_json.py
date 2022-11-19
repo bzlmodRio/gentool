@@ -3,7 +3,7 @@ import os
 from utils import render_template, write_file, SCRIPT_DIR, TEMPLATE_BASE_DIR
 import json
 import subprocess
-from cc_dependency import CcDependency
+from bazelrio_gentool.deps.cc_dependency import CcDependency
 
 
 def __write_json(json_file, cc_dep, resource, patches):
