@@ -7,11 +7,12 @@ jobs:
       fail-fast: false
       matrix:
         include:
-        - { os: windows-latest }
-    name: "Build Tests - ${{ matrix.name }}"
+        - { os: windows-latest, config: "--config=windows" }
+        - { os: ubuntu-latest, config: "--config=linux" }
+        - { os: macos-latest, config: "--config=macos" }
     runs-on: ${{ matrix.os }}
     steps:
     - uses: actions/checkout@v2
-    - run: bazel build //...:* -k --verbose_failures
+    - run: bazel build //... -k --verbose_failures
       working-directory: tests
 {%- endraw %}

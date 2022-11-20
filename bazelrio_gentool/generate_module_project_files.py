@@ -6,6 +6,7 @@ def generate_module_project_files(module_directory, group):
 
     template_files = [
         ".github/workflows/build.yml",
+        ".github/workflows/lint.yml",
         ".gitignore",
         "BUILD.bazel",
         "README.md",
