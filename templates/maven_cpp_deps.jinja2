@@ -1,8 +1,76 @@
 load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive")
 load("@bazel_tools//tools/build_defs/repo:utils.bzl", "maybe")
 
-def setup_{{group.repo_name}}_dependencies():
+
+filegroup_all = """filegroup(
+     name = "all",
+     srcs = glob(["**"]),
+     visibility = ["//visibility:public"],
+ )
+ """
+
+cc_library_headers = """cc_library(
+    name = "headers",
+    hdrs = glob(["**"]),
+    includes = ["."],
+    visibility = ["//visibility:public"],
+)
+"""
+
+cc_library_sources = """filegroup(
+     name = "sources",
+     srcs = glob(["**"]),
+     visibility = ["//visibility:public"],
+ )
+ """
+
+cc_library_static = """
+
+cc_library(
+    name = "static_libs",
+    srcs = glob(["**/*.lib", "**/*.a"]),
+    visibility = ["//visibility:public"],
+)
+"""
+
+cc_library_shared = """
+static_srcs = glob(["**/*.lib", "**/*.a"], exclude=["**/*jni.lib"])
+shared_srcs = glob(["**/*.dll", "**/*.so*", "**/*.dylib"], exclude=["**/*jni.dll", "**/*jni.so", "**/*.so.debug", "**/libopencv_java*.dylib"])
+shared_jni_srcs = glob(["**/*jni.dll", "**/*jni.so*", "**/*.jni.dylib", "**/libopencv_java*.dylib"], exclude=["**/*.so.debug"])
+
+cc_library(
+    name = "static_libs",
+    srcs = static_srcs,
+    visibility = ["//visibility:public"],
+)
+
+cc_library(
+    name = "shared_libs",
+    srcs = shared_srcs,
+    visibility = ["//visibility:public"],
+    deps = [
+        ":static_libs",
+    ]
+)
+
+cc_library(
+    name = "shared_jni_libs",
+    srcs = shared_jni_srcs,
+    visibility = ["//visibility:public"],
+)
+"""
+
+def __setup_{{group.repo_name}}_dependencies(mctx):
     {%- for cpp_dep in group.cc_deps %}
+    {%- if cpp_dep.headers %}
+    maybe(
+        http_archive,
+        "{{cpp_dep.get_archive_name('headers')}}",
+        url = "{{cpp_dep.get_url('headers')}}",
+        sha256 = "{{cpp_dep.get_sha256('headers')}}",
+        build_file_content = {{cpp_dep.get_build_file_content('headers')}},
+    )
+    {%- endif %}
     {%- for resource in cpp_dep.resources %}
     {%- set sha256 = cpp_dep.get_sha256(resource) %}
     {%- if sha256 %}
@@ -10,9 +78,65 @@ def setup_{{group.repo_name}}_dependencies():
         http_archive,
         "{{cpp_dep.get_archive_name(resource)}}",
         url = "{{cpp_dep.get_url(resource)}}",
-        sha256 = "{{cpp_dep.get_sha256(resource)}}",
+        sha256 = "{{sha256}}",
         build_file_content = {{cpp_dep.get_build_file_content(resource)}},
     )
     {%- endif %}
+    {%- endfor %}
+    {%- endfor %}
+
+    
+    {%- for tool_dep in group.java_native_tools %}
+    {%- for resource in tool_dep.resources %}
+    maybe(
+        http_jar,
+        name = "{{tool_dep.get_archive_name(resource)}}",
+        url = "{{tool_dep.get_url(resource)}}",
+        sha256 = "{{tool_dep.get_sha256(resource)}}",
+    )
+    {%- endfor %}
+    {%- endfor %}
+
+    {%- for tool_dep in group.executable_tools %}
+    {%- for resource in tool_dep.resources %}
+    maybe(
+        http_archive,
+        name = "{{tool_dep.get_archive_name(resource)}}",
+        url = "{{tool_dep.get_url(resource)}}",
+        sha256 = "{{tool_dep.get_sha256(resource)}}",
+        build_file_content = "filegroup(name='all', srcs=glob(['**']), visibility=['//visibility:public'])",
+    )
+    {%- endfor %}
+    {%- endfor %}
+
+
+
+    
+setup_{{group.repo_name}}_dependencies = module_extension(
+    __setup_{{group.repo_name}}_dependencies,
+)
+
+
+
+{%- for cpp_dep in group.cc_deps %}
+    {%- if cpp_dep.headers %}
+    # "{{cpp_dep.get_archive_name('headers')}}",
+    {%- endif %}
+
+    {%- for resource in cpp_dep.resources %}
+    # "{{cpp_dep.get_archive_name(resource)}}",
+    {%- endfor %}
+{%- endfor %}
+
+    
+    {%- for tool_dep in group.java_native_tools %}
+    {%- for resource in tool_dep.resources %}
+    # "{{tool_dep.get_archive_name(resource)}}",
+    {%- endfor %}
+    {%- endfor %}
+
+    {%- for tool_dep in group.executable_tools %}
+    {%- for resource in tool_dep.resources %}
+    # "{{tool_dep.get_archive_name(resource)}}",
     {%- endfor %}
     {%- endfor %}

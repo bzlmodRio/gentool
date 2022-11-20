@@ -9,7 +9,11 @@ class BaseDependency:
         self.version = version
         self.fail_on_hash_miss = fail_on_hash_miss
 
+        print("FFFF", self.artifact_name, self.version)
+
+
     def get_archive_name(self, suffix=""):
+        print(self.artifact_name, self.version)
         group_underscore = self.group_id.replace(".", "_").lower()
 
         # Having a year in the bazel name makes things tricky downstream. Remove it.
@@ -17,7 +21,7 @@ class BaseDependency:
         if year_search:
             group_underscore = group_underscore.replace(year_search[0], "")
 
-        archive_name = f"__bazelrio_{group_underscore}_{self.artifact_name.lower()}"
+        archive_name = f"bazelrio_{group_underscore}_{self.artifact_name.lower()}"
         if suffix:
             archive_name += f"_{suffix}"
 

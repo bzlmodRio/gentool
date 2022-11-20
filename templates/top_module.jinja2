@@ -1,0 +1,73 @@
+
+module(
+    name = "{{group.repo_name}}",
+    version = "{{group.version}}",
+)
+
+bazel_dep(name = "bazel_skylib", version = "1.1.1")
+bazel_dep(name = "platforms", version = "0.0.4")
+bazel_dep(name = "rules_cc", version = "0.0.2")
+bazel_dep(name = "rules_java", version = "5.1.0")
+bazel_dep(name = "rules_python", version = "0.12.0")
+bazel_dep(name = "rules_jvm_external", version = "4.4.2")
+
+bazel_dep(name = "rules_bazelrio", version = "0.0.1")
+
+maven = use_extension("@rules_jvm_external//:extensions.bzl", "maven")
+maven.install(
+    artifacts = [
+        "edu.wpi.first.cameraserver:cameraserver-java:2023.1.1-beta-3",
+        "edu.wpi.first.cscore:cscore-java:2023.1.1-beta-3",
+        "edu.wpi.first.hal:hal-java:2023.1.1-beta-3",
+        "edu.wpi.first.ntcore:ntcore-java:2023.1.1-beta-3",
+        "edu.wpi.first.wpilibj:wpilibj-java:2023.1.1-beta-3",
+        "edu.wpi.first.wpilibNewCommands:wpilibNewCommands-java:2023.1.1-beta-3",
+        "edu.wpi.first.wpimath:wpimath-java:2023.1.1-beta-3",
+        "edu.wpi.first.wpinet:wpinet-java:2023.1.1-beta-3",
+        "edu.wpi.first.wpiutil:wpiutil-java:2023.1.1-beta-3",
+
+        "com.fasterxml.jackson.core:jackson-annotations:2.12.4",
+        "com.fasterxml.jackson.core:jackson-core:2.12.4",
+        "com.fasterxml.jackson.core:jackson-databind:2.12.4",
+        "org.ejml:ejml-simple:0.41",
+    ],
+    repositories = [
+        "https://repo1.maven.org/maven2",
+        "https://frcmaven.wpi.edu/release",
+    ]
+)
+
+use_repo(
+    maven,
+    "maven",
+)
+
+
+setup_{{group.repo_name}}_dependencies = use_extension("//dependencies:maven_cpp_deps.bzl", "setup_{{group.repo_name}}_dependencies")
+use_repo(
+    setup_{{group.repo_name}}_dependencies,
+    
+    
+{%- for cpp_dep in group.cc_deps %}
+    {%- if cpp_dep.headers %}
+    "{{cpp_dep.get_archive_name('headers')}}",
+    {%- endif %}
+
+    {%- for resource in cpp_dep.resources %}
+    "{{cpp_dep.get_archive_name(resource)}}",
+    {%- endfor %}
+{%- endfor %}
+
+    
+    {%- for tool_dep in group.java_native_tools %}
+    {%- for resource in tool_dep.resources %}
+    "{{tool_dep.get_archive_name(resource)}}",
+    {%- endfor %}
+    {%- endfor %}
+
+    {%- for tool_dep in group.executable_tools %}
+    {%- for resource in tool_dep.resources %}
+    "{{tool_dep.get_archive_name(resource)}}",
+    {%- endfor %}
+    {%- endfor %}
+)

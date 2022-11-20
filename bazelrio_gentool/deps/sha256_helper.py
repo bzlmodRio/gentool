@@ -52,7 +52,7 @@ def __download_and_cache(cached_file, url, fail_on_miss):
 def get_hash(url, fail_on_miss):
     cached_file = os.path.join(CACHE_DIRECTORY, os.path.basename(url) + ".sha256")
     if not os.path.exists(cached_file):
-        return _download_and_cache(cached_file, url, fail_on_miss)
+        return __download_and_cache(cached_file, url, fail_on_miss)
 
     with open(cached_file, "r") as f:
         data = f.read()
