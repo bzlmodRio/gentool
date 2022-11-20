@@ -36,7 +36,7 @@ use_repo(
 )
 
 
-setup_{{group.repo_name}}_dependencies = use_extension("//dependencies:maven_cpp_deps.bzl", "setup_{{group.repo_name}}_dependencies")
+setup_{{group.repo_name}}_dependencies = use_extension("//:maven_cpp_deps.bzl", "setup_{{group.repo_name}}_dependencies")
 use_repo(
     setup_{{group.repo_name}}_dependencies,
     

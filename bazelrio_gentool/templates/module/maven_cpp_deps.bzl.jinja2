@@ -1,6 +1,5 @@
-load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive")
+load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive", "http_jar")
 load("@bazel_tools//tools/build_defs/repo:utils.bzl", "maybe")
-
 
 filegroup_all = """filegroup(
      name = "all",
@@ -109,34 +108,6 @@ def __setup_{{group.repo_name}}_dependencies(mctx):
     {%- endfor %}
     {%- endfor %}
 
-
-
-    
 setup_{{group.repo_name}}_dependencies = module_extension(
     __setup_{{group.repo_name}}_dependencies,
 )
-
-
-
-{%- for cpp_dep in group.cc_deps %}
-    {%- if cpp_dep.headers %}
-    # "{{cpp_dep.get_archive_name('headers')}}",
-    {%- endif %}
-
-    {%- for resource in cpp_dep.resources %}
-    # "{{cpp_dep.get_archive_name(resource)}}",
-    {%- endfor %}
-{%- endfor %}
-
-    
-    {%- for tool_dep in group.java_native_tools %}
-    {%- for resource in tool_dep.resources %}
-    # "{{tool_dep.get_archive_name(resource)}}",
-    {%- endfor %}
-    {%- endfor %}
-
-    {%- for tool_dep in group.executable_tools %}
-    {%- for resource in tool_dep.resources %}
-    # "{{tool_dep.get_archive_name(resource)}}",
-    {%- endfor %}
-    {%- endfor %}

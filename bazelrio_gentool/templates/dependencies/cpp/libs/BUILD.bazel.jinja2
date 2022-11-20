@@ -2,7 +2,15 @@ cc_library(
     name = "{{target.parent_folder}}",
     linkstatic = 1,
     visibility = ["//visibility:public"],
-    deps = [{% for dep in target.dependencies %}{% if 'opencv' in dep.parent_folder %}"@opencv-cpp//:opencv"{%else%}"@allwpilib//dependencies/cpp/{{dep.parent_folder}}"{%endif%}{% if not loop.last %}, {% endif %}{% endfor %}] + {% if target.headers %}["@{{target.get_header_archive_name()}}//:headers"] + {% endif %}select({
+    deps = [
+      {%- for dep in target.dependencies %}
+       {%- if 'opencv' in dep.parent_folder %}
+        "@opencv-cpp//:opencv"
+       {%- else%}
+        "@allwpilib//dependencies/cpp/{{dep.parent_folder}}"
+       {%- endif%},
+      {%- endfor %}
+    ] + {% if target.headers %}["@{{target.get_header_archive_name()}}//:headers"] + {% endif %}select({
         "@bazel_tools//src/conditions:windows": ["@{{target.get_archive_name('windowsx86-64')}}//:shared_libs"],
         "@bazel_tools//src/conditions:linux_x86_64": ["@{{target.name.lower()}}-linuxx86-64//:shared_libs"],
         "@bazel_tools//src/conditions:darwin": ["@{{target.name.lower()}}-osxx86-64//:shared_libs"],

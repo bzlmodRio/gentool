@@ -9,11 +9,9 @@ class BaseDependency:
         self.version = version
         self.fail_on_hash_miss = fail_on_hash_miss
 
-        print("FFFF", self.artifact_name, self.version)
-
 
     def get_archive_name(self, suffix=""):
-        print(self.artifact_name, self.version)
+        # print(self.artifact_name, self.version)
         group_underscore = self.group_id.replace(".", "_").lower()
 
         # Having a year in the bazel name makes things tricky downstream. Remove it.

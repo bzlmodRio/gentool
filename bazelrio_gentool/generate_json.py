@@ -1,8 +1,8 @@
 
 import os
-from utils import render_template, write_file, SCRIPT_DIR, TEMPLATE_BASE_DIR
 import json
 import subprocess
+from bazelrio_gentool.utils import render_template, write_file, SCRIPT_DIR, TEMPLATE_BASE_DIR
 from bazelrio_gentool.deps.cc_dependency import CcDependency
 
 

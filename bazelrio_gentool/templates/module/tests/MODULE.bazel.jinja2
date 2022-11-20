@@ -1,0 +1,10 @@
+
+bazel_dep(name = "allwpilib", repo_name = "allwpilib", version = "")
+
+local_path_override(
+    module_name = "allwpilib",
+    path = "..",
+)
+
+bazel_dep(name = "rules_bazelrio", version = "0.0.1")
+bazel_dep(name = "rules_cc", version = "0.0.2")
