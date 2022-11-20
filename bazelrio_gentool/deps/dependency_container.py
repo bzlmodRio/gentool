@@ -15,10 +15,15 @@ class DependencyContainer:
         self.cc_deps = []
         self.java_native_tools = []
         self.executable_tools = []
+        self.module_dependencies = {}
         self.dep_lookup = {}
         self.repository_url = None
         self.strip_prefix = None
         self.fail_on_hash_miss = True
+
+    def add_module_dependency(self, name, group):
+        self.module_dependencies[name] = group
+        self.dep_lookup.update(group.dep_lookup)
 
     def create_cc_dependency(self, name, dependencies=[], version=None, **kwargs):
         if version is None:
@@ -61,3 +66,12 @@ class DependencyContainer:
                 fail_on_hash_miss=self.fail_on_hash_miss,
             )
         )
+
+    def get_all_maven_dependencies(self):
+        all_maven_deps = set()
+
+        for java_dep in self.java_deps:
+            all_maven_deps.add((f"{java_dep.group_id}", f"{java_dep.name}:{java_dep.version}"))
+            all_maven_deps.update(java_dep.maven_deps)
+
+        return sorted(list(all_maven_deps))

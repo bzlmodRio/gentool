@@ -13,23 +13,16 @@ bazel_dep(name = "rules_jvm_external", version = "4.4.2")
 
 bazel_dep(name = "rules_bazelrio", version = "0.0.1")
 
+{%- for name, module_dep in group.module_dependencies.items() %}
+bazel_dep(name = "{{name}}", version = "{{module_dep.version}}")
+{%- endfor %}
+
 maven = use_extension("@rules_jvm_external//:extensions.bzl", "maven")
 maven.install(
     artifacts = [
-        "edu.wpi.first.cameraserver:cameraserver-java:2023.1.1-beta-3",
-        "edu.wpi.first.cscore:cscore-java:2023.1.1-beta-3",
-        "edu.wpi.first.hal:hal-java:2023.1.1-beta-3",
-        "edu.wpi.first.ntcore:ntcore-java:2023.1.1-beta-3",
-        "edu.wpi.first.wpilibj:wpilibj-java:2023.1.1-beta-3",
-        "edu.wpi.first.wpilibNewCommands:wpilibNewCommands-java:2023.1.1-beta-3",
-        "edu.wpi.first.wpimath:wpimath-java:2023.1.1-beta-3",
-        "edu.wpi.first.wpinet:wpinet-java:2023.1.1-beta-3",
-        "edu.wpi.first.wpiutil:wpiutil-java:2023.1.1-beta-3",
-
-        "com.fasterxml.jackson.core:jackson-annotations:2.12.4",
-        "com.fasterxml.jackson.core:jackson-core:2.12.4",
-        "com.fasterxml.jackson.core:jackson-databind:2.12.4",
-        "org.ejml:ejml-simple:0.41",
+        {%- for maven_dep in group.get_all_maven_dependencies() %}
+        "{{maven_dep[0]}}:{{maven_dep[1]}}",
+        {%- endfor %}
     ],
     repositories = [
         "https://repo1.maven.org/maven2",

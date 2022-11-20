@@ -1,0 +1,38 @@
+module(
+    name = "{{group.repo_name}}",
+    version = "{{group.version}}",
+    compatibility_level = 1,
+)
+
+
+{% for dep in group.dependencies %}
+bazel_dep(name = "{{dep.name}}", version = "{{dep.version}}")
+{%- endfor %}
+
+
+{%- for module_dependency in group.module_dependencies %}
+bazel_dep(name = "{{module_dependency[0]}}", version = "{{module_dependency[1]}}")
+{%- endfor %}
+
+{%- if group.java_deps %}
+bazel_dep(name = "rules_jvm_external", version = "4.5")
+maven = use_extension("@rules_jvm_external//:extensions.bzl", "maven")
+
+maven.install(
+    artifacts = [
+        {%- for maven_dep in group.get_all_maven_dependencies() %}
+        "{{maven_dep[0]}}:{{maven_dep[1]}}",
+        {%- endfor %}
+    ],
+    repositories = [
+        "https://frcmaven.wpi.edu/release",
+    ]
+    # lock_file = "//:maven_install.json",
+)
+
+use_repo(
+    maven,
+    "maven",
+)
+
+{% endif %}
