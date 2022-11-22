@@ -11,7 +11,7 @@ bazel_dep(name = "rules_java", version = "5.1.0")
 bazel_dep(name = "rules_python", version = "0.12.0")
 bazel_dep(name = "rules_jvm_external", version = "4.4.2")
 
-bazel_dep(name = "rules_bazelrio", version = "0.0.1")
+bazel_dep(name = "rules_bazelrio", version = "0.0.2")
 
 {%- for name, module_dep in group.module_dependencies.items() %}
 bazel_dep(name = "{{name}}", version = "{{module_dep.version}}")
@@ -36,9 +36,9 @@ use_repo(
 )
 
 
-setup_{{group.repo_name}}_dependencies = use_extension("//:maven_cpp_deps.bzl", "setup_{{group.repo_name}}_dependencies")
+setup_{{group.sanitized_repo_name}}_dependencies = use_extension("//:maven_cpp_deps.bzl", "setup_{{group.sanitized_repo_name}}_dependencies")
 use_repo(
-    setup_{{group.repo_name}}_dependencies,
+    setup_{{group.sanitized_repo_name}}_dependencies,
     
     
 {%- for cpp_dep in group.cc_deps %}

@@ -1,0 +1,12 @@
+{%- for target in group.executable_tools -%}
+alias(
+    name = "{{target.artifact_name}}",
+    actual = "@allwpilib//dependencies/tools/{{target.artifact_name}}:{{target.artifact_name}}",
+)
+{%- endfor %}
+{% for target in group.java_native_tools %}
+alias(
+    name = "{{target.artifact_name}}",
+    actual = "@allwpilib//dependencies/tools/{{target.artifact_name}}:{{target.artifact_name}}",
+)
+{% endfor %}

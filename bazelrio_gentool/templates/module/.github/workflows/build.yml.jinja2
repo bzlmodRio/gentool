@@ -7,12 +7,13 @@ jobs:
       fail-fast: false
       matrix:
         include:
-        - { os: windows-latest, config: "--config=windows" }
-        - { os: ubuntu-latest, config: "--config=linux" }
-        - { os: macos-latest, config: "--config=macos" }
+        - { os: windows-latest, command: "test", config: "--config=windows" }
+        - { os: ubuntu-latest,  command: "test", config: "--config=linux --test_tag_filters=-bazelrio-java-test" }
+        - { os: macos-latest,   command: "build", config: "--config=macos --test_tag_filters=-bazelrio-java-test" }
+    name: "Build Tests - ${{ matrix.os }}"
     runs-on: ${{ matrix.os }}
     steps:
     - uses: actions/checkout@v2
-    - run: bazel build //... -k --verbose_failures
+    - run: bazel ${{ matrix.command }} //... -k ${{ matrix.config }} --verbose_failures
       working-directory: tests
 {%- endraw %}

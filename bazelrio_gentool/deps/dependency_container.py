@@ -9,6 +9,7 @@ class DependencyContainer:
 
     def __init__(self, repo_name, version, maven_url):
         self.repo_name = repo_name
+        self.sanitized_repo_name = repo_name.replace("-", "_")
         self.version = version
         self.maven_url = maven_url
         self.java_deps = []
@@ -21,8 +22,10 @@ class DependencyContainer:
         self.strip_prefix = None
         self.fail_on_hash_miss = True
 
-    def add_module_dependency(self, name, group):
-        self.module_dependencies[name] = group
+    def add_module_dependency(self, group, override_version=None):
+        if override_version:
+            group.version = override_version
+        self.module_dependencies[group.repo_name] = group
         self.dep_lookup.update(group.dep_lookup)
 
     def create_cc_dependency(self, name, dependencies=[], version=None, **kwargs):
@@ -30,26 +33,28 @@ class DependencyContainer:
             version = self.version
         # print("XXX", name, version)
         dependencies = [self.dep_lookup[d] for d in dependencies]
-        dep = CcDependency(artifact_name=name, maven_url=self.maven_url, version=version, dependencies=dependencies, **kwargs)
+        dep = CcDependency(artifact_name=name, maven_url=self.maven_url, version=version, dependencies=dependencies, repo_name=self.repo_name, **kwargs)
 
         self.cc_deps.append(dep)
         self.dep_lookup[name] = dep
 
     def create_java_dependency(self, name, dependencies=[], **kwargs):
         dependencies = [self.dep_lookup[d] for d in dependencies]
-        dep = JavaDependency(name=name, version=self.version, dependencies=dependencies, **kwargs)
+        dep = JavaDependency(name=name, version=self.version, dependencies=dependencies, repo_name=self.repo_name, **kwargs)
 
         self.java_deps.append(dep)
         self.dep_lookup[name] = dep
         
-    def create_java_native_tool(self, group_id, artifact_name, resources):
+    def create_java_native_tool(self, main_class, group_id, artifact_name, resources):
         self.java_native_tools.append(
             JavaNativeToolDependency(
+                main_class=main_class,
                 group_id=group_id,
                 artifact_name=artifact_name,
                 resources=resources,
                 maven_url=self.maven_url,
                 version=self.version,
+                repo_name=self.repo_name,
                 fail_on_hash_miss=self.fail_on_hash_miss,
             )
         )
@@ -62,6 +67,7 @@ class DependencyContainer:
                 resources=resources,
                 maven_url=self.maven_url,
                 version=self.version,
+                repo_name=self.repo_name,
                 fail_on_hash_miss=self.fail_on_hash_miss,
             )
         )

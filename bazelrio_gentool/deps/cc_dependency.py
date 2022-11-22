@@ -3,7 +3,7 @@ import re
 from bazelrio_gentool.deps.multi_resource_dependency import MultiResourceDependency
 
 class CcDependency(MultiResourceDependency):
-    def __init__(self, artifact_name, maven_url, group_id, version, parent_folder, dependencies, resources, headers, has_jni, fail_on_hash_miss=True):
+    def __init__(self, artifact_name, maven_url, group_id, version, parent_folder, dependencies, resources, headers, has_jni, repo_name, fail_on_hash_miss=True):
         MultiResourceDependency.__init__(self, 
                                          artifact_name=artifact_name, 
                                          group_id=group_id,
@@ -11,6 +11,7 @@ class CcDependency(MultiResourceDependency):
                                          version=version,
                                          file_extension=".zip",
                                          resources=resources,
+                                         repo_name=repo_name,
                                          fail_on_hash_miss=fail_on_hash_miss)
         # self.name = name
         # self.version = version

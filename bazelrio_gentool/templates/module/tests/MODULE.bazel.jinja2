@@ -1,10 +1,34 @@
 
-bazel_dep(name = "allwpilib", repo_name = "allwpilib", version = "")
+bazel_dep(name = "{{group.repo_name}}", repo_name = "{{group.repo_name}}", version = "")
 
 local_path_override(
-    module_name = "allwpilib",
+    module_name = "{{group.repo_name}}",
     path = "..",
 )
 
-bazel_dep(name = "rules_bazelrio", version = "0.0.1")
+bazel_dep(name = "googletest", version = "1.11.0")
+bazel_dep(name = "rules_bazelrio", version = "0.0.2")
 bazel_dep(name = "rules_cc", version = "0.0.2")
+bazel_dep(name = "rules_jvm_external", version = "4.4.2")
+
+maven = use_extension("@rules_jvm_external//:extensions.bzl", "maven")
+maven.install(
+    artifacts = [
+        "org.junit.jupiter:junit-jupiter-api:5.8.2",
+        "org.junit.jupiter:junit-jupiter-params:5.8.2",
+        "org.junit.jupiter:junit-jupiter-engine:5.8.2",
+        "org.junit.platform:junit-platform-commons:1.6.1",
+        "org.junit.platform:junit-platform-console:1.6.1",
+        "org.junit.platform:junit-platform-engine:1.6.1",
+        "org.junit.platform:junit-platform-launcher:1.6.1",
+        "org.junit.platform:junit-platform-suite-api:1.6.1",
+    ],
+    repositories = [
+        "https://repo1.maven.org/maven2",
+    ]
+)
+
+use_repo(
+    maven,
+    "maven",
+)

@@ -1,7 +1,6 @@
-# load("@rules_bazelrio//:java_rules.bzl", "bazelrio_java_binary")
+load("@rules_bazelrio//:java_rules.bzl", "bazelrio_java_binary", "bazelrio_java_test")
 
-# bazelrio_java_binary(
-java_binary(
+bazelrio_java_binary(
     name = "main",
     srcs = ["Main.java"],
     jvm_flags = [
@@ -9,7 +8,34 @@ java_binary(
     ],
     main_class = "bazelrio_test.Main",
     deps = [
-        "@allwpilib//dependencies/java/{{target.parent_folder}}",
+        "@{{group.repo_name}}//dependencies/java/{{target.parent_folder}}",
+    ],
+)
+
+bazelrio_java_test(
+    name = "test",
+    srcs = ["BasicTest.java"],
+    args = [
+        "--select-package",
+        "bazelrio_test",
+    ],
+    jvm_flags = [
+        "-Djava.library.path=.",
+    ],
+    main_class = "org.junit.platform.console.ConsoleLauncher",
+    tags = ["bazelrio-java-test"],
+    runtime_deps = [
+        "@maven//:org_junit_platform_junit_platform_commons",
+        "@maven//:org_junit_platform_junit_platform_console",
+        "@maven//:org_junit_platform_junit_platform_engine",
+        "@maven//:org_junit_platform_junit_platform_launcher",
+        "@maven//:org_junit_platform_junit_platform_suite_api",
+    ],
+    deps = [
+        "@{{group.repo_name}}//dependencies/java/{{target.parent_folder}}",
+        "@maven//:org_junit_jupiter_junit_jupiter_api",
+        "@maven//:org_junit_jupiter_junit_jupiter_engine",
+        "@maven//:org_junit_jupiter_junit_jupiter_params",
     ],
 )
 

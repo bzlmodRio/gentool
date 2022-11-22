@@ -1,0 +1,17 @@
+{%- if target.resources and target.resources[0] -%}
+load("//dependencies/tools:tool_launchers.bzl", "java_tool_launcher")
+
+java_tool_launcher(
+    name = "{{target.artifact_name}}",
+    base_repo_name = "bazelrio_{{target.group_id.replace('.', '_').lower()}}_{{target.artifact_name.lower()}}",
+    main_class = "{{target.main_class}}",
+)
+{%- else -%}
+java_binary(
+    name = "{{target.artifact_name}}",
+    main_class = "{{target.main_class}}",
+    visibility = ["//visibility:public"],
+    runtime_deps = ["@bazelrio_{{target.group_id.replace('.', '_').lower()}}_{{target.artifact_name.lower()}}//jar"],
+)
+{%- endif %}
+
