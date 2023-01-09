@@ -10,7 +10,7 @@ cc_library(
         "@bazel_tools//src/conditions:windows": ["@{{target.get_archive_name('windowsx86-64')}}//:shared_libs"],
         "@bazel_tools//src/conditions:linux_x86_64": ["@{{target.get_archive_name('linuxx86-64')}}//:shared_libs"],
         "@bazel_tools//src/conditions:darwin": ["@{{target.get_archive_name('osxx86-64')}}//:shared_libs"],
-        # "//constraints/is_roborio:roborio": ["@{{target.get_archive_name('linuxathena')}}//:shared_libs"],
+        "//constraints/is_roborio:roborio": ["@{{target.get_archive_name('linuxathena')}}//:shared_libs"],
     }),
 )
 {% if target.has_jni %}
@@ -23,7 +23,7 @@ cc_library(
         "@bazel_tools//src/conditions:windows": ["@{{target.get_archive_name('windowsx86-64')}}//:shared_jni_libs"],
         "@bazel_tools//src/conditions:linux_x86_64": ["@{{target.get_archive_name('linuxx86-64')}}//:shared_jni_libs"],
         "@bazel_tools//src/conditions:darwin": ["@{{target.get_archive_name('osxx86-64')}}//:shared_jni_libs"],
-        # "//constraints/is_roborio:roborio": ["@{{target.get_archive_name('linuxathena')}}//:shared_jni_libs"],
+        "//constraints/is_roborio:roborio": ["@{{target.get_archive_name('linuxathena')}}//:shared_jni_libs"],
     }),
 )
 {% endif %}

@@ -3,7 +3,7 @@ import os
 import json
 from bazelrio_gentool.deps.dependency_container import DependencyContainer
 
-def vendordep_dependency(vendor_file):
+def vendordep_dependency(vendor_file, fail_on_hash_miss):
     PLATFORM_BLACKLIST = set(
         [
             "windowsx86",
@@ -32,7 +32,7 @@ def vendordep_dependency(vendor_file):
             for platform in cpp_dep["binaryPlatforms"]:
                 if platform not in PLATFORM_BLACKLIST:
                     resources.append(platform)
-                    # resources.append(platform + "static")
+                    resources.append(platform + "static")
 
             maven_dep.create_cc_dependency(
                 name=cpp_dep["artifactId"],
@@ -42,7 +42,7 @@ def vendordep_dependency(vendor_file):
                 group_id=cpp_dep["groupId"],
                 version=cpp_dep["version"],
                 has_jni=False,
-                fail_on_hash_miss=True,
+                fail_on_hash_miss=fail_on_hash_miss,
             )
 
         # # Then grab the native libraries

@@ -7,9 +7,13 @@ jobs:
       fail-fast: false
       matrix:
         include:
-        - { os: windows-latest, command: "test", config: "--config=windows" }
-        - { os: ubuntu-latest,  command: "test", config: "--config=linux --test_tag_filters=-bazelrio-java-test" }
-        - { os: macos-latest,   command: "build", config: "--config=macos --test_tag_filters=-bazelrio-java-test" }
+        - { os: windows-latest, command: "test",  config: "--config=windows" }
+        - { os: ubuntu-latest,  command: "test",  config: "--config=linux --test_tag_filters=-bazelrio-java-test" }
+        - { os: macos-latest,   command: "build", config: "--config=macos --build_tag_filters=-bazelrio-java-test --test_tag_filters=-bazelrio-java-test" }
+
+        - { os: windows-latest, command: "build", config: "--config=roborio" }
+        - { os: ubuntu-latest,  command: "build", config: "--config=roborio" }
+        - { os: macos-latest,   command: "build", config: "--config=roborio" }
     name: "Build Tests - ${{ matrix.os }}"
     runs-on: ${{ matrix.os }}
     steps:

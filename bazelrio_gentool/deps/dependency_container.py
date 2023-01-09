@@ -7,10 +7,11 @@ from bazelrio_gentool.deps.executable_tool_dependency import ExecutableToolDepen
 
 class DependencyContainer:
 
-    def __init__(self, repo_name, version, maven_url):
+    def __init__(self, repo_name, version, year, maven_url):
         self.repo_name = repo_name
         self.sanitized_repo_name = repo_name.replace("-", "_")
         self.version = version
+        self.year = year
         self.maven_url = maven_url
         self.java_deps = []
         self.cc_deps = []

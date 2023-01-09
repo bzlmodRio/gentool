@@ -2,6 +2,7 @@
 module(
     name = "{{group.repo_name}}",
     version = "{{group.version}}",
+    compatibility_level = {{group.year}},
 )
 
 bazel_dep(name = "bazel_skylib", version = "1.1.1")
@@ -47,7 +48,9 @@ use_repo(
     {%- endif %}
 
     {%- for resource in cpp_dep.resources %}
+    {%- if cpp_dep.get_sha256(resource) %}
     "{{cpp_dep.get_archive_name(resource)}}",
+    {%- endif %}
     {%- endfor %}
 {%- endfor %}
 
