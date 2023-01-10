@@ -6,6 +6,18 @@ local_path_override(
     path = "..",
 )
 
+{%- if True %}
+local_path_override(
+    module_name = "rules_roborio_toolchain",
+    path = "../../rules_roborio_toolchain",
+)
+
+local_path_override(
+    module_name = "bzlmodrio-gentool",
+    path = "../../gentool",
+)
+{%- endif %}
+
 bazel_dep(name = "googletest", version = "1.11.0")
 bazel_dep(name = "rules_bazelrio", version = "0.0.2")
 bazel_dep(name = "rules_cc", version = "0.0.2")

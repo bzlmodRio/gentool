@@ -59,7 +59,7 @@ cc_library(
 )
 """
 
-def __setup_{{group.sanitized_repo_name}}_dependencies(mctx):
+def __setup_{{group.sanitized_repo_name}}_cpp_dependencies(mctx):
     {%- for cpp_dep in group.cc_deps %}
     {%- if cpp_dep.headers %}
     maybe(
@@ -108,7 +108,12 @@ def __setup_{{group.sanitized_repo_name}}_dependencies(mctx):
     {%- endfor %}
     {%- endfor %}
 
-setup_{{group.sanitized_repo_name}}_dependencies = module_extension(
-    __setup_{{group.sanitized_repo_name}}_dependencies,
+
+def setup_legacy_{{group.sanitized_repo_name}}_cpp_dependencies():
+    __setup_{{group.sanitized_repo_name}}_cpp_dependencies(None)
+
+
+setup_{{group.sanitized_repo_name}}_cpp_dependencies = module_extension(
+    __setup_{{group.sanitized_repo_name}}_cpp_dependencies,
 )
 

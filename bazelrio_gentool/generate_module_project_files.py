@@ -7,10 +7,12 @@ def generate_module_project_files(module_directory, group):
     template_files = [
         ".github/workflows/build.yml",
         ".github/workflows/lint.yml",
+        ".bazelrc",
         ".gitignore",
         "BUILD.bazel",
         "README.md",
         "maven_cpp_deps.bzl",
+        "maven_java_deps.bzl",
         "MODULE.bazel",
         "WORKSPACE.bzlmod",
         "WORKSPACE",

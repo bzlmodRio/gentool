@@ -26,6 +26,8 @@ def clean_existing_version(module_directory):
                 continue
             if full_file.endswith("test.cpp") or full_file.endswith("Test.java"):
                 continue
+            if full_file.endswith("user.bazelrc"):
+                continue
             os.remove(full_file)
 
 

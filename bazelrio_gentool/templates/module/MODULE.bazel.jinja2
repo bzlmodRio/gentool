@@ -5,14 +5,17 @@ module(
     compatibility_level = {{group.year}},
 )
 
-bazel_dep(name = "bazel_skylib", version = "1.1.1")
-bazel_dep(name = "platforms", version = "0.0.4")
-bazel_dep(name = "rules_cc", version = "0.0.2")
-bazel_dep(name = "rules_java", version = "5.1.0")
-bazel_dep(name = "rules_python", version = "0.12.0")
+# bazel_dep(name = "bazel_skylib", version = "1.1.1")
+# bazel_dep(name = "platforms", version = "0.0.4")
+# bazel_dep(name = "rules_cc", version = "0.0.2")
+# bazel_dep(name = "rules_java", version = "5.1.0")
 bazel_dep(name = "rules_jvm_external", version = "4.4.2")
 
+bazel_dep(name = "rules_python", version = "0.12.0", dev_dependency=True)
+
+bazel_dep(name = "bzlmodrio-gentool", version = "")
 bazel_dep(name = "rules_bazelrio", version = "0.0.2")
+bazel_dep(name = "rules_roborio_toolchain", version = "0.0.1")
 
 {%- for name, module_dep in group.module_dependencies.items() %}
 bazel_dep(name = "{{name}}", version = "{{module_dep.version}}")
@@ -35,6 +38,7 @@ use_repo(
     maven,
     "maven",
 )
+
 
 
 setup_{{group.sanitized_repo_name}}_dependencies = use_extension("//:maven_cpp_deps.bzl", "setup_{{group.sanitized_repo_name}}_dependencies")
@@ -67,3 +71,4 @@ use_repo(
     {%- endfor %}
     {%- endfor %}
 )
+
