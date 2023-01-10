@@ -12,7 +12,6 @@ class BaseDependency:
 
 
     def get_archive_name(self, suffix=""):
-        # print(self.artifact_name, self.version)
         group_underscore = self.group_id.replace(".", "_").lower()
 
         # Having a year in the bazel name makes things tricky downstream. Remove it.

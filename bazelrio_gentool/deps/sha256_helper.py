@@ -13,10 +13,6 @@ def __download_and_cache(cached_file, url, fail_on_miss):
         os.mkdir(CACHE_DIRECTORY)
 
     print(f"Cache miss for {url}")
-    # print("               https://github.com/wpilibsuite/opensdk/releases/download/v2023-5/cortexa9_vfpv3-roborio-academic-2023-x86_64-w64-mingw32-Toolchain-12.1.0.zip")
-    # print("               https://github.com/wpilibsuite/opensdk/releases/download/v2023-5/cortexa9_vfpv3-roborio-academic-2023-x86_64-linux-gnu-Toolchain-12.1.0.tgz")
-    # print("               https://github.com/wpilibsuite/opensdk/releases/download/v2023-5/cortexa9_vfpv3-roborio-academic-2023-x86_64-apple-darwin-Toolchain-12.1.0.tgz")
-    # return
     try:
         url_result = urlopen(url)
     except:
