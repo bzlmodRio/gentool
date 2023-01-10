@@ -16,12 +16,23 @@ local_path_override(
     module_name = "bzlmodrio-gentool",
     path = "../../gentool",
 )
+
 {%- endif %}
 
+{% for name, module_dep in group.module_dependencies.items() %}
+local_path_override(
+    module_name = "{{name}}",
+    path = "{{module_dep.local_rel_folder}}",
+)
+{%- endfor %}
+
 bazel_dep(name = "googletest", version = "1.11.0")
-bazel_dep(name = "rules_bazelrio", version = "0.0.2")
 bazel_dep(name = "rules_cc", version = "0.0.2")
 bazel_dep(name = "rules_jvm_external", version = "4.4.2")
+
+bazel_dep(name = "bzlmodrio-gentool", version = "1.11.0")
+bazel_dep(name = "rules_bazelrio", version = "0.0.2")
+bazel_dep(name = "rules_roborio_toolchain", version = "0.0.1")
 
 maven = use_extension("@rules_jvm_external//:extensions.bzl", "maven")
 maven.install(

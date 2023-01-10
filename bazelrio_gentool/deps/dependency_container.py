@@ -5,6 +5,16 @@ from bazelrio_gentool.deps.java_dependency import JavaDependency
 from bazelrio_gentool.deps.java_native_tool_dependency import JavaNativeToolDependency
 from bazelrio_gentool.deps.executable_tool_dependency import ExecutableToolDependency
 
+
+class ModuleDependency:
+    def __init__(self, container, use_local_version, local_rel_folder, override_version=None):
+        self.container = container
+        if override_version:
+            container.version = override_version
+        self.local_rel_folder = local_rel_folder
+        self.use_local_version = use_local_version
+
+
 class DependencyContainer:
 
     def __init__(self, repo_name, version, year, maven_url):
@@ -23,11 +33,11 @@ class DependencyContainer:
         self.strip_prefix = None
         self.fail_on_hash_miss = True
 
-    def add_module_dependency(self, group, override_version=None):
-        if override_version:
-            group.version = override_version
-        self.module_dependencies[group.repo_name] = group
-        self.dep_lookup.update(group.dep_lookup)
+    def add_module_dependency(self, dependency):
+        if not isinstance(dependency, ModuleDependency):
+            raise
+        self.module_dependencies[dependency.container.repo_name] = dependency
+        self.dep_lookup.update(dependency.container.dep_lookup)
 
     def create_cc_dependency(self, name, dependencies=[], version=None, **kwargs):
         if version is None:
