@@ -14,5 +14,5 @@ source "${RUNFILES_DIR:-/dev/null}/$f" 2>/dev/null || \
 REPO_NAME=$1
 SUBPATH=$2
 EXE_NAME=$3
-"$(rlocation allwpilib~override~setup_allwpilib_dependencies~$REPO_NAME/$SUBPATH/$EXE_NAME)"
+"$(rlocation allwpilib~override~setup_allwpilib_cpp_dependencies~$REPO_NAME/$SUBPATH/$EXE_NAME)"
 

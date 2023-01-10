@@ -2,7 +2,20 @@
 import os
 from bazelrio_gentool.utils import render_template, write_file, TEMPLATE_BASE_DIR
 
-def generate_module_project_files(module_directory, group):
+
+class MandetoryDependencySettings:
+    class Setting:
+        def __init__(self, version, use_local_version):
+            self.version = version
+            self.use_local_version = use_local_version
+
+    def __init__(self, bcr_branch, rules_roborio_toolchain, rules_bazelrio):
+        self.bcr_branch = bcr_branch
+        self.rules_roborio_toolchain = rules_roborio_toolchain
+        self.rules_bazelrio = rules_bazelrio
+
+
+def generate_module_project_files(module_directory, group, mandetory_dependencies):
 
     template_files = [
         ".github/workflows/build.yml",
@@ -12,7 +25,6 @@ def generate_module_project_files(module_directory, group):
         "BUILD.bazel",
         "README.md",
         "maven_cpp_deps.bzl",
-        "maven_java_deps.bzl",
         "MODULE.bazel",
         "WORKSPACE.bzlmod",
         "WORKSPACE",
@@ -33,5 +45,17 @@ def generate_module_project_files(module_directory, group):
     for tf in template_files:
         template_file = os.path.join(TEMPLATE_BASE_DIR, "module", tf + ".jinja2")
         output_file = os.path.join(module_directory, tf)
-        render_template(template_file, output_file, group=group)
+        render_template(template_file, output_file, group=group, mandetory_dependencies=mandetory_dependencies)
 
+        if output_file.endswith(".sh"):
+            os.chmod(output_file, 0o755)
+
+
+    if group.get_all_maven_dependencies():
+        for tf in ["maven_java_deps.bzl"]:
+            template_file = os.path.join(TEMPLATE_BASE_DIR, "module", tf + ".jinja2")
+            output_file = os.path.join(module_directory, tf)
+            render_template(template_file, output_file, group=group, mandetory_dependencies=mandetory_dependencies)
+
+            if output_file.endswith(".sh"):
+                os.chmod(output_file, 0o755)

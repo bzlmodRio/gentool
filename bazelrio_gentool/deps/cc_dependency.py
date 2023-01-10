@@ -18,13 +18,6 @@ class CcDependency(MultiResourceDependency):
         self.has_jni = has_jni
         self.headers = headers
         self.dependencies = dependencies
-        print(resources)
-        self.native_platforms = [
-            ('@bazel_tools//src/conditions:windows', 'windowsx86-64'),
-            ('@bazel_tools//src/conditions:linux_x86_64', 'linuxx86-64'),
-            ('@bazel_tools//src/conditions:darwin', 'osxx86-64'),
-            ('@rules_roborio_toolchain//constraints/is_roborio:roborio', 'linuxathena'),
-        ]
 
     def get_header_archive_name(self):
         return self.get_archive_name("headers")
@@ -53,8 +46,8 @@ class CcDependency(MultiResourceDependency):
                 lines.append(f'        "@bazel_tools//src/conditions:darwin": ["@{self.get_archive_name(res)}//:shared_libs"]')
             elif res == "linuxathena":
                 lines.append(f'        "@rules_roborio_toolchain//constraints/is_roborio:roborio": ["@{self.get_archive_name(res)}//:shared_libs"]')
-            else:
-                print(res)
+            # else:
+            #     print(res)
 
         return ",\n".join(lines)
 

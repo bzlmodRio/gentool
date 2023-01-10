@@ -39,7 +39,7 @@ def __write_dependency_file(base_output_directory, group, target, language):
 
     __maybe_write_file(test_dir, os.path.join(template_base, "test"), main_file, target)
     __maybe_write_file(test_dir, os.path.join(template_base, "test"), test_file, target)
-    
+
 
 def generate_group(base_output_directory, group):
     for cc_dep in group.cc_deps:
@@ -50,7 +50,7 @@ def generate_group(base_output_directory, group):
         
     for exe_tool in group.executable_tools:
         template_base = os.path.join(TEMPLATE_BASE_DIR, "dependencies", "tools")
-        lib_dir = os.path.join(base_output_directory, "tools", exe_tool.artifact_name)
+        lib_dir = os.path.join(base_output_directory, "tools", exe_tool.artifact_name.lower() if exe_tool.lower_target_name else exe_tool.artifact_name)
         # test_dir = os.path.join(base_output_directory, "..", "tests", "tools", exe_tool.artifact_name)
         
         # Write BUILD file
@@ -59,6 +59,7 @@ def generate_group(base_output_directory, group):
         render_template(template_file, output_file, target=exe_tool)
         
     for exe_tool in group.java_native_tools:
+        print("GOt exie tool")
         template_base = os.path.join(TEMPLATE_BASE_DIR, "dependencies", "tools")
         lib_dir = os.path.join(base_output_directory, "tools", exe_tool.artifact_name)
         # test_dir = os.path.join(base_output_directory, "..", "tests", "tools", exe_tool.artifact_name)
@@ -71,7 +72,7 @@ def generate_group(base_output_directory, group):
     if group.executable_tools or group.java_native_tools:
         template_base = os.path.join(TEMPLATE_BASE_DIR, "dependencies", "tools")
         lib_dir = os.path.join(base_output_directory, '..', "tests")
-        print(lib_dir)
+        print("GOt java tool")
         # test_dir = os.path.join(base_output_directory, "..", "tests", "tools", exe_tool.artifact_name)
         
         # Write BUILD file
