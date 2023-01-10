@@ -69,22 +69,22 @@ http_archive(
 
 load("@rules_jvm_external//:defs.bzl", "maven_install")
 
-maven_artifacts = []
-maven_repositories = []
-
 {%- endif %}
 {% for name, module_dep in group.module_dependencies.items() %}
 # {{name}}
 local_repository(
     name = "{{name}}",
-    path = "..",
+    path = "../..",
 )
 
 load("@{{name}}//:maven_cpp_deps.bzl", "setup_legacy_{{module_dep.container.sanitized_repo_name}}_cpp_dependencies")
-setup_legacy_wpi_opencv_dependencies()
+{%- if module_dep.container.get_all_maven_dependencies() %}
+load("@{{name}}//:maven_java_deps.bzl", "get_{{module_dep.container.sanitized_repo_name}}_java_dependencies")
+{%- endif %}
+setup_legacy_{{module_dep.container.sanitized_repo_name}}_cpp_dependencies()
 
-load("@{{name}}//:maven_java_deps.bzl", "setup_legacy_{{module_dep.container.sanitized_repo_name}}_java_dependencies")
-maven_artifacts, maven_repositories = setup_legacy_{{module_dep.container.sanitized_repo_name}}_java_dependencies()
+
+
 {%- endfor %}
 
 # My repository!
@@ -100,6 +100,16 @@ load("@{{group.repo_name}}//:maven_java_deps.bzl", "get_{{group.sanitized_repo_n
 maven_artifacts, maven_repositories = get_{{group.sanitized_repo_name}}_java_dependencies()
 {%- endif %}
 {% if group.get_all_maven_dependencies() %}
+
+# Add depdency java artifacts
+{%- for name, module_dep in group.module_dependencies.items() %}
+{%- if module_dep.container.get_all_maven_dependencies() %}
+dep_maven_artifacts, dep_maven_repositories = get_{{module_dep.container.sanitized_repo_name}}_java_dependencies()
+maven_artifacts += dep_maven_artifacts
+maven_repositories += dep_maven_repositories
+{%- endif %}
+{% endfor %}
+
 # Add junit
 maven_artifacts += [
         "org.junit.jupiter:junit-jupiter-api:5.8.2",
