@@ -2,14 +2,18 @@
 import os
 from bazelrio_gentool.utils import render_template, write_file, TEMPLATE_BASE_DIR
 
+class MandetoryDependencySetting:
+    def __init__(self, version, use_local_version):
+        self.version = version
+        self.use_local_version = use_local_version
+        
+DEFAULT_RULES_ROBORIO_TOOLCHAIN = MandetoryDependencySetting("2023-7.3", False)
+DEFAULT_RULES_BAZELRIO = MandetoryDependencySetting("", True)
+
 
 class MandetoryDependencySettings:
-    class Setting:
-        def __init__(self, version, use_local_version):
-            self.version = version
-            self.use_local_version = use_local_version
 
-    def __init__(self, bcr_branch, rules_roborio_toolchain, rules_bazelrio):
+    def __init__(self, bcr_branch, rules_roborio_toolchain=DEFAULT_RULES_ROBORIO_TOOLCHAIN, rules_bazelrio=DEFAULT_RULES_BAZELRIO):
         self.bcr_branch = bcr_branch
         self.rules_roborio_toolchain = rules_roborio_toolchain
         self.rules_bazelrio = rules_bazelrio

@@ -37,6 +37,13 @@ local_repository(
     name = "rules_roborio_toolchain",
     path = "../../rules_roborio_toolchain",
 )
+{% else %}
+http_archive(
+    name = "rules_roborio_toolchain",
+    sha256 = "TODO",
+    strip_prefix = "TODO",
+    url = "TODO",
+)
 {% endif %}
 
 load("@rules_roborio_toolchain//:maven_deps.bzl", "setup_legacy_setup_toolchains_dependencies")

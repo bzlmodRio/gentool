@@ -7,10 +7,12 @@ local_path_override(
 )
 
 {%- if True %}
+{%- if mandetory_dependencies.rules_roborio_toolchain.use_local_version %}
 local_path_override(
     module_name = "rules_roborio_toolchain",
     path = "../../rules_roborio_toolchain",
 )
+{%- endif %}
 
 local_path_override(
     module_name = "bzlmodrio-gentool",
@@ -32,7 +34,6 @@ bazel_dep(name = "rules_jvm_external", version = "4.4.2")
 
 bazel_dep(name = "bzlmodrio-gentool", version = "1.11.0")
 bazel_dep(name = "rules_bazelrio", version = "0.0.2")
-bazel_dep(name = "rules_roborio_toolchain", version = "0.0.1")
 
 maven = use_extension("@rules_jvm_external//:extensions.bzl", "maven")
 maven.install(

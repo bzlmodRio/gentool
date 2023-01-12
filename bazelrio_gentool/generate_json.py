@@ -35,7 +35,7 @@ def create_module(central_registery_location, json_file):
     if not os.path.exists(json_file):
         raise
 
-    args = ["python", './tools/add_module.py', '--input', json_file]
+    args = [sys.executable, './tools/add_module.py', '--input', json_file]
     # args = ["python", './tools/add_module.py']
     print("  ".join(args))
     subprocess.check_call(args)
