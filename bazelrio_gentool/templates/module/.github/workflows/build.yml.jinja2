@@ -7,17 +7,29 @@ jobs:
       fail-fast: false
       matrix:
         include:
-        - { os: windows-latest, command: "test",  config: "--config=windows" }
-        - { os: ubuntu-latest,  command: "test",  config: "--config=linux --test_tag_filters=-bazelrio-java-test" }
-        - { os: macos-latest,   command: "build", config: "--config=macos --build_tag_filters=-bazelrio-java-test --test_tag_filters=-bazelrio-java-test" }
+        # Build standard, native
+        - { name: "windows - native",        os: windows-latest, bazel_options: "--output_user_root=C:\\bazelroot", command: "test",  config: "--config=windows" }
+        - { name: "ubuntu  - native",        os: ubuntu-latest,  bazel_options: "",                                 command: "test",  config: "--config=linux --test_tag_filters=-bazelrio-java-test" }
+        - { name: "macos   - native",        os: macos-latest,   bazel_options: "",                                 command: "build", config: "--config=macos --build_tag_filters=-bazelrio-java-test --test_tag_filters=-bazelrio-java-test" }
 
-        - { os: windows-latest, command: "build", config: "--config=roborio" }
-        - { os: ubuntu-latest,  command: "build", config: "--config=roborio" }
-        - { os: macos-latest,   command: "build", config: "--config=roborio" }
-    name: "Build Tests - ${{ matrix.os }}"
+        # Build standard, roborio
+        - { name: "windows - cross",         os: windows-latest, bazel_options: "--output_user_root=C:\\bazelroot", command: "build", config: "--config=roborio" }
+        - { name: "ubuntu  - cross",         os: ubuntu-latest,  bazel_options: "",                                 command: "build", config: "--config=roborio" }
+        - { name: "macos   - cross",         os: macos-latest,   bazel_options: "",                                 command: "build", config: "--config=roborio" }
+        
+        # Build bzlmod, native
+        - { name: "windows - bzlmod native", os: windows-latest, bazel_options: "--output_user_root=C:\\bazelroot", command: "test",  config: "--enable_bzlmod --config=windows" }
+        - { name: "ubuntu  - bzlmod native", os: ubuntu-latest,  bazel_options: "",                                 command: "test",  config: "--enable_bzlmod --config=linux --test_tag_filters=-bazelrio-java-test" }
+        - { name: "macos   - bzlmod native", os: macos-latest,   bazel_options: "",                                 command: "build", config: "--enable_bzlmod --config=macos --build_tag_filters=-bazelrio-java-test --test_tag_filters=-bazelrio-java-test" }
+
+        # Build bzlmod, roborio
+        # - { name: "windows - bzlmod cross",  os: windows-latest, bazel_options: "--output_user_root=C:\\bazelroot", command: "build", config: "--enable_bzlmod --config=roborio" }
+        - { name: "ubuntu  - bzlmod cross",  os: ubuntu-latest,  bazel_options: "",                                 command: "build", config: "--enable_bzlmod --config=roborio" }
+        - { name: "macos   - bzlmod cross",  os: macos-latest,   bazel_options: "",                                 command: "build", config: "--enable_bzlmod --config=roborio" }
+    name: "Build - ${{ matrix.name }}"
     runs-on: ${{ matrix.os }}
     steps:
     - uses: actions/checkout@v2
-    - run: bazel ${{ matrix.command }} //... -k ${{ matrix.config }} --verbose_failures
+    - run: bazel ${{ matrix.bazel_options }} ${{ matrix.command }} //... -k ${{ matrix.config }} --verbose_failures
       working-directory: tests
 {%- endraw %}

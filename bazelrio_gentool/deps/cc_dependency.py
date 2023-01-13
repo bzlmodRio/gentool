@@ -42,6 +42,8 @@ class CcDependency(MultiResourceDependency):
                 lines.append(f'        "@bazel_tools//src/conditions:windows": ["@{self.get_archive_name(res)}//:shared_libs"]')
             elif res == "linuxx86-64":
                 lines.append(f'        "@bazel_tools//src/conditions:linux_x86_64": ["@{self.get_archive_name(res)}//:shared_libs"]')
+            elif res == "osxuniversal":
+                lines.append(f'        "@bazel_tools//src/conditions:darwin": ["@{self.get_archive_name(res)}//:shared_libs"]')
             elif res == "osxx86-64":
                 lines.append(f'        "@bazel_tools//src/conditions:darwin": ["@{self.get_archive_name(res)}//:shared_libs"]')
             elif res == "linuxathena":
@@ -49,7 +51,25 @@ class CcDependency(MultiResourceDependency):
             # else:
             #     print(res)
 
-        return ",\n".join(lines)
+        return ",\n".join(lines) + ","
+
+    def get_jni_shared_library_select(self):
+        lines = []
+        for res in self.resources:
+            if res == "windowsx86-64":
+                lines.append(f'        "@bazel_tools//src/conditions:windows": ["@{self.get_archive_name(res)}//:shared_jni_libs"]')
+            elif res == "linuxx86-64":
+                lines.append(f'        "@bazel_tools//src/conditions:linux_x86_64": ["@{self.get_archive_name(res)}//:shared_jni_libs"]')
+            elif res == "osxuniversal":
+                lines.append(f'        "@bazel_tools//src/conditions:darwin": ["@{self.get_archive_name(res)}//:shared_jni_libs"]')
+            elif res == "osxx86-64":
+                lines.append(f'        "@bazel_tools//src/conditions:darwin": ["@{self.get_archive_name(res)}//:shared_jni_libs"]')
+            elif res == "linuxathena":
+                lines.append(f'        "@rules_roborio_toolchain//constraints/is_roborio:roborio": ["@{self.get_archive_name(res)}//:shared_jni_libs"]')
+            # else:
+            #     print(res)
+
+        return ",\n".join(lines) + ","
 
     def has_incompatible_targets(self):
         if "linuxathena" not in self.resources:

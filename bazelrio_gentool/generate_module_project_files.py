@@ -7,16 +7,22 @@ class MandetoryDependencySetting:
         self.version = version
         self.use_local_version = use_local_version
         
-DEFAULT_RULES_ROBORIO_TOOLCHAIN = MandetoryDependencySetting("2023-7.3", False)
-DEFAULT_RULES_BAZELRIO = MandetoryDependencySetting("", True)
+DEFAULT_RULES_ROBORIO_TOOLCHAIN = MandetoryDependencySetting("2023-7.4", False)
+DEFAULT_RULES_BAZELRIO = MandetoryDependencySetting("0.0.2", False)
+DEFAULT_RULES_BZLMODRIO_GENTOOL = MandetoryDependencySetting("0.0.3", True)
 
 
 class MandetoryDependencySettings:
 
-    def __init__(self, bcr_branch, rules_roborio_toolchain=DEFAULT_RULES_ROBORIO_TOOLCHAIN, rules_bazelrio=DEFAULT_RULES_BAZELRIO):
+    def __init__(self, 
+                 bcr_branch = "main", 
+                 rules_roborio_toolchain=DEFAULT_RULES_ROBORIO_TOOLCHAIN, 
+                 rules_bazelrio=DEFAULT_RULES_BAZELRIO, 
+                 bzlmodrio_gentool=DEFAULT_RULES_BZLMODRIO_GENTOOL):
         self.bcr_branch = bcr_branch
         self.rules_roborio_toolchain = rules_roborio_toolchain
         self.rules_bazelrio = rules_bazelrio
+        self.bzlmodrio_gentool = bzlmodrio_gentool
 
 
 def generate_module_project_files(module_directory, group, mandetory_dependencies):

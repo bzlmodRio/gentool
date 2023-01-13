@@ -19,11 +19,18 @@ bazelrio_java_test(
         "--select-package",
         "bazelrio_test",
     ],
+    env = {
+        "PATH": ".",
+        "LD_LIBRARY_PATH": ".",
+    },  # TODO fishy
     jvm_flags = [
         "-Djava.library.path=.",
     ],
     main_class = "org.junit.platform.console.ConsoleLauncher",
-    tags = ["bazelrio-java-test"],
+    tags = [
+        "bazelrio-java-test",
+        "no-sandbox",  # TODO Fishy
+    ],
     runtime_deps = [
         "@maven//:org_junit_platform_junit_platform_commons",
         "@maven//:org_junit_platform_junit_platform_console",

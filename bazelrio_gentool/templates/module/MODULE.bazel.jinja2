@@ -15,8 +15,9 @@ bazel_dep(name = "rules_jvm_external", version = "4.4.2")
 
 # bazel_dep(name = "rules_python", version = "0.12.0", dev_dependency=True)
 
-bazel_dep(name = "bzlmodrio-gentool", version = "")
+bazel_dep(name = "bzlmodrio-gentool", version = "{{mandetory_dependencies.bzlmodrio_gentool.version}}")
 bazel_dep(name = "rules_bazelrio", version = "0.0.2")
+bazel_dep(name = "rules_roborio_toolchain", version = "{{mandetory_dependencies.rules_roborio_toolchain.version}}")
 {% for name, module_dep in group.module_dependencies.items() %}
 bazel_dep(name = "{{name}}", version = "{{module_dep.container.version}}")
 {%- endfor %}

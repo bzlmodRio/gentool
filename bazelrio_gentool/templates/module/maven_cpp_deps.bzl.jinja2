@@ -1,4 +1,4 @@
-load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive", "http_jar")
+load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive"{% if group.java_native_tools %}, "http_jar"{% endif %})
 load("@bazel_tools//tools/build_defs/repo:utils.bzl", "maybe")
 
 filegroup_all = """filegroup(
@@ -108,10 +108,8 @@ def __setup_{{group.sanitized_repo_name}}_cpp_dependencies(mctx):
     {%- endfor %}
     {%- endfor %}
 
-
 def setup_legacy_{{group.sanitized_repo_name}}_cpp_dependencies():
     __setup_{{group.sanitized_repo_name}}_cpp_dependencies(None)
-
 
 setup_{{group.sanitized_repo_name}}_cpp_dependencies = module_extension(
     __setup_{{group.sanitized_repo_name}}_cpp_dependencies,

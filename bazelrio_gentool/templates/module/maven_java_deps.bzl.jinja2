@@ -1,6 +1,4 @@
-
 def get_{{group.sanitized_repo_name}}_java_dependencies():
-
     artifacts = [
         {%- for maven_dep in group.get_all_maven_dependencies() %}
         "{{maven_dep[0]}}:{{maven_dep[1]}}",
@@ -12,3 +10,4 @@ def get_{{group.sanitized_repo_name}}_java_dependencies():
     ]
 
     return artifacts, repositories
+

@@ -1,12 +1,14 @@
-{%- for target in group.executable_tools -%}
+{%- for target in group.executable_tools %}
 alias(
     name = "{{target.artifact_name}}",
-    actual = "@allwpilib//dependencies/tools/{{target.artifact_name}}:{{target.artifact_name}}",
+    actual = "@allwpilib//dependencies/tools/{% if True %}{{target.artifact_name.lower()}}:{{target.artifact_name.lower()}}{%else%} TODO {%endif%}",
+    tags = ["no-roborio"],
 )
-{%- endfor %}
+{%- endfor -%}
 {% for target in group.java_native_tools %}
 alias(
     name = "{{target.artifact_name}}",
     actual = "@allwpilib//dependencies/tools/{{target.artifact_name}}:{{target.artifact_name}}",
+    tags = ["no-roborio"],
 )
 {% endfor %}

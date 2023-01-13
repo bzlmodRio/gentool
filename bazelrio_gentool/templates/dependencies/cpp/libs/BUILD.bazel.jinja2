@@ -1,6 +1,12 @@
 cc_library(
     name = "{{target.parent_folder}}",
     linkstatic = 1,
+    {%- if target.has_incompatible_targets() %}
+    target_compatible_with = select({
+        "@rules_roborio_toolchain//constraints/is_roborio:roborio": ["@platforms//:incompatible"],
+        "//conditions:default": [],
+    }),
+    {%- endif %}
     visibility = ["//visibility:public"],
     deps = [
       {%- for dep in target.dependencies %}
@@ -9,12 +15,6 @@ cc_library(
     ] + {% if target.headers %}["@{{target.get_header_archive_name()}}//:headers"] + {% endif %}select({
 {{target.get_shared_library_select()}}
     }),
-    {%- if target.has_incompatible_targets() %}
-    target_compatible_with = select({
-        "@rules_roborio_toolchain//constraints/is_roborio:roborio": ["@platforms//:incompatible"],
-        "//conditions:default": [],
-    }),
-    {%- endif %}
 )
 {% if target.has_jni %}
 cc_library(
@@ -23,10 +23,7 @@ cc_library(
     deps = [
         ":{{target.parent_folder}}",
     ] + select({
-        "@bazel_tools//src/conditions:windows": ["@{{target.get_archive_name('windowsx86-64')}}//:shared_jni_libs"],
-        "@bazel_tools//src/conditions:linux_x86_64": ["@{{target.get_archive_name('linuxx86-64')}}//:shared_jni_libs"],
-        "@bazel_tools//src/conditions:darwin": ["@{{target.get_archive_name('osxx86-64')}}//:shared_jni_libs"],
-        "@rules_roborio_toolchain//constraints/is_roborio:roborio": ["@{{target.get_archive_name('linuxathena')}}//:shared_jni_libs"],
+{{target.get_jni_shared_library_select()}}
     }),
 )
 {% endif %}
