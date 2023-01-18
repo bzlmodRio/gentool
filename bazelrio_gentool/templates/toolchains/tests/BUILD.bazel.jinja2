@@ -1,0 +1,9 @@
+cc_binary(
+    name = "main",
+    srcs = ["main.cpp"],
+    defines = select({
+        "//conditions:default": ["IS_ROBORIO_TEST=0"],
+        "@rules_roborio_toolchain//constraints/is_roborio:roborio": ["IS_ROBORIO_TEST=1"],
+    }),
+)
+

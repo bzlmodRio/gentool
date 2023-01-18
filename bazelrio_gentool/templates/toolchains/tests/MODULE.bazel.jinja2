@@ -1,0 +1,12 @@
+bazel_dep(name = "rules_roborio_toolchain", repo_name = "rules_roborio_toolchain", version = "")
+
+local_path_override(
+    module_name = "rules_roborio_toolchain",
+    path = "..",
+)
+
+local_path_override(
+    module_name = "bzlmodrio-gentool",
+    path = "../../gentool",
+)
+
