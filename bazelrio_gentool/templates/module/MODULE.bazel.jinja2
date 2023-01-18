@@ -32,6 +32,9 @@ maven.install(
     repositories = [
         "https://repo1.maven.org/maven2",
         "https://frcmaven.wpi.edu/release",
+        {%- for extra_maven_repos in group.extra_maven_repos %}
+        "{{extra_maven_repos}}",
+        {%- endfor %}
     ]
 )
 

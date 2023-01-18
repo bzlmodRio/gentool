@@ -1,5 +1,5 @@
 import os
-from jinja2 import Template
+from jinja2 import Template, Environment, BaseLoader, FileSystemLoader
 
 SCRIPT_DIR = os.path.dirname(os.path.realpath(__file__))
 TEMPLATE_BASE_DIR = os.path.join(SCRIPT_DIR, "templates")
@@ -23,5 +23,6 @@ def render_template(template_file, output_file, **kwargs):
     template_file = os.path.join(TEMPLATE_BASE_DIR, template_file)
     
     template_contents = open(template_file, "r").read()
-    output = Template(template_contents).render(**kwargs)
+    template = Environment(loader=FileSystemLoader(TEMPLATE_BASE_DIR)).from_string(template_contents)
+    output = template.render(**kwargs)
     write_file(output_file, output)

@@ -14,11 +14,7 @@ def clean_existing_version(module_directory):
 
     for root, dirs, files in os.walk(module_directory):
         dirs[:] = [d for d in dirs if d not in DIR_BLACKLIST]
-        # for d in dirs:
-        #     if d in DIR_BLACKLIST:
-        #         print("IGNOREING ", root, d)
-        #         dirs.remove(d)
-        # print(root, dirs)
+        dirs[:] = [d for d in dirs if not os.path.join(root, d).startswith(os.path.join(root, "generate_"))]
 
         for f in files:
             full_file = os.path.join(root, f).replace("\\", "/")

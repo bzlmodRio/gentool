@@ -6,19 +6,31 @@ class MandetoryDependencySetting:
     def __init__(self, version, use_local_version):
         self.version = version
         self.use_local_version = use_local_version
-        
-DEFAULT_RULES_ROBORIO_TOOLCHAIN = MandetoryDependencySetting("2023-7.4", False)
-DEFAULT_RULES_BAZELRIO = MandetoryDependencySetting("0.0.2", False)
-DEFAULT_RULES_BZLMODRIO_GENTOOL = MandetoryDependencySetting("0.0.3", True)
+
+def create_default_mandatory_settings(
+    use_local_roborio,
+    use_local_bazelrio,
+    use_local_bzlmodrio_gentool,
+):
+    default_rules_roborio_toolchain = MandetoryDependencySetting("2023-7.4", use_local_roborio)
+    default_rules_bazelrio = MandetoryDependencySetting("0.0.2", use_local_bazelrio)
+    default_rules_bzlmodrio_gentool = MandetoryDependencySetting("0.0.3", use_local_bzlmodrio_gentool)
+    
+    return MandatoryDependencySettings(bcr_branch="megadiff", 
+                 rules_roborio_toolchain=default_rules_roborio_toolchain, 
+                 rules_bazelrio=default_rules_bazelrio, 
+                 bzlmodrio_gentool=default_rules_bzlmodrio_gentool,
+    )
 
 
-class MandetoryDependencySettings:
+
+class MandatoryDependencySettings:
 
     def __init__(self, 
-                 bcr_branch = "main", 
-                 rules_roborio_toolchain=DEFAULT_RULES_ROBORIO_TOOLCHAIN, 
-                 rules_bazelrio=DEFAULT_RULES_BAZELRIO, 
-                 bzlmodrio_gentool=DEFAULT_RULES_BZLMODRIO_GENTOOL):
+                 rules_roborio_toolchain, 
+                 rules_bazelrio, 
+                 bzlmodrio_gentool,
+                 bcr_branch = "main"):
         self.bcr_branch = bcr_branch
         self.rules_roborio_toolchain = rules_roborio_toolchain
         self.rules_bazelrio = rules_bazelrio

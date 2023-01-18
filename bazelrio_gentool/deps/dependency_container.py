@@ -7,12 +7,18 @@ from bazelrio_gentool.deps.executable_tool_dependency import ExecutableToolDepen
 
 
 class ModuleDependency:
-    def __init__(self, container, use_local_version, local_rel_folder, override_version=None):
+    def __init__(self, container, use_local_version, local_rel_folder, override_version=None,
+                 remote_sha="TODO",
+                 remote_commitish="TODO",
+                 remote_repo="TODO"):
         self.container = container
         if override_version:
             container.version = override_version
         self.local_rel_folder = local_rel_folder
         self.use_local_version = use_local_version
+        self.remote_commitish = remote_commitish
+        self.remote_sha = remote_sha
+        self.remote_repo = remote_repo
 
 
 class DependencyContainer:
@@ -32,12 +38,16 @@ class DependencyContainer:
         self.repository_url = None
         self.strip_prefix = None
         self.fail_on_hash_miss = True
+        self.extra_maven_repos = []
 
     def add_module_dependency(self, dependency):
         if not isinstance(dependency, ModuleDependency):
             raise
         self.module_dependencies[dependency.container.repo_name] = dependency
         self.dep_lookup.update(dependency.container.dep_lookup)
+
+        for repo_name, subdep in dependency.container.module_dependencies.items():
+            self.add_module_dependency(subdep)
 
     def create_cc_dependency(self, name, dependencies=[], version=None, **kwargs):
         if version is None:

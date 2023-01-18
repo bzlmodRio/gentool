@@ -7,7 +7,7 @@ cc_library(
         "//conditions:default": [],
     }),
     {%- endif %}
-    visibility = ["//visibility:public"],
+    visibility = {{ visibility or ["//visibility:public"]}},
     deps = [
       {%- for dep in target.dependencies %}
         "@{{dep.repo_name}}//dependencies/cpp/{{dep.parent_folder}}",

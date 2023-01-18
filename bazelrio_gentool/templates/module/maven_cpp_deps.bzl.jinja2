@@ -70,6 +70,15 @@ def __setup_{{group.sanitized_repo_name}}_cpp_dependencies(mctx):
         build_file_content = {{cpp_dep.get_build_file_content('headers')}},
     )
     {%- endif %}
+    {%- if cpp_dep.sources %}
+    maybe(
+        http_archive,
+        "{{cpp_dep.get_archive_name('sources')}}",
+        url = "{{cpp_dep.get_url('sources')}}",
+        sha256 = "{{cpp_dep.get_sha256('sources')}}",
+        build_file_content = {{cpp_dep.get_build_file_content('sources')}},
+    )
+    {%- endif %}
     {%- for resource in cpp_dep.resources %}
     {%- set sha256 = cpp_dep.get_sha256(resource) %}
     {%- if sha256 %}

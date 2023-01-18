@@ -1,0 +1,4 @@
+
+{%- for target in group.cc_deps %}
+{%- include "dependencies/cpp/libs/BUILD.bazel.jinja2" %}
+{%- endfor %}

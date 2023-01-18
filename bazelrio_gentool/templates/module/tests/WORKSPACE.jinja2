@@ -107,14 +107,14 @@ load("@rules_jvm_external//:defs.bzl", "maven_install")
 {%- if module_dep.use_local_version %}
 local_repository(
     name = "{{name}}",
-    path = "../..",
+    path = "{{module_dep.local_rel_folder}}",
 )
 {% else %}
 http_archive(
     name = "{{name}}",
-    # sha256 = "",
-    strip_prefix = "TODO",
-    url = "TODO",
+    sha256 = "{{module_dep.remote_sha}}",
+    strip_prefix = "{{module_dep.remote_repo}}-{{module_dep.remote_commitish}}",
+    url = "https://github.com/bzlmodRio/{{module_dep.remote_repo}}/archive/{{module_dep.remote_commitish}}.tar.gz",
 )
 {% endif %}
 load("@{{name}}//:maven_cpp_deps.bzl", "setup_legacy_{{module_dep.container.sanitized_repo_name}}_cpp_dependencies")
