@@ -40,7 +40,7 @@ def generate_toolchain(module_directory, config):
         "BUILD.bazel",
         "README.md",
         "WORKSPACE.bzlmod",
-        "WORKSPACE",
+        # "WORKSPACE",
         "tests/.bazelrc",
         "tests/.bazelversion",
     ]

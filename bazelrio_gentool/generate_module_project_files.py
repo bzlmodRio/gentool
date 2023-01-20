@@ -12,8 +12,8 @@ def create_default_mandatory_settings(
     use_local_bazelrio,
     use_local_bzlmodrio_gentool,
 ):
-    default_rules_roborio_toolchain = MandetoryDependencySetting("2023-7.4", use_local_roborio)
-    default_rules_bazelrio = MandetoryDependencySetting("0.0.2", use_local_bazelrio)
+    default_rules_roborio_toolchain = MandetoryDependencySetting("2023-7.5", use_local_roborio)
+    default_rules_bazelrio = MandetoryDependencySetting("0.0.5", use_local_bazelrio)
     default_rules_bzlmodrio_gentool = MandetoryDependencySetting("0.0.3", use_local_bzlmodrio_gentool)
     
     return MandatoryDependencySettings(bcr_branch="megadiff", 
@@ -43,6 +43,7 @@ def generate_module_project_files(module_directory, group, mandetory_dependencie
         ".github/workflows/build.yml",
         ".github/workflows/lint.yml",
         ".bazelrc",
+        ".bazelignore",
         ".gitignore",
         "BUILD.bazel",
         "README.md",
@@ -50,6 +51,9 @@ def generate_module_project_files(module_directory, group, mandetory_dependencie
         "MODULE.bazel",
         "WORKSPACE.bzlmod",
         "WORKSPACE",
+        "private/non_bzlmod_dependencies/BUILD.bazel",
+        "private/non_bzlmod_dependencies/download_dependencies.bzl",
+        "private/non_bzlmod_dependencies/setup_dependencies.bzl",
         "tests/.bazelrc",
         "tests/.bazelversion",
         "tests/MODULE.bazel",

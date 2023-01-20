@@ -1,8 +1,7 @@
-
 module(
     name = "{{group.repo_name}}",
-    version = "{{group.version}}",
     compatibility_level = {{group.year}},
+    version = "{{group.version}}",
 )
 
 # bazel_dep(name = "bazel_skylib", version = "1.1.1")
@@ -16,13 +15,14 @@ bazel_dep(name = "rules_jvm_external", version = "4.4.2")
 # bazel_dep(name = "rules_python", version = "0.12.0", dev_dependency=True)
 
 bazel_dep(name = "bzlmodrio-gentool", version = "{{mandetory_dependencies.bzlmodrio_gentool.version}}")
-bazel_dep(name = "rules_bazelrio", version = "0.0.2")
+bazel_dep(name = "rules_bazelrio", version = "{{mandetory_dependencies.rules_bazelrio.version}}")
 bazel_dep(name = "rules_roborio_toolchain", version = "{{mandetory_dependencies.rules_roborio_toolchain.version}}")
 {% for name, module_dep in group.module_dependencies.items() %}
 bazel_dep(name = "{{name}}", version = "{{module_dep.container.version}}")
 {%- endfor %}
-{% if group.get_all_maven_dependencies() %}
+{%- if group.get_all_maven_dependencies() %}
 maven = use_extension("@rules_jvm_external//:extensions.bzl", "maven")
+
 maven.install(
     artifacts = [
         {%- for maven_dep in group.get_all_maven_dependencies() %}
@@ -35,16 +35,17 @@ maven.install(
         {%- for extra_maven_repos in group.extra_maven_repos %}
         "{{extra_maven_repos}}",
         {%- endfor %}
-    ]
+    ],
 )
 
 use_repo(
     maven,
     "maven",
 )
-{%- endif %}
 
+{%- endif %}
 setup_{{group.sanitized_repo_name}}_cpp_dependencies = use_extension("//:maven_cpp_deps.bzl", "setup_{{group.sanitized_repo_name}}_cpp_dependencies")
+
 use_repo(
     setup_{{group.sanitized_repo_name}}_cpp_dependencies,
     

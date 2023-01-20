@@ -1,0 +1,49 @@
+cc_library(
+    name = "shared",
+    linkstatic = 1,
+    {%- if target.has_incompatible_targets() %}
+    target_compatible_with = select({
+        "@rules_roborio_toolchain//constraints/is_roborio:roborio": ["@platforms//:incompatible"],
+        "//conditions:default": [],
+    }),
+    {%- endif %}
+    visibility = ["@{{group.repo_name}}//:__subpackages__"],
+    deps = {% if target.headers %}["@{{target.get_header_archive_name()}}//:headers"] + {% endif %}select({
+{{target.get_shared_library_select()}}
+    }),
+)
+{%- if target.get_static_library_select() != "," %}
+
+cc_library(
+    name = "static",
+    linkstatic = 1,
+    {%- if target.has_incompatible_targets() %}
+    target_compatible_with = select({
+        "@rules_roborio_toolchain//constraints/is_roborio:roborio": ["@platforms//:incompatible"],
+        "//conditions:default": [],
+    }),
+    {%- endif %}
+    visibility = ["@{{group.repo_name}}//:__subpackages__"],
+    deps = {% if target.headers %}["@{{target.get_header_archive_name()}}//:headers"] + {% endif %}select({
+{{target.get_static_library_select()}}
+    }),
+)
+{%- endif %}
+{%- if target.has_jni %}
+
+cc_library(
+    name = "jni",
+    linkstatic = 1,
+    {%- if target.has_incompatible_targets() %}
+    target_compatible_with = select({
+        "@rules_roborio_toolchain//constraints/is_roborio:roborio": ["@platforms//:incompatible"],
+        "//conditions:default": [],
+    }),
+    {%- endif %}
+    visibility = ["@{{group.repo_name}}//:__subpackages__"],
+    deps = {% if target.headers %}["@{{target.get_header_archive_name()}}//:headers"] + {% endif %}select({
+{{target.get_jni_shared_library_select()}}
+    }),
+)
+{%- endif %}
+

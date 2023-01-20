@@ -1,6 +1,6 @@
 import os
 
-def clean_existing_version(module_directory):
+def clean_existing_version(module_directory, extra_dir_blacklist=None):
     module_directory = os.path.abspath(module_directory)
 
     DIR_BLACKLIST = [
@@ -10,7 +10,11 @@ def clean_existing_version(module_directory):
         "bazel-testlogs",
         "bazel-tests",
         "generate",
+        "robot-cpp",
+        "robot-java",
     ]
+    if extra_dir_blacklist:
+        DIR_BLACKLIST.extend(extra_dir_blacklist)
 
     for root, dirs, files in os.walk(module_directory):
         dirs[:] = [d for d in dirs if d not in DIR_BLACKLIST]

@@ -1,0 +1,87 @@
+load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive")
+
+def download_dependencies():
+{%- if group.get_all_maven_dependencies() %}
+    # JVM External
+    RULES_JVM_EXTERNAL_TAG = "4.2"
+    RULES_JVM_EXTERNAL_SHA = "cd1a77b7b02e8e008439ca76fd34f5b07aecb8c752961f9640dea15e9e5ba1ca"
+    http_archive(
+        name = "rules_jvm_external",
+        sha256 = RULES_JVM_EXTERNAL_SHA,
+        strip_prefix = "rules_jvm_external-%s" % RULES_JVM_EXTERNAL_TAG,
+        url = "https://github.com/bazelbuild/rules_jvm_external/archive/%s.zip" % RULES_JVM_EXTERNAL_TAG,
+    )
+{% endif %}
+    # Python, for gentool
+    http_archive(
+        name = "rules_python",
+        sha256 = "497ca47374f48c8b067d786b512ac10a276211810f4a580178ee9b9ad139323a",
+        strip_prefix = "rules_python-0.16.1",
+        url = "https://github.com/bazelbuild/rules_python/archive/refs/tags/0.16.1.tar.gz",
+    )
+
+    # Project Generator
+    {%- if mandetory_dependencies.bzlmodrio_gentool.use_local_version %}
+    native.local_repository(
+        name = "bzlmodrio-gentool",
+        path = "../../gentool",
+    )
+    {%- else %}
+    http_archive(
+        name = "bzlmodrio-gentool",
+        sha256 = "91dbeb541a6151eab3f4dfa37318b81e3f4fa964e45ebea48665cb2b3e471353",
+        strip_prefix = "gentool-dummy_version",
+        url = "https://github.com/bzlmodRio/gentool/archive/refs/heads/dummy_version.zip",
+    )
+    {%- endif %}
+
+    # Bazelrio Rules
+    {%- if mandetory_dependencies.rules_bazelrio.use_local_version %}
+    native.local_repository(
+        name = "rules_bazelrio",
+        path = "../../bzlmodRio-rules_bazelrio",
+    )
+    {%- else %}
+    http_archive(
+        name = "rules_bazelrio",
+        sha256 = "470592cbc252abc8eed7520ce1d9c55007701b62f2e959836e53d66776200e82",
+        strip_prefix = "bzlmodRio-rules_bazelrio-bb90ff46dfe56fe1c227aac4277873d12d8abbe5",
+        url = "https://github.com/bzlmodRio/bzlmodRio-rules_bazelrio/archive/bb90ff46dfe56fe1c227aac4277873d12d8abbe5.zip",
+    )
+    {%- endif %}
+
+    # Roborio Toolchain
+    {%- if mandetory_dependencies.rules_roborio_toolchain.use_local_version %}
+    native.local_repository(
+        name = "rules_roborio_toolchain",
+        path = "../../rules_roborio_toolchain",
+    )
+    {%- else %}
+    http_archive(
+        name = "rules_roborio_toolchain",
+        sha256 = "1470b8626dda33deb15bd2a220ce74bcd851880ce4aa560cf853bf6849ff3a01",
+        strip_prefix = "rules_roborio_toolchain-ba3f5a3fd391e6536b5fd5c13e0098b06892077a",
+        url = "https://github.com/bzlmodRio/rules_roborio_toolchain/archive/ba3f5a3fd391e6536b5fd5c13e0098b06892077a.zip",
+    )
+    {%- endif %}
+
+    ########################
+    # bzlmodRio dependencies
+{% for name, module_dep in group.module_dependencies.items() %}
+    # {{name}}
+{%- if module_dep.use_local_version %}
+    native.local_repository(
+        name = "{{name}}",
+        path = "{{module_dep.local_rel_folder}}",
+    )
+{%- else %}
+    http_archive(
+        name = "{{name}}",
+        sha256 = "{{module_dep.remote_sha}}",
+        strip_prefix = "{{module_dep.remote_repo}}-{{module_dep.remote_commitish}}",
+        url = "https://github.com/bzlmodRio/{{module_dep.remote_repo}}/archive/{{module_dep.remote_commitish}}.tar.gz",
+    )
+{%- endif %}
+{% endfor %}
+    ########################
+

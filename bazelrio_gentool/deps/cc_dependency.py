@@ -36,41 +36,99 @@ class CcDependency(MultiResourceDependency):
         else:
             return "cc_library_static"
 
-    def get_shared_library_select(self):
+    # CONDITIONS_LOOKUP = {
+    #     "@bazel_tools//src/conditions:windows": ["windowsx86-64"],
+    #     "@bazel_tools//src/conditions:linux_x86_64": ["linuxx86-64"],
+    #     "@bazel_tools//src/conditions:darwin": ["osxx86-64", "osxuniversal"],
+    #     "@rules_roborio_toolchain//constraints/is_roborio:roborio": ["linuxathena"],
+    # }
+    
+    CONDITIONS_LOOKUP = {
+        "windowsx86-64"           : "@rules_bazelrio//conditions:windows",
+        "windowsx86-64debug"      : "@rules_bazelrio//conditions:windows_debug",
+        "windowsx86-64static"     : "@rules_bazelrio//conditions:windows",
+        "windowsx86-64staticdebug": "@rules_bazelrio//conditions:windows_debug",
+
+        "linuxx86-64"             : "@rules_bazelrio//conditions:linux_x86_64",
+        "linuxx86-64debug"        : "@rules_bazelrio//conditions:linux_x86_64_debug",
+        "linuxx86-64static"       : "@rules_bazelrio//conditions:linux_x86_64",
+        "linuxx86-64staticdebug"  : "@rules_bazelrio//conditions:linux_x86_64_debug",
+        
+
+        # "linuxarm32"             : "@rules_bazelrio//conditions:linux_arm32",
+        # "linuxarm32debug"        : "@rules_bazelrio//conditions:linux_arm32_debug",
+        # "linuxarm32static"       : "@rules_bazelrio//conditions:linux_arm32",
+        # "linuxarm32staticdebug"  : "@rules_bazelrio//conditions:linuxarm32_debug",
+        
+        "linuxarm64"             : "@rules_bazelrio//conditions:linux_arm64",
+        "linuxarm64debug"        : "@rules_bazelrio//conditions:linux_arm64_debug",
+        "linuxarm64static"       : "@rules_bazelrio//conditions:linux_arm64",
+        "linuxarm64staticdebug"  : "@rules_bazelrio//conditions:linux_arm64_debug",
+ 
+        "osxx86-64"               : "@rules_bazelrio//conditions:osx",
+        "osxx86-64debug"          : "@rules_bazelrio//conditions:osx_debug",
+        "osxx86-64static"         : "@rules_bazelrio//conditions:osx",
+        "osxx86-64staticdebug"    : "@rules_bazelrio//conditions:osx_debug",
+         
+        "osxuniversal"            : "@rules_bazelrio//conditions:osx",
+        "osxuniversaldebug"       : "@rules_bazelrio//conditions:osx_debug",
+        "osxuniversalstatic"      : "@rules_bazelrio//conditions:osx",
+        "osxuniversalstaticdebug" : "@rules_bazelrio//conditions:osx_debug",
+
+        "linuxathena"             : "@rules_roborio_toolchain//constraints/is_roborio:roborio",
+        "linuxathenadebug"        : "@rules_roborio_toolchain//constraints/is_roborio:roborio_debug",
+        "linuxathenastatic"       : "@rules_roborio_toolchain//constraints/is_roborio:roborio",
+        "linuxathenastaticdebug"  : "@rules_roborio_toolchain//constraints/is_roborio:roborio_debug",
+    }
+
+    def __get_select(self, resources, library_build):
         lines = []
-        for res in self.resources:
-            if res == "windowsx86-64":
-                lines.append(f'        "@bazel_tools//src/conditions:windows": ["@{self.get_archive_name(res)}//:shared_libs"]')
-            elif res == "linuxx86-64":
-                lines.append(f'        "@bazel_tools//src/conditions:linux_x86_64": ["@{self.get_archive_name(res)}//:shared_libs"]')
-            elif res == "osxuniversal":
-                lines.append(f'        "@bazel_tools//src/conditions:darwin": ["@{self.get_archive_name(res)}//:shared_libs"]')
-            elif res == "osxx86-64":
-                lines.append(f'        "@bazel_tools//src/conditions:darwin": ["@{self.get_archive_name(res)}//:shared_libs"]')
-            elif res == "linuxathena":
-                lines.append(f'        "@rules_roborio_toolchain//constraints/is_roborio:roborio": ["@{self.get_archive_name(res)}//:shared_libs"]')
-            # else:
-            #     print(res)
+        for res in resources:
+            full_res = res 
+            if full_res in self.CONDITIONS_LOOKUP:
+                lines.append(f'        "{self.CONDITIONS_LOOKUP[full_res]}": ["@{self.get_archive_name(res)}//:{library_build}"]')
+            else:
+                print("Unknown", full_res)
+            # condition = self.__resource_type_to_condition(res)
+            # if condition:
+            #     lines.append(f'        "{condition}": ["@{self.get_archive_name(res)}//:shared_libs"]')
 
         return ",\n".join(lines) + ","
+
+
+    def get_shared_library_select(self):
+        shared_resources = []
+        for res in self.resources:
+            if res.endswith("staticdebug") or res.endswith("static"):
+                pass
+            else:
+                shared_resources.append(res)
+
+        return self.__get_select(shared_resources, "shared_libs")
+        
+    def get_static_library_select(self):
+        shared_resources = []
+        for res in self.resources:
+            if res.endswith("static") or res.endswith("staticdebug"):
+                shared_resources.append(res)
+        return self.__get_select(shared_resources, "static_libs")
+
+    # def get_static_debug_library_select(self):
+    #     shared_resources = []
+    #     for res in self.resources:
+    #         if res.endswith("staticdebug"):
+    #             shared_resources.append(res)
+    #     return self.__get_select(shared_resources, "static_libs")
 
     def get_jni_shared_library_select(self):
-        lines = []
+        shared_resources = []
         for res in self.resources:
-            if res == "windowsx86-64":
-                lines.append(f'        "@bazel_tools//src/conditions:windows": ["@{self.get_archive_name(res)}//:shared_jni_libs"]')
-            elif res == "linuxx86-64":
-                lines.append(f'        "@bazel_tools//src/conditions:linux_x86_64": ["@{self.get_archive_name(res)}//:shared_jni_libs"]')
-            elif res == "osxuniversal":
-                lines.append(f'        "@bazel_tools//src/conditions:darwin": ["@{self.get_archive_name(res)}//:shared_jni_libs"]')
-            elif res == "osxx86-64":
-                lines.append(f'        "@bazel_tools//src/conditions:darwin": ["@{self.get_archive_name(res)}//:shared_jni_libs"]')
-            elif res == "linuxathena":
-                lines.append(f'        "@rules_roborio_toolchain//constraints/is_roborio:roborio": ["@{self.get_archive_name(res)}//:shared_jni_libs"]')
-            # else:
-            #     print(res)
+            if res.endswith("staticdebug") or res.endswith("static"):
+                pass
+            else:
+                shared_resources.append(res)
 
-        return ",\n".join(lines) + ","
+        return self.__get_select(shared_resources, "shared_jni_libs")
 
     def has_incompatible_targets(self):
         if "linuxathena" not in self.resources:

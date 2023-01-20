@@ -1,4 +1,4 @@
-load("@pip//:requirements.bzl", "requirement")
+load("@bzlmodrio-gentool-pip//:requirements.bzl", "requirement")
 
 py_library(
     name = "bazelrio_gentool",

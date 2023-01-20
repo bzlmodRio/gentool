@@ -22,9 +22,9 @@ register_toolchains(
 pip = use_extension("@rules_python//python:extensions.bzl", "pip")
 
 pip.parse(
-    name = "pip",
+    name = "bzlmodrio-gentool-pip",
     requirements_lock = "//:requirements_lock.txt",
     requirements_windows = "//:requirements_windows.txt",
 )
 
-use_repo(pip, "pip")
+use_repo(pip, "bzlmodrio-gentool-pip")

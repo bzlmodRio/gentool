@@ -1,0 +1,61 @@
+load("@{{group.repo_name}}//:maven_cpp_deps.bzl", "setup_legacy_{{group.sanitized_repo_name}}_cpp_dependencies")
+{%- if group.get_all_maven_dependencies() %}
+load("@{{group.repo_name}}//:maven_java_deps.bzl", "get_{{group.sanitized_repo_name}}_java_dependencies")
+{%- endif %}
+{%- for name, module_dep in group.module_dependencies.items() -%}
+load("@{{name}}//:maven_cpp_deps.bzl", "setup_legacy_{{module_dep.container.sanitized_repo_name}}_cpp_dependencies")
+{%- if module_dep.container.get_all_maven_dependencies() %}
+load("@{{name}}//:maven_java_deps.bzl", "get_{{module_dep.container.sanitized_repo_name}}_java_dependencies")
+{%- endif %}
+{%- endfor %}
+load("@rules_roborio_toolchain//:maven_deps.bzl", "setup_legacy_setup_toolchains_dependencies")
+load("@rules_roborio_toolchain//toolchains:load_toolchains.bzl", "load_toolchains")
+load("@rules_python//python:pip.bzl", "pip_parse")
+
+def _setup_toolchains():
+    setup_legacy_setup_toolchains_dependencies()
+
+    load_toolchains()
+
+    native.register_toolchains(
+        "@local_roborio//:macos",
+        "@local_roborio//:linux",
+        "@local_roborio//:windows",
+    )
+
+def _setup_cpp_dependencies():
+    setup_legacy_{{group.sanitized_repo_name}}_cpp_dependencies()
+
+    {%- for name, module_dep in group.module_dependencies.items() %}
+    setup_legacy_{{module_dep.container.sanitized_repo_name}}_cpp_dependencies()
+    {%- endfor %}
+
+def _combine_maven_info(maven_artifacts, maven_repositories, setup_functor):
+    dep_maven_artifacts, dep_maven_repositories = setup_functor()
+
+    maven_artifacts += dep_maven_artifacts
+    maven_repositories += dep_maven_repositories
+
+    return maven_artifacts, maven_repositories
+{% if group.get_all_maven_dependencies() %}
+def get_java_dependenicies():
+    maven_artifacts, maven_repositories = [], []
+
+    maven_artifacts, maven_repositories = _combine_maven_info(maven_artifacts, maven_repositories, get_{{group.sanitized_repo_name}}_java_dependencies)
+{%- for name, module_dep in group.module_dependencies.items() %}
+{%- if module_dep.container.get_all_maven_dependencies() %}
+    maven_artifacts, maven_repositories = _combine_maven_info(maven_artifacts, maven_repositories, get_{{module_dep.container.sanitized_repo_name}}_java_dependencies)
+{%- endif %}
+{%- endfor %}
+
+    return maven_artifacts, maven_repositories
+{% endif %}
+def setup_dependencies():
+    _setup_toolchains()
+    _setup_cpp_dependencies()
+
+    pip_parse(
+        name = "bzlmodrio-gentool-pip",
+        requirements_lock = "@bzlmodrio-gentool//:requirements_lock.txt",
+    )
+

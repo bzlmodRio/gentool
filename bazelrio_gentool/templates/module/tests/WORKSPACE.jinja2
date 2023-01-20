@@ -1,5 +1,11 @@
 load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive")
 
+# My repository!
+local_repository(
+    name = "{{group.repo_name}}",
+    path = "../",
+)
+
 # Google Test
 http_archive(
     name = "googletest",
@@ -8,151 +14,17 @@ http_archive(
     urls = ["https://github.com/google/googletest/archive/5ab508a01f9eb089207ee87fd547d290da39d015.zip"],
 )
 
-http_archive(
-    name = "rules_python",
-    sha256 = "497ca47374f48c8b067d786b512ac10a276211810f4a580178ee9b9ad139323a",
-    strip_prefix = "rules_python-0.16.1",
-    url = "https://github.com/bazelbuild/rules_python/archive/refs/tags/0.16.1.tar.gz",
-)
+load("@{{group.repo_name}}//private/non_bzlmod_dependencies:download_dependencies.bzl", "download_dependencies")
 
-# Project Generator
-{%- if mandetory_dependencies.bzlmodrio_gentool.use_local_version %}
-local_repository(
-    name = "bzlmodrio-gentool",
-    path = "../../gentool",
-)
-{%- else %}
-http_archive(
-    name = "bzlmodrio-gentool",
-    sha256 = "91dbeb541a6151eab3f4dfa37318b81e3f4fa964e45ebea48665cb2b3e471353",
-    strip_prefix = "gentool-dummy_version",
-    url = "https://github.com/bzlmodRio/gentool/archive/refs/heads/dummy_version.zip",
-)
-{%- endif %}
+download_dependencies()
 
-load("@rules_python//python:pip.bzl", "pip_parse")
+load("@{{group.repo_name}}//private/non_bzlmod_dependencies:setup_dependencies.bzl", {% if group.get_all_maven_dependencies() %}"get_java_dependenicies", {% endif %}"setup_dependencies")
 
-pip_parse(
-    name = "pip",
-    requirements_lock = "@bzlmodrio-gentool//:requirements_lock.txt",
-)
-
-load("@pip//:requirements.bzl", "install_deps")
-
-install_deps()
-
-# Roborio Toolchain
-{%- if mandetory_dependencies.rules_roborio_toolchain.use_local_version %}
-local_repository(
-    name = "rules_roborio_toolchain",
-    path = "../../rules_roborio_toolchain",
-)
-{% else %}
-http_archive(
-    name = "rules_roborio_toolchain",
-    sha256 = "6a92e62829905cdc8bdb398b5467476699dff503be3d0b49c122e9ed8c9df35f",
-    strip_prefix = "rules_roborio_toolchain-836647310508c1c9a838adc12f0535ea6abdcff5",
-    url = "https://github.com/bzlmodRio/rules_roborio_toolchain/archive/836647310508c1c9a838adc12f0535ea6abdcff5.zip",
-)
-{% endif %}
-load("@rules_roborio_toolchain//:maven_deps.bzl", "setup_legacy_setup_toolchains_dependencies")
-
-setup_legacy_setup_toolchains_dependencies()
-
-load("@rules_roborio_toolchain//toolchains:load_toolchains.bzl", "load_toolchains")
-
-load_toolchains()
-
-register_toolchains(
-    "@local_roborio//:macos",
-    "@local_roborio//:linux",
-    "@local_roborio//:windows",
-)
-
-# Bazelrio Rules
-{%- if mandetory_dependencies.rules_bazelrio.use_local_version %}
-local_repository(
-    name = "rules_bazelrio",
-    path = "../../bzlmodRio-rules_bazelrio",
-)
-
-{%- else %}
-http_archive(
-    name = "rules_bazelrio",
-    sha256 = "241b2a33888ec7f2ccb41f88a09e3203bde1f4232219cc51608b0f5cf796ee87",
-    strip_prefix = "bzlmodRio-rules_bazelrio-starting",
-    url = "https://github.com/bzlmodRio/bzlmodRio-rules_bazelrio/archive/refs/heads/starting.zip",
-)
-
-{%- endif %}
-{%- if group.get_all_maven_dependencies() %}
-
-# JVM External
-RULES_JVM_EXTERNAL_TAG = "4.2"
-
-RULES_JVM_EXTERNAL_SHA = "cd1a77b7b02e8e008439ca76fd34f5b07aecb8c752961f9640dea15e9e5ba1ca"
-
-http_archive(
-    name = "rules_jvm_external",
-    sha256 = RULES_JVM_EXTERNAL_SHA,
-    strip_prefix = "rules_jvm_external-%s" % RULES_JVM_EXTERNAL_TAG,
-    url = "https://github.com/bazelbuild/rules_jvm_external/archive/%s.zip" % RULES_JVM_EXTERNAL_TAG,
-)
-
+setup_dependencies()
+{% if group.get_all_maven_dependencies() %}
 load("@rules_jvm_external//:defs.bzl", "maven_install")
 
-{%- endif %}
-{% for name, module_dep in group.module_dependencies.items() %}
-# {{name}}
-{%- if module_dep.use_local_version %}
-local_repository(
-    name = "{{name}}",
-    path = "{{module_dep.local_rel_folder}}",
-)
-{% else %}
-http_archive(
-    name = "{{name}}",
-    sha256 = "{{module_dep.remote_sha}}",
-    strip_prefix = "{{module_dep.remote_repo}}-{{module_dep.remote_commitish}}",
-    url = "https://github.com/bzlmodRio/{{module_dep.remote_repo}}/archive/{{module_dep.remote_commitish}}.tar.gz",
-)
-{% endif %}
-load("@{{name}}//:maven_cpp_deps.bzl", "setup_legacy_{{module_dep.container.sanitized_repo_name}}_cpp_dependencies")
-{% if module_dep.container.get_all_maven_dependencies() %}
-load("@{{name}}//:maven_java_deps.bzl", "get_{{module_dep.container.sanitized_repo_name}}_java_dependencies")
-{% endif %}
-setup_legacy_{{module_dep.container.sanitized_repo_name}}_cpp_dependencies()
-
-
-
-{%- endfor %}
-
-# My repository!
-local_repository(
-    name = "{{group.repo_name}}",
-    path = "../",
-)
-
-load("@{{group.repo_name}}//:maven_cpp_deps.bzl", "setup_legacy_{{group.sanitized_repo_name}}_cpp_dependencies")
-
-setup_legacy_{{group.sanitized_repo_name}}_cpp_dependencies()
-{% if group.get_all_maven_dependencies() %}
-load("@{{group.repo_name}}//:maven_java_deps.bzl", "get_{{group.sanitized_repo_name}}_java_dependencies")
-
-maven_artifacts, maven_repositories = get_{{group.sanitized_repo_name}}_java_dependencies()
-{%- endif %}
-{%- if group.get_all_maven_dependencies() %}
-
-# Add depdency java artifacts
-{%- for name, module_dep in group.module_dependencies.items() %}
-{%- if module_dep.container.get_all_maven_dependencies() %}
-dep_maven_artifacts, dep_maven_repositories = get_{{module_dep.container.sanitized_repo_name}}_java_dependencies()
-
-maven_artifacts += dep_maven_artifacts
-
-maven_repositories += dep_maven_repositories
-{%- endif %}
-{%- endfor %}
+maven_artifacts, maven_repositories = get_java_dependenicies()
 
 # Add junit
 maven_artifacts += [
@@ -173,3 +45,7 @@ maven_install(
     # maven_install_json = "//build_scripts/bazel/deps:maven_install.json",
 )
 {% endif %}
+load("@bzlmodrio-gentool-pip//:requirements.bzl", "install_deps")
+
+install_deps()
+
