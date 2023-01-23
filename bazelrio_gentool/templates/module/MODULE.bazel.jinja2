@@ -4,15 +4,11 @@ module(
     version = "{{group.version}}",
 )
 
-# bazel_dep(name = "bazel_skylib", version = "1.1.1")
-# bazel_dep(name = "platforms", version = "0.0.4")
-# bazel_dep(name = "rules_cc", version = "0.0.2")
-# bazel_dep(name = "rules_java", version = "5.1.0")
+bazel_dep(name = "platforms", version = "0.0.4")
+bazel_dep(name = "rules_java", version = "5.1.0")
 {%- if group.get_all_maven_dependencies() %}
 bazel_dep(name = "rules_jvm_external", version = "4.4.2")
 {%- endif %}
-
-# bazel_dep(name = "rules_python", version = "0.12.0", dev_dependency=True)
 
 bazel_dep(name = "bzlmodrio-gentool", version = "{{mandetory_dependencies.bzlmodrio_gentool.version}}")
 bazel_dep(name = "rules_bazelrio", version = "{{mandetory_dependencies.rules_bazelrio.version}}")
@@ -53,6 +49,9 @@ use_repo(
 {%- for cpp_dep in group.cc_deps %}
     {%- if cpp_dep.headers %}
     "{{cpp_dep.get_archive_name('headers')}}",
+    {%- endif %}
+    {%- if cpp_dep.sources %}
+    "{{cpp_dep.get_archive_name('sources')}}",
     {%- endif %}
 
     {%- for resource in cpp_dep.resources %}

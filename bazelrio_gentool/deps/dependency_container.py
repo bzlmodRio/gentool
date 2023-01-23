@@ -8,7 +8,7 @@ from bazelrio_gentool.deps.executable_tool_dependency import ExecutableToolDepen
 
 class ModuleDependency:
     def __init__(self, container, use_local_version, local_rel_folder, override_version=None,
-                 remote_sha="TODO",
+                 remote_sha="",
                  remote_commitish="TODO",
                  remote_repo="TODO"):
         self.container = container
@@ -40,7 +40,7 @@ class DependencyContainer:
         self.fail_on_hash_miss = True
         self.extra_maven_repos = []
 
-    def add_module_dependency(self, dependency):
+    def add_module_dependency(self, dependency, meta_deps=None):
         if not isinstance(dependency, ModuleDependency):
             raise
         self.module_dependencies[dependency.container.repo_name] = dependency
@@ -48,6 +48,10 @@ class DependencyContainer:
 
         for repo_name, subdep in dependency.container.module_dependencies.items():
             self.add_module_dependency(subdep)
+
+        if meta_deps:
+            for meta_dep in meta_deps:
+                self.dep_lookup[meta_dep] = dict(repo_name=dependency.container.repo_name, parent_folder=meta_dep)
 
     def create_cc_dependency(self, name, dependencies=[], version=None, **kwargs):
         if version is None:
