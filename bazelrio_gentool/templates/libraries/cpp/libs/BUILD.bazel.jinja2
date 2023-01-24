@@ -16,7 +16,7 @@ cc_library(
     visibility = {{ visibility }},
     deps = [
       {%- for dep in target.dependencies %}
-        "@{{dep.repo_name}}//dependencies/cpp/{{dep.parent_folder}}:shared",
+        "@{{dep.repo_name}}//libraries/cpp/{{dep.parent_folder}}:shared",
       {%- endfor %}
     ] + [
         "@{{group.repo_name}}//private/cpp/{{target.parent_folder}}:shared",
@@ -35,7 +35,7 @@ cc_library(
     visibility = {{ visibility }},
     deps = [
       {%- for dep in target.dependencies %}
-        "@{{dep.repo_name}}//dependencies/cpp/{{dep.parent_folder}}:static",
+        "@{{dep.repo_name}}//libraries/cpp/{{dep.parent_folder}}:static",
       {%- endfor %}
     ] + [
         "@{{group.repo_name}}//private/cpp/{{target.parent_folder}}:static",

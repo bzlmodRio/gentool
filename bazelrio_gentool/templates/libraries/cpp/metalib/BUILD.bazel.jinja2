@@ -1,0 +1,28 @@
+alias(
+    name = "{{target.parent_folder}}",
+    actual = ":shared",
+    visibility = {{ visibility }},
+)
+
+cc_library(
+    name = "shared",
+    linkstatic = 1,
+    visibility = {{ visibility }},
+    deps = [
+      {%- for dep in target.deps %}
+        "@{{target.repo_name}}//private/cpp/{{dep}}:shared",
+      {%- endfor %}
+    ],
+)
+
+cc_library(
+    name = "static",
+    linkstatic = 1,
+    visibility = {{ visibility }},
+    deps = [
+      {%- for dep in target.deps %}
+        "@{{target.repo_name}}//private/cpp/{{dep}}:static",
+      {%- endfor %}
+    ] + [
+    ],
+)

@@ -5,21 +5,21 @@ halsim_cc_binary(
     name = "main",
     srcs = ["main.cpp"],
     # deps = ["@com_github_google_glog//:glog"],
-    halsim_deps = ["@{{group.repo_name}}//dependencies/cpp/{{target.parent_folder}}"],
+    halsim_deps = ["@{{group.repo_name}}//libraries/cpp/{{target.parent_folder}}"],
 )
 {%- else -%}
 cc_binary(
     name = "main",
     srcs = ["main.cpp"],
     # deps = ["@com_github_google_glog//:glog"],
-    deps = ["@{{group.repo_name}}//dependencies/cpp/{{target.parent_folder}}"],
+    deps = ["@{{group.repo_name}}//libraries/cpp/{{target.parent_folder}}"],
 )
 
 cc_test(
     name = "test",
     srcs = ["test.cpp"],
     deps = [
-        "@{{group.repo_name}}//dependencies/cpp/{{target.parent_folder}}",
+        "@{{group.repo_name}}//libraries/cpp/{{target.parent_folder}}",
         "@googletest//:gtest_main",
     ],
 )

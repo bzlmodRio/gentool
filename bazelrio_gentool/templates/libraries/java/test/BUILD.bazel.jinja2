@@ -8,7 +8,7 @@ bazelrio_java_binary(
     ],
     main_class = "bazelrio_test.Main",
     deps = [
-        "@{{group.repo_name}}//dependencies/java/{{target.parent_folder}}",
+        "@{{group.repo_name}}//libraries/java/{{target.parent_folder}}",
     ],
 )
 
@@ -39,7 +39,7 @@ bazelrio_java_test(
         "@maven//:org_junit_platform_junit_platform_suite_api",
     ],
     deps = [
-        "@{{group.repo_name}}//dependencies/java/{{target.parent_folder}}",
+        "@{{group.repo_name}}//libraries/java/{{target.parent_folder}}",
         "@maven//:org_junit_jupiter_junit_jupiter_api",
         "@maven//:org_junit_jupiter_junit_jupiter_engine",
         "@maven//:org_junit_jupiter_junit_jupiter_params",

@@ -1,10 +1,10 @@
 load("@{{group.repo_name}}//:maven_cpp_deps.bzl", "setup_legacy_{{group.sanitized_repo_name}}_cpp_dependencies")
-{%- if group.get_all_maven_dependencies() %}
+{%- if group.has_maven_deps() %}
 load("@{{group.repo_name}}//:maven_java_deps.bzl", "get_{{group.sanitized_repo_name}}_java_dependencies")
 {%- endif %}
 {%- for name, module_dep in group.module_dependencies.items() %}
 load("@{{name}}//:maven_cpp_deps.bzl", "setup_legacy_{{module_dep.container.sanitized_repo_name}}_cpp_dependencies")
-{%- if module_dep.container.get_all_maven_dependencies() %}
+{%- if module_dep.container.java_deps or module_dep.container.has_maven_deps() %}
 load("@{{name}}//:maven_java_deps.bzl", "get_{{module_dep.container.sanitized_repo_name}}_java_dependencies")
 {%- endif %}
 {%- endfor %}
@@ -40,13 +40,13 @@ def _combine_maven_info(maven_artifacts, maven_repositories, setup_functor):
     maven_repositories += dep_maven_repositories
 
     return maven_artifacts, maven_repositories
-{% if group.get_all_maven_dependencies() %}
+{% if group.has_maven_deps() %}
 def get_java_dependenicies():
     maven_artifacts, maven_repositories = [], []
 
     maven_artifacts, maven_repositories = _combine_maven_info(maven_artifacts, maven_repositories, get_{{group.sanitized_repo_name}}_java_dependencies)
 {%- for name, module_dep in group.module_dependencies.items() %}
-{%- if module_dep.container.get_all_maven_dependencies() %}
+{%- if module_dep.container.has_maven_deps() %}
     maven_artifacts, maven_repositories = _combine_maven_info(maven_artifacts, maven_repositories, get_{{module_dep.container.sanitized_repo_name}}_java_dependencies)
 {%- endif %}
 {%- endfor %}

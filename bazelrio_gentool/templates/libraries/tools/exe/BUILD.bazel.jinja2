@@ -1,4 +1,4 @@
-load("//dependencies/tools:tool_launchers.bzl", "executable_tool_launcher")
+load("//libraries/tools:tool_launchers.bzl", "executable_tool_launcher")
 
 executable_tool_launcher(
     name = "{% if target.lower_target_name %}{{target.artifact_name.lower()}}{% else %} {{target.artifact_name}} {%endif%}",

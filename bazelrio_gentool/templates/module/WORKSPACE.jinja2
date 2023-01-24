@@ -4,7 +4,7 @@ load("@{{group.sanitized_repo_name}}//private/non_bzlmod_dependencies:download_d
 
 download_dependencies()
 
-load("@{{group.sanitized_repo_name}}//private/non_bzlmod_dependencies:setup_dependencies.bzl", {% if group.get_all_maven_dependencies() %}"get_java_dependenicies", {% endif %}"setup_dependencies")
+load("@{{group.sanitized_repo_name}}//private/non_bzlmod_dependencies:setup_dependencies.bzl", {% if group.has_maven_deps() %}"get_java_dependenicies", {% endif %}"setup_dependencies")
 
 setup_dependencies()
 

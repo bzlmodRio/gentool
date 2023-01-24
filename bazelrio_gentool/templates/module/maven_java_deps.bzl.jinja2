@@ -1,3 +1,25 @@
+
+load("@bazel_tools//tools/build_defs/repo:jvm.bzl", "jvm_maven_import_external")
+
+def __setup_{{group.sanitized_repo_name}}_java_dependencies(mctx):
+    {%- for java_dep in group.java_deps %}
+    jvm_maven_import_external(
+        name = "{{java_dep.import_repo_name}}",
+        artifact = "{{java_dep.group_id}}:{{java_dep.name}}:{{java_dep.version}}",
+        artifact_sha256 = "{{java_dep.get_sha256()}}",
+        server_urls = ["https://frcmaven.wpi.edu/release"],
+    )
+    {%- endfor %}
+
+def setup_legacy_{{group.sanitized_repo_name}}_java_dependencies():
+    __setup_{{group.sanitized_repo_name}}_java_dependencies(None)
+
+setup_{{group.sanitized_repo_name}}_java_dependencies = module_extension(
+    __setup_{{group.sanitized_repo_name}}_java_dependencies,
+)
+
+
+
 def get_{{group.sanitized_repo_name}}_java_dependencies():
     artifacts = [
         {%- for maven_dep in group.get_all_maven_dependencies() %}

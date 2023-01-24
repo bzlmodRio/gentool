@@ -1,5 +1,5 @@
 {%- if target.resources and target.resources[0] -%}
-load("//dependencies/tools:tool_launchers.bzl", "java_tool_launcher")
+load("//libraries/tools:tool_launchers.bzl", "java_tool_launcher")
 
 java_tool_launcher(
     name = "{{target.artifact_name}}",
