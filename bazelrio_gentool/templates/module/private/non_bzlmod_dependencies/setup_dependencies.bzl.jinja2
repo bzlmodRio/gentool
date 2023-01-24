@@ -1,17 +1,34 @@
 load("@{{group.repo_name}}//:maven_cpp_deps.bzl", "setup_legacy_{{group.sanitized_repo_name}}_cpp_dependencies")
-{%- if group.has_maven_deps() %}
+
+
+{%- if group.has_direct_maven_deps() or group.java_deps %}
+load("@{{group.sanitized_repo_name}}//:maven_java_deps.bzl",
+{%- if group.has_direct_maven_deps() -%}
+"get_{{group.sanitized_repo_name}}_java_dependencies"
+{%- endif -%}
+{%- if group.java_deps %} "setup_legacy_{{group.sanitized_repo_name}}_java_dependencies"
+{%- endif -%})
+{%- endif -%}
+
+
+{%- if group.has_direct_maven_deps() %}
 load("@{{group.repo_name}}//:maven_java_deps.bzl", "get_{{group.sanitized_repo_name}}_java_dependencies")
 {%- endif %}
 {%- for name, module_dep in group.module_dependencies.items() %}
 load("@{{name}}//:maven_cpp_deps.bzl", "setup_legacy_{{module_dep.container.sanitized_repo_name}}_cpp_dependencies")
-{%- if module_dep.container.java_deps or module_dep.container.has_maven_deps() %}
-load("@{{name}}//:maven_java_deps.bzl", "get_{{module_dep.container.sanitized_repo_name}}_java_dependencies")
+{%- if module_dep.container.has_direct_maven_deps() or module_dep.container.java_deps %}
+load("@{{name}}//:maven_java_deps.bzl",
+{%- if module_dep.container.has_direct_maven_deps() %} "get_{{module_dep.container.sanitized_repo_name}}_java_dependencies"{%- endif -%}
+{%- if module_dep.container.has_direct_maven_deps() and module_dep.container.java_deps -%}, {%- endif -%}
+{%- if module_dep.container.java_deps %} "setup_legacy_{{module_dep.container.sanitized_repo_name}}_java_dependencies"
+{%- endif -%})
 {%- endif %}
 {%- endfor %}
 load("@rules_roborio_toolchain//:maven_deps.bzl", "setup_legacy_setup_toolchains_dependencies")
 load("@rules_roborio_toolchain//toolchains:load_toolchains.bzl", "load_toolchains")
 load("@rules_python//python:pip.bzl", "pip_parse")
-{%- if True or needs_robot %}
+load("@rules_bazelrio//:nonbzlmod_setup.bzl", "setup_rules_bazelrio")
+{%- if False or needs_robot %}
 load("@rules_jvm_external//:defs.bzl", "maven_install")
 {%- endif %}
 
@@ -32,6 +49,18 @@ def _setup_cpp_dependencies():
     {%- for name, module_dep in group.module_dependencies.items() %}
     setup_legacy_{{module_dep.container.sanitized_repo_name}}_cpp_dependencies()
     {%- endfor %}
+{%- if group.has_direct_maven_deps() or group.java_deps %}
+
+def _setup_java_dependencies():
+    setup_legacy_{{group.sanitized_repo_name}}_java_dependencies()
+
+    {%- for name, module_dep in group.module_dependencies.items() %}
+        {%- if module_dep.container.java_deps %}
+    setup_legacy_{{module_dep.container.sanitized_repo_name}}_java_dependencies()
+        {%- endif %}
+    {%- endfor %}
+{%- endif %}
+{%- if group.has_any_maven_deps() %}
 
 def _combine_maven_info(maven_artifacts, maven_repositories, setup_functor):
     dep_maven_artifacts, dep_maven_repositories = setup_functor()
@@ -40,40 +69,33 @@ def _combine_maven_info(maven_artifacts, maven_repositories, setup_functor):
     maven_repositories += dep_maven_repositories
 
     return maven_artifacts, maven_repositories
-{% if group.has_maven_deps() %}
+
 def get_java_dependenicies():
     maven_artifacts, maven_repositories = [], []
 
+{%- if group.has_direct_maven_deps() -%}
     maven_artifacts, maven_repositories = _combine_maven_info(maven_artifacts, maven_repositories, get_{{group.sanitized_repo_name}}_java_dependencies)
+{%- endif %}
 {%- for name, module_dep in group.module_dependencies.items() %}
-{%- if module_dep.container.has_maven_deps() %}
+{%- if module_dep.container.has_direct_maven_deps() %}
     maven_artifacts, maven_repositories = _combine_maven_info(maven_artifacts, maven_repositories, get_{{module_dep.container.sanitized_repo_name}}_java_dependencies)
 {%- endif %}
 {%- endfor %}
 
     return maven_artifacts, maven_repositories
-{% endif %}
+{%- endif %}
+
 def setup_dependencies():
     _setup_toolchains()
     _setup_cpp_dependencies()
+{%- if group.has_any_maven_deps() %}
+    _setup_java_dependencies()
+{%- endif %}
 
     pip_parse(
         name = "bzlmodrio-gentool-pip",
         requirements_lock = "@bzlmodrio-gentool//:requirements_lock.txt",
     )
-{%- if True or needs_robot %}
 
-    maven_install(
-        name = "rules_bazelrio_maven",
-        artifacts = [
-            "com.hierynomus:sshj:0.32.0",
-            "me.tongfei:progressbar:0.9.2",
-            "net.sourceforge.argparse4j:argparse4j:0.9.0",
-            "org.slf4j:slf4j-nop:1.7.32",
-        ],
-        repositories = [
-            "https://repo1.maven.org/maven2",
-        ],
-    )
-{%- endif %}
+    setup_rules_bazelrio()
 

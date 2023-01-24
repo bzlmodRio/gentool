@@ -28,7 +28,6 @@ class CppToolchainConfig:
         self.cpp_url = cpp_url
 
         self.cpp_platform_configs = cpp_platform_configs
-        print(self.cpp_platform_configs)
 
     def get_cpp_url(self, platform_config):
         release_version_hyphen = self.release_version.replace("_", "-")

@@ -8,21 +8,77 @@ cc_library(
     name = "shared",
     linkstatic = 1,
     visibility = {{ visibility }},
-    deps = [
+    deps = {% if target.deps %}[
       {%- for dep in target.deps %}
-        "@{{target.repo_name}}//private/cpp/{{dep}}:shared",
+        "@{{dep.repo_name}}//libraries/cpp/{{dep.parent_folder}}:shared",
       {%- endfor %}
-    ],
+    ]{% if target.platform_deps %} + {% else %},{% endif %}{% endif %}
+    {% if target.platform_deps %}
+    # Binaries
+    select({
+      {%- for t, deps in target.platform_deps.items() %}
+        "{{t}}": [
+        {%- for dep in deps %}
+         {%- if target.repo_name == dep.repo_name %}
+            "//private/cpp/{{dep.parent_folder}}:shared",
+         {%- else %}
+            "@{{dep.repo_name}}//libraries/cpp/{{dep.parent_folder}}:shared",
+         {%- endif %}
+        {%- endfor %}
+        ],
+      {%- endfor %}
+    }),
+    {%- endif %}
 )
+{%- if target.has_static %}
 
 cc_library(
     name = "static",
     linkstatic = 1,
     visibility = {{ visibility }},
-    deps = [
-      {%- for dep in target.deps %}
-        "@{{target.repo_name}}//private/cpp/{{dep}}:static",
+    deps = select({
+      {% for t, deps in target.platform_deps.items() %}
+        {{t}}: [
+        {%- for dep in deps %}
+         {%- if target.repo_name == dep.repo_name %}
+         "//private/cpp/{{dep.parent_folder}}:static",
+         {%- else %}
+         "@{{target.repo_name}}//private/cpp/{{dep.parent_folder}}:static",
+         {%- endif %}
+        {%- endfor %}
+        ],
       {%- endfor %}
-    ] + [
-    ],
+    ),
+    # deps = [
+    #   {%- for dep in target.deps %}
+    #     {%- if target.repo_name == dep.repo_name %}
+    #     "//private/cpp/{{dep.parent_folder}}:static",
+    #     {%- else %}
+    #     "@{{target.repo_name}}//private/cpp/{{dep.parent_folder}}:static",
+    #     {%- endif %}
+    #   {%- endfor %}
+    # ] + [
+    # ],
 )
+{%- endif %}
+{%- if target.jni_deps %}
+
+cc_library(
+    name = "jni",
+    visibility = {{ visibility }},
+    deps = select({
+      {%- for t, deps in target.jni_deps.items() %}
+        "{{t}}": [
+        {%- for dep in deps %}
+         {%- if target.repo_name == dep.repo_name %}
+            "//private/cpp/{{dep.parent_folder}}:shared",
+         {%- else %}
+            "@{{dep.repo_name}}//libraries/cpp/{{dep.parent_folder}}:jni",
+         {%- endif %}
+        {%- endfor %}
+        ],
+      {%- endfor %}
+    }),
+)
+{%- endif %}
+

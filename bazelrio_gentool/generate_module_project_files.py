@@ -83,9 +83,9 @@ def generate_module_project_files(module_directory, group, mandetory_dependencie
     if group.executable_tools or group.java_native_tools:
         template_files.extend(
             [
-                "dependencies/tools/BUILD",
-                "dependencies/tools/executable_launcher.sh",
-                "dependencies/tools/tool_launchers.bzl",
+                "libraries/tools/BUILD",
+                "libraries/tools/executable_launcher.sh",
+                "libraries/tools/tool_launchers.bzl",
             ]
         )
 
@@ -102,7 +102,7 @@ def generate_module_project_files(module_directory, group, mandetory_dependencie
         if output_file.endswith(".sh"):
             os.chmod(output_file, 0o755)
 
-    if group.get_all_maven_dependencies():
+    if group.java_deps:
         for tf in ["maven_java_deps.bzl"]:
             template_file = os.path.join(TEMPLATE_BASE_DIR, "module", tf + ".jinja2")
             output_file = os.path.join(module_directory, tf)

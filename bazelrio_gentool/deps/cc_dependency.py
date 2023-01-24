@@ -133,3 +133,14 @@ class CcDependency(MultiResourceDependency):
     def has_incompatible_targets(self):
         if "linuxathena" not in self.resources:
             return True
+
+
+class CcMetaDependency:
+    def __init__(self, repo_name, name, deps, platform_deps, has_static, jni_deps):
+        self.repo_name = repo_name
+        self.name = name
+        self.deps = deps
+        self.parent_folder = name
+        self.platform_deps = platform_deps
+        self.has_static = has_static
+        self.jni_deps = jni_deps

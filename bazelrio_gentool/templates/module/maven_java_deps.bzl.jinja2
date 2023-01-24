@@ -1,5 +1,4 @@
-
-load("@bazel_tools//tools/build_defs/repo:jvm.bzl", "jvm_maven_import_external")
+{%- if group.java_deps %}load("@bazel_tools//tools/build_defs/repo:jvm.bzl", "jvm_maven_import_external"){%- endif %}
 
 def __setup_{{group.sanitized_repo_name}}_java_dependencies(mctx):
     {%- for java_dep in group.java_deps %}
@@ -17,12 +16,10 @@ def setup_legacy_{{group.sanitized_repo_name}}_java_dependencies():
 setup_{{group.sanitized_repo_name}}_java_dependencies = module_extension(
     __setup_{{group.sanitized_repo_name}}_java_dependencies,
 )
-
-
-
+{%- if group.has_direct_maven_deps() %}
 def get_{{group.sanitized_repo_name}}_java_dependencies():
     artifacts = [
-        {%- for maven_dep in group.get_all_maven_dependencies() %}
+        {%- for maven_dep in group.get_all_maven_dependencies2() %}
         "{{maven_dep[0]}}:{{maven_dep[1]}}",
         {%- endfor %}
     ]
@@ -35,4 +32,5 @@ def get_{{group.sanitized_repo_name}}_java_dependencies():
     ]
 
     return artifacts, repositories
+{%- endif %}
 

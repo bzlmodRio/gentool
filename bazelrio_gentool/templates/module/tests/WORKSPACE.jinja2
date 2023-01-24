@@ -18,10 +18,10 @@ load("@{{group.repo_name}}//private/non_bzlmod_dependencies:download_dependencie
 
 download_dependencies()
 
-load("@{{group.repo_name}}//private/non_bzlmod_dependencies:setup_dependencies.bzl", {% if group.has_maven_deps() %}"get_java_dependenicies", {% endif %}"setup_dependencies")
+load("@{{group.repo_name}}//private/non_bzlmod_dependencies:setup_dependencies.bzl", {% if group.has_any_maven_deps() %}"get_java_dependenicies", {% endif %}"setup_dependencies")
 
 setup_dependencies()
-{% if group.has_maven_deps() %}
+{% if group.java_deps %}
 load("@rules_jvm_external//:defs.bzl", "maven_install")
 
 maven_artifacts, maven_repositories = get_java_dependenicies()

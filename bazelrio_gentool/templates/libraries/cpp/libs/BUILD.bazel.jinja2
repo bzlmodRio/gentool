@@ -41,7 +41,8 @@ cc_library(
         "@{{group.repo_name}}//private/cpp/{{target.parent_folder}}:static",
     ],
 )
-{% if target.has_jni %}
+{%- if target.has_jni %}
+
 cc_library(
     name = "jni",
     visibility = ["//visibility:public"],
@@ -50,4 +51,5 @@ cc_library(
         "@{{group.repo_name}}//private/cpp/{{target.parent_folder}}:jni",
     ],
 )
-{% endif %}
+{%- endif %}
+

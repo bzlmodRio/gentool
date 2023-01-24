@@ -1,5 +1,4 @@
-bazel_dep(name = "{{group.repo_name}}", repo_name = "{{group.repo_name}}", version = "")
-
+bazel_dep(name = "{{group.repo_name}}", version = "", repo_name = "{{group.repo_name}}")
 local_path_override(
     module_name = "{{group.repo_name}}",
     path = "..",
@@ -12,29 +11,34 @@ local_path_override(
     path = "../../rules_roborio_toolchain",
 )
 {%- endif %}
-{% if mandetory_dependencies.bzlmodrio_gentool.use_local_version %}
+{%- if mandetory_dependencies.bzlmodrio_gentool.use_local_version %}
+
 local_path_override(
     module_name = "bzlmodrio-gentool",
     path = "../../gentool",
 )
 {%- endif %}
-{% for name, module_dep in group.module_dependencies.items() %}
+{%- for name, module_dep in group.module_dependencies.items() %}
 {%- if module_dep.use_local_version %}
+
 local_path_override(
     module_name = "{{name}}",
     path = "{{module_dep.local_rel_folder}}",
 )
 {%- endif %}
 {%- endfor %}
+
 bazel_dep(name = "googletest", version = "1.11.0")
 bazel_dep(name = "rules_cc", version = "0.0.2")
 bazel_dep(name = "rules_jvm_external", version = "4.4.2")
 bazel_dep(name = "bzlmodrio-gentool", version = "{{mandetory_dependencies.bzlmodrio_gentool.version}}")
 bazel_dep(name = "rules_bazelrio", version = "{{mandetory_dependencies.rules_bazelrio.version}}")
 bazel_dep(name = "rules_roborio_toolchain", version = "{{mandetory_dependencies.rules_roborio_toolchain.version}}")
+{%- for name, module_dep in group.module_dependencies.items() %}
+bazel_dep(name = "{{name}}", version = "{{module_dep.container.version}}")
+{%- endfor %}
 
 maven = use_extension("@rules_jvm_external//:extensions.bzl", "maven")
-
 maven.install(
     artifacts = [
         "org.junit.jupiter:junit-jupiter-api:5.8.2",
@@ -50,7 +54,6 @@ maven.install(
         "https://repo1.maven.org/maven2",
     ],
 )
-
 use_repo(
     maven,
     "maven",

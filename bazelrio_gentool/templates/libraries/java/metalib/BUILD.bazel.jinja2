@@ -1,5 +1,3 @@
-{%- if target.has_maven_deps() %}load("@rules_jvm_external//:defs.bzl", "artifact"){%- endif %}
-
 java_import(
     name = "{{target.parent_folder}}",
     jars = ["@{{target.import_repo_name}}//jar:file"],
@@ -7,9 +5,6 @@ java_import(
     deps = [
 {%- for dep in target.sorted_dependencies() %}
         "{{dep}}",
-{%- endfor %}
-{%- for maven_dep in target.maven_deps %}
-        artifact("{{maven_dep[0]}}"),
 {%- endfor %}
     ],
 )

@@ -1,6 +1,6 @@
 import os
 
-def clean_existing_version(module_directory, extra_dir_blacklist=None):
+def clean_existing_version(module_directory, extra_dir_blacklist=None, force_tests=False):
     module_directory = os.path.abspath(module_directory)
 
     DIR_BLACKLIST = [
@@ -28,6 +28,11 @@ def clean_existing_version(module_directory, extra_dir_blacklist=None):
                 continue
             if full_file.endswith("user.bazelrc"):
                 continue
+            if not force_tests:
+                if f"{module_directory}/tests/cpp" in full_file and full_file.endswith("BUILD.bazel"):
+                    continue
+                if f"{module_directory}/tests/java" in full_file and full_file.endswith("BUILD.bazel"):
+                    continue
             os.remove(full_file)
 
 
