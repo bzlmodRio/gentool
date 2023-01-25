@@ -3,16 +3,25 @@ rules_bazelrio:
     - version: 0.0.7
       sha: a8e997def42472dd2f31cd90b855c0aeab93aabe1b436cd48f4e1efdd760f01c
       commitish: bd9c8375bf4f5a91d08cbf64e359c0b30aaf7433
+    - version: 0.0.8
+      sha: "5bcea84860f14b03767cbc4f3d16173502fe60173968da6715fa11b1aedb8fe3"
+      commitish: 4908451bfa5a04f6b79a6181ad95eeb0eb4e69d3
     
 rules_roborio_toolchain:
     - version: 2023-7.6
-      sha: c8a6fc0acac4a08aa884b59d13af9c3da010a4eed416ee10ccc05c73b9753deb
+      sha: c83f40ec9bafba45c726062e3c7982f0301fbede9aa46ac25a9900642c13ca66
       commitish: 8668e36043c7489a9669a9281f7024272b36d583
     
 gentool:
     - version: 0.0.3
       sha: 91dbeb541a6151eab3f4dfa37318b81e3f4fa964e45ebea48665cb2b3e471353
       commitish: dummy_version
+    - version: 1.0.0
+      sha: "0625d004f78f3509fb5175ede4f40f9153b75546bbe85a121e321db902fe94e5"
+      commitish: 95ccdbc245c9a5ee72f980681dc537a38a463a67
+    - version: 1.0.1
+      sha: null
+      commitish: ""
       
 wpi-opencv:
     - version: 4.6.0-4
@@ -21,8 +30,8 @@ wpi-opencv:
 
 bzlmodrio-ni:
     - version: 2023.3.0
-      sha: 54ed8d2e0d2c5a76c16eb312b48cef60c2de451910def5e10b7c8e4a8e80f89a
-      commitish: cc24faa330eb82f05fe30c7df030d59cfa3cfd06
+      sha: null
+      commitish: dd24e2d211cff83e9d21b88bbc0b80de98aac29f
 
 allwpilib:
     - version: 2023.2.1

@@ -30,7 +30,7 @@ def download_dependencies():
         name = "bzlmodrio-gentool",
         sha256 = "{{ mandetory_dependencies.bzlmodrio_gentool.sha }}",
         strip_prefix = "gentool-{{ mandetory_dependencies.bzlmodrio_gentool.commitish }}",
-        url = "https://github.com/bzlmodRio/gentool/archive/refs/heads/{{ mandetory_dependencies.bzlmodrio_gentool.commitish }}.zip",
+        url = "https://github.com/bzlmodRio/gentool/archive/{{ mandetory_dependencies.bzlmodrio_gentool.commitish }}.tar.gz",
     )
     {%- endif %}
 
@@ -45,7 +45,7 @@ def download_dependencies():
         name = "rules_bazelrio",
         sha256 = "{{ mandetory_dependencies.rules_bazelrio.sha }}",
         strip_prefix = "bzlmodRio-rules_bazelrio-{{ mandetory_dependencies.rules_bazelrio.commitish }}",
-        url = "https://github.com/bzlmodRio/bzlmodRio-rules_bazelrio/archive/{{ mandetory_dependencies.rules_bazelrio.commitish }}.zip",
+        url = "https://github.com/bzlmodRio/bzlmodRio-rules_bazelrio/archive/{{ mandetory_dependencies.rules_bazelrio.commitish }}.tar.gz",
     )
     {%- endif %}
 
@@ -60,7 +60,7 @@ def download_dependencies():
         name = "rules_roborio_toolchain",
         sha256 = "{{ mandetory_dependencies.rules_roborio_toolchain.sha }}",
         strip_prefix = "rules_roborio_toolchain-{{ mandetory_dependencies.rules_roborio_toolchain.commitish }}",
-        url = "https://github.com/bzlmodRio/rules_roborio_toolchain/archive/{{ mandetory_dependencies.rules_roborio_toolchain.commitish }}.zip",
+        url = "https://github.com/bzlmodRio/rules_roborio_toolchain/archive/{{ mandetory_dependencies.rules_roborio_toolchain.commitish }}.tar.gz",
     )
     {%- endif %}
 

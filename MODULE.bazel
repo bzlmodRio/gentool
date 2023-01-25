@@ -2,7 +2,7 @@
 module(
     name = "bzlmodrio-gentool",
     compatibility_level = 2023,
-    version = "1.0.0",
+    version = "1.0.1",
 )
 
 bazel_dep(name = "rules_python", version = "0.16.1")
@@ -25,7 +25,6 @@ pip = use_extension("@rules_python//python:extensions.bzl", "pip")
 pip.parse(
     name = "bzlmodrio-gentool-pip",
     requirements_lock = "//:requirements_lock.txt",
-    requirements_windows = "//:requirements_windows.txt",
 )
 
 use_repo(pip, "bzlmodrio-gentool-pip")

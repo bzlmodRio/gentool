@@ -2,7 +2,7 @@ load("@{{group.repo_name}}//:maven_cpp_deps.bzl", "setup_legacy_{{group.sanitize
 
 
 {%- if group.has_direct_maven_deps() or group.java_deps %}
-load("@{{group.sanitized_repo_name}}//:maven_java_deps.bzl",
+load("@{{group.repo_name}}//:maven_java_deps.bzl",
 {%- if group.has_direct_maven_deps() -%}
 "get_{{group.sanitized_repo_name}}_java_dependencies"
 {%- endif -%}
@@ -88,7 +88,7 @@ def get_java_dependenicies():
 def setup_dependencies():
     _setup_toolchains()
     _setup_cpp_dependencies()
-{%- if group.has_any_maven_deps() %}
+{%- if group.java_deps or group.has_any_maven_deps() %}
     _setup_java_dependencies()
 {%- endif %}
 

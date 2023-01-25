@@ -10,7 +10,10 @@ setup_dependencies()
 
 load("@rules_jvm_external//:defs.bzl", "maven_install")
 
-maven_artifacts, maven_repositories = get_java_dependenicies()
+maven_artifacts, maven_repositories = {% if group.has_any_maven_deps() %}get_java_dependenicies(){% else %}[], [
+    "https://repo1.maven.org/maven2",
+    "https://frcmaven.wpi.edu/release",
+]{%endif%}
 
 maven_install(
     name = "maven",
