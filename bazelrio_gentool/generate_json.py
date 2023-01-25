@@ -6,10 +6,11 @@ import subprocess
 from bazelrio_gentool.utils import render_template, write_file, SCRIPT_DIR, TEMPLATE_BASE_DIR
 from bazelrio_gentool.deps.cc_dependency import CcDependency
 from bazelrio_gentool.generate_module_project_files import generate_module_project_files, create_default_mandatory_settings
-
+from bazelrio_gentool.load_cached_versions import update_cached_version
+import hashlib
+from urllib.request import urlopen
 
 def generate_json(central_registery_location, group, module_json_template, module_template):
-
     if module_json_template is None:
         module_json_template = os.path.join(TEMPLATE_BASE_DIR, "publish", "module_config.json.jinja2")
         
@@ -32,13 +33,21 @@ def generate_json(central_registery_location, group, module_json_template, modul
     module_directory = os.path.join(central_registery_location, "json", group.repo_name)
 
     create_module(central_registery_location, json_file)
+    update_cached_versions(group, json_file, hash)
 
     return json_file
 
+
+def update_cached_versions(group, json_file, hash):
+    json_info = json.load(open(json_file, 'r'))    
+    url_result = urlopen(json_info['url'])
+    data = url_result.read()
+    sha256 = hashlib.sha256(data).hexdigest()
+    
+    update_cached_version(group.repo_name, group.version, sha256, hash)
+
     
 def create_module(central_registery_location, json_file):
-
-
     os.chdir(central_registery_location)
     if not os.path.exists(json_file):
         raise
