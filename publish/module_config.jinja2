@@ -1,8 +1,8 @@
 
 module(
-    name = "bzlmodrio-gentool",
-    compatibility_level = 2023,
-    version = "1.0.0",
+    name = "{{group.repo_name}}",
+    compatibility_level = {{group.year}},
+    version = "{{group.version}}",
 )
 
 bazel_dep(name = "rules_python", version = "0.16.1")
