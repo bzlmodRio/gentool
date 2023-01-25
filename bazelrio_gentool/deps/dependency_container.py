@@ -4,21 +4,21 @@ from bazelrio_gentool.deps.cc_dependency import CcDependency, CcMetaDependency
 from bazelrio_gentool.deps.java_dependency import JavaDependency, JavaMetaDependency
 from bazelrio_gentool.deps.java_native_tool_dependency import JavaNativeToolDependency
 from bazelrio_gentool.deps.executable_tool_dependency import ExecutableToolDependency
+from bazelrio_gentool.load_cached_versions import load_cached_version_info
 
 
 class ModuleDependency:
     def __init__(self, container, use_local_version, local_rel_folder, override_version=None,
-                 remote_sha="",
-                 remote_commitish="TODO",
                  remote_repo="TODO"):
         self.container = container
         if override_version:
             container.version = override_version
         self.local_rel_folder = local_rel_folder
         self.use_local_version = use_local_version
-        self.remote_commitish = remote_commitish
-        self.remote_sha = remote_sha
-        self.remote_repo = remote_repo
+        
+        cached_version = load_cached_version_info(container.repo_name, container.version)
+        self.remote_sha = cached_version['sha']
+        self.remote_commitish = cached_version['commitish']
 
 
 class DependencyContainer:

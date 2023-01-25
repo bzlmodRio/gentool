@@ -5,6 +5,7 @@ py_library(
     srcs = glob(["**/*.py"]),
     visibility = ["//visibility:public"],
     deps = [
-        requirement("jinja2")
+        requirement("jinja2"),
+        requirement("pyyaml")
     ]
 )

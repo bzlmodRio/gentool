@@ -1,0 +1,50 @@
+
+rules_bazelrio:
+    - version: 0.0.7
+      sha: a8e997def42472dd2f31cd90b855c0aeab93aabe1b436cd48f4e1efdd760f01c
+      commitish: bd9c8375bf4f5a91d08cbf64e359c0b30aaf7433
+    
+rules_roborio_toolchain:
+    - version: 2023-7.6
+      sha: c8a6fc0acac4a08aa884b59d13af9c3da010a4eed416ee10ccc05c73b9753deb
+      commitish: 8668e36043c7489a9669a9281f7024272b36d583
+    
+gentool:
+    - version: 0.0.3
+      sha: 91dbeb541a6151eab3f4dfa37318b81e3f4fa964e45ebea48665cb2b3e471353
+      commitish: dummy_version
+      
+wpi-opencv:
+    - version: 4.6.0-4
+      sha: 4b0b9d708cafb597fa1b7b1730a653c59e03c8f71d58d9474fcce329a112bd61
+      commitish: 4fc2007fbdb70ec71c40a94ca2b9eaf0cadb5bcb
+
+bzlmodrio-ni:
+    - version: 2023.3.0
+      sha: 54ed8d2e0d2c5a76c16eb312b48cef60c2de451910def5e10b7c8e4a8e80f89a
+      commitish: cc24faa330eb82f05fe30c7df030d59cfa3cfd06
+
+allwpilib:
+    - version: 2023.2.1
+      sha: "d4d8bccb48408d367f3120ec1820fa5452d0eaf0dd053adb18c9e50ab44d2410"
+      commitish: "458c77738bee96002ba6edda0117072bc32c4dd1"
+      
+navx:
+    - version: 2023.0.0
+      sha: "7b344ad63ec981e585bf6a484ff42fbc8562d572178f88b21152434fcbf3926d"
+      commitish: "acaf439c6abcafbc60fc3a38632f50493e67fecd"
+
+ctre:
+    - version: 5.30.1
+      sha: "b9b02d45e52d7572fefb005209c38ceaa4fecf95bd53bd409db88a93f6bc96bd"
+      commitish: "4f9fa5b8affaf41fc6573c3e00df24f5a2340153"
+
+rev:
+    - version: 2023.1.2
+      sha: "acfff5ad269f10eac0407d2761c80273088eb98d8fc9b3bc020e8db8c9d0f04f"
+      commitish: "cd3dc9581a1d6dceac542c29dded0b362def394f"
+
+navx:
+    - version: 2023.0.0
+      sha: "7b344ad63ec981e585bf6a484ff42fbc8562d572178f88b21152434fcbf3926d"
+      commitish: "acaf439c6abcafbc60fc3a38632f50493e67fecd"

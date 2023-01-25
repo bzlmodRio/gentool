@@ -1,13 +1,17 @@
 import os
 from bazelrio_gentool.utils import render_template, write_file, TEMPLATE_BASE_DIR
+from bazelrio_gentool.load_cached_versions import load_cached_version_info
 
 
 class MandetoryDependencySetting:
-    def __init__(self, version, use_local_version, sha, commitish):
+    def __init__(self, repo_name, version, use_local_version):
+        self.repo_name = repo_name
         self.version = version
         self.use_local_version = use_local_version
-        self.sha = sha
-        self.commitish = commitish
+
+        cached_version = load_cached_version_info(repo_name, version)
+        self.sha = cached_version['sha']
+        self.commitish = cached_version['commitish']
 
 
 def create_default_mandatory_settings(
@@ -16,22 +20,19 @@ def create_default_mandatory_settings(
     use_local_bzlmodrio_gentool,
 ):
     default_rules_roborio_toolchain = MandetoryDependencySetting(
+        "rules_roborio_toolchain",
         "2023-7.6",
         use_local_roborio,
-        sha="c8a6fc0acac4a08aa884b59d13af9c3da010a4eed416ee10ccc05c73b9753deb",
-        commitish="8668e36043c7489a9669a9281f7024272b36d583",
     )
     default_rules_bazelrio = MandetoryDependencySetting(
+        "rules_bazelrio",
         "0.0.7",
         use_local_bazelrio,
-        sha="a8e997def42472dd2f31cd90b855c0aeab93aabe1b436cd48f4e1efdd760f01c",
-        commitish="bd9c8375bf4f5a91d08cbf64e359c0b30aaf7433",
     )
     default_rules_bzlmodrio_gentool = MandetoryDependencySetting(
+        "gentool",
         "0.0.3",
         use_local_bzlmodrio_gentool,
-        sha="91dbeb541a6151eab3f4dfa37318b81e3f4fa964e45ebea48665cb2b3e471353",
-        commitish="dummy_version",
     )
 
     return MandatoryDependencySettings(
