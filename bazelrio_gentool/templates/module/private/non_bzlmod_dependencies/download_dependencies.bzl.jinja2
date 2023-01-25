@@ -11,29 +11,6 @@ def download_dependencies():
         url = "https://github.com/bazelbuild/rules_jvm_external/archive/%s.zip" % RULES_JVM_EXTERNAL_TAG,
     )
 
-    # Python, for gentool
-    http_archive(
-        name = "rules_python",
-        sha256 = "497ca47374f48c8b067d786b512ac10a276211810f4a580178ee9b9ad139323a",
-        strip_prefix = "rules_python-0.16.1",
-        url = "https://github.com/bazelbuild/rules_python/archive/refs/tags/0.16.1.tar.gz",
-    )
-
-    # Project Generator
-    {%- if mandetory_dependencies.bzlmodrio_gentool.use_local_version %}
-    native.local_repository(
-        name = "bzlmodrio-gentool",
-        path = "../../gentool",
-    )
-    {%- else %}
-    http_archive(
-        name = "bzlmodrio-gentool",
-        sha256 = "{{ mandetory_dependencies.bzlmodrio_gentool.sha }}",
-        strip_prefix = "gentool-{{ mandetory_dependencies.bzlmodrio_gentool.commitish }}",
-        url = "https://github.com/bzlmodRio/gentool/archive/{{ mandetory_dependencies.bzlmodrio_gentool.commitish }}.tar.gz",
-    )
-    {%- endif %}
-
     # Bazelrio Rules
     {%- if mandetory_dependencies.rules_bazelrio.use_local_version %}
     native.local_repository(

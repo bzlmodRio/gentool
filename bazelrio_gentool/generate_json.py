@@ -9,6 +9,13 @@ from bazelrio_gentool.generate_module_project_files import generate_module_proje
 
 
 def generate_json(central_registery_location, group, module_json_template, module_template):
+
+    if module_json_template is None:
+        module_json_template = os.path.join(TEMPLATE_BASE_DIR, "publish", "module_config.json.jinja2")
+        
+    if module_template is None:
+        module_template = os.path.join(TEMPLATE_BASE_DIR, "publish", "module_config.jinja2")
+
     hash = subprocess.check_output(args=["git", "rev-parse", "HEAD"]).decode("utf-8").strip()
     mandatory_dependencies = create_default_mandatory_settings(
         use_local_roborio=False,

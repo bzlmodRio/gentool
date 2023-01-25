@@ -22,7 +22,6 @@ load("@{{name}}//:maven_java_deps.bzl",
 {%- endfor %}
 load("@rules_roborio_toolchain//:maven_deps.bzl", "setup_legacy_setup_toolchains_dependencies")
 load("@rules_roborio_toolchain//toolchains:load_toolchains.bzl", "load_toolchains")
-load("@rules_python//python:pip.bzl", "pip_parse")
 load("@rules_bazelrio//:nonbzlmod_setup.bzl", "setup_rules_bazelrio")
 {%- if False or needs_robot %}
 load("@rules_jvm_external//:defs.bzl", "maven_install")
@@ -87,11 +86,6 @@ def setup_dependencies():
 {%- if group.java_deps or group.has_any_maven_deps() %}
     _setup_java_dependencies()
 {%- endif %}
-
-    pip_parse(
-        name = "bzlmodrio-gentool-pip",
-        requirements_lock = "@bzlmodrio-gentool//:requirements_lock.txt",
-    )
 
     setup_rules_bazelrio()
 

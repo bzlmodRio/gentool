@@ -35,8 +35,8 @@ bzlmodrio-ni:
 
 bzlmodrio-allwpilib:
     - version: 2023.2.1
-      sha: "d4d8bccb48408d367f3120ec1820fa5452d0eaf0dd053adb18c9e50ab44d2410"
-      commitish: "458c77738bee96002ba6edda0117072bc32c4dd1"
+      sha: "8f402290666f837c99ff985908b05223b4b2f5d32ab2f552308ca3b753856a41"
+      commitish: "38742ec2cc6e2d05da155b74772edfe2102f6693"
       
 navx:
     - version: 2023.0.0

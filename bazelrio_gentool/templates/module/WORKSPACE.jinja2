@@ -1,10 +1,10 @@
-workspace(name = "{{group.sanitized_repo_name}}")
+workspace(name = "{{group.repo_name}}")
 
-load("@{{group.sanitized_repo_name}}//private/non_bzlmod_dependencies:download_dependencies.bzl", "download_dependencies")
+load("@{{group.repo_name}}//private/non_bzlmod_dependencies:download_dependencies.bzl", "download_dependencies")
 
 download_dependencies()
 
-load("@{{group.sanitized_repo_name}}//private/non_bzlmod_dependencies:setup_dependencies.bzl", {% if group.has_direct_maven_deps() %}"get_java_dependenicies", {% endif %}"setup_dependencies")
+load("@{{group.repo_name}}//private/non_bzlmod_dependencies:setup_dependencies.bzl", {% if group.has_any_maven_deps() %}"get_java_dependenicies", {% endif %}"setup_dependencies")
 
 setup_dependencies()
 
@@ -21,8 +21,4 @@ maven_install(
     repositories = maven_repositories,
     # maven_install_json = "//build_scripts/bazel/deps:maven_install.json",
 )
-
-load("@bzlmodrio-gentool-pip//:requirements.bzl", "install_deps")
-
-install_deps()
 
