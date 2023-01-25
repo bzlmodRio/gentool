@@ -25,9 +25,9 @@ def __write_dependency_file(base_output_directory, group, target, language, forc
     render_template(template_file, output_file, group=group, target=target, visibility='["//visibility:public"]')
 
     # Write test files
-    if force_tests:
-        template_file = os.path.join(template_base, "test", "BUILD.bazel.jinja2")
-        output_file = os.path.join(test_dir, "BUILD.bazel")
+    template_file = os.path.join(template_base, "test", "BUILD.bazel.jinja2")
+    output_file = os.path.join(test_dir, "BUILD.bazel")
+    if force_tests or not os.path.exists(output_file):
         render_template(template_file, output_file, group=group, target=target)
 
     # Test file

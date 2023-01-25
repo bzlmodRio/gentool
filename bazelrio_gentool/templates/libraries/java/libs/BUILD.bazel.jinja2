@@ -1,4 +1,5 @@
-{%- if target.maven_deps -%}load("@rules_jvm_external//:defs.bzl", "artifact"){% endif -%}
+{%- if target.maven_deps -%}load("@rules_jvm_external//:defs.bzl", "artifact"){% endif %}
+
 java_import(
     name = "{{target.parent_folder}}",
     jars = ["@{{target.import_repo_name}}//jar:file"],

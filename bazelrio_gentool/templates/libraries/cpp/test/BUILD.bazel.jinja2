@@ -13,6 +13,7 @@ cc_binary(
     srcs = ["main.cpp"],
     # deps = ["@com_github_google_glog//:glog"],
     deps = ["@{{group.repo_name}}//libraries/cpp/{{target.parent_folder}}"],
+    tags = ["no-sandbox"],
 )
 
 cc_test(
@@ -22,6 +23,7 @@ cc_test(
         "@{{group.repo_name}}//libraries/cpp/{{target.parent_folder}}",
         "@googletest//:gtest_main",
     ],
+    tags = ["no-sandbox"],
 )
 {%- endif %}
 

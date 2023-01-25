@@ -19,6 +19,7 @@ class ModuleDependency:
         cached_version = load_cached_version_info(container.repo_name, container.version)
         self.remote_sha = cached_version['sha']
         self.remote_commitish = cached_version['commitish']
+        self.remote_repo = remote_repo
 
 
 class DependencyContainer:

@@ -21,7 +21,7 @@ maven = use_extension("@rules_jvm_external//:extensions.bzl", "maven")
 maven.install(
     artifacts = [
         {%- for maven_dep in group.get_all_maven_dependencies2() %}
-        # "{{maven_dep[0]}}:{{maven_dep[1]}}",
+        "{{maven_dep[0]}}:{{maven_dep[1]}}",
         {%- endfor %}
     ],
     repositories = [

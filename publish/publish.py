@@ -7,7 +7,7 @@ def main():
     SCRIPT_DIR = os.path.dirname(os.path.realpath(__file__))
     registry_location = os.path.join(SCRIPT_DIR, "..", '..', "bazel-central-registry")
     
-    version = "1.0.0"
+    version = "1.0.1"
     year = "2023"
     group = DependencyContainer("bzlmodrio-gentool", version, year, "https://frcmaven.wpi.edu/release")
     
@@ -20,6 +20,6 @@ def main():
 
 if __name__ == "__main__":
     """
-    bazel run //generate:publish --enable_bzlmod
+    bazel run //publish --enable_bzlmod
     """
     main()

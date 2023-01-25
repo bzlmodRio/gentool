@@ -20,20 +20,20 @@ gentool:
       sha: "0625d004f78f3509fb5175ede4f40f9153b75546bbe85a121e321db902fe94e5"
       commitish: 95ccdbc245c9a5ee72f980681dc537a38a463a67
     - version: 1.0.1
-      sha: null
-      commitish: ""
+      sha: "aef265af16cd74086cd560a932ba9e21734572635047308a98577663eebf48a0"
+      commitish: "8b1ace0c2a93a9e08f0a213e8f5e7d98646c1c61"
       
-wpi-opencv:
+bzlmodrio-opencv:
     - version: 4.6.0-4
-      sha: 4b0b9d708cafb597fa1b7b1730a653c59e03c8f71d58d9474fcce329a112bd61
-      commitish: 4fc2007fbdb70ec71c40a94ca2b9eaf0cadb5bcb
+      sha: 6f76e7a95a63d4859355d44934f6cd5663cc0f0bdc769c657c25e59e1ba5a22f
+      commitish: 130376f5cb63d661990e3d22aa60a7369e34942f
 
 bzlmodrio-ni:
     - version: 2023.3.0
-      sha: null
+      sha: 53234e9338a215b9ea96e4e84bd1695ac2caefe18effcc9ece1ea5f48003b8b5
       commitish: dd24e2d211cff83e9d21b88bbc0b80de98aac29f
 
-allwpilib:
+bzlmodrio-allwpilib:
     - version: 2023.2.1
       sha: "d4d8bccb48408d367f3120ec1820fa5452d0eaf0dd053adb18c9e50ab44d2410"
       commitish: "458c77738bee96002ba6edda0117072bc32c4dd1"

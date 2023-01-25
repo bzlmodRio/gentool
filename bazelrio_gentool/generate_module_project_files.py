@@ -31,7 +31,7 @@ def create_default_mandatory_settings(
     )
     default_rules_bzlmodrio_gentool = MandetoryDependencySetting(
         "gentool",
-        "1.0.0",
+        "1.0.1",
         use_local_bzlmodrio_gentool,
     )
 
