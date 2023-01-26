@@ -1,4 +1,5 @@
 {%- for target in group.executable_tools %}
+
 alias(
     name = "{{target.artifact_name}}",
     actual = "@bzlmodrio-allwpilib//libraries/tools/{% if True %}{{target.artifact_name.lower()}}{%else%} TODO {%endif%}",
@@ -6,9 +7,11 @@ alias(
 )
 {%- endfor %}
 {%- for target in group.java_native_tools %}
+
 alias(
     name = "{{target.artifact_name}}",
     actual = "@bzlmodrio-allwpilib//libraries/tools/{{target.artifact_name}}",
     tags = ["no-roborio"],
 )
-{% endfor %}
+{%- endfor %}
+

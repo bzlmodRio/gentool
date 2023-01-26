@@ -133,6 +133,9 @@ class DependencyContainer:
 
         return sorted(list(all_maven_deps))
 
+    def sorted_java_deps(self):
+        return sorted(self.java_deps, key=lambda x: x.import_repo_name)
+
 
     def sorted_cc_deps(self):
         output = []
@@ -146,6 +149,14 @@ class DependencyContainer:
             for resource in cpp_dep.resources:
                 if cpp_dep.get_sha256(resource):
                     output.append(f"{cpp_dep.get_archive_name(resource)}")
+
+        for tool_dep in self.java_native_tools:
+            for resource in tool_dep.resources:
+                output.append(f"{tool_dep.get_archive_name(resource)}")
+
+        for tool_dep in self.executable_tools:
+            for resource in tool_dep.resources:
+                output.append(f"{tool_dep.get_archive_name(resource)}")
         
         output = sorted(output)
 

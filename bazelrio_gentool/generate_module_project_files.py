@@ -17,29 +17,22 @@ class MandetoryDependencySetting:
 def create_default_mandatory_settings(
     use_local_roborio,
     use_local_bazelrio,
-    use_local_bzlmodrio_gentool,
 ):
     default_rules_roborio_toolchain = MandetoryDependencySetting(
         "rules_roborio_toolchain",
-        "2023-7.6",
+        "2022-1",
         use_local_roborio,
     )
     default_rules_bazelrio = MandetoryDependencySetting(
         "rules_bazelrio",
-        "0.0.8",
+        "0.0.9",
         use_local_bazelrio,
-    )
-    default_rules_bzlmodrio_gentool = MandetoryDependencySetting(
-        "gentool",
-        "1.0.1",
-        use_local_bzlmodrio_gentool,
     )
 
     return MandatoryDependencySettings(
         bcr_branch="megadiff",
         rules_roborio_toolchain=default_rules_roborio_toolchain,
         rules_bazelrio=default_rules_bazelrio,
-        bzlmodrio_gentool=default_rules_bzlmodrio_gentool,
     )
 
 
@@ -48,13 +41,11 @@ class MandatoryDependencySettings:
         self,
         rules_roborio_toolchain,
         rules_bazelrio,
-        bzlmodrio_gentool,
         bcr_branch="main",
     ):
         self.bcr_branch = bcr_branch
         self.rules_roborio_toolchain = rules_roborio_toolchain
         self.rules_bazelrio = rules_bazelrio
-        self.bzlmodrio_gentool = bzlmodrio_gentool
 
 
 def generate_module_project_files(module_directory, group, mandetory_dependencies):

@@ -41,3 +41,6 @@ class CppToolchainConfig:
 
     def get_cpp_sha256(self, resource):
         return get_hash(self.get_cpp_url(resource), True)
+
+    def has_any_maven_deps(self):
+         return False

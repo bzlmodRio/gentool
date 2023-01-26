@@ -15,8 +15,8 @@ bazel_dep(name = "rules_roborio_toolchain", version = "{{mandetory_dependencies.
 bazel_dep(name = "{{name}}", version = "{{module_dep.container.version}}")
 {%- endfor %}
 {%- if group.has_direct_maven_deps() %}
-maven = use_extension("@rules_jvm_external//:extensions.bzl", "maven")
 
+maven = use_extension("@rules_jvm_external//:extensions.bzl", "maven")
 maven.install(
     artifacts = [
         {%- for maven_dep in group.get_all_maven_dependencies2() %}
@@ -31,7 +31,6 @@ maven.install(
         {%- endfor %}
     ],
 )
-
 use_repo(
     maven,
     "maven",
@@ -43,24 +42,12 @@ setup_{{group.sanitized_repo_name}}_cpp_dependencies = use_extension("//:maven_c
 use_repo(
     setup_{{group.sanitized_repo_name}}_cpp_dependencies,
     {{group.sorted_cc_deps()}}
-    
-    {%- for tool_dep in group.java_native_tools %}
-    {%- for resource in tool_dep.resources %}
-    "{{tool_dep.get_archive_name(resource)}}",
-    {%- endfor %}
-    {%- endfor %}
-
-    {%- for tool_dep in group.executable_tools %}
-    {%- for resource in tool_dep.resources %}
-    "{{tool_dep.get_archive_name(resource)}}",
-    {%- endfor %}
-    {%- endfor %}
 )
 
 setup_{{group.sanitized_repo_name}}_java_dependencies = use_extension("//:maven_java_deps.bzl", "setup_{{group.sanitized_repo_name}}_java_dependencies")
 use_repo(
     setup_{{group.sanitized_repo_name}}_java_dependencies,
-    {%- for java_dep in group.java_deps %}
+    {%- for java_dep in group.sorted_java_deps() %}
     "{{java_dep.import_repo_name}}",
     {%- endfor %}
 )

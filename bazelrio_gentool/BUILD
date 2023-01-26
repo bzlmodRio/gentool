@@ -6,6 +6,6 @@ py_library(
     visibility = ["//visibility:public"],
     deps = [
         requirement("jinja2"),
-        requirement("pyyaml")
-    ]
+        requirement("pyyaml"),
+    ],
 )

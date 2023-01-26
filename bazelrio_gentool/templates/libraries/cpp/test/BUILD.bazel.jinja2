@@ -11,19 +11,21 @@ halsim_cc_binary(
 cc_binary(
     name = "main",
     srcs = ["main.cpp"],
-    # deps = ["@com_github_google_glog//:glog"],
-    deps = ["@{{group.repo_name}}//libraries/cpp/{{target.parent_folder}}"],
     tags = ["no-sandbox"],
+    deps = ["@{{group.repo_name}}//libraries/cpp/{{target.parent_folder}}"],
 )
 
 cc_test(
     name = "test",
     srcs = ["test.cpp"],
+    tags = [
+        "bazelrio-cpp-test",
+        "no-sandbox",
+    ],
     deps = [
         "@{{group.repo_name}}//libraries/cpp/{{target.parent_folder}}",
         "@googletest//:gtest_main",
     ],
-    tags = ["no-sandbox"],
 )
 {%- endif %}
 

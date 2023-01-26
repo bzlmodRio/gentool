@@ -13,21 +13,21 @@ cc_library(
         "@{{dep.repo_name}}//libraries/cpp/{{dep.parent_folder}}:shared",
       {%- endfor %}
     ]{% if target.platform_deps %} + {% else %},{% endif %}{% endif %}
-    {% if target.platform_deps %}
-    # Binaries
-    select({
-      {%- for t, deps in target.platform_deps.items() %}
-        "{{t}}": [
-        {%- for dep in deps %}
-         {%- if target.repo_name == dep.repo_name %}
-            "//private/cpp/{{dep.parent_folder}}:shared",
-         {%- else %}
-            "@{{dep.repo_name}}//libraries/cpp/{{dep.parent_folder}}:shared",
-         {%- endif %}
-        {%- endfor %}
-        ],
-      {%- endfor %}
-    }),
+    {%- if target.platform_deps %}
+        # Binaries
+        select({
+          {%- for t, deps in target.platform_deps.items() %}
+            "{{t}}": [
+            {%- for dep in deps %}
+             {%- if target.repo_name == dep.repo_name %}
+                "//private/cpp/{{dep.parent_folder}}:shared",
+             {%- else %}
+                "@{{dep.repo_name}}//libraries/cpp/{{dep.parent_folder}}:shared",
+             {%- endif %}
+            {%- endfor %}
+            ],
+          {%- endfor %}
+        }),
     {%- endif %}
 )
 {%- if target.has_static %}

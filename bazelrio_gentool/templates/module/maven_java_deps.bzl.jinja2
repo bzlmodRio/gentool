@@ -6,7 +6,7 @@ def __setup_{{group.sanitized_repo_name}}_java_dependencies(mctx):
         name = "{{java_dep.import_repo_name}}",
         artifact = "{{java_dep.group_id}}:{{java_dep.name}}:{{java_dep.version}}",
         artifact_sha256 = "{{java_dep.get_sha256()}}",
-        server_urls = ["https://frcmaven.wpi.edu/release"],
+        server_urls = ["{{java_dep.maven_url}}"],
     )
     {%- endfor %}
 
@@ -17,6 +17,7 @@ setup_{{group.sanitized_repo_name}}_java_dependencies = module_extension(
     __setup_{{group.sanitized_repo_name}}_java_dependencies,
 )
 {%- if group.has_direct_maven_deps() %}
+
 def get_{{group.sanitized_repo_name}}_java_dependencies():
     artifacts = [
         {%- for maven_dep in group.get_all_maven_dependencies2() %}

@@ -8,6 +8,7 @@ def generate_toolchain(module_directory, config):
     template_files = [
         "extensions.bzl",
         "maven_deps.bzl",
+        "WORKSPACE",
         "constraints/is_roborio/BUILD",
         "platforms/roborio/BUILD",
         "toolchains/BUILD",
@@ -18,7 +19,6 @@ def generate_toolchain(module_directory, config):
         "toolchains/cross_compiler/BUILD",
         "toolchains/cross_compiler/cc-toolchain-config.bzl",
         "toolchains/cross_compiler/command_wrapper.tpl",
-        "toolchains/cross_compiler/toolchain.tpl",
         
         "MODULE.bazel",
         "tests/BUILD.bazel",
@@ -35,13 +35,15 @@ def generate_toolchain(module_directory, config):
     template_files = [
         ".github/workflows/build.yml",
         ".github/workflows/lint.yml",
+        ".bazelrc-buildbuddy",
+        ".bazelignore",
         ".bazelrc",
         ".gitignore",
         "BUILD.bazel",
         "README.md",
         "WORKSPACE.bzlmod",
-        # "WORKSPACE",
         "tests/.bazelrc",
+        "tests/.bazelrc-buildbuddy",
         "tests/.bazelversion",
     ]
 

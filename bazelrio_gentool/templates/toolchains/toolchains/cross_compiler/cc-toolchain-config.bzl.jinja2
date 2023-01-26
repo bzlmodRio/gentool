@@ -149,11 +149,16 @@ def _impl(ctx):
         ],
     )
 
+    compiler_param_feature = feature(
+        name = "compiler_param_file",
+    )
+
     features = [
         unfiltered_compile_flags_feature,
         default_link_flags_feature,
         default_compile_flags_feature,
         sysroot_feature,
+        compiler_param_feature,
     ]
 
     return cc_common.create_cc_toolchain_config_info(
