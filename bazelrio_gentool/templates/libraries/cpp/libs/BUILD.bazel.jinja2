@@ -1,9 +1,9 @@
 alias(
     name = "{{target.parent_folder}}",
-    actual = ":shared",
+    actual = {%- if target.get_shared_library_select() != "," %}":shared"{% else %}":static"{%endif%},
     visibility = {{ visibility }},
 )
-
+{% if target.get_shared_library_select() != "," %}
 cc_library(
     name = "shared",
     linkstatic = 1,
@@ -22,7 +22,7 @@ cc_library(
         "@{{group.repo_name}}//private/cpp/{{target.parent_folder}}:shared",
     ],
 )
-
+{% endif %}
 cc_library(
     name = "static",
     linkstatic = 1,

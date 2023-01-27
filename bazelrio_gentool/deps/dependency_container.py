@@ -43,6 +43,8 @@ class DependencyContainer:
         self.fail_on_hash_miss = True
         self.extra_maven_repos = []
 
+        self.sanitized_version = self.version.replace("+", "-")
+
     def __repr__(self):
         output = f"DepContainer: {self.repo_name}, {self.version}"
         return output
@@ -53,6 +55,7 @@ class DependencyContainer:
         self.module_dependencies[dependency.container.repo_name] = dependency
         self.dep_lookup.update(dependency.container.dep_lookup)
 
+
         for repo_name, subdep in dependency.container.module_dependencies.items():
             self.add_module_dependency(subdep)
 
@@ -60,6 +63,8 @@ class DependencyContainer:
             for meta_dep in meta_deps:
                 self.dep_lookup[meta_dep] = dict(repo_name=dependency.container.repo_name, parent_folder=meta_dep)
 
+        print(self.module_dependencies.keys())
+        
     def create_cc_dependency(self, name, dependencies=[], version=None, **kwargs):
         if version is None:
             version = self.version
@@ -69,9 +74,11 @@ class DependencyContainer:
         self.cc_deps.append(dep)
         self.dep_lookup[name] = dep
 
-    def create_java_dependency(self, name, dependencies=[], **kwargs):
+    def create_java_dependency(self, name, dependencies=[], version=None, **kwargs):
+        if version is None:
+            version = self.version
         dependencies = [self.dep_lookup[d] for d in dependencies]
-        dep = JavaDependency(name=name, version=self.version, dependencies=dependencies, repo_name=self.repo_name, maven_url=self.maven_url, **kwargs)
+        dep = JavaDependency(name=name, version=version, dependencies=dependencies, repo_name=self.repo_name, maven_url=self.maven_url, **kwargs)
 
         self.java_deps.append(dep)
         self.dep_lookup[name] = dep

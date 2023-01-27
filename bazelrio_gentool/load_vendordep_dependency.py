@@ -53,6 +53,7 @@ def vendordep_dependency(module_name, vendor_file, year, fail_on_hash_miss, has_
         ):
             maven_dep.create_java_dependency(
                 name=java_dep["artifactId"], group_id=java_dep["groupId"], parent_folder="parent",
+                version=java_dep["version"],
             )
 
         return maven_dep

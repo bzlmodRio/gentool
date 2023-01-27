@@ -10,7 +10,7 @@ from bazelrio_gentool.load_cached_versions import update_cached_version
 import hashlib
 from urllib.request import urlopen
 
-def generate_json(central_registery_location, group, module_json_template, module_template):
+def generate_json(central_registery_location, group, module_json_template, module_template, **kwargs):
     if module_json_template is None:
         module_json_template = os.path.join(TEMPLATE_BASE_DIR, "publish", "module_config.json.jinja2")
         
@@ -24,10 +24,10 @@ def generate_json(central_registery_location, group, module_json_template, modul
     
     module_bazel_file = os.path.join(central_registery_location, "json", group.repo_name, group.version, "MODULE.bazel")
 
-    render_template(module_template, module_bazel_file, group=group, module_bazel_file=module_bazel_file, hash=hash, mandetory_dependencies=mandatory_dependencies)
+    render_template(module_template, module_bazel_file, group=group, module_bazel_file=module_bazel_file, hash=hash, mandetory_dependencies=mandatory_dependencies, **kwargs)
     
     json_file = os.path.join(central_registery_location, "json", group.repo_name, group.version, "config.json")
-    render_template(module_json_template, json_file, group=group, module_bazel_file=module_bazel_file, hash=hash)
+    render_template(module_json_template, json_file, group=group, module_bazel_file=module_bazel_file, hash=hash, **kwargs)
 
     module_directory = os.path.join(central_registery_location, "json", group.repo_name)
 

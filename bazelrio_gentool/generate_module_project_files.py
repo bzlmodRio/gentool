@@ -20,7 +20,7 @@ def create_default_mandatory_settings(
 ):
     default_rules_roborio_toolchain = MandetoryDependencySetting(
         "rules_roborio_toolchain",
-        "2022-1",
+        "2023-7",
         use_local_roborio,
     )
     default_rules_bazelrio = MandetoryDependencySetting(
@@ -48,7 +48,7 @@ class MandatoryDependencySettings:
         self.rules_bazelrio = rules_bazelrio
 
 
-def generate_module_project_files(module_directory, group, mandetory_dependencies):
+def generate_module_project_files(module_directory, group, mandetory_dependencies, no_roborio=False):
 
     template_files = [
         ".github/workflows/build.yml",
@@ -91,6 +91,7 @@ def generate_module_project_files(module_directory, group, mandetory_dependencie
             output_file,
             group=group,
             mandetory_dependencies=mandetory_dependencies,
+            no_roborio=no_roborio,
         )
 
         if output_file.endswith(".sh"):
@@ -105,6 +106,7 @@ def generate_module_project_files(module_directory, group, mandetory_dependencie
                 output_file,
                 group=group,
                 mandetory_dependencies=mandetory_dependencies,
+                no_roborio=no_roborio,
             )
 
             if output_file.endswith(".sh"):

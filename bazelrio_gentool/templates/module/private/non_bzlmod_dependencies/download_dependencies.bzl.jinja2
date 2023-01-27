@@ -25,6 +25,7 @@ def download_dependencies():
         url = "https://github.com/bzlmodRio/rules_bazelrio/archive/refs/tags/{{ mandetory_dependencies.rules_bazelrio.version }}.tar.gz",
     )
     {%- endif %}
+{%- if not no_roborio %}
 
     # Roborio Toolchain
     {%- if mandetory_dependencies.rules_roborio_toolchain.use_local_version %}
@@ -40,6 +41,7 @@ def download_dependencies():
         url = "https://github.com/bzlmodRio/rules_roborio_toolchain/archive/refs/tags/{{ mandetory_dependencies.rules_roborio_toolchain.version }}.tar.gz",
     )
     {%- endif %}
+{%- endif %}
 
     ########################
     # bzlmodRio dependencies

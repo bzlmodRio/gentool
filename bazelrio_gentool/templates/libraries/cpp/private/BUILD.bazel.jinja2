@@ -1,3 +1,4 @@
+{%- if target.get_shared_library_select() != "," %}
 cc_library(
     name = "shared",
     linkstatic = 1,
@@ -12,6 +13,7 @@ cc_library(
 {{target.get_shared_library_select()}}
     }),
 )
+{%- endif %}
 {%- if target.get_static_library_select() != "," %}
 
 cc_library(

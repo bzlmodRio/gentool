@@ -2,7 +2,7 @@ load("//libraries/tools:tool_launchers.bzl", "executable_tool_launcher")
 
 executable_tool_launcher(
     name = "{% if target.lower_target_name %}{{target.artifact_name.lower()}}{% else %} {{target.artifact_name}} {%endif%}",
-    base_repo_name = "bazelrio_edu_wpi_first_tools_glass",
-    macos_app = "Glass.app",
+    base_repo_name = "{{target.get_archive_name()}}",
+    macos_app = "{{target.artifact_name}}.app",
 )
 

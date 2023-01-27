@@ -1,6 +1,6 @@
 module(
     name = "{{group.repo_name}}",
-    version = "{{group.version}}",
+    version = "{{group.sanitized_version}}",
     compatibility_level = {{group.year}},
 )
 
@@ -43,6 +43,7 @@ use_repo(
     setup_{{group.sanitized_repo_name}}_cpp_dependencies,
     {{group.sorted_cc_deps()}}
 )
+{%- if group.java_deps %}
 
 setup_{{group.sanitized_repo_name}}_java_dependencies = use_extension("//:maven_java_deps.bzl", "setup_{{group.sanitized_repo_name}}_java_dependencies")
 use_repo(
@@ -51,4 +52,5 @@ use_repo(
     "{{java_dep.import_repo_name}}",
     {%- endfor %}
 )
+{%- endif %}
 
