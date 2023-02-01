@@ -87,8 +87,8 @@ class CcDependency(MultiResourceDependency):
             full_res = res 
             if full_res in self.CONDITIONS_LOOKUP:
                 lines.append(f'        "{self.CONDITIONS_LOOKUP[full_res]}": ["@{self.get_archive_name(res)}//:{library_build}"]')
-            else:
-                print("Unknown", full_res)
+            ##else:
+            #    print("Unknown", full_res)
             # condition = self.__resource_type_to_condition(res)
             # if condition:
             #     lines.append(f'        "{condition}": ["@{self.get_archive_name(res)}//:shared_libs"]')

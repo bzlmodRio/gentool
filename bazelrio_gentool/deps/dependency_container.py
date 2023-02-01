@@ -63,7 +63,7 @@ class DependencyContainer:
             for meta_dep in meta_deps:
                 self.dep_lookup[meta_dep] = dict(repo_name=dependency.container.repo_name, parent_folder=meta_dep)
 
-        print(self.module_dependencies.keys())
+        # print(self.module_dependencies.keys())
         
     def create_cc_dependency(self, name, dependencies=[], version=None, **kwargs):
         if version is None:
@@ -114,7 +114,7 @@ class DependencyContainer:
     def has_direct_maven_deps(self):
         for java_dep in self.java_deps:
             if java_dep.maven_deps:
-                print("Has maven deps....", java_dep)
+                # print("Has maven deps....", java_dep)
                 return True
                 
         return False
@@ -127,7 +127,7 @@ class DependencyContainer:
             if module_dep.container.has_any_maven_deps():
                 return True            
 
-        print("NO MAVEN DEPS", self)
+        # print("NO MAVEN DEPS", self)
         return False
 
 
