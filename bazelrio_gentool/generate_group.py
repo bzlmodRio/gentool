@@ -18,6 +18,10 @@ def __write_dependency_file(base_output_directory, group, target, language, forc
     template_base = os.path.join(TEMPLATE_BASE_DIR, "libraries", language)
     lib_dir = os.path.join(base_output_directory, language, target.parent_folder)
     test_dir = os.path.join(base_output_directory, "..", "tests", language, target.parent_folder)
+
+    if language == "java":
+        test_dir = os.path.join(base_output_directory, "..", "tests", language, target.parent_folder.lower().replace("-", ""))
+
     
     # Write BUILD file
     template_file = os.path.join(template_base, lib_folder, "BUILD.bazel.jinja2")

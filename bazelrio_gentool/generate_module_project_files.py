@@ -98,7 +98,15 @@ def generate_module_project_files(module_directory, group, mandetory_dependencie
             os.chmod(output_file, 0o755)
 
     if group.java_deps:
-        for tf in ["maven_java_deps.bzl"]:
+        for tf in [
+            "maven_java_deps.bzl",
+            "tests/styleguide/BUILD.bazel",
+            "tests/styleguide/checkstyle-suppressions.xml",
+            "tests/styleguide/checkstyle.xml",
+            "tests/styleguide/java_styleguide.bzl",
+            "tests/styleguide/pmd-ruleset.xml",
+            
+            ]:
             template_file = os.path.join(TEMPLATE_BASE_DIR, "module", tf + ".jinja2")
             output_file = os.path.join(module_directory, tf)
             render_template(

@@ -47,4 +47,46 @@ maven_install(
     repositories = maven_repositories,
     # maven_install_json = "//build_scripts/bazel/deps:maven_install.json",
 )
+
+
+local_repository(
+    name = "rules_checkstyle",
+    path = "../../rules_checkstyle",
+)
+
+load("@rules_checkstyle//checkstyle:load_checkstyle_rule_dependencies.bzl", "load_checkstyle_rule_dependencies")
+
+load_checkstyle_rule_dependencies()
+
+## Toolchains
+load("@rules_checkstyle//checkstyle:load_checkstyle_dependencies.bzl", "load_checkstyle_dependencies")
+
+load_checkstyle_dependencies()
+
+local_repository(
+    name = "rules_pmd",
+    path = "../../rules_pmd",
+)
+
+load("@rules_pmd//pmd:dependencies.bzl", "rules_pmd_dependencies")
+
+rules_pmd_dependencies()
+
+load("@rules_pmd//pmd:toolchains.bzl", "rules_pmd_toolchains")
+
+rules_pmd_toolchains()
+
+local_repository(
+    name = "rules_spotless",
+    path = "../../rules_spotless",
+)
+
+load("@rules_spotless//spotless:load_spotless_rule_dependencies.bzl", "load_spotless_rule_dependencies")
+
+load_spotless_rule_dependencies()
+
+## Toolchains
+load("@rules_spotless//spotless:load_spotless_dependencies.bzl", "load_spotless_dependencies")
+
+load_spotless_dependencies()
 {% endif %}

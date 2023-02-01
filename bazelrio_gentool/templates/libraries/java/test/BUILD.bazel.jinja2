@@ -1,4 +1,5 @@
 load("@rules_bazelrio//:java_rules.bzl", "bazelrio_java_binary", "bazelrio_java_test")
+load("//styleguide:java_styleguide.bzl", "java_styleguide")
 
 bazelrio_java_binary(
     name = "main",
@@ -46,3 +47,23 @@ bazelrio_java_test(
     ],
 )
 
+pmd(
+    name = "pmd_analysis",
+    srcs = glob(["*.java"]),
+    rulesets = ["//styleguide:pmd_rules"],
+    tags = ["java-styleguide"],
+)
+
+checkstyle(
+    name = "checkstyle_analysis",
+    srcs = glob(["*.java"]),
+    config_file = "//styleguide:checkstyle",
+    tags = ["java-styleguide"],
+)
+
+
+spotless(
+    name = "spotless",
+    srcs = glob(["*.java"]),
+    tags = ["java-styleguide", "no-sandbox"],
+)
