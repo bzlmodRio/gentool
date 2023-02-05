@@ -1,27 +1,27 @@
 constraint_setting(
-    name = "is_roborio",
+    name = "is_{{config.short_name_no_dash}}",
     default_constraint_value = ":false",
 )
 
 constraint_value(
     name = "true",
-    constraint_setting = ":is_roborio",
+    constraint_setting = ":is_{{config.short_name_no_dash}}",
     visibility = ["//visibility:public"],
 )
 
 constraint_value(
     name = "false",
-    constraint_setting = ":is_roborio",
+    constraint_setting = ":is_{{config.short_name_no_dash}}",
 )
 
 config_setting(
-    name = "roborio",
+    name = "{{config.short_name_no_dash}}",
     constraint_values = [":true"],
     visibility = ["//visibility:public"],
 )
 
 config_setting(
-    name = "roborio_debug",
+    name = "{{config.short_name_no_dash}}_debug",
     constraint_values = [":true"],
     values = {
         "compilation_mode": "dbg",

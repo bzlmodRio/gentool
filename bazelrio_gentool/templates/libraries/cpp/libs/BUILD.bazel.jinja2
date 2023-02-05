@@ -9,7 +9,7 @@ cc_library(
     linkstatic = 1,
     {%- if target.has_incompatible_targets() %}
     target_compatible_with = select({
-        "@rules_roborio_toolchain//constraints/is_roborio:roborio": ["@platforms//:incompatible"],
+        "@rules_bzlmodrio_toolchains//constraints/is_roborio:roborio": ["@platforms//:incompatible"],
         "//conditions:default": [],
     }),
     {%- endif %}
@@ -28,7 +28,7 @@ cc_library(
     linkstatic = 1,
     {%- if target.has_incompatible_targets() %}
     target_compatible_with = select({
-        "@rules_roborio_toolchain//constraints/is_roborio:roborio": ["@platforms//:incompatible"],
+        "@rules_bzlmodrio_toolchains//constraints/is_roborio:roborio": ["@platforms//:incompatible"],
         "//conditions:default": [],
     }),
     {%- endif %}

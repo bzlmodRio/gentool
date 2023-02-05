@@ -1,0 +1,10 @@
+
+load("@rules_wpiformat//wpiformat:defs.bzl", "format_target")
+
+def cc_styleguide(name, srcs = None):
+    if not srcs:
+        srcs = native.glob(["*.cpp", "*.cc", "*.hpp", "*.hh", "*.h"])
+
+    format_target(name + ".wpiformat", srcs=srcs)
+
+    pass

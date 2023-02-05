@@ -14,21 +14,23 @@ def configure_cross_compiler_impl(repository_ctx):
         "{tool_platform_suffix}": "",
         "{sep}": "/",
         "{arg_passthrough}": '"$@"',
+        "{repo_short_name}": repository_ctx.attr.repo_shortname,
+        "{repo_short_name_no_dash}": repository_ctx.attr.repo_shortname.replace("_", ""),
     }
 
     if repository_ctx.os.name.startswith("windows"):
         substitutions["{command_prefix}"] = "@echo off\n"
         substitutions["{tool_platform_suffix}"] = ".exe"
-        substitutions["{compiler_repo}"] = "bazelrio_roborio_toolchain_windows"
+        substitutions["{compiler_repo}"] = "bazelrio_{}_toolchain_windows".format(repository_ctx.attr.repo_shortname)
         substitutions["{sep}"] = "\\"
         substitutions["{bin_subfolder}"] = substitutions["{bin_subfolder}"].replace("/", "\\")
 
         substitutions["{arg_passthrough}"] = "%*"
         substitutions["{wrapper_extension}"] = ".bat"
     elif repository_ctx.os.name == "mac os x":
-        substitutions["{compiler_repo}"] = "bazelrio_roborio_toolchain_macos"
+        substitutions["{compiler_repo}"] = "bazelrio_{}_toolchain_macos".format(repository_ctx.attr.repo_shortname)
     elif repository_ctx.os.name == "linux":
-        substitutions["{compiler_repo}"] = "bazelrio_roborio_toolchain_linux"
+        substitutions["{compiler_repo}"] = "bazelrio_{}_toolchain_linux".format(repository_ctx.attr.repo_shortname)
     else:
         fail("Unknown os " + repository_ctx.os.name)
 
@@ -52,25 +54,19 @@ def configure_cross_compiler_impl(repository_ctx):
         bin_substitution["{compiler_workspace}"] = compiler_workspace
         repository_ctx.template(
             "bin/" + binary + substitutions["{wrapper_extension}"],
-            repository_ctx.path(Label("@rules_roborio_toolchain//toolchains/cross_compiler:command_wrapper.tpl")),
+            repository_ctx.path(Label("@{{container.repo_name}}//toolchains/cross_compiler:command_wrapper.tpl")),
             substitutions = bin_substitution,
         )
 
     repository_ctx.template(
         "BUILD.bazel",
-        repository_ctx.path(Label("@rules_roborio_toolchain//toolchains/cross_compiler:BUILD.tpl")),
+        repository_ctx.path(Label("@{{container.repo_name}}//toolchains/cross_compiler:BUILD.tpl")),
         substitutions = substitutions,
     )
 
     repository_ctx.template(
         "cc-toolchain-config.bzl",
-        repository_ctx.path(Label("@rules_roborio_toolchain//toolchains/cross_compiler:cc-toolchain-config.bzl")),
-        substitutions = substitutions,
-    )
-
-    repository_ctx.template(
-        "toolchain.bzl",
-        repository_ctx.path(Label("@rules_roborio_toolchain//toolchains/cross_compiler:toolchain.tpl")),
+        repository_ctx.path(Label("@{{container.repo_name}}//toolchains/cross_compiler:cc-toolchain-config.bzl")),
         substitutions = substitutions,
     )
 
@@ -84,6 +80,7 @@ configure_cross_compiler = repository_rule(
         "sysroot_subfolder": attr.string(mandatory = True),
         "cxx_version": attr.string(mandatory = True),
         "sysroot_include_folder": attr.string(mandatory = True),
+        "repo_shortname": attr.string(mandatory = True),
     },
 )
 

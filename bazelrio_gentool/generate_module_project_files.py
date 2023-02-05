@@ -19,7 +19,7 @@ def create_default_mandatory_settings(
     use_local_bazelrio,
 ):
     default_rules_roborio_toolchain = MandetoryDependencySetting(
-        "rules_roborio_toolchain",
+        "rules_bzlmodrio_toolchains",
         "2023-7",
         use_local_roborio,
     )
@@ -103,8 +103,11 @@ def generate_module_project_files(module_directory, group, mandetory_dependencie
             "tests/styleguide/BUILD.bazel",
             "tests/styleguide/checkstyle-suppressions.xml",
             "tests/styleguide/checkstyle.xml",
+            "tests/styleguide/cc_styleguide.bzl",
             "tests/styleguide/java_styleguide.bzl",
             "tests/styleguide/pmd-ruleset.xml",
+            "tests/.styleguide",
+            "tests/.styleguide-license",
             
             ]:
             template_file = os.path.join(TEMPLATE_BASE_DIR, "module", tf + ".jinja2")

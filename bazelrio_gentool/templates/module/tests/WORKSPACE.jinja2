@@ -9,9 +9,9 @@ local_repository(
 # Google Test
 http_archive(
     name = "googletest",
-    sha256 = "755f9a39bc7205f5a0c428e920ddad092c33c8a1b46997def3f1d4a82aded6e1",
-    strip_prefix = "googletest-5ab508a01f9eb089207ee87fd547d290da39d015",
-    urls = ["https://github.com/google/googletest/archive/5ab508a01f9eb089207ee87fd547d290da39d015.zip"],
+    sha256 = "24564e3b712d3eb30ac9a85d92f7d720f60cc0173730ac166f27dda7fed76cb2",
+    strip_prefix = "googletest-release-1.12.1",
+    urls = ["https://github.com/google/googletest/archive/release-1.12.1.zip"],
 )
 
 load("@{{group.repo_name}}//private/non_bzlmod_dependencies:download_dependencies.bzl", "download_dependencies")
@@ -48,7 +48,7 @@ maven_install(
     # maven_install_json = "//build_scripts/bazel/deps:maven_install.json",
 )
 
-
+{%- if include_styleguide %}
 local_repository(
     name = "rules_checkstyle",
     path = "../../rules_checkstyle",
@@ -89,4 +89,5 @@ load_spotless_rule_dependencies()
 load("@rules_spotless//spotless:load_spotless_dependencies.bzl", "load_spotless_dependencies")
 
 load_spotless_dependencies()
+{%- endif %}
 {% endif %}

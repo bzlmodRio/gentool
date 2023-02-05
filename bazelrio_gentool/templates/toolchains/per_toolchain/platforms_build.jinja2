@@ -1,9 +1,9 @@
 platform(
-    name = "roborio",
+    name = "{{config.short_name_no_dash}}",
     constraint_values = [
         "@platforms//os:linux",
         "@platforms//cpu:armv7",
-        "//constraints/is_roborio:true",
+        "//constraints/is_{{config.short_name_no_dash}}:true",
     ],
 )
 

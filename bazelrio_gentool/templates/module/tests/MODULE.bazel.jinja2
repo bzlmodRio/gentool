@@ -1,4 +1,4 @@
-bazel_dep(name = "{{group.repo_name}}", version = "", repo_name = "{{group.repo_name}}")
+bazel_dep(name = "{{group.repo_name}}", version = "")
 local_path_override(
     module_name = "{{group.repo_name}}",
     path = "..",
@@ -7,8 +7,8 @@ local_path_override(
 {%- if mandetory_dependencies.rules_roborio_toolchain.use_local_version %}
 
 local_path_override(
-    module_name = "rules_roborio_toolchain",
-    path = "../../rules_roborio_toolchain",
+    module_name = "rules_bzlmodrio_toolchains",
+    path = "../../rules_bzlmodrio_toolchains",
 )
 {%- endif %}
 {%- for name, module_dep in group.module_dependencies.items() %}
@@ -21,11 +21,11 @@ local_path_override(
 {%- endif %}
 {%- endfor %}
 
-bazel_dep(name = "googletest", version = "1.11.0")
-bazel_dep(name = "rules_cc", version = "0.0.2")
-bazel_dep(name = "rules_jvm_external", version = "4.4.2")
+bazel_dep(name = "googletest", version = "1.12.1")
+bazel_dep(name = "rules_cc", version = "0.0.4")
+bazel_dep(name = "rules_jvm_external", version = "4.5")
 bazel_dep(name = "rules_bazelrio", version = "{{mandetory_dependencies.rules_bazelrio.version}}")
-bazel_dep(name = "rules_roborio_toolchain", version = "{{mandetory_dependencies.rules_roborio_toolchain.version}}")
+bazel_dep(name = "rules_bzlmodrio_toolchains", version = "{{mandetory_dependencies.rules_roborio_toolchain.version}}")
 {%- for name, module_dep in group.module_dependencies.items() %}
 bazel_dep(name = "{{name}}", version = "{{module_dep.container.version}}")
 {%- endfor %}

@@ -1,26 +1,31 @@
 module(
-    name = "{{config.repo_name}}",
-    version = "{{config.version}}",
-    compatibility_level = {{config.year}},
+    name = "{{container.repo_name}}",
+    version = "{{container.version}}",
+    compatibility_level = {{container.year}},
 )
 
-bazel_dep(name = "platforms", version = "0.0.4")
-bazel_dep(name = "rules_cc", version = "0.0.2")
+bazel_dep(name = "platforms", version = "0.0.6")
+bazel_dep(name = "rules_cc", version = "0.0.4")
 
 deps = use_extension("//:maven_deps.bzl", "deps")
 use_repo(
     deps,
-    "bazelrio_roborio_toolchain_linux",
-    "bazelrio_roborio_toolchain_macos",
-    "bazelrio_roborio_toolchain_windows",
+{%- for config in container.configs %}
+    "bazelrio_{{config.short_name_underscore}}_toolchain_linux",
+    "bazelrio_{{config.short_name_underscore}}_toolchain_macos",
+    "bazelrio_{{config.short_name_underscore}}_toolchain_windows",
+{%- endfor %}
 )
 
-sh_configure = use_extension("@rules_roborio_toolchain//:extensions.bzl", "sh_configure")
-use_repo(sh_configure, "local_roborio")
+sh_configure = use_extension("@{{container.repo_name}}//:extensions.bzl", "sh_configure")
+use_repo(sh_configure, {%- for config in container.configs %}"local_{{config.short_name_underscore}}", {% endfor %})
+
 
 register_toolchains(
-    "@local_roborio//:macos",
-    "@local_roborio//:linux",
-    "@local_roborio//:windows",
+{%- for config in container.configs %}
+    "@local_{{config.short_name_underscore}}//:macos",
+    "@local_{{config.short_name_underscore}}//:linux",
+    "@local_{{config.short_name_underscore}}//:windows",
+{%- endfor %}
 )
 

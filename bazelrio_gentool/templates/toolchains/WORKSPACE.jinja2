@@ -1,16 +1,18 @@
-workspace(name = "{{config.repo_name}}")
 
-load("@rules_roborio_toolchain//:maven_deps.bzl", "setup_legacy_setup_toolchains_dependencies")
+
+load("@{{container.repo_name}}//:maven_deps.bzl", "setup_legacy_setup_toolchains_dependencies")
 
 setup_legacy_setup_toolchains_dependencies()
 
-load("@rules_roborio_toolchain//toolchains:load_toolchains.bzl", "load_toolchains")
+load("@{{container.repo_name}}//toolchains:load_toolchains.bzl", "load_toolchains")
 
 load_toolchains()
 
 register_toolchains(
-    "@local_roborio//:windows",
-    "@local_roborio//:linux",
-    "@local_roborio//:macos",
+{%- for config in container.configs %}
+    "@local_{{config.short_name_underscore}}//:macos",
+    "@local_{{config.short_name_underscore}}//:linux",
+    "@local_{{config.short_name_underscore}}//:windows",
+{%- endfor %}
 )
 

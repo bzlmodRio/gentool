@@ -1,13 +1,15 @@
 load("//toolchains:configure_cross_compiler.bzl", "configure_cross_compiler")
 
 def load_toolchains():
+{%- for config in container.configs %}
     configure_cross_compiler(
-        name = "local_roborio",
-        compiler = "roborio",
-        bin_subfolder = "roborio-academic/bin",
+        name = "local_{{config.short_name}}",
+        compiler = "{{config.short_name}}",
+        bin_subfolder = "{{config.short_name}}-academic/bin",
         bin_prefix = "arm-frc2023-linux-gnueabi-",
-        sysroot_subfolder = "roborio-academic/arm-nilrt-linux-gnueabi/sysroot",
+        sysroot_subfolder = "{{config.short_name}}-academic/arm-nilrt-linux-gnueabi/sysroot",
         cxx_version = "12",
         sysroot_include_folder = "arm-nilrt-linux-gnueabi",
     )
+{%- endfor %}
 

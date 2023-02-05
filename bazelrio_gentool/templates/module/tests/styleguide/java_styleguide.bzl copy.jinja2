@@ -1,0 +1,30 @@
+load("@rules_pmd//pmd:defs.bzl", "pmd")
+load("@rules_checkstyle//checkstyle:defs.bzl", "checkstyle")
+load("@rules_spotless//spotless:defs.bzl", "spotless")
+
+def java_styleguide(name, srcs = None):
+    if not srcs:
+        srcs = native.glob(["*.java"])
+
+    pmd(
+        name = "pmd_analysis",
+        srcs = srcs,
+        rulesets = ["//styleguide:pmd_rules"],
+        tags = ["java-styleguide"],
+    )
+
+    checkstyle(
+        name = "checkstyle_analysis",
+        srcs = srcs,
+        config_file = "//styleguide:checkstyle",
+        tags = ["java-styleguide"],
+    )
+
+    spotless(
+        name = "spotless",
+        srcs = srcs,
+        tags = [
+            "java-styleguide",
+            "no-sandbox",
+        ],
+    )
