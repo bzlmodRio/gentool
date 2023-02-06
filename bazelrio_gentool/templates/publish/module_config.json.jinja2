@@ -8,10 +8,10 @@
     "patch_strip": 0,
     "patches": [],
     "presubmit_yml": null,
-    "strip_prefix": "{{group.repo_name.replace("bzlmodrio", "bzlmodRio")}}-{{group.version.replace("+", "-")}}",
+    "strip_prefix": "{{group.repo_name.replace("bzlmodrio", "bzlmodRio")}}-{{group.version.replace("+", "-")}}{{group.patch}}",
     "test_module_build_targets": [],
     "test_module_path": "test",
     "test_module_test_targets": [],
-    "url": "https://github.com/bzlmodRio/{{group.repo_name}}/archive/refs/tags/{{group.version}}.tar.gz",
-    "version": "{{group.sanitized_version}}"
+    "url": "https://github.com/bzlmodRio/{{group.repo_name}}/archive/refs/tags/{{group.version}}{{group.patch}}.tar.gz",
+    "version": "{{group.sanitized_version}}{{group.patch}}"
 }

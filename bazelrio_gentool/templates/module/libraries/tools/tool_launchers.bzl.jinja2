@@ -34,7 +34,7 @@ def executable_tool_launcher(name, base_repo_name, macos_app = None):
         args = repo_name + subpath + exe_name,
         deps = ["@bazel_tools//tools/bash/runfiles"],
         visibility = ["//visibility:public"],
-        tags = ["no-roborio"],
+        tags = ["no-roborio", "no-bullseye", "no-raspi"],
     )
 
 def java_tool_launcher(name, main_class, base_repo_name):
@@ -47,6 +47,6 @@ def java_tool_launcher(name, main_class, base_repo_name):
             "@bazel_tools//src/conditions:darwin": ["@" + base_repo_name + "_macx64//jar"],
         }),
         visibility = ["//visibility:public"],
-        tags = ["no-roborio"],
+        tags = ["no-roborio", "no-bullseye", "no-raspi"],
     )
 

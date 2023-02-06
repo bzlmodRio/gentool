@@ -24,7 +24,7 @@ class ModuleDependency:
 
 class DependencyContainer:
 
-    def __init__(self, repo_name, version, year, maven_url):
+    def __init__(self, repo_name, version, year, maven_url, patch=""):
         self.repo_name = repo_name
         self.sanitized_repo_name = repo_name.replace("-", "_")
         self.version = version
@@ -42,6 +42,7 @@ class DependencyContainer:
         self.strip_prefix = None
         self.fail_on_hash_miss = True
         self.extra_maven_repos = []
+        self.patch = patch
 
         self.sanitized_version = self.version.replace("+", "-")
 

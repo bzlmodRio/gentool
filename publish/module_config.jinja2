@@ -2,7 +2,7 @@
 module(
     name = "{{group.repo_name}}",
     compatibility_level = {{group.year}},
-    version = "{{group.version}}",
+    version = "{{group.version}}{{group.patch}}",
 )
 
 bazel_dep(name = "rules_python", version = "0.16.1")

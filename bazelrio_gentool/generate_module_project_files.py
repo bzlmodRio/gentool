@@ -72,6 +72,10 @@ def generate_module_project_files(module_directory, group, mandetory_dependencie
         "tests/MODULE.bazel",
         "tests/WORKSPACE.bzlmod",
         "tests/WORKSPACE",
+        "tests/.styleguide",
+        "tests/.styleguide-license",
+        "tests/styleguide/BUILD.bazel",
+        "tests/styleguide/cc_styleguide.bzl",
     ]
 
     if group.executable_tools or group.java_native_tools:
@@ -100,14 +104,10 @@ def generate_module_project_files(module_directory, group, mandetory_dependencie
     if group.java_deps:
         for tf in [
             "maven_java_deps.bzl",
-            "tests/styleguide/BUILD.bazel",
             "tests/styleguide/checkstyle-suppressions.xml",
             "tests/styleguide/checkstyle.xml",
-            "tests/styleguide/cc_styleguide.bzl",
             "tests/styleguide/java_styleguide.bzl",
             "tests/styleguide/pmd-ruleset.xml",
-            "tests/.styleguide",
-            "tests/.styleguide-license",
             
             ]:
             template_file = os.path.join(TEMPLATE_BASE_DIR, "module", tf + ".jinja2")

@@ -22,11 +22,11 @@ def generate_json(central_registery_location, group, module_json_template, modul
         use_local_roborio=False,
         use_local_bazelrio=False)
     
-    module_bazel_file = os.path.join(central_registery_location, "json", group.repo_name, group.version, "MODULE.bazel")
+    module_bazel_file = os.path.join(central_registery_location, "json", group.repo_name, group.version + group.patch, "MODULE.bazel")
 
     render_template(module_template, module_bazel_file, group=group, module_bazel_file=module_bazel_file, hash=hash, mandetory_dependencies=mandatory_dependencies, **kwargs)
     
-    json_file = os.path.join(central_registery_location, "json", group.repo_name, group.version, "config.json")
+    json_file = os.path.join(central_registery_location, "json", group.repo_name, group.version + group.patch, "config.json")
     render_template(module_json_template, json_file, group=group, module_bazel_file=module_bazel_file, hash=hash, **kwargs)
 
     module_directory = os.path.join(central_registery_location, "json", group.repo_name)

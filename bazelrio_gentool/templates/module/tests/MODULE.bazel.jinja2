@@ -27,7 +27,7 @@ bazel_dep(name = "rules_jvm_external", version = "4.5")
 bazel_dep(name = "rules_bazelrio", version = "{{mandetory_dependencies.rules_bazelrio.version}}")
 bazel_dep(name = "rules_bzlmodrio_toolchains", version = "{{mandetory_dependencies.rules_roborio_toolchain.version}}")
 {%- for name, module_dep in group.module_dependencies.items() %}
-bazel_dep(name = "{{name}}", version = "{{module_dep.container.version}}")
+bazel_dep(name = "{{name}}", version = "{{module_dep.container.version}}{{module_dep.container.patch}}")
 {%- endfor %}
 
 maven = use_extension("@rules_jvm_external//:extensions.bzl", "maven")

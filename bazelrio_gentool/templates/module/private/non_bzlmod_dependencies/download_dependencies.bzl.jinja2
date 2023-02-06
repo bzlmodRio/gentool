@@ -56,8 +56,8 @@ def download_dependencies():
     http_archive(
         name = "{{name}}",
         sha256 = "{{module_dep.remote_sha}}",
-        strip_prefix = "{{module_dep.remote_repo}}-{{module_dep.container.version}}",
-        url = "https://github.com/bzlmodRio/{{module_dep.remote_repo}}/archive/refs/tags/{{module_dep.container.version}}.tar.gz",
+        strip_prefix = "{{module_dep.remote_repo}}-{{module_dep.container.version}}{{module_dep.container.patch}}",
+        url = "https://github.com/bzlmodRio/{{module_dep.remote_repo}}/archive/refs/tags/{{module_dep.container.version}}{{module_dep.container.patch}}.tar.gz",
     )
 {%- endif %}
 {% endfor %}
