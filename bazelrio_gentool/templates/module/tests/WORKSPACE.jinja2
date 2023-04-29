@@ -91,3 +91,19 @@ load("@rules_spotless//spotless:load_spotless_dependencies.bzl", "load_spotless_
 load_spotless_dependencies()
 {%- endif %}
 {% endif %}
+load("//styleguide/private:download_styleguide_deps.bzl", "download_styleguide_deps")
+
+download_styleguide_deps()
+
+load("//styleguide/private:load_styleguide_deps.bzl", "load_styleguide_deps")
+
+load_styleguide_deps()
+
+load("//styleguide/private:setup_styleguide.bzl", "setup_styleguide")
+
+setup_styleguide()
+
+load("@rules_wpiformat_pip//:requirements.bzl", "install_deps")
+
+install_deps()
+

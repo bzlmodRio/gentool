@@ -20,7 +20,10 @@ def generate_json(central_registery_location, group, module_json_template, modul
     hash = subprocess.check_output(args=["git", "rev-parse", "HEAD"]).decode("utf-8").strip()
     mandatory_dependencies = create_default_mandatory_settings(
         use_local_roborio=False,
-        use_local_bazelrio=False)
+        use_local_bazelrio=False,
+        use_local_rules_pmd=False,
+        use_local_rules_checkstyle=False,
+        use_local_rules_wpiformat=False)
     
     module_bazel_file = os.path.join(central_registery_location, "json", group.repo_name, group.version + group.patch, "MODULE.bazel")
 

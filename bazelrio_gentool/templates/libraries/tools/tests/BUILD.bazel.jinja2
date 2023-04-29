@@ -1,17 +1,22 @@
-{%- for target in group.executable_tools %}
-
-alias(
+{% for target in group.executable_tools %}alias(
     name = "{{target.artifact_name}}",
     actual = "@bzlmodrio-allwpilib//libraries/tools/{% if True %}{{target.artifact_name.lower()}}{%else%} TODO {%endif%}",
-    tags = ["no-roborio", "no-bullseye", "no-raspi"],
+    tags = [
+        "no-bullseye",
+        "no-raspi",
+        "no-roborio",
+    ],
 )
-{%- endfor %}
-{%- for target in group.java_native_tools %}
 
+{% endfor %}
+{%- for target in group.java_native_tools %}
 alias(
     name = "{{target.artifact_name}}",
     actual = "@bzlmodrio-allwpilib//libraries/tools/{{target.artifact_name}}",
-    tags = ["no-roborio", "no-bullseye", "no-raspi"],
+    tags = [
+        "no-bullseye",
+        "no-raspi",
+        "no-roborio",
+    ],
 )
-{%- endfor %}
-
+{% endfor %}

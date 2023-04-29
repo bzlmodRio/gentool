@@ -9,6 +9,9 @@ bzlmodrio-allwpilib:
   2023.2.1:
     commitish: d117e8d80d584960d70fc83e858aab83511d3737
     sha: 4421ec2ef4e4904af632e7f38c6e0fe1b7fe5fd6d10955759b26e76d76551d55
+  2023.3.2:
+    commitish: 1c51d6c1058f83091e2f0d1cf2bee5e1cd8caf1f
+    sha: 2faa5dedf3ded5191d08638a62840ad59e938c25fc0905c9f7072d1865020479
 bzlmodrio-apriltaglib:
   3.2.0-3:
     commitish: 739577fb603c2f18c1c55bef154e41561b25c5e3
@@ -64,3 +67,15 @@ rules_bzlmodrio_toolchains:
   2023-7:
     commitish: 3fdada728adb8b939922fe766469bd46a2e53c95
     sha: b24d5813300ebe9a252c5e1c69a421c0d112f50da0d7b22c8de5efd7bca6babf
+rules_checkstyle:
+  '10.1':
+    commitish: ''
+    sha: c9ad648693b72137b27e274789cdf9d1f4b7b0bdeba1ea84a572b42ac5e3aac7
+rules_pmd:
+  6.39.0:
+    commitish: ''
+    sha: 6007cf19e55cb06ef4ff4933e857a833f079a57ef89b7603b0c168f46ca400d4
+rules_wpiformat:
+  '2022.30':
+    commitish: ''
+    sha: 8bef5845cb4fbc4637910522630767c2cf83d8a2370ecdf990dc4daebdb8bc50

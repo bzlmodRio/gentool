@@ -1,6 +1,6 @@
 alias(
     name = "{{target.parent_folder}}",
-    actual = {%- if target.get_shared_library_select() != "," %}":shared"{% else %}":static"{%endif%},
+    actual = {% if target.get_shared_library_select() != "," %}":shared"{% else %}":static"{%endif%},
     visibility = {{ visibility }},
 )
 {% if target.get_shared_library_select() != "," %}

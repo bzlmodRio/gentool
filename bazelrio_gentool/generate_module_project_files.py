@@ -13,10 +13,16 @@ class MandetoryDependencySetting:
         self.sha = cached_version['sha']
         self.commitish = cached_version['commitish']
 
+    def __repr__(self):
+        return f"MandetoryDependencySetting: {self.repo_name}, {self.version}, {self.use_local_version}"
+
 
 def create_default_mandatory_settings(
     use_local_roborio,
     use_local_bazelrio,
+    use_local_rules_pmd,
+    use_local_rules_checkstyle,
+    use_local_rules_wpiformat,
 ):
     default_rules_roborio_toolchain = MandetoryDependencySetting(
         "rules_bzlmodrio_toolchains",
@@ -28,11 +34,29 @@ def create_default_mandatory_settings(
         "0.0.9",
         use_local_bazelrio,
     )
+    default_rules_pmd = MandetoryDependencySetting(
+        "rules_pmd",
+        "6.39.0",
+        use_local_rules_pmd,
+    )
+    default_rules_checkstyle = MandetoryDependencySetting(
+        "rules_checkstyle",
+        "10.1",
+        use_local_rules_checkstyle,
+    )
+    default_rules_wpiformat = MandetoryDependencySetting(
+        "rules_wpiformat",
+        "2022.30",
+        use_local_rules_wpiformat,
+    )
 
     return MandatoryDependencySettings(
         bcr_branch="megadiff",
         rules_roborio_toolchain=default_rules_roborio_toolchain,
         rules_bazelrio=default_rules_bazelrio,
+        rules_pmd=default_rules_pmd,
+        rules_checkstyle=default_rules_checkstyle,
+        rules_wpiformat=default_rules_wpiformat,
     )
 
 
@@ -41,11 +65,17 @@ class MandatoryDependencySettings:
         self,
         rules_roborio_toolchain,
         rules_bazelrio,
+        rules_pmd,
+        rules_checkstyle,
+        rules_wpiformat,
         bcr_branch="main",
     ):
         self.bcr_branch = bcr_branch
         self.rules_roborio_toolchain = rules_roborio_toolchain
         self.rules_bazelrio = rules_bazelrio
+        self.rules_pmd = rules_pmd
+        self.rules_checkstyle = rules_checkstyle
+        self.rules_wpiformat = rules_wpiformat
 
 
 def generate_module_project_files(module_directory, group, mandetory_dependencies, no_roborio=False):
@@ -57,6 +87,8 @@ def generate_module_project_files(module_directory, group, mandetory_dependencie
         ".bazelrc-buildbuddy",
         ".bazelignore",
         ".gitignore",
+        ".styleguide",
+        ".styleguide-license",
         "BUILD.bazel",
         "README.md",
         "maven_cpp_deps.bzl",
@@ -72,10 +104,13 @@ def generate_module_project_files(module_directory, group, mandetory_dependencie
         "tests/MODULE.bazel",
         "tests/WORKSPACE.bzlmod",
         "tests/WORKSPACE",
-        "tests/.styleguide",
-        "tests/.styleguide-license",
         "tests/styleguide/BUILD.bazel",
         "tests/styleguide/cc_styleguide.bzl",
+        "tests/styleguide/private/BUILD.bazel",
+        "tests/styleguide/private/download_styleguide_deps.bzl",
+        "tests/styleguide/private/load_styleguide_deps.bzl",
+        "tests/styleguide/private/setup_styleguide.bzl",
+        
     ]
 
     if group.executable_tools or group.java_native_tools:

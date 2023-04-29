@@ -11,6 +11,24 @@ local_path_override(
     path = "../../rules_bzlmodrio_toolchains",
 )
 {%- endif %}
+{%- if mandetory_dependencies.rules_pmd.use_local_version %}
+local_path_override(
+    module_name = "rules_pmd",
+    path = "../../rules_pmd",
+)
+{%- endif %}
+{%- if mandetory_dependencies.rules_checkstyle.use_local_version %}
+local_path_override(
+    module_name = "rules_checkstyle",
+    path = "../../rules_checkstyle",
+)
+{%- endif %}
+{%- if mandetory_dependencies.rules_wpiformat.use_local_version %}
+local_path_override(
+    module_name = "rules_wpiformat",
+    path = "../../rules_wpiformat",
+)
+{%- endif %}
 {%- for name, module_dep in group.module_dependencies.items() %}
 {%- if module_dep.use_local_version %}
 
@@ -29,6 +47,9 @@ bazel_dep(name = "rules_bzlmodrio_toolchains", version = "{{mandetory_dependenci
 {%- for name, module_dep in group.module_dependencies.items() %}
 bazel_dep(name = "{{name}}", version = "{{module_dep.container.version}}{{module_dep.container.patch}}")
 {%- endfor %}
+bazel_dep(name = "rules_pmd", version = "{{mandetory_dependencies.rules_pmd.version}}")
+bazel_dep(name = "rules_checkstyle", version = "{{mandetory_dependencies.rules_checkstyle.version}}")
+bazel_dep(name = "rules_wpiformat", version = "{{mandetory_dependencies.rules_wpiformat.version}}")
 
 maven = use_extension("@rules_jvm_external//:extensions.bzl", "maven")
 maven.install(
