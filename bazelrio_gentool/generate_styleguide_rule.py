@@ -2,6 +2,27 @@ import os
 from bazelrio_gentool.utils import TEMPLATE_BASE_DIR, write_file, render_template
 
 
+def write_shared_root_files(module_directory, group):
+    template_files = [
+        ".bazelignore",
+        ".bazelrc-buildbuddy",
+        ".bazelversion",
+        # ".bazelrc",
+        # ".gitignore",
+        # # ".bazelversion",
+        # "BUILD.bazel",
+        # "README.md",
+        # "WORKSPACE.bzlmod",
+    ]
+
+    for tf in template_files:
+        template_file = os.path.join(TEMPLATE_BASE_DIR, "shared", tf + ".jinja2")
+        output_file = os.path.join(module_directory, tf)
+        render_template(template_file, output_file, group=group)
+        # render_template(template_file, output_file, group=config)
+
+
+
 def generate_styleguide_rule(module_directory):
     group = {}
     group["repo_name"] = "Dummy"
@@ -22,24 +43,26 @@ def generate_styleguide_rule(module_directory):
         render_template(template_file, output_file, group=group)
         # render_template(template_file, output_file, group=config)
 
-    template_files = [
-        ".github/workflows/build.yml",
-        ".github/workflows/lint.yml",
-        ".bazelrc-buildbuddy",
-        ".bazelignore",
-        ".bazelrc",
-        ".gitignore",
-        # ".bazelversion",
-        "BUILD.bazel",
-        "README.md",
-        "WORKSPACE.bzlmod",
-    ]
+    write_shared_root_files(module_directory, group)
 
-    for tf in template_files:
-        template_file = os.path.join(TEMPLATE_BASE_DIR, "module", tf + ".jinja2")
-        output_file = os.path.join(module_directory, tf)
-        render_template(template_file, output_file, group=group)
-        # render_template(template_file, output_file, group=config)
+    # template_files = [
+    #     # ".github/workflows/build.yml",
+    #     # ".github/workflows/lint.yml",
+    #     # ".bazelrc-buildbuddy",
+    #     # ".bazelignore",
+    #     # ".bazelrc",
+    #     # ".gitignore",
+    #     # # ".bazelversion",
+    #     # "BUILD.bazel",
+    #     # "README.md",
+    #     # "WORKSPACE.bzlmod",
+    # ]
+
+    # for tf in template_files:
+    #     template_file = os.path.join(TEMPLATE_BASE_DIR, "module", tf + ".jinja2")
+    #     output_file = os.path.join(module_directory, tf)
+    #     render_template(template_file, output_file, group=group)
+    #     # render_template(template_file, output_file, group=config)
 
 
     print("FJKLSDFJ")
