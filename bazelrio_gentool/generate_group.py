@@ -16,7 +16,7 @@ def __maybe_write_file(output_dir, template_dir, filename, target):
 def __write_dependency_file(
     base_output_directory, group, target, language, force_tests, lib_folder="libs"
 ):
-    template_base = os.path.join(TEMPLATE_BASE_DIR, "libraries", language)
+    template_base = os.path.join(TEMPLATE_BASE_DIR, "library_wrapper", "libraries", language)
     lib_dir = os.path.join(base_output_directory, language, target.parent_folder)
     test_dir = os.path.join(
         base_output_directory, "..", "tests", language, target.parent_folder
@@ -32,6 +32,7 @@ def __write_dependency_file(
         )
 
     # Write BUILD file
+    print(template_base)
     template_file = os.path.join(template_base, lib_folder, "BUILD.bazel.jinja2")
     output_file = os.path.join(lib_dir, "BUILD.bazel")
     render_template(
@@ -63,7 +64,7 @@ def __write_dependency_file(
 def __generate_private_raw_libraries(base_output_directory, group):
     language = "cpp"
 
-    template_base = os.path.join(TEMPLATE_BASE_DIR, "libraries", language)
+    template_base = os.path.join(TEMPLATE_BASE_DIR, "library_wrapper", "libraries", language)
 
     for cc_dep in group.cc_deps:
         private_dir = os.path.join(
@@ -132,7 +133,7 @@ def generate_group(base_output_directory, group, force_tests):
         )
 
     for exe_tool in group.executable_tools:
-        template_base = os.path.join(TEMPLATE_BASE_DIR, "libraries", "tools")
+        template_base = os.path.join(TEMPLATE_BASE_DIR, "library_wrapper", "libraries", "tools")
         lib_dir = os.path.join(
             base_output_directory,
             "tools",
@@ -148,7 +149,7 @@ def generate_group(base_output_directory, group, force_tests):
         render_template(template_file, output_file, target=exe_tool)
 
     for exe_tool in group.java_native_tools:
-        template_base = os.path.join(TEMPLATE_BASE_DIR, "libraries", "tools")
+        template_base = os.path.join(TEMPLATE_BASE_DIR, "library_wrapper", "libraries", "tools")
         lib_dir = os.path.join(base_output_directory, "tools", exe_tool.artifact_name)
         # test_dir = os.path.join(base_output_directory, "..", "tests", "tools", exe_tool.artifact_name)
 
@@ -158,7 +159,7 @@ def generate_group(base_output_directory, group, force_tests):
         render_template(template_file, output_file, target=exe_tool)
 
     if group.executable_tools or group.java_native_tools:
-        template_base = os.path.join(TEMPLATE_BASE_DIR, "libraries", "tools")
+        template_base = os.path.join(TEMPLATE_BASE_DIR, "library_wrapper", "libraries", "tools")
         lib_dir = os.path.join(base_output_directory, "..", "tests")
 
         # Write BUILD file

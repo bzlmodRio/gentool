@@ -39,7 +39,6 @@ def clean_existing_version(
                 continue
             if full_file.endswith("user.bazelrc"):
                 continue
-            print(full_file)
             if file_blacklist and full_file in file_blacklist:
                 continue
             if not force_tests:

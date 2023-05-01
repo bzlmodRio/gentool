@@ -1,6 +1,7 @@
 import os
 from bazelrio_gentool.utils import render_template, write_file, TEMPLATE_BASE_DIR
 from bazelrio_gentool.load_cached_versions import load_cached_version_info
+from bazelrio_gentool.generate_shared_files import write_shared_root_files, write_shared_test_files
 from bazelrio_gentool.cli import GenericCliArgs
 
 
@@ -118,30 +119,30 @@ class MandatoryDependencySettings:
 def generate_module_project_files(
     module_directory, group, mandetory_dependencies, no_roborio=False
 ):
+    write_shared_root_files(module_directory, group)
+    write_shared_test_files(module_directory, group)
 
     template_files = [
         ".github/workflows/build.yml",
         ".github/workflows/lint.yml",
         ".bazelrc",
-        ".bazelrc-buildbuddy",
-        ".bazelignore",
-        ".gitignore",
-        ".styleguide",
-        ".styleguide-license",
-        "BUILD.bazel",
-        "README.md",
+        # ".bazelrc-buildbuddy",
+        # ".bazelignore",
+        # ".gitignore",
+        # "BUILD.bazel",
+        # "README.md",
         "maven_cpp_deps.bzl",
         "MODULE.bazel",
-        "WORKSPACE.bzlmod",
+        # "WORKSPACE.bzlmod",
         "WORKSPACE",
         "private/non_bzlmod_dependencies/BUILD.bazel",
         "private/non_bzlmod_dependencies/download_dependencies.bzl",
         "private/non_bzlmod_dependencies/setup_dependencies.bzl",
         "tests/.bazelrc",
-        "tests/.bazelrc-buildbuddy",
-        "tests/.bazelversion",
+        # "tests/.bazelrc-buildbuddy",
+        # "tests/.bazelversion",
         "tests/MODULE.bazel",
-        "tests/WORKSPACE.bzlmod",
+        # "tests/WORKSPACE.bzlmod",
         "tests/WORKSPACE",
     ]
 
@@ -155,7 +156,7 @@ def generate_module_project_files(
         )
 
     for tf in template_files:
-        template_file = os.path.join(TEMPLATE_BASE_DIR, "module", tf + ".jinja2")
+        template_file = os.path.join(TEMPLATE_BASE_DIR, "library_wrapper", tf + ".jinja2")
         output_file = os.path.join(module_directory, tf)
         render_template(
             template_file,
@@ -173,7 +174,7 @@ def generate_module_project_files(
         for tf in [
             "maven_java_deps.bzl",
         ]:
-            template_file = os.path.join(TEMPLATE_BASE_DIR, "module", tf + ".jinja2")
+            template_file = os.path.join(TEMPLATE_BASE_DIR, "library_wrapper", tf + ".jinja2")
             output_file = os.path.join(module_directory, tf)
             render_template(
                 template_file,
