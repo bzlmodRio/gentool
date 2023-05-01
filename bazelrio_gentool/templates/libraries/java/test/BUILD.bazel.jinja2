@@ -1,5 +1,5 @@
 load("@rules_bazelrio//:java_rules.bzl", "bazelrio_java_binary", "bazelrio_java_test")
-load("//styleguide:java_styleguide.bzl", "java_styleguide")
+load("@rules_wpi_styleguide//styleguide:java_styleguide.bzl", "java_styleguide")
 
 bazelrio_java_binary(
     name = "main",

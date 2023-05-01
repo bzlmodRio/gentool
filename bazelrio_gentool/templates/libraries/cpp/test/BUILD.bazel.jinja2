@@ -1,6 +1,6 @@
 {%- if "halsim" in target.name -%}
 load("@rules_bazelrio//:halsim_defs.bzl", "halsim_cc_binary")
-load("//styleguide:cc_styleguide.bzl", "cc_styleguide")
+load("@rules_wpi_styleguide//styleguide:cc_styleguide.bzl", "cc_styleguide")
 
 halsim_cc_binary(
     name = "main",
@@ -9,7 +9,7 @@ halsim_cc_binary(
     halsim_deps = ["@{{group.repo_name}}//libraries/cpp/{{target.parent_folder}}"],
 )
 {%- else -%}
-load("//styleguide:cc_styleguide.bzl", "cc_styleguide")
+load("@rules_wpi_styleguide//styleguide:cc_styleguide.bzl", "cc_styleguide")
 
 cc_binary(
     name = "main",
