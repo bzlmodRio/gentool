@@ -79,3 +79,11 @@ rules_wpiformat:
   '2022.30':
     commitish: ''
     sha: 8bef5845cb4fbc4637910522630767c2cf83d8a2370ecdf990dc4daebdb8bc50
+rules_spotless:
+  '2022.30':
+    commitish: ''
+    sha: 8bef5845cb4fbc4637910522630767c2cf83d8a2370ecdf990dc4daebdb8bc50
+rules_wpi_styleguide:
+  '2022.30':
+    commitish: ''
+    sha: 8bef5845cb4fbc4637910522630767c2cf83d8a2370ecdf990dc4daebdb8bc50

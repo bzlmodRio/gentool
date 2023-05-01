@@ -23,10 +23,22 @@ local_path_override(
     path = "../../rules_checkstyle",
 )
 {%- endif %}
+{%- if mandetory_dependencies.rules_spotless.use_local_version %}
+local_path_override(
+    module_name = "rules_spotless",
+    path = "../../rules_spotless",
+)
+{%- endif %}
 {%- if mandetory_dependencies.rules_wpiformat.use_local_version %}
 local_path_override(
     module_name = "rules_wpiformat",
     path = "../../rules_wpiformat",
+)
+{%- endif %}
+{%- if mandetory_dependencies.rules_wpi_styleguide.use_local_version %}
+local_path_override(
+    module_name = "rules_wpi_styleguide",
+    path = "../../rules_wpi_styleguide",
 )
 {%- endif %}
 {%- for name, module_dep in group.module_dependencies.items() %}
@@ -50,6 +62,8 @@ bazel_dep(name = "{{name}}", version = "{{module_dep.container.version}}{{module
 bazel_dep(name = "rules_pmd", version = "{{mandetory_dependencies.rules_pmd.version}}")
 bazel_dep(name = "rules_checkstyle", version = "{{mandetory_dependencies.rules_checkstyle.version}}")
 bazel_dep(name = "rules_wpiformat", version = "{{mandetory_dependencies.rules_wpiformat.version}}")
+bazel_dep(name = "rules_wpi_styleguide", version = "{{mandetory_dependencies.rules_wpi_styleguide.version}}")
+bazel_dep(name = "rules_spotless", version = "{{mandetory_dependencies.rules_spotless.version}}")
 
 maven = use_extension("@rules_jvm_external//:extensions.bzl", "maven")
 maven.install(

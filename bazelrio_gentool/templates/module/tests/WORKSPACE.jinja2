@@ -48,62 +48,52 @@ maven_install(
     # maven_install_json = "//build_scripts/bazel/deps:maven_install.json",
 )
 
-{%- if include_styleguide %}
-local_repository(
-    name = "rules_checkstyle",
-    path = "../../rules_checkstyle",
-)
 
-load("@rules_checkstyle//checkstyle:load_checkstyle_rule_dependencies.bzl", "load_checkstyle_rule_dependencies")
-
-load_checkstyle_rule_dependencies()
-
-## Toolchains
-load("@rules_checkstyle//checkstyle:load_checkstyle_dependencies.bzl", "load_checkstyle_dependencies")
-
-load_checkstyle_dependencies()
-
+{% endif %}
+#####################
+# Styleguide
+#####################
+{%- if mandetory_dependencies.rules_pmd.use_local_version %}
 local_repository(
     name = "rules_pmd",
     path = "../../rules_pmd",
 )
-
-load("@rules_pmd//pmd:dependencies.bzl", "rules_pmd_dependencies")
-
-rules_pmd_dependencies()
-
-load("@rules_pmd//pmd:toolchains.bzl", "rules_pmd_toolchains")
-
-rules_pmd_toolchains()
-
+{%- endif %}
+{%- if mandetory_dependencies.rules_checkstyle.use_local_version %}
+local_repository(
+    name = "rules_checkstyle",
+    path = "../../rules_checkstyle",
+)
+{%- endif %}
+{%- if mandetory_dependencies.rules_spotless.use_local_version %}
 local_repository(
     name = "rules_spotless",
     path = "../../rules_spotless",
 )
-
-load("@rules_spotless//spotless:load_spotless_rule_dependencies.bzl", "load_spotless_rule_dependencies")
-
-load_spotless_rule_dependencies()
-
-## Toolchains
-load("@rules_spotless//spotless:load_spotless_dependencies.bzl", "load_spotless_dependencies")
-
-load_spotless_dependencies()
 {%- endif %}
-{% endif %}
-load("//styleguide/private:download_styleguide_deps.bzl", "download_styleguide_deps")
+{%- if mandetory_dependencies.rules_wpiformat.use_local_version %}
+local_repository(
+    name = "rules_wpiformat",
+    path = "../../rules_wpiformat",
+)
+{%- endif %}
+{%- if mandetory_dependencies.rules_wpi_styleguide.use_local_version %}
+local_repository(
+    name = "rules_wpi_styleguide",
+    path = "../../rules_wpi_styleguide",
+)
+{%- endif %}
 
-download_styleguide_deps()
+load("@rules_wpi_styleguide//dependencies:load_rule_dependencies.bzl", "load_styleguide_rule_dependencies")
+load_styleguide_rule_dependencies()
 
-load("//styleguide/private:load_styleguide_deps.bzl", "load_styleguide_deps")
+load("@rules_wpi_styleguide//dependencies:load_dependencies.bzl", "load_styleguide_dependencies")
+load_styleguide_dependencies()
 
-load_styleguide_deps()
-
-load("//styleguide/private:setup_styleguide.bzl", "setup_styleguide")
-
+load("@rules_wpi_styleguide//dependencies:setup_styleguide.bzl", "setup_styleguide")
 setup_styleguide()
 
-load("@rules_wpiformat_pip//:requirements.bzl", "install_deps")
-
-install_deps()
+load("@rules_wpi_styleguide//dependencies:load_pins.bzl", "load_styleguide_pins")
+load_styleguide_pins()
+#####################
 
