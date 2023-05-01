@@ -1,0 +1,18 @@
+workspace(name = "rules_pmd")
+
+# Runtime
+
+## Dependencies
+
+load("//dependencies:load_rule_dependencies.bzl", "load_pmd_rule_dependencies")
+
+load_pmd_rule_dependencies()
+
+## Toolchains
+
+load("//dependencies:load_dependencies.bzl", "load_pmd_dependencies")
+
+load_pmd_dependencies()
+
+load("@rules_pmd_dependencies//:defs.bzl", "pinned_maven_install")
+pinned_maven_install()

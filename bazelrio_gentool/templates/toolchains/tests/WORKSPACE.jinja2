@@ -8,9 +8,9 @@ local_repository(
 # Google Test
 http_archive(
     name = "googletest",
-    sha256 = "755f9a39bc7205f5a0c428e920ddad092c33c8a1b46997def3f1d4a82aded6e1",
-    strip_prefix = "googletest-5ab508a01f9eb089207ee87fd547d290da39d015",
-    urls = ["https://github.com/google/googletest/archive/5ab508a01f9eb089207ee87fd547d290da39d015.zip"],
+    sha256 = "{{bazel_dependencies.googletest.sha}}",
+    strip_prefix = "googletest-XXX",
+    urls = ["https://github.com/google/googletest/archive/XXXX.zip"],
 )
 
 load("@{{container.repo_name}}//:maven_deps.bzl", "setup_legacy_setup_toolchains_dependencies")

@@ -1,0 +1,18 @@
+load("@rules_jvm_external//:defs.bzl", "maven_install")
+load("@rules_jvm_external//:specs.bzl", "maven")
+
+def load_pmd_dependencies():
+    pmd_version = "6.43.0"
+    maven_install(
+        name = "rules_pmd_dependencies",
+        artifacts = [
+            maven.artifact("net.sourceforge.pmd", "pmd-core", pmd_version),
+            maven.artifact("net.sourceforge.pmd", "pmd-dist", pmd_version),
+        ],
+        repositories = [
+            "https://repo1.maven.org/maven2",
+            "https://repo.maven.apache.org/maven2/",
+        ],
+        maven_install_json = "@rules_pmd//:rules_pmd_dependencies_install.json",
+    )
+

@@ -1,0 +1,31 @@
+module(
+    name = "rules_pmd",
+    version = "6.43.0",
+)
+
+bazel_dep(name = "rules_java", version = "5.3.5")
+bazel_dep(name = "rules_jvm_external", version = "4.4.2")
+
+PMD_VERSION = "6.43.0"
+
+maven = use_extension("@rules_jvm_external//:extensions.bzl", "maven")
+
+artifact = use_extension("@rules_jvm_external//:extensions.bzl", "artifact")
+
+maven.install(
+    name = "rules_pmd_dependencies",
+    artifacts = [
+        "net.sourceforge.pmd:pmd-core:{}".format(PMD_VERSION),
+        "net.sourceforge.pmd:pmd-dist:{}".format(PMD_VERSION),
+    ],
+    lock_file = "//:rules_pmd_dependencies_install.json",
+    repositories = [
+        "https://repo1.maven.org/maven2",
+        "https://repo.maven.apache.org/maven2/",
+    ],
+)
+use_repo(
+    maven,
+    "rules_pmd_dependencies",
+)
+

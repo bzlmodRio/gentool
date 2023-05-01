@@ -2,7 +2,7 @@ import os
 
 
 def clean_existing_version(
-    module_directory, extra_dir_blacklist=None, force_tests=False
+    module_directory, extra_dir_blacklist=None, file_blacklist=None, force_tests=False
 ):
     module_directory = os.path.abspath(module_directory)
 
@@ -19,6 +19,10 @@ def clean_existing_version(
     if extra_dir_blacklist:
         DIR_BLACKLIST.extend(extra_dir_blacklist)
 
+    file_blacklist = file_blacklist or []
+    file_blacklist = [os.path.join(module_directory, x) for x in file_blacklist]
+    print(file_blacklist)
+
     for root, dirs, files in os.walk(module_directory):
         dirs[:] = [d for d in dirs if d not in DIR_BLACKLIST]
         dirs[:] = [
@@ -34,6 +38,9 @@ def clean_existing_version(
             if full_file.endswith("test.cpp") or full_file.endswith("Test.java"):
                 continue
             if full_file.endswith("user.bazelrc"):
+                continue
+            print(full_file)
+            if file_blacklist and full_file in file_blacklist:
                 continue
             if not force_tests:
                 if f"{module_directory}/tests/cpp" in full_file and full_file.endswith(

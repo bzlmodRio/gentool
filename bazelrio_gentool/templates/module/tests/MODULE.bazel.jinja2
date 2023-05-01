@@ -51,9 +51,9 @@ local_path_override(
 {%- endif %}
 {%- endfor %}
 
-bazel_dep(name = "googletest", version = "1.12.1")
-bazel_dep(name = "rules_cc", version = "0.0.4")
-bazel_dep(name = "rules_jvm_external", version = "4.5")
+bazel_dep(name = "googletest", version = "{{bazel_dependencies.googletest.version}}")
+bazel_dep(name = "rules_cc", version = "{{bazel_dependencies.rules_cc.version}}")
+bazel_dep(name = "rules_jvm_external", version = "{{bazel_dependencies.rules_jvm_external.version}}")
 bazel_dep(name = "rules_bazelrio", version = "{{mandetory_dependencies.rules_bazelrio.version}}")
 bazel_dep(name = "rules_bzlmodrio_toolchains", version = "{{mandetory_dependencies.rules_roborio_toolchain.version}}")
 {%- for name, module_dep in group.module_dependencies.items() %}

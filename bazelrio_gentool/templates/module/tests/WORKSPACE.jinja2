@@ -9,9 +9,9 @@ local_repository(
 # Google Test
 http_archive(
     name = "googletest",
-    sha256 = "24564e3b712d3eb30ac9a85d92f7d720f60cc0173730ac166f27dda7fed76cb2",
-    strip_prefix = "googletest-release-1.12.1",
-    urls = ["https://github.com/google/googletest/archive/release-1.12.1.zip"],
+    sha256 = "{{bazel_dependencies.googletest.sha}}",
+    strip_prefix = "googletest-release-{{bazel_dependencies.googletest.version}}",
+    urls = ["https://github.com/google/googletest/archive/release-{{bazel_dependencies.googletest.version}}.zip"],
 )
 
 load("@{{group.repo_name}}//private/non_bzlmod_dependencies:download_dependencies.bzl", "download_dependencies")
