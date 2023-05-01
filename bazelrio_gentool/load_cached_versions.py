@@ -1,11 +1,13 @@
-
 import yaml
 
 
-__CACHED_FILE = '/home/pjreiniger/git/bzlmodRio/gentool/bazelrio_gentool/cached_versions.yml'
+__CACHED_FILE = (
+    "/home/pjreiniger/git/bzlmodRio/gentool/bazelrio_gentool/cached_versions.yml"
+)
+
 
 def load_cached_versions():
-    with open(__CACHED_FILE, 'r') as file:
+    with open(__CACHED_FILE, "r") as file:
         return yaml.load(file, Loader=yaml.SafeLoader)
 
 
@@ -30,6 +32,6 @@ def update_cached_version(repo_name, version, sha, commitish):
 
     repo_info = data[repo_name]
     repo_info[version] = dict(sha=sha, commitish=commitish)
-    
-    with open(__CACHED_FILE, 'w') as file:
+
+    with open(__CACHED_FILE, "w") as file:
         yaml.dump(data, file)

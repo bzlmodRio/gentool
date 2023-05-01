@@ -1,11 +1,10 @@
-
 import tempfile
 import hashlib
 from urllib.request import urlopen
 import os
 
 __DEFAULT_CACHE_DIRECTORY = os.path.join(tempfile.gettempdir(), "bazelrio_cache")
-CACHE_DIRECTORY = os.path.join(os.path.expanduser('~'), "bzlmod_cache")
+CACHE_DIRECTORY = os.path.join(os.path.expanduser("~"), "bzlmod_cache")
 print(f"Writing cache to {CACHE_DIRECTORY}")
 
 

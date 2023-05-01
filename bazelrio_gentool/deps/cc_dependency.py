@@ -1,18 +1,34 @@
-
 import re
 from bazelrio_gentool.deps.multi_resource_dependency import MultiResourceDependency
 
+
 class CcDependency(MultiResourceDependency):
-    def __init__(self, artifact_name, maven_url, group_id, version, parent_folder, dependencies, resources, headers, sources, has_jni, repo_name, fail_on_hash_miss=True):
-        MultiResourceDependency.__init__(self, 
-                                         artifact_name=artifact_name, 
-                                         group_id=group_id,
-                                         maven_url=maven_url,
-                                         version=version,
-                                         file_extension=".zip",
-                                         resources=resources,
-                                         repo_name=repo_name,
-                                         fail_on_hash_miss=fail_on_hash_miss)
+    def __init__(
+        self,
+        artifact_name,
+        maven_url,
+        group_id,
+        version,
+        parent_folder,
+        dependencies,
+        resources,
+        headers,
+        sources,
+        has_jni,
+        repo_name,
+        fail_on_hash_miss=True,
+    ):
+        MultiResourceDependency.__init__(
+            self,
+            artifact_name=artifact_name,
+            group_id=group_id,
+            maven_url=maven_url,
+            version=version,
+            file_extension=".zip",
+            resources=resources,
+            repo_name=repo_name,
+            fail_on_hash_miss=fail_on_hash_miss,
+        )
         self.name = artifact_name
         self.parent_folder = parent_folder
         self.has_jni = has_jni
@@ -42,30 +58,24 @@ class CcDependency(MultiResourceDependency):
     #     "@bazel_tools//src/conditions:darwin": ["osxx86-64", "osxuniversal"],
     #     "@rules_bzlmodrio_toolchains//constraints/is_roborio:roborio": ["linuxathena"],
     # }
-    
+
     CONDITIONS_LOOKUP = {
-        "windowsx86-64"           : "@rules_bazelrio//conditions:windows",
-        "windowsx86-64debug"      : "@rules_bazelrio//conditions:windows_debug",
-        "windowsx86-64static"     : "@rules_bazelrio//conditions:windows",
+        "windowsx86-64": "@rules_bazelrio//conditions:windows",
+        "windowsx86-64debug": "@rules_bazelrio//conditions:windows_debug",
+        "windowsx86-64static": "@rules_bazelrio//conditions:windows",
         "windowsx86-64staticdebug": "@rules_bazelrio//conditions:windows_debug",
-
-        "linuxx86-64"             : "@rules_bazelrio//conditions:linux_x86_64",
-        "linuxx86-64debug"        : "@rules_bazelrio//conditions:linux_x86_64_debug",
-        "linuxx86-64static"       : "@rules_bazelrio//conditions:linux_x86_64",
-        "linuxx86-64staticdebug"  : "@rules_bazelrio//conditions:linux_x86_64_debug",
-        
-
- 
-        "osxx86-64"               : "@rules_bazelrio//conditions:osx",
-        "osxx86-64debug"          : "@rules_bazelrio//conditions:osx_debug",
-        "osxx86-64static"         : "@rules_bazelrio//conditions:osx",
-        "osxx86-64staticdebug"    : "@rules_bazelrio//conditions:osx_debug",
-         
-        "osxuniversal"            : "@rules_bazelrio//conditions:osx",
-        "osxuniversaldebug"       : "@rules_bazelrio//conditions:osx_debug",
-        "osxuniversalstatic"      : "@rules_bazelrio//conditions:osx",
-        "osxuniversalstaticdebug" : "@rules_bazelrio//conditions:osx_debug",
-
+        "linuxx86-64": "@rules_bazelrio//conditions:linux_x86_64",
+        "linuxx86-64debug": "@rules_bazelrio//conditions:linux_x86_64_debug",
+        "linuxx86-64static": "@rules_bazelrio//conditions:linux_x86_64",
+        "linuxx86-64staticdebug": "@rules_bazelrio//conditions:linux_x86_64_debug",
+        "osxx86-64": "@rules_bazelrio//conditions:osx",
+        "osxx86-64debug": "@rules_bazelrio//conditions:osx_debug",
+        "osxx86-64static": "@rules_bazelrio//conditions:osx",
+        "osxx86-64staticdebug": "@rules_bazelrio//conditions:osx_debug",
+        "osxuniversal": "@rules_bazelrio//conditions:osx",
+        "osxuniversaldebug": "@rules_bazelrio//conditions:osx_debug",
+        "osxuniversalstatic": "@rules_bazelrio//conditions:osx",
+        "osxuniversalstaticdebug": "@rules_bazelrio//conditions:osx_debug",
         # Cross Compilers
         "linuxathena"             : "@rules_bzlmodrio_toolchains//constraints/is_roborio:roborio",
         "linuxathenadebug"        : "@rules_bzlmodrio_toolchains//constraints/is_roborio:roborio_debug",
@@ -83,26 +93,33 @@ class CcDependency(MultiResourceDependency):
         "linuxarm64staticdebug"  : "@rules_bzlmodrio_toolchains//constraints/is_bullseye64:bullseye64_debug",
     }
 
-
     def __make_ignored_platforms(base_platform):
-        return [base_platform, base_platform + "static", base_platform + "staticdebug", base_platform + "debug"]
+        return [
+            base_platform,
+            base_platform + "static",
+            base_platform + "staticdebug",
+            base_platform + "debug",
+        ]
 
-    IGNORED_PLATFORMS = __make_ignored_platforms("windowsx86") +  __make_ignored_platforms("osxarm64")
+    IGNORED_PLATFORMS = __make_ignored_platforms(
+        "windowsx86"
+    ) + __make_ignored_platforms("osxarm64")
 
     def __get_select(self, resources, library_build):
         lines = []
         for res in resources:
-            full_res = res 
+            full_res = res
             if full_res in self.CONDITIONS_LOOKUP:
-                lines.append(f'        "{self.CONDITIONS_LOOKUP[full_res]}": ["@{self.get_archive_name(res)}//:{library_build}"]')
+                lines.append(
+                    f'        "{self.CONDITIONS_LOOKUP[full_res]}": ["@{self.get_archive_name(res)}//:{library_build}"]'
+                )
             elif full_res not in self.IGNORED_PLATFORMS:
-               print("Unknown", full_res)
+                print("Unknown", full_res)
             # condition = self.__resource_type_to_condition(res)
             # if condition:
             #     lines.append(f'        "{condition}": ["@{self.get_archive_name(res)}//:shared_libs"]')
 
         return ",\n".join(lines) + ","
-
 
     def get_shared_library_select(self):
         shared_resources = []
@@ -113,7 +130,7 @@ class CcDependency(MultiResourceDependency):
                 shared_resources.append(res)
 
         return self.__get_select(shared_resources, "shared_libs")
-        
+
     def get_static_library_select(self):
         shared_resources = []
         for res in self.resources:

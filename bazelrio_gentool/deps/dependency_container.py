@@ -1,5 +1,3 @@
-
-
 from bazelrio_gentool.deps.cc_dependency import CcDependency, CcMetaDependency
 from bazelrio_gentool.deps.java_dependency import JavaDependency, JavaMetaDependency
 from bazelrio_gentool.deps.java_native_tool_dependency import JavaNativeToolDependency
@@ -8,22 +6,29 @@ from bazelrio_gentool.load_cached_versions import load_cached_version_info
 
 
 class ModuleDependency:
-    def __init__(self, container, use_local_version, local_rel_folder, override_version=None,
-                 remote_repo="TODO"):
+    def __init__(
+        self,
+        container,
+        use_local_version,
+        local_rel_folder,
+        override_version=None,
+        remote_repo="TODO",
+    ):
         self.container = container
         if override_version:
             container.version = override_version
         self.local_rel_folder = local_rel_folder
         self.use_local_version = use_local_version
-        
-        cached_version = load_cached_version_info(container.repo_name, container.version)
-        self.remote_sha = cached_version['sha']
-        self.remote_commitish = cached_version['commitish']
+
+        cached_version = load_cached_version_info(
+            container.repo_name, container.version
+        )
+        self.remote_sha = cached_version["sha"]
+        self.remote_commitish = cached_version["commitish"]
         self.remote_repo = remote_repo
 
 
 class DependencyContainer:
-
     def __init__(self, repo_name, version, year, maven_url, patch=""):
         self.repo_name = repo_name
         self.sanitized_repo_name = repo_name.replace("-", "_")
@@ -56,21 +61,29 @@ class DependencyContainer:
         self.module_dependencies[dependency.container.repo_name] = dependency
         self.dep_lookup.update(dependency.container.dep_lookup)
 
-
         for repo_name, subdep in dependency.container.module_dependencies.items():
             self.add_module_dependency(subdep)
 
         if meta_deps:
             for meta_dep in meta_deps:
-                self.dep_lookup[meta_dep] = dict(repo_name=dependency.container.repo_name, parent_folder=meta_dep)
+                self.dep_lookup[meta_dep] = dict(
+                    repo_name=dependency.container.repo_name, parent_folder=meta_dep
+                )
 
         # print(self.module_dependencies.keys())
-        
+
     def create_cc_dependency(self, name, dependencies=[], version=None, **kwargs):
         if version is None:
             version = self.version
         dependencies = [self.dep_lookup[d] for d in dependencies]
-        dep = CcDependency(artifact_name=name, maven_url=self.maven_url, version=version, dependencies=dependencies, repo_name=self.repo_name, **kwargs)
+        dep = CcDependency(
+            artifact_name=name,
+            maven_url=self.maven_url,
+            version=version,
+            dependencies=dependencies,
+            repo_name=self.repo_name,
+            **kwargs,
+        )
 
         self.cc_deps.append(dep)
         self.dep_lookup[name] = dep
@@ -79,11 +92,18 @@ class DependencyContainer:
         if version is None:
             version = self.version
         dependencies = [self.dep_lookup[d] for d in dependencies]
-        dep = JavaDependency(name=name, version=version, dependencies=dependencies, repo_name=self.repo_name, maven_url=self.maven_url, **kwargs)
+        dep = JavaDependency(
+            name=name,
+            version=version,
+            dependencies=dependencies,
+            repo_name=self.repo_name,
+            maven_url=self.maven_url,
+            **kwargs,
+        )
 
         self.java_deps.append(dep)
         self.dep_lookup[name] = dep
-        
+
     def create_java_native_tool(self, main_class, group_id, artifact_name, resources):
         self.java_native_tools.append(
             JavaNativeToolDependency(
@@ -98,7 +118,9 @@ class DependencyContainer:
             )
         )
 
-    def create_executable_tool(self, group_id, artifact_name, resources, lower_target_name=False):
+    def create_executable_tool(
+        self, group_id, artifact_name, resources, lower_target_name=False
+    ):
         self.executable_tools.append(
             ExecutableToolDependency(
                 group_id=group_id,
@@ -108,7 +130,7 @@ class DependencyContainer:
                 version=self.version,
                 repo_name=self.repo_name,
                 fail_on_hash_miss=self.fail_on_hash_miss,
-                lower_target_name = lower_target_name,
+                lower_target_name=lower_target_name,
             )
         )
 
@@ -117,26 +139,25 @@ class DependencyContainer:
             if java_dep.maven_deps:
                 # print("Has maven deps....", java_dep)
                 return True
-                
+
         return False
 
     def has_any_maven_deps(self):
         if self.has_direct_maven_deps():
             return True
-                
+
         for module_dep in self.module_dependencies.values():
             if module_dep.container.has_any_maven_deps():
-                return True            
+                return True
 
         # print("NO MAVEN DEPS", self)
         return False
-
 
     def get_all_maven_dependencies2(self):
         all_maven_deps = set()
 
         for java_dep in self.java_deps:
-            #all_maven_deps.add((f"{java_dep.group_id}", f"{java_dep.name}:{java_dep.version}"))
+            # all_maven_deps.add((f"{java_dep.group_id}", f"{java_dep.name}:{java_dep.version}"))
             all_maven_deps.update(java_dep.maven_deps)
 
         return sorted(list(all_maven_deps))
@@ -144,10 +165,9 @@ class DependencyContainer:
     def sorted_java_deps(self):
         return sorted(self.java_deps, key=lambda x: x.import_repo_name)
 
-
     def sorted_cc_deps(self):
         output = []
-        
+
         for cpp_dep in self.cc_deps:
             if cpp_dep.headers:
                 output.append(f"{cpp_dep.get_archive_name('headers')}")
@@ -165,13 +185,14 @@ class DependencyContainer:
         for tool_dep in self.executable_tools:
             for resource in tool_dep.resources:
                 output.append(f"{tool_dep.get_archive_name(resource)}")
-        
+
         output = sorted(output)
 
-        return '"' + "\",\n    \"".join(output) + "\","
-                
+        return '"' + '",\n    "'.join(output) + '",'
 
-    def add_cc_meta_dependency(self, name, deps, platform_deps, has_static=False, jni_deps=None):
+    def add_cc_meta_dependency(
+        self, name, deps, platform_deps, has_static=False, jni_deps=None
+    ):
 
         dependencies = [self.dep_lookup[d] for d in deps]
         pd = {}
@@ -190,6 +211,8 @@ class DependencyContainer:
     def add_java_meta_dependency(self, name, deps, group_id):
         dependencies = [self.dep_lookup[d] for d in deps]
 
-        dep = JavaMetaDependency(self.repo_name, name, deps=dependencies, group_id=group_id)
+        dep = JavaMetaDependency(
+            self.repo_name, name, deps=dependencies, group_id=group_id
+        )
         self.java_meta_deps.append(dep)
         self.dep_lookup[name] = dep

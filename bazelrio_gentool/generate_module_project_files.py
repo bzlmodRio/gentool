@@ -11,8 +11,8 @@ class MandetoryDependencySetting:
         self.use_local_version = use_local_version
 
         cached_version = load_cached_version_info(repo_name, version)
-        self.sha = cached_version['sha']
-        self.commitish = cached_version['commitish']
+        self.sha = cached_version["sha"]
+        self.commitish = cached_version["commitish"]
 
     def __repr__(self):
         return f"MandetoryDependencySetting: {self.repo_name}, {self.version}, {self.use_local_version}"
@@ -89,7 +89,9 @@ class MandatoryDependencySettings:
         self.rules_wpi_styleguide = rules_wpi_styleguide
 
 
-def generate_module_project_files(module_directory, group, mandetory_dependencies, no_roborio=False):
+def generate_module_project_files(
+    module_directory, group, mandetory_dependencies, no_roborio=False
+):
 
     template_files = [
         ".github/workflows/build.yml",
@@ -115,7 +117,6 @@ def generate_module_project_files(module_directory, group, mandetory_dependencie
         "tests/MODULE.bazel",
         "tests/WORKSPACE.bzlmod",
         "tests/WORKSPACE",
-        
     ]
 
     if group.executable_tools or group.java_native_tools:
@@ -144,8 +145,7 @@ def generate_module_project_files(module_directory, group, mandetory_dependencie
     if group.java_deps:
         for tf in [
             "maven_java_deps.bzl",
-            
-            ]:
+        ]:
             template_file = os.path.join(TEMPLATE_BASE_DIR, "module", tf + ".jinja2")
             output_file = os.path.join(module_directory, tf)
             render_template(

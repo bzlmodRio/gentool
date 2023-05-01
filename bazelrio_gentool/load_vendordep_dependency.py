@@ -1,9 +1,11 @@
-
 import os
 import json
 from bazelrio_gentool.deps.dependency_container import DependencyContainer
 
-def vendordep_dependency(module_name, vendor_file, year, fail_on_hash_miss, has_static_libraries):
+
+def vendordep_dependency(
+    module_name, vendor_file, year, fail_on_hash_miss, has_static_libraries
+):
     PLATFORM_BLACKLIST = set(
         [
             "windowsx86",
@@ -22,7 +24,9 @@ def vendordep_dependency(module_name, vendor_file, year, fail_on_hash_miss, has_
             maven_url = maven_url[:-1]
         version = vendor_dep["version"]
 
-        maven_dep = DependencyContainer(module_name, version=version, year=year, maven_url=maven_url)
+        maven_dep = DependencyContainer(
+            module_name, version=version, year=year, maven_url=maven_url
+        )
         maven_dep.extra_maven_repos.append(maven_url)
 
         # Add all the headers and sources first
@@ -39,8 +43,8 @@ def vendordep_dependency(module_name, vendor_file, year, fail_on_hash_miss, has_
             maven_dep.create_cc_dependency(
                 name=cpp_dep["artifactId"],
                 parent_folder=cpp_dep["artifactId"],
-                headers=cpp_dep['headerClassifier'],
-                sources=cpp_dep.get('sourcesClassifier', None),
+                headers=cpp_dep["headerClassifier"],
+                sources=cpp_dep.get("sourcesClassifier", None),
                 resources=resources,
                 group_id=cpp_dep["groupId"],
                 version=cpp_dep["version"],
@@ -52,7 +56,9 @@ def vendordep_dependency(module_name, vendor_file, year, fail_on_hash_miss, has_
             vendor_dep["javaDependencies"], key=lambda x: x["artifactId"]
         ):
             maven_dep.create_java_dependency(
-                name=java_dep["artifactId"], group_id=java_dep["groupId"], parent_folder="parent",
+                name=java_dep["artifactId"],
+                group_id=java_dep["groupId"],
+                parent_folder="parent",
                 version=java_dep["version"],
             )
 

@@ -1,6 +1,9 @@
 import os
 
-def clean_existing_version(module_directory, extra_dir_blacklist=None, force_tests=False):
+
+def clean_existing_version(
+    module_directory, extra_dir_blacklist=None, force_tests=False
+):
     module_directory = os.path.abspath(module_directory)
 
     DIR_BLACKLIST = [
@@ -18,7 +21,11 @@ def clean_existing_version(module_directory, extra_dir_blacklist=None, force_tes
 
     for root, dirs, files in os.walk(module_directory):
         dirs[:] = [d for d in dirs if d not in DIR_BLACKLIST]
-        dirs[:] = [d for d in dirs if not os.path.join(root, d).startswith(os.path.join(root, "generate_"))]
+        dirs[:] = [
+            d
+            for d in dirs
+            if not os.path.join(root, d).startswith(os.path.join(root, "generate_"))
+        ]
 
         for f in files:
             full_file = os.path.join(root, f).replace("\\", "/")
@@ -29,10 +36,13 @@ def clean_existing_version(module_directory, extra_dir_blacklist=None, force_tes
             if full_file.endswith("user.bazelrc"):
                 continue
             if not force_tests:
-                if f"{module_directory}/tests/cpp" in full_file and full_file.endswith("BUILD.bazel"):
+                if f"{module_directory}/tests/cpp" in full_file and full_file.endswith(
+                    "BUILD.bazel"
+                ):
                     continue
-                if f"{module_directory}/tests/java" in full_file and full_file.endswith("BUILD.bazel"):
+                if (
+                    f"{module_directory}/tests/java" in full_file
+                    and full_file.endswith("BUILD.bazel")
+                ):
                     continue
             os.remove(full_file)
-
-

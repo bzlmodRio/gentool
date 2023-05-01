@@ -1,6 +1,6 @@
-
 from bazelrio_gentool.deps.base_dependency import BaseDependency
 from bazelrio_gentool.deps.sha256_helper import get_hash
+
 
 class MultiResourceDependency(BaseDependency):
     def __init__(self, file_extension, resources, suffix="", **kwargs):

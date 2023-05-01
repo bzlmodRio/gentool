@@ -1,15 +1,16 @@
-
 import re
 
+
 class BaseDependency:
-    def __init__(self, maven_url, group_id, artifact_name, version, repo_name, fail_on_hash_miss):
+    def __init__(
+        self, maven_url, group_id, artifact_name, version, repo_name, fail_on_hash_miss
+    ):
         self.maven_url = maven_url
         self.group_id = group_id
         self.artifact_name = artifact_name
         self.version = version
         self.repo_name = repo_name
         self.fail_on_hash_miss = fail_on_hash_miss
-
 
     def get_archive_name(self, suffix=""):
         group_underscore = self.group_id.replace(".", "_").lower()
