@@ -4,10 +4,12 @@ from bazelrio_gentool.utils import TEMPLATE_BASE_DIR, write_file, render_templat
 
 def write_shared_root_files(module_directory, group):
     template_files = [
+        ".github/workflows/build.yml",
+        ".github/workflows/lint.yml",
         ".bazelignore",
         ".bazelrc-buildbuddy",
         ".bazelversion",
-        # ".bazelrc",
+        ".bazelrc",
         ".gitignore",
         # # ".bazelversion",
         "BUILD.bazel",
@@ -28,8 +30,8 @@ def write_shared_test_files(module_directory, group):
         # ".bazelignore",
         ".bazelrc-buildbuddy",
         ".bazelversion",
+        ".bazelrc",
         "WORKSPACE.bzlmod",
-        # # ".bazelrc",
         # ".gitignore",
         # # # ".bazelversion",
         # "BUILD.bazel",

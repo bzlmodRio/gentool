@@ -100,9 +100,7 @@ def generate_module_project_files(
     write_shared_test_files(module_directory, group)
 
     template_files = [
-        ".github/workflows/build.yml",
-        ".github/workflows/lint.yml",
-        ".bazelrc",
+        # ".bazelrc",
         # ".bazelrc-buildbuddy",
         # ".bazelignore",
         # ".gitignore",
@@ -115,7 +113,7 @@ def generate_module_project_files(
         "private/non_bzlmod_dependencies/BUILD.bazel",
         "private/non_bzlmod_dependencies/download_dependencies.bzl",
         "private/non_bzlmod_dependencies/setup_dependencies.bzl",
-        "tests/.bazelrc",
+        # "tests/.bazelrc",
         # "tests/.bazelrc-buildbuddy",
         # "tests/.bazelversion",
         "tests/MODULE.bazel",

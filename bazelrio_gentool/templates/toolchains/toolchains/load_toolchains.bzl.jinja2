@@ -3,13 +3,14 @@ load("//toolchains:configure_cross_compiler.bzl", "configure_cross_compiler")
 def load_toolchains():
 {%- for config in container.configs %}
     configure_cross_compiler(
-        name = "local_{{config.short_name}}",
+        name = "local_{{config.short_name_underscore}}",
         compiler = "{{config.short_name}}",
         bin_subfolder = "{{config.short_name}}-academic/bin",
         bin_prefix = "arm-frc2023-linux-gnueabi-",
         sysroot_subfolder = "{{config.short_name}}-academic/arm-nilrt-linux-gnueabi/sysroot",
-        cxx_version = "12",
+        cxx_version = "10",
         sysroot_include_folder = "arm-nilrt-linux-gnueabi",
+        repo_shortname = "{{config.short_name_underscore}}",
     )
 {%- endfor %}
 

@@ -1,19 +1,15 @@
+load("//:defines_helper.bzl", "defines_helper")
+
 cc_binary(
     name = "main",
     srcs = ["main.cpp"],
-    defines = select({
-        "//conditions:default": ["IS_ROBORIO_TEST=0"],
-        "@rules_bzlmodrio_toolchains//constraints/is_roborio:roborio": ["IS_ROBORIO_TEST=1"],
-    }),
+    defines = select(defines_helper()),
 )
 
 cc_test(
     name = "test",
     srcs = ["test.cpp"],
-    defines = select({
-        "//conditions:default": ["IS_ROBORIO_TEST=0"],
-        "@rules_bzlmodrio_toolchains//constraints/is_roborio:roborio": ["IS_ROBORIO_TEST=1"],
-    }),
+    defines = select(defines_helper()),
     deps = [
         "@googletest//:gtest_main",
     ],

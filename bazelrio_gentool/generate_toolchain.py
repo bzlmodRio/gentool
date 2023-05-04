@@ -84,4 +84,3 @@ def generate_toolchain(module_directory, container):
         template_file = os.path.join(TEMPLATE_BASE_DIR, "module", tf + ".jinja2")
         output_file = os.path.join(module_directory, tf)
         render_template(template_file, output_file, group=container)
-        # render_template(template_file, output_file, group=config)
