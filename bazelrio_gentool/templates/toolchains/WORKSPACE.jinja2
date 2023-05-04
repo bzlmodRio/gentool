@@ -1,3 +1,4 @@
+workspace(name = "{{container.repo_name}}")
 
 
 load("@{{container.repo_name}}//:maven_deps.bzl", "setup_legacy_setup_toolchains_dependencies")
@@ -16,3 +17,10 @@ register_toolchains(
 {%- endfor %}
 )
 
+load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive")
+http_archive(
+    name = "bazel_skylib",
+    sha256 = "{{bazel_dependencies.bazel_skylib.sha}}",
+    strip_prefix = "bazel-skylib-{{bazel_dependencies.bazel_skylib.version}}",
+    url = "https://github.com/bazelbuild/bazel-skylib/archive/refs/tags/{{bazel_dependencies.bazel_skylib.version}}.tar.gz",
+)

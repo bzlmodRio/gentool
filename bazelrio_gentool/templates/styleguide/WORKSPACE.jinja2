@@ -28,16 +28,20 @@ install_deps()
 
 {% if group.include_wpiformat %}
 # WPI Formatter
-{{  mandatory_dependencies.rules_wpiformat.download_repository(0) }}
+{{  mandatory_dependencies.rules_wpiformat.download_repository(0,native=False) }}
 
-{{ bazel_dependencies.rules_python.download_repository(0) }}
+{{ bazel_dependencies.rules_python.download_repository(0, maybe=False) }}
 
+load("@rules_wpiformat//dependencies:load_rule_dependencies.bzl", "load_wpiformat_rule_dependencies")
 
-load("@rules_wpiformat//wpiformat:load_dependencies.bzl", "load_wpiformat_dependencies")
+load_wpiformat_rule_dependencies()
+
+load("@rules_wpiformat//dependencies:load_dependencies.bzl", "load_wpiformat_dependencies")
 
 load_wpiformat_dependencies()
 
 load("@rules_wpiformat_pip//:requirements.bzl", "install_deps")
+
 
 install_deps()
 {% endif %}

@@ -1,4 +1,5 @@
 load("@rules_jvm_external//:defs.bzl", "maven_install")
+load("@rules_jvm_external//:repositories.bzl", "rules_jvm_external_deps")
 load("@rules_jvm_external//:specs.bzl", "maven")
 {% if group.has_protobuf %}
 load("@rules_proto//proto:repositories.bzl", "rules_proto_dependencies", "rules_proto_toolchains")
@@ -13,6 +14,7 @@ def load_{{ group.short_name }}_dependencies():
     rules_proto_toolchains()
     {% endif %}
     {% if group.is_java %}
+    rules_jvm_external_deps()
     maven_install(
         name = "{{group.repo_name}}_dependencies",
         artifacts = [

@@ -29,6 +29,9 @@ def generate_styleguide_rule(module_directory, group: StyleguideGroup, mandatory
         "dependencies/load_rule_dependencies.bzl",
 
     ]
+
+    if group.is_python:
+        template_files.append("BUILD.bazel")
     
     bazel_dependencies=get_bazel_dependencies()
     
@@ -37,24 +40,4 @@ def generate_styleguide_rule(module_directory, group: StyleguideGroup, mandatory
         output_file = os.path.join(module_directory, tf)
         render_template(template_file, output_file, group=group, bazel_dependencies=bazel_dependencies, mandatory_dependencies=mandatory_dependencies)
         # render_template(template_file, output_file, group=config)
-
-
-    # template_files = [
-    #     # ".github/workflows/build.yml",
-    #     # ".github/workflows/lint.yml",
-    #     # ".bazelrc-buildbuddy",
-    #     # ".bazelignore",
-    #     # ".bazelrc",
-    #     # ".gitignore",
-    #     # # ".bazelversion",
-    #     # "BUILD.bazel",
-    #     # "README.md",
-    #     # "WORKSPACE.bzlmod",
-    # ]
-
-    # for tf in template_files:
-    #     template_file = os.path.join(TEMPLATE_BASE_DIR, "module", tf + ".jinja2")
-    #     output_file = os.path.join(module_directory, tf)
-    #     render_template(template_file, output_file, group=group)
-    #     # render_template(template_file, output_file, group=config)
 

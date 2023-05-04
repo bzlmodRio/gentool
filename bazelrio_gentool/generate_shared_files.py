@@ -112,5 +112,6 @@ def get_bazel_dependencies():
     add_dep(repo_name="rules_cc", version="0.0.4", sha="")
     add_dep(repo_name="googletest", version="1.12.1", sha="24564e3b712d3eb30ac9a85d92f7d720f60cc0173730ac166f27dda7fed76cb2")
     add_dep(repo_name="rules_proto", version="5.3.0-21.7", sha="")
+    add_dep(repo_name="bazel_skylib", version="1.4.1", sha="060426b186670beede4104095324a72bd7494d8b4e785bf0d84a612978285908")
     
     return output
