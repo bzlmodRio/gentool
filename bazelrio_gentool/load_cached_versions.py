@@ -2,7 +2,7 @@ import yaml
 
 
 __CACHED_FILE = (
-    "/home/pjreiniger/git/bzlmodRio/gentool/bazelrio_gentool/cached_versions.yml"
+    "/home/pjreiniger/git/bzlmodRio/monorepo/gentool/bazelrio_gentool/cached_versions.yml"
 )
 
 
