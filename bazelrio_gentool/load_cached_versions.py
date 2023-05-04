@@ -3,7 +3,7 @@ import yaml
 
 
 __SCRIPT_DIR = os.path.dirname(os.path.realpath(__file__))
-__CACHED_FILE2 = os.path.join(__SCRIPT_DIR, "cached_versions.yml")
+__CACHED_FILE = os.path.join(__SCRIPT_DIR, "cached_versions.yml")
 
 
 def load_cached_versions():
