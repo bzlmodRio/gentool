@@ -5,7 +5,7 @@ from bazelrio_gentool.deps.dependency_container import DependencyContainer
 
 def main():
     SCRIPT_DIR = os.path.dirname(os.path.realpath(__file__))
-    registry_location = os.path.join(SCRIPT_DIR, "..", "..", "bazel-central-registry")
+    registry_location = os.path.join(SCRIPT_DIR, "..", "..", "..", "bazel-central-registry")
 
     version = "1.0.1"
     year = "2023"
