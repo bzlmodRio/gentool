@@ -1,26 +1,32 @@
 load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive")
 load("@bazel_tools//tools/build_defs/repo:utils.bzl", "maybe")
 
-def load_{{ short_name }}_rule_dependencies():
+def load_{{ group.short_name }}_rule_dependencies():
+{% if group.is_java %}
     # Java
-    RULES_JAVA_COMMITISH = "5.3.5"
-    RULES_JAVA_SHA = "7df0811e29830e79be984f9d5bf6839ce151702d694038126d7c23296785bf97"
-    maybe(
-        http_archive,
-        name = "rules_java",
-        sha256 = RULES_JAVA_SHA,
-        strip_prefix = "rules_java-{}".format(RULES_JAVA_COMMITISH),
-        url = "https://github.com/bazelbuild/rules_java/archive/{}.tar.gz".format(RULES_JAVA_COMMITISH),
-    )
+    {{ bazel_dependencies.rules_java.download_repository(4)}}
 
     # JVM External
-    RULES_JVM_EXTERNAL_TAG = "4.4.2"
-    RULES_JVM_EXTERNAL_SHA = "735602f50813eb2ea93ca3f5e43b1959bd80b213b836a07a62a29d757670b77b"
+    {{ bazel_dependencies.rules_jvm_external.download_repository(4)}}
+{% endif %}
+{% if group.is_python %}
     maybe(
         http_archive,
-        name = "rules_jvm_external",
-        sha256 = RULES_JVM_EXTERNAL_SHA,
-        strip_prefix = "rules_jvm_external-%s" % RULES_JVM_EXTERNAL_TAG,
-        url = "https://github.com/bazelbuild/rules_jvm_external/archive/%s.zip" % RULES_JVM_EXTERNAL_TAG,
+        name = "rules_python",
+        sha256 = "48a838a6e1983e4884b26812b2c748a35ad284fd339eb8e2a6f3adf95307fbcd",
+        strip_prefix = "rules_python-0.16.2",
+        url = "https://github.com/bazelbuild/rules_python/archive/refs/tags/0.16.2.tar.gz",
     )
+{% endif %}
+{% if group.has_protobuf %}
+    maybe(
+        http_archive,
+        name = "rules_proto",
+        sha256 = "dc3fb206a2cb3441b485eb1e423165b231235a1ea9b031b4433cf7bc1fa460dd",
+        strip_prefix = "rules_proto-5.3.0-21.7",
+        urls = [
+            "https://github.com/bazelbuild/rules_proto/archive/refs/tags/5.3.0-21.7.tar.gz",
+        ],
+    )
+{% endif %}
 

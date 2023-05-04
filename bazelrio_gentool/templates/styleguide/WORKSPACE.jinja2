@@ -3,30 +3,35 @@ workspace(name = "{{group.repo_name}}")
 load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive")
 
 # Rule Dependencies
-load("//dependencies:load_rule_dependencies.bzl", "load_{{ short_name }}_rule_dependencies")
+load("//dependencies:load_rule_dependencies.bzl", "load_{{ group.short_name }}_rule_dependencies")
 
-load_{{ short_name }}_rule_dependencies()
+load_{{ group.short_name }}_rule_dependencies()
 
 # Transitive Dependencies
 
-load("//dependencies:load_dependencies.bzl", "load_{{ short_name }}_dependencies")
+load("//dependencies:load_dependencies.bzl", "load_{{ group.short_name }}_dependencies")
 
-load_{{ short_name }}_dependencies()
+load_{{ group.short_name }}_dependencies()
 
+{% if group.is_java %}
 # Pin the maven install
-load("@rules_{{ short_name }}_dependencies//:defs.bzl", "pinned_maven_install")
+load("@rules_{{ group.short_name }}_dependencies//:defs.bzl", "pinned_maven_install")
 
 pinned_maven_install()
+{% endif %}
+{% if group.is_python %}
+load("@rules_{{ group.short_name }}_pip//:requirements.bzl", "install_deps")
 
+install_deps()
+
+{% endif %}
+
+{% if group.include_wpiformat %}
 # WPI Formatter
-{{  mandetory_dependencies.rules_wpiformat.download_repository(0) }}
+{{  mandatory_dependencies.rules_wpiformat.download_repository(0) }}
 
-http_archive(
-    name = "rules_python",
-    sha256 = "48a838a6e1983e4884b26812b2c748a35ad284fd339eb8e2a6f3adf95307fbcd",
-    strip_prefix = "rules_python-{{bazel_dependencies.rules_python.version}}",
-    url = "https://github.com/bazelbuild/rules_python/archive/refs/tags/{{bazel_dependencies.rules_python.version}}.tar.gz",
-)
+{{ bazel_dependencies.rules_python.download_repository(0) }}
+
 
 load("@rules_wpiformat//wpiformat:load_dependencies.bzl", "load_wpiformat_dependencies")
 
@@ -35,4 +40,5 @@ load_wpiformat_dependencies()
 load("@rules_wpiformat_pip//:requirements.bzl", "install_deps")
 
 install_deps()
+{% endif %}
 

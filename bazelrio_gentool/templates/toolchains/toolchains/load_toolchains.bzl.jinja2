@@ -5,11 +5,11 @@ def load_toolchains():
     configure_cross_compiler(
         name = "local_{{config.short_name_underscore}}",
         compiler = "{{config.short_name}}",
-        bin_subfolder = "{{config.short_name}}-academic/bin",
-        bin_prefix = "arm-frc2023-linux-gnueabi-",
-        sysroot_subfolder = "{{config.short_name}}-academic/arm-nilrt-linux-gnueabi/sysroot",
-        cxx_version = "10",
-        sysroot_include_folder = "arm-nilrt-linux-gnueabi",
+        bin_subfolder = "{{config.bin_subfolder}}",
+        bin_prefix = "{{config.bin_prefix}}",
+        sysroot_subfolder = "{{config.sysroot_subfolder}}",
+        cxx_version = "{{config.cxx_version}}",
+        sysroot_include_folder = "{{config.sysroot_include_folder}}",
         repo_shortname = "{{config.short_name_underscore}}",
     )
 {%- endfor %}

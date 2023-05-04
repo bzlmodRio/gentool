@@ -6,12 +6,7 @@ local_repository(
 )
 
 # Google Test
-http_archive(
-    name = "googletest",
-    sha256 = "{{bazel_dependencies.googletest.sha}}",
-    strip_prefix = "googletest-XXX",
-    urls = ["https://github.com/google/googletest/archive/XXXX.zip"],
-)
+{{ bazel_dependencies.googletest.download_repository(0, maybe=False) }}
 
 load("@{{container.repo_name}}//:maven_deps.bzl", "setup_legacy_setup_toolchains_dependencies")
 

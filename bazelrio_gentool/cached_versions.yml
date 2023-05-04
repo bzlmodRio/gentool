@@ -79,11 +79,11 @@ rules_pmd:
     commitish: 849520e7880f362e63391fa68dbcfa7ef33c18b6
     sha: f15d3ea527d7a5ae10eed808789f0a61cc1b39c0bef64decaeb03c2f0f22cd51
 rules_spotless:
-  '2022.30':
+  '2.34.0':
     commitish: ''
     sha: 8bef5845cb4fbc4637910522630767c2cf83d8a2370ecdf990dc4daebdb8bc50
 rules_wpi_styleguide:
-  '2022.30':
+  '1':
     commitish: ''
     sha: 8bef5845cb4fbc4637910522630767c2cf83d8a2370ecdf990dc4daebdb8bc50
 rules_wpiformat:

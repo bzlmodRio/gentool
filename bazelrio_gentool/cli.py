@@ -19,8 +19,3 @@ class GenericCliArgs:
         self.use_local_rules_spotless = args.use_local_rules_spotless
         self.use_local_rules_wpi_styleguide = args.use_local_rules_wpi_styleguide
 
-        self.use_local_rules_pmd = True
-        self.use_local_rules_checkstyle = True
-        self.use_local_rules_wpiformat = False
-        self.use_local_rules_spotless = True
-        self.use_local_rules_wpi_styleguide = True

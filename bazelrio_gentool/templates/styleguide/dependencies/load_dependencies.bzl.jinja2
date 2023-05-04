@@ -1,7 +1,18 @@
 load("@rules_jvm_external//:defs.bzl", "maven_install")
 load("@rules_jvm_external//:specs.bzl", "maven")
+{% if group.has_protobuf %}
+load("@rules_proto//proto:repositories.bzl", "rules_proto_dependencies", "rules_proto_toolchains")
+{% endif %}
+{% if group.is_python %}
+load("@rules_python//python:pip.bzl", "pip_parse")
+{% endif %}
 
-def load_{{ short_name }}_dependencies():
+def load_{{ group.short_name }}_dependencies():
+    {% if group.has_protobuf %}
+    rules_proto_dependencies()
+    rules_proto_toolchains()
+    {% endif %}
+    {% if group.is_java %}
     maven_install(
         name = "{{group.repo_name}}_dependencies",
         artifacts = [
@@ -15,4 +26,12 @@ def load_{{ short_name }}_dependencies():
         ],
         maven_install_json = "@{{group.repo_name}}//:{{group.repo_name}}_dependencies_install.json",
     )
+    {% endif %}
+    {% if group.is_python %}
+    pip_parse(
+        name = "rules_wpiformat_pip",
+        requirements_lock = "@rules_wpiformat//:requirements_lock.txt",
+        requirements_windows = "@rules_wpiformat//:requirements_windows.txt",
+    )
+    {% endif %}
 

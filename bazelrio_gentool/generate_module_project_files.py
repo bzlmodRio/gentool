@@ -22,11 +22,13 @@ class MandetoryDependencySetting:
         return f"MandetoryDependencySetting: {self.repo_name}, {self.version}, {self.use_local_version}"
 
     def maybe_local_repository(self):
-        return f"""
+        if self.use_local_version:
+            return f"""
 local_repository(
     name = "{self.repo_name}",
     path = "../../{self.repo_name}",
 )"""
+        return ""
         
     def local_module_override(self):
         if self.use_local_version:
@@ -68,7 +70,7 @@ def create_default_mandatory_settings(generic_cli: GenericCliArgs):
     )
     default_rules_pmd = MandetoryDependencySetting(
         "rules_pmd",
-        "6.39.0",
+        "6.43.0",
         generic_cli.use_local_rules_pmd,
     )
     default_rules_checkstyle = MandetoryDependencySetting(
@@ -78,7 +80,7 @@ def create_default_mandatory_settings(generic_cli: GenericCliArgs):
     )
     default_rules_spotless = MandetoryDependencySetting(
         "rules_spotless",
-        "2022.30",
+        "2.34.0",
         generic_cli.use_local_rules_spotless,
     )
     default_rules_wpiformat = MandetoryDependencySetting(
@@ -88,7 +90,7 @@ def create_default_mandatory_settings(generic_cli: GenericCliArgs):
     )
     default_rules_wpi_styleguide = MandetoryDependencySetting(
         "rules_wpi_styleguide",
-        "2022.30",
+        "1",
         generic_cli.use_local_rules_wpi_styleguide,
     )
 
@@ -127,7 +129,7 @@ class MandatoryDependencySettings:
 
 
 def generate_module_project_files(
-    module_directory, group, mandetory_dependencies, no_roborio=False
+    module_directory, group, mandatory_dependencies, no_roborio=False
 ):
     write_shared_root_files(module_directory, group)
     write_shared_test_files(module_directory, group)
@@ -170,7 +172,7 @@ def generate_module_project_files(
             template_file,
             output_file,
             group=group,
-            mandetory_dependencies=mandetory_dependencies,
+            mandatory_dependencies=mandatory_dependencies,
             bazel_dependencies=get_bazel_dependencies(),
             no_roborio=no_roborio,
         )
@@ -188,7 +190,7 @@ def generate_module_project_files(
                 template_file,
                 output_file,
                 group=group,
-                mandetory_dependencies=mandetory_dependencies,
+                mandatory_dependencies=mandatory_dependencies,
                 no_roborio=no_roborio,
             )
 

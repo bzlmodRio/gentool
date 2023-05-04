@@ -21,7 +21,7 @@ def clean_existing_version(
 
     file_blacklist = file_blacklist or []
     file_blacklist = [os.path.join(module_directory, x) for x in file_blacklist]
-    print(file_blacklist)
+    # print(file_blacklist)
 
     for root, dirs, files in os.walk(module_directory):
         dirs[:] = [d for d in dirs if d not in DIR_BLACKLIST]

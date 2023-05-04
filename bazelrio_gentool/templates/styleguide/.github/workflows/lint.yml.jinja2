@@ -27,8 +27,7 @@ jobs:
           sudo sh -c "echo 'deb http://apt.llvm.org/jammy/ llvm-toolchain-jammy-14 main' >> /etc/apt/sources.list.d/proposed-repositories.list"
           sudo apt-get update -q
           sudo apt-get install -y clang-format-14
-      - run: bazel run @rules_wpiformat//wpiformat -- -f ..
-        working-directory: tests
+      - run: bazel run @rules_wpiformat//wpiformat -- -f .
 
       - name: Check Output
         run: git --no-pager diff --exit-code HEAD

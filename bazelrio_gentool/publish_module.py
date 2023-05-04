@@ -73,7 +73,7 @@ def publish_module(
         group=group,
         module_bazel_file=module_bazel_file,
         hash=hash,
-        mandetory_dependencies=mandatory_dependencies,
+        mandatory_dependencies=mandatory_dependencies,
         bazel_dependencies=get_bazel_dependencies(),
         **kwargs
     )

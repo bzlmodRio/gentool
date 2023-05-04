@@ -5,11 +5,11 @@ def download_dependencies():
     {{ bazel_dependencies.rules_jvm_external.download_repository(4)}}
 
     # Bazelrio Rules
-{{ mandetory_dependencies.rules_bazelrio.download_repository(4) }}
+{{ mandatory_dependencies.rules_bazelrio.download_repository(4) }}
 {%- if not no_roborio %}
 
     # Roborio Toolchain
-{{ mandetory_dependencies.rules_roborio_toolchain.download_repository(4) }}
+{{ mandatory_dependencies.rules_roborio_toolchain.download_repository(4) }}
 {%- endif %}
 
     ########################

@@ -51,11 +51,11 @@ maven_install(
 #####################
 # Styleguide
 #####################
-{{ mandetory_dependencies.rules_pmd.maybe_local_repository() }}
-{{ mandetory_dependencies.rules_checkstyle.maybe_local_repository() }}
-{{ mandetory_dependencies.rules_spotless.maybe_local_repository() }}
-{{ mandetory_dependencies.rules_wpiformat.maybe_local_repository() }}
-{{ mandetory_dependencies.rules_wpi_styleguide.maybe_local_repository() }}
+{{ mandatory_dependencies.rules_pmd.maybe_local_repository() }}
+{{ mandatory_dependencies.rules_checkstyle.maybe_local_repository() }}
+{{ mandatory_dependencies.rules_spotless.maybe_local_repository() }}
+{{ mandatory_dependencies.rules_wpiformat.maybe_local_repository() }}
+{{ mandatory_dependencies.rules_wpi_styleguide.maybe_local_repository() }}
 
 load("@rules_wpi_styleguide//dependencies:load_rule_dependencies.bzl", "load_styleguide_rule_dependencies")
 load_styleguide_rule_dependencies()

@@ -9,9 +9,9 @@ bazel_dep(name = "rules_java", version = "{{bazel_dependencies.rules_java.versio
 {%- if group.has_direct_maven_deps() %}
 bazel_dep(name = "rules_jvm_external", version = "{{bazel_dependencies.rules_jvm_external.version}}")
 {%- endif %}
-bazel_dep(name = "rules_bazelrio", version = "{{mandetory_dependencies.rules_bazelrio.version}}")
+bazel_dep(name = "rules_bazelrio", version = "{{mandatory_dependencies.rules_bazelrio.version}}")
 {%- if not no_roborio %}
-bazel_dep(name = "rules_bzlmodrio_toolchains", version = "{{mandetory_dependencies.rules_roborio_toolchain.version}}")
+bazel_dep(name = "rules_bzlmodrio_toolchains", version = "{{mandatory_dependencies.rules_roborio_toolchain.version}}")
 {%- endif %}
 {%- for name, module_dep in group.module_dependencies.items() %}
 bazel_dep(name = "{{name}}", version = "{{module_dep.container.version}}{{module_dep.container.patch}}")

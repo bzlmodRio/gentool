@@ -18,6 +18,11 @@ class CppToolchainConfig:
         version,
         toolchain_version,
         release_version,
+        bin_subfolder,
+        bin_prefix,
+        sysroot_subfolder,
+        cxx_version,
+        sysroot_include_folder,
         cpp_url,
         cpp_platform_configs,
     ):
@@ -28,6 +33,13 @@ class CppToolchainConfig:
         self.release_version_underscore = release_version.replace("-", "_")
         self.toolchain_version = toolchain_version
         self.year = year
+
+        
+        self.bin_subfolder = bin_subfolder
+        self.bin_prefix = bin_prefix
+        self.sysroot_subfolder = sysroot_subfolder
+        self.cxx_version = cxx_version
+        self.sysroot_include_folder = sysroot_include_folder
 
         self.cpp_url = cpp_url
 

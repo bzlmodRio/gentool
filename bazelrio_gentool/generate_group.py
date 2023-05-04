@@ -32,7 +32,6 @@ def __write_dependency_file(
         )
 
     # Write BUILD file
-    print(template_base)
     template_file = os.path.join(template_base, lib_folder, "BUILD.bazel.jinja2")
     output_file = os.path.join(lib_dir, "BUILD.bazel")
     render_template(
