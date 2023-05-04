@@ -13,9 +13,16 @@ class GenericCliArgs:
     def __init__(self, args):
         self.use_local_roborio = args.use_local_roborio
         self.use_local_bazelrio = args.use_local_bazelrio
+
         self.use_local_rules_pmd = args.use_local_rules_pmd
         self.use_local_rules_checkstyle = args.use_local_rules_checkstyle
         self.use_local_rules_wpiformat = args.use_local_rules_wpiformat
         self.use_local_rules_spotless = args.use_local_rules_spotless
         self.use_local_rules_wpi_styleguide = args.use_local_rules_wpi_styleguide
+
+        self.use_local_rules_pmd = True
+        self.use_local_rules_checkstyle = True
+        self.use_local_rules_wpiformat = True
+        self.use_local_rules_spotless = True
+        self.use_local_rules_wpi_styleguide = True
 

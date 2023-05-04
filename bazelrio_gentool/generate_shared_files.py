@@ -63,13 +63,22 @@ class BazelDependencySetting:
         if self.use_long_form:
             output += f"""{self.repo_name.upper()}_COMMITISH = "{self.version}"
     {self.repo_name.upper()}_SHA = "{self.sha}"
-    maybe(
-    http_archive,
+    """
+            
+            if maybe:
+                output += "maybe(\n    http_archive,"
+            else:
+                output += "http_archive("
+
+            output += f"""
     name = "{self.repo_name}",
     sha256 = {self.repo_name.upper()}_SHA,
     strip_prefix = "{self.repo_name}-{{}}".format({self.repo_name.upper()}_COMMITISH),
     url = "https://github.com/bazelbuild/{self.repo_name}/archive/{{}}.{file_extension}".format({self.repo_name.upper()}_COMMITISH),
 )"""
+            return output
+
+            
         output = ""
         if maybe:
             output += "maybe(\n    http_archive,"
@@ -95,7 +104,7 @@ def get_bazel_dependencies():
 
     add_dep(repo_name="platforms", version="0.0.6", sha="")
     add_dep(repo_name="rules_python", version="0.16.2", sha="48a838a6e1983e4884b26812b2c748a35ad284fd339eb8e2a6f3adf95307fbcd")
-    add_dep(repo_name="rules_java", version="5.4.0", sha="TODO", use_long_form=True)
+    add_dep(repo_name="rules_java", version="5.4.0", sha="f90111a597b2aa77b7104dbdc685fd35ea0cca3b7c3f807153765e22319cbd88", use_long_form=True)
     # add_dep(repo_name="rules_java", version="5.3.5", sha="7df0811e29830e79be984f9d5bf6839ce151702d694038126d7c23296785bf97", use_long_form=True)
     # add_dep("rules_java", "5.4.0", "", "")
     # add_dep(repo_name="rules_jvm_external", version="4.4.2", sha="735602f50813eb2ea93ca3f5e43b1959bd80b213b836a07a62a29d757670b77b", use_zip=True, use_long_form=True)

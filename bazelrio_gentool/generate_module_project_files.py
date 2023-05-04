@@ -22,11 +22,12 @@ class MandetoryDependencySetting:
         return f"MandetoryDependencySetting: {self.repo_name}, {self.version}, {self.use_local_version}"
 
     def maybe_local_repository(self):
+        local_path = f"../../../rules/{self.repo_name}"
         if self.use_local_version:
             return f"""
 local_repository(
     name = "{self.repo_name}",
-    path = "../../{self.repo_name}",
+    path = "{local_path}",
 )"""
         return ""
         
@@ -40,13 +41,15 @@ local_path_override(
 
         return ""
         
-    def download_repository(self, num_indent):
+    def download_repository(self, num_indent, native=True):
         indent = " " * num_indent
+        native_text = "native." if native else ""
+        local_path = f"../../../rules/{self.repo_name}"
         if self.use_local_version:
             return f"""
-{indent}native.local_repository(
+{indent}{native_text}local_repository(
 {indent}    name = "{self.repo_name}",
-{indent}    path = "../../{self.repo_name}",
+{indent}    path = "{local_path}",
 {indent})"""
      
         return f"""{indent}http_archive(
