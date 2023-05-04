@@ -14,11 +14,13 @@ from bazelrio_gentool.generate_module_project_files import (
     create_default_mandatory_settings,
 )
 from bazelrio_gentool.load_cached_versions import update_cached_version
+from bazelrio_gentool.generate_shared_files import get_bazel_dependencies
 import hashlib
 from urllib.request import urlopen
+from bazelrio_gentool.cli import GenericCliArgs
+from typing import NamedTuple
 
-
-def generate_json(
+def publish_module(
     central_registery_location, group, module_json_template, module_template, **kwargs
 ):
     if module_json_template is None:
@@ -36,13 +38,26 @@ def generate_json(
         .decode("utf-8")
         .strip()
     )
+
+    class DummyArgs(NamedTuple):
+        use_local_roborio: bool = False
+        use_local_bazelrio: bool = False
+        use_local_rules_pmd: bool = False
+        use_local_rules_checkstyle: bool = False
+        use_local_rules_wpiformat: bool = False
+        use_local_rules_spotless: bool = False
+        use_local_rules_wpi_styleguide: bool = False
+
+
     mandatory_dependencies = create_default_mandatory_settings(
-        use_local_roborio=False,
-        use_local_bazelrio=False,
-        use_local_rules_pmd=False,
-        use_local_rules_checkstyle=False,
-        use_local_rules_wpiformat=False,
+        GenericCliArgs(DummyArgs())
     )
+    
+        # use_local_roborio=False,
+        # use_local_bazelrio=False,
+        # use_local_rules_pmd=False,
+        # use_local_rules_checkstyle=False,
+        # use_local_rules_wpiformat=False,
 
     module_bazel_file = os.path.join(
         central_registery_location,
@@ -59,6 +74,7 @@ def generate_json(
         module_bazel_file=module_bazel_file,
         hash=hash,
         mandetory_dependencies=mandatory_dependencies,
+        bazel_dependencies=get_bazel_dependencies(),
         **kwargs
     )
 
@@ -97,10 +113,12 @@ def update_cached_versions(group, json_file, hash):
 
 def create_module(central_registery_location, json_file):
     os.chdir(central_registery_location)
+    print("Changed to ", central_registery_location)
     if not os.path.exists(json_file):
         raise
 
-    args = ["python3", "./tools/add_module.py", "--input", json_file]
+    args = ["python3", "./tools/add_module.py", "--input", json_file, "--registry", central_registery_location]
     # args = ["python", './tools/add_module.py']
     print("  ".join(args))
     subprocess.check_call(args)
+    print("_--------------------------------")

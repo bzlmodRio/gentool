@@ -69,21 +69,24 @@ rules_bzlmodrio_toolchains:
     sha: b24d5813300ebe9a252c5e1c69a421c0d112f50da0d7b22c8de5efd7bca6babf
 rules_checkstyle:
   '10.1':
-    commitish: ''
-    sha: c9ad648693b72137b27e274789cdf9d1f4b7b0bdeba1ea84a572b42ac5e3aac7
+    commitish: c3f2c9ea1f3a46b084f3c9c9c51a0bf4bd834678
+    sha: dc1282d77bed576c4a2720b30ea9664421a3b71ab49827d3ce6759917dfc8567
 rules_pmd:
   6.39.0:
     commitish: ''
     sha: 6007cf19e55cb06ef4ff4933e857a833f079a57ef89b7603b0c168f46ca400d4
-rules_wpiformat:
-  '2022.30':
-    commitish: ''
-    sha: 8bef5845cb4fbc4637910522630767c2cf83d8a2370ecdf990dc4daebdb8bc50
+  6.43.0:
+    commitish: 849520e7880f362e63391fa68dbcfa7ef33c18b6
+    sha: f15d3ea527d7a5ae10eed808789f0a61cc1b39c0bef64decaeb03c2f0f22cd51
 rules_spotless:
   '2022.30':
     commitish: ''
     sha: 8bef5845cb4fbc4637910522630767c2cf83d8a2370ecdf990dc4daebdb8bc50
 rules_wpi_styleguide:
+  '2022.30':
+    commitish: ''
+    sha: 8bef5845cb4fbc4637910522630767c2cf83d8a2370ecdf990dc4daebdb8bc50
+rules_wpiformat:
   '2022.30':
     commitish: ''
     sha: 8bef5845cb4fbc4637910522630767c2cf83d8a2370ecdf990dc4daebdb8bc50

@@ -1,0 +1,34 @@
+{%- raw -%}
+name: Build example project
+on: [pull_request, push]
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.head_ref || github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build_native:
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+        # Build standard, native
+        - { name: "windows - native",        os: windows-latest, command: "build",  config: "--config=windows", bazel_options: "", }
+        - { name: "ubuntu  - native",        os: ubuntu-latest,  command: "build",  config: "--config=linux",   bazel_options: "", }
+        - { name: "macos   - native",        os: macos-latest,   command: "build",  config: "--config=macos",   bazel_options: "", }
+
+        # Build bzlmod, native
+        - { name: "windows - bzlmod native", os: windows-latest, command: "build",  config: "--enable_bzlmod --config=windows", bazel_options: "", }
+        - { name: "ubuntu  - bzlmod native", os: ubuntu-latest,  command: "build",  config: "--enable_bzlmod --config=linux",   bazel_options: "", }
+        - { name: "macos   - bzlmod native", os: macos-latest,   command: "build",  config: "--enable_bzlmod --config=macos",   bazel_options: "", }
+
+    name: "Build - ${{ matrix.name }}"
+    runs-on: ${{ matrix.os }}
+    steps:
+    - uses: actions/checkout@v3
+    - uses: actions/setup-python@v4
+      with:
+        python-version: '3.10.8'
+    - run: bazel ${{ matrix.command }} //... -k ${{ matrix.config }} --verbose_failures
+{%- endraw %}
+

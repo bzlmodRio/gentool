@@ -21,6 +21,39 @@ class MandetoryDependencySetting:
     def __repr__(self):
         return f"MandetoryDependencySetting: {self.repo_name}, {self.version}, {self.use_local_version}"
 
+    def maybe_local_repository(self):
+        return f"""
+local_repository(
+    name = "{self.repo_name}",
+    path = "../../{self.repo_name}",
+)"""
+        
+    def local_module_override(self):
+        if self.use_local_version:
+            return f"""
+local_path_override(
+    module_name = "{self.repo_name}",
+    path = "../../{self.repo_name}",
+)"""
+
+        return ""
+        
+    def download_repository(self, num_indent):
+        indent = " " * num_indent
+        if self.use_local_version:
+            return f"""
+{indent}native.local_repository(
+{indent}    name = "{self.repo_name}",
+{indent}    path = "../../{self.repo_name}",
+{indent})"""
+     
+        return f"""{indent}http_archive(
+{indent}name = "{self.repo_name}",
+{indent}sha256 = "{ self.sha }",
+{indent}strip_prefix = "{self.repo_name}-{self.version}",
+{indent}url = "https://github.com/bzlmodRio/{self.repo_name}/archive/refs/tags/{self.version}.tar.gz",
+    )"""
+
 
 def create_default_mandatory_settings(generic_cli: GenericCliArgs):
     default_rules_roborio_toolchain = MandetoryDependencySetting(

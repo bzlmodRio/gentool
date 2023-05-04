@@ -1,6 +1,11 @@
 {%- raw -%}
 name: Build example project
 on: [pull_request, push]
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.head_ref || github.ref }}
+  cancel-in-progress: true
+
 jobs:
   build_native:
     strategy:

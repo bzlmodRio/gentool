@@ -1,18 +1,38 @@
-workspace(name = "rules_pmd")
+workspace(name = "{{group.repo_name}}")
 
-# Runtime
+load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive")
 
-## Dependencies
+# Rule Dependencies
+load("//dependencies:load_rule_dependencies.bzl", "load_{{ short_name }}_rule_dependencies")
 
-load("//dependencies:load_rule_dependencies.bzl", "load_pmd_rule_dependencies")
+load_{{ short_name }}_rule_dependencies()
 
-load_pmd_rule_dependencies()
+# Transitive Dependencies
 
-## Toolchains
+load("//dependencies:load_dependencies.bzl", "load_{{ short_name }}_dependencies")
 
-load("//dependencies:load_dependencies.bzl", "load_pmd_dependencies")
+load_{{ short_name }}_dependencies()
 
-load_pmd_dependencies()
+# Pin the maven install
+load("@rules_{{ short_name }}_dependencies//:defs.bzl", "pinned_maven_install")
 
-load("@rules_pmd_dependencies//:defs.bzl", "pinned_maven_install")
 pinned_maven_install()
+
+# WPI Formatter
+{{  mandetory_dependencies.rules_wpiformat.download_repository(0) }}
+
+http_archive(
+    name = "rules_python",
+    sha256 = "48a838a6e1983e4884b26812b2c748a35ad284fd339eb8e2a6f3adf95307fbcd",
+    strip_prefix = "rules_python-{{bazel_dependencies.rules_python.version}}",
+    url = "https://github.com/bazelbuild/rules_python/archive/refs/tags/{{bazel_dependencies.rules_python.version}}.tar.gz",
+)
+
+load("@rules_wpiformat//wpiformat:load_dependencies.bzl", "load_wpiformat_dependencies")
+
+load_wpiformat_dependencies()
+
+load("@rules_wpiformat_pip//:requirements.bzl", "install_deps")
+
+install_deps()
+

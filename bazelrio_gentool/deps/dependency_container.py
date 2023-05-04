@@ -26,6 +26,32 @@ class ModuleDependency:
         self.remote_sha = cached_version["sha"]
         self.remote_commitish = cached_version["commitish"]
         self.remote_repo = remote_repo
+        
+    def local_module_override(self):
+        if self.use_local_version:
+            return f"""
+local_path_override(
+    module_name = "{remote_repo}",
+    path = "../../{remote_repo}",
+)"""
+
+        return ""
+
+    def download_repository(self, num_indent):
+        indent = " " * num_indent
+        if self.use_local_version:
+            return f"""
+    native.local_repository(
+        name = "{self.container.repo_name}",
+        path = "../../{self.container.repo_name}",
+    )"""
+     
+        return f"""    http_archive(
+        name = "{self.container.repo_name}",
+        sha256 = "{ self.remote_sha }",
+        strip_prefix = "{self.remote_repo}-{self.container.version}{self.container.patch}",
+        url = "https://github.com/bzlmodRio/{self.remote_repo}/archive/refs/tags/{self.container.version}{self.container.patch}.tar.gz",
+    )"""
 
 
 class DependencyContainer:

@@ -55,6 +55,9 @@ class BazelDependencySetting:
         self.sha = sha
         self.url = url
 
+    def download_repository(self, indent):
+        return ""
+
         
 def get_bazel_dependencies():
 
@@ -64,8 +67,11 @@ def get_bazel_dependencies():
     output = {}
 
     add_dep("platforms", "0.0.6", "", "")
-    add_dep("rules_java", "5.4.0", "", "")
-    add_dep("rules_jvm_external", "4.5", "b17d7388feb9bfa7f2fa09031b32707df529f26c91ab9e5d909eb1676badd9a6", "")
+    add_dep("rules_python", "0.16.2", "", "48a838a6e1983e4884b26812b2c748a35ad284fd339eb8e2a6f3adf95307fbcd")
+    add_dep("rules_java", "5.3.5", "", "")
+    # add_dep("rules_java", "5.4.0", "", "")
+    add_dep("rules_jvm_external", "4.4.2", "b17d7388feb9bfa7f2fa09031b32707df529f26c91ab9e5d909eb1676badd9a6", "")
+    # add_dep("rules_jvm_external", "4.5", "b17d7388feb9bfa7f2fa09031b32707df529f26c91ab9e5d909eb1676badd9a6", "")
     add_dep("rules_cc", "0.0.4", "", "")
     add_dep("googletest", "1.12.1", "24564e3b712d3eb30ac9a85d92f7d720f60cc0173730ac166f27dda7fed76cb2", "")
     

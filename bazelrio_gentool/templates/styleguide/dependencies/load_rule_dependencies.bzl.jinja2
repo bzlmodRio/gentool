@@ -1,7 +1,7 @@
 load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive")
 load("@bazel_tools//tools/build_defs/repo:utils.bzl", "maybe")
 
-def load_pmd_rule_dependencies():
+def load_{{ short_name }}_rule_dependencies():
     # Java
     RULES_JAVA_COMMITISH = "5.3.5"
     RULES_JAVA_SHA = "7df0811e29830e79be984f9d5bf6839ce151702d694038126d7c23296785bf97"

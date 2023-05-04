@@ -1,24 +1,21 @@
 module(
-    name = "rules_pmd",
-    version = "6.43.0",
+    name = "{{group.repo_name}}",
+    version = "{{group.sanitized_version}}{{group.patch}}",
+    compatibility_level = {{group.year}},
 )
 
-bazel_dep(name = "rules_java", version = "5.3.5")
-bazel_dep(name = "rules_jvm_external", version = "4.4.2")
-
-PMD_VERSION = "6.43.0"
+bazel_dep(name = "rules_java", version = "{{bazel_dependencies.rules_java.version}}")
+bazel_dep(name = "rules_jvm_external", version = "{{bazel_dependencies.rules_jvm_external.version}}")
 
 maven = use_extension("@rules_jvm_external//:extensions.bzl", "maven")
-
-artifact = use_extension("@rules_jvm_external//:extensions.bzl", "artifact")
-
 maven.install(
-    name = "rules_pmd_dependencies",
+    name = "{{group.repo_name}}_dependencies",
     artifacts = [
-        "net.sourceforge.pmd:pmd-core:{}".format(PMD_VERSION),
-        "net.sourceforge.pmd:pmd-dist:{}".format(PMD_VERSION),
+        {%- for maven_dep in group.get_all_maven_dependencies2() %}
+        "{{maven_dep[0]}}:{{maven_dep[1]}}",
+        {%- endfor %}
     ],
-    lock_file = "//:rules_pmd_dependencies_install.json",
+    lock_file = "//:{{group.repo_name}}_dependencies_install.json",
     repositories = [
         "https://repo1.maven.org/maven2",
         "https://repo.maven.apache.org/maven2/",
@@ -26,6 +23,6 @@ maven.install(
 )
 use_repo(
     maven,
-    "rules_pmd_dependencies",
+    "{{group.repo_name}}_dependencies",
 )
 

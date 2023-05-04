@@ -4,51 +4,14 @@ local_path_override(
     path = "..",
 )
 
-{%- if mandetory_dependencies.rules_roborio_toolchain.use_local_version %}
-
-local_path_override(
-    module_name = "rules_bzlmodrio_toolchains",
-    path = "../../rules_bzlmodrio_toolchains",
-)
-{%- endif %}
-{%- if mandetory_dependencies.rules_pmd.use_local_version %}
-local_path_override(
-    module_name = "rules_pmd",
-    path = "../../rules_pmd",
-)
-{%- endif %}
-{%- if mandetory_dependencies.rules_checkstyle.use_local_version %}
-local_path_override(
-    module_name = "rules_checkstyle",
-    path = "../../rules_checkstyle",
-)
-{%- endif %}
-{%- if mandetory_dependencies.rules_spotless.use_local_version %}
-local_path_override(
-    module_name = "rules_spotless",
-    path = "../../rules_spotless",
-)
-{%- endif %}
-{%- if mandetory_dependencies.rules_wpiformat.use_local_version %}
-local_path_override(
-    module_name = "rules_wpiformat",
-    path = "../../rules_wpiformat",
-)
-{%- endif %}
-{%- if mandetory_dependencies.rules_wpi_styleguide.use_local_version %}
-local_path_override(
-    module_name = "rules_wpi_styleguide",
-    path = "../../rules_wpi_styleguide",
-)
-{%- endif %}
+{{ mandetory_dependencies.rules_roborio_toolchain.local_module_override() }}
+{{ mandetory_dependencies.rules_pmd.local_module_override() }}
+{{ mandetory_dependencies.rules_checkstyle.local_module_override() }}
+{{ mandetory_dependencies.rules_spotless.local_module_override() }}
+{{ mandetory_dependencies.rules_wpiformat.local_module_override() }}
+{{ mandetory_dependencies.rules_wpi_styleguide.local_module_override() }}
 {%- for name, module_dep in group.module_dependencies.items() %}
-{%- if module_dep.use_local_version %}
-
-local_path_override(
-    module_name = "{{name}}",
-    path = "{{module_dep.local_rel_folder}}",
-)
-{%- endif %}
+{{ module_dep.local_module_override() }}
 {%- endfor %}
 
 bazel_dep(name = "googletest", version = "{{bazel_dependencies.googletest.version}}")
