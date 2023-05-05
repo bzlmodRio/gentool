@@ -6,6 +6,7 @@ def write_shared_root_files(module_directory, group):
     template_files = [
         ".github/workflows/build.yml",
         ".github/workflows/lint.yml",
+        ".github/workflows/publish.yml",
         ".bazelignore",
         ".bazelrc-buildbuddy",
         ".bazelversion",
