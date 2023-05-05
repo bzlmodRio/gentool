@@ -79,14 +79,17 @@ rules_pmd:
     commitish: 849520e7880f362e63391fa68dbcfa7ef33c18b6
     sha: f15d3ea527d7a5ae10eed808789f0a61cc1b39c0bef64decaeb03c2f0f22cd51
 rules_spotless:
-  '2.34.0':
-    commitish: ''
-    sha: 8bef5845cb4fbc4637910522630767c2cf83d8a2370ecdf990dc4daebdb8bc50
+  2.34.0:
+    commitish: 8b29ac7593343f17c4fdb60c2e3e6c43ddb7ea96
+    sha: d0c8e5684123f7ed925725b5e7e7d383f4973386433b726f47c51084c3134b19
 rules_wpi_styleguide:
+  0.0.0:
+    commitish: db2fe56f433b2957ca795d8885673e64660e7641
+    sha: 5bdf5bf15b8854a3e36be410d114f7bea561acd6b998d89de8f4d70539f7c577
   '1':
     commitish: ''
     sha: 8bef5845cb4fbc4637910522630767c2cf83d8a2370ecdf990dc4daebdb8bc50
 rules_wpiformat:
   '2022.30':
-    commitish: ''
-    sha: 8bef5845cb4fbc4637910522630767c2cf83d8a2370ecdf990dc4daebdb8bc50
+    commitish: d35b37d8b9eaf2f31ba84dbe9938afbe1ea07e3b
+    sha: 871885dc981cbb892894589ef3965b38c7a438880da434693669cba4ad2d5369
