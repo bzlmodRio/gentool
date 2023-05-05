@@ -26,7 +26,7 @@ class ModuleDependency:
         self.remote_sha = cached_version["sha"]
         self.remote_commitish = cached_version["commitish"]
         self.remote_repo = remote_repo
-        
+
     def local_module_override(self):
         if self.use_local_version:
             return f"""
@@ -38,14 +38,14 @@ local_path_override(
         return ""
 
     def download_repository(self, num_indent):
-        indent = " " * num_indent
+        " " * num_indent
         if self.use_local_version:
             return f"""
     native.local_repository(
         name = "{self.container.repo_name}",
         path = "../../{self.container.repo_name}",
     )"""
-     
+
         return f"""    http_archive(
         name = "{self.container.repo_name}",
         sha256 = "{ self.remote_sha }",

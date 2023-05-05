@@ -1,11 +1,15 @@
 import os
-from bazelrio_gentool.utils import render_template, render_templates, write_file, TEMPLATE_BASE_DIR
+from bazelrio_gentool.utils import (
+    render_templates,
+    TEMPLATE_BASE_DIR,
+)
 from bazelrio_gentool.load_cached_versions import load_cached_version_info
-from bazelrio_gentool.generate_shared_files import write_shared_root_files, write_shared_test_files
+from bazelrio_gentool.generate_shared_files import (
+    write_shared_root_files,
+    write_shared_test_files,
+)
 from bazelrio_gentool.cli import GenericCliArgs
 from bazelrio_gentool.generate_shared_files import get_bazel_dependencies
-
-
 
 
 class MandetoryDependencySetting:
@@ -30,7 +34,7 @@ local_repository(
     path = "{local_path}",
 )"""
         return ""
-        
+
     def local_module_override(self):
         if self.use_local_version:
             return f"""
@@ -40,7 +44,7 @@ local_path_override(
 )"""
 
         return ""
-        
+
     def download_repository(self, num_indent, native=True, maybe=False):
         indent = " " * num_indent
         native_text = "native." if native else ""
@@ -63,7 +67,7 @@ local_path_override(
             output += "maybe(\n    http_archive,"
         else:
             output += "http_archive("
-     
+
         output += f"""
 {indent}name = "{self.repo_name}",
 {indent}sha256 = "{ self.sha }",
@@ -171,14 +175,22 @@ def generate_module_project_files(
             ]
         )
 
-    render_templates(template_files, module_directory, os.path.join(TEMPLATE_BASE_DIR, "library_wrapper"), 
-            group=group,
-            mandatory_dependencies=mandatory_dependencies,
-            bazel_dependencies=get_bazel_dependencies(),
-            no_roborio=no_roborio,)
+    render_templates(
+        template_files,
+        module_directory,
+        os.path.join(TEMPLATE_BASE_DIR, "library_wrapper"),
+        group=group,
+        mandatory_dependencies=mandatory_dependencies,
+        bazel_dependencies=get_bazel_dependencies(),
+        no_roborio=no_roborio,
+    )
 
     if group.java_deps:
-        render_templates(["maven_java_deps.bzl"], module_directory, os.path.join(TEMPLATE_BASE_DIR, "library_wrapper"), 
-                group=group,
-                mandatory_dependencies=mandatory_dependencies,
-                no_roborio=no_roborio,)
+        render_templates(
+            ["maven_java_deps.bzl"],
+            module_directory,
+            os.path.join(TEMPLATE_BASE_DIR, "library_wrapper"),
+            group=group,
+            mandatory_dependencies=mandatory_dependencies,
+            no_roborio=no_roborio,
+        )

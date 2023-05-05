@@ -17,7 +17,7 @@ def vendordep_dependency(
     with open(vendor_file, "r") as f:
         vendor_dep = json.load(f)
 
-        vendor_name = os.path.basename(os.path.dirname(vendor_file))
+        os.path.basename(os.path.dirname(vendor_file))
 
         maven_url = vendor_dep["mavenUrls"][0]
         if maven_url.endswith("/"):

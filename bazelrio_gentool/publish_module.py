@@ -1,16 +1,11 @@
 import os
-import sys
 import json
 import subprocess
 from bazelrio_gentool.utils import (
     render_template,
-    write_file,
-    SCRIPT_DIR,
     TEMPLATE_BASE_DIR,
 )
-from bazelrio_gentool.deps.cc_dependency import CcDependency
 from bazelrio_gentool.generate_module_project_files import (
-    generate_module_project_files,
     create_default_mandatory_settings,
 )
 from bazelrio_gentool.load_cached_versions import update_cached_version
@@ -19,6 +14,7 @@ import hashlib
 from urllib.request import urlopen
 from bazelrio_gentool.cli import GenericCliArgs
 from typing import NamedTuple
+
 
 def publish_module(
     central_registery_location, group, module_json_template, module_template, **kwargs
@@ -48,16 +44,15 @@ def publish_module(
         use_local_rules_spotless: bool = False
         use_local_rules_wpi_styleguide: bool = False
 
-
     mandatory_dependencies = create_default_mandatory_settings(
         GenericCliArgs(DummyArgs())
     )
-    
-        # use_local_roborio=False,
-        # use_local_bazelrio=False,
-        # use_local_rules_pmd=False,
-        # use_local_rules_checkstyle=False,
-        # use_local_rules_wpiformat=False,
+
+    # use_local_roborio=False,
+    # use_local_bazelrio=False,
+    # use_local_rules_pmd=False,
+    # use_local_rules_checkstyle=False,
+    # use_local_rules_wpiformat=False,
 
     module_bazel_file = os.path.join(
         central_registery_location,
@@ -94,7 +89,7 @@ def publish_module(
         **kwargs
     )
 
-    module_directory = os.path.join(central_registery_location, "json", group.repo_name)
+    os.path.join(central_registery_location, "json", group.repo_name)
 
     create_module(central_registery_location, json_file)
     update_cached_versions(group, json_file, hash)
@@ -117,7 +112,14 @@ def create_module(central_registery_location, json_file):
     if not os.path.exists(json_file):
         raise
 
-    args = ["python3", "./tools/add_module.py", "--input", json_file, "--registry", central_registery_location]
+    args = [
+        "python3",
+        "./tools/add_module.py",
+        "--input",
+        json_file,
+        "--registry",
+        central_registery_location,
+    ]
     # args = ["python", './tools/add_module.py']
     print("  ".join(args))
     subprocess.check_call(args)

@@ -25,4 +25,3 @@ class GenericCliArgs:
         # self.use_local_rules_wpiformat = True
         # self.use_local_rules_spotless = True
         # self.use_local_rules_wpi_styleguide = True
-

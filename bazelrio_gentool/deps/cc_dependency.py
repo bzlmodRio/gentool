@@ -1,4 +1,3 @@
-import re
 from bazelrio_gentool.deps.multi_resource_dependency import MultiResourceDependency
 
 

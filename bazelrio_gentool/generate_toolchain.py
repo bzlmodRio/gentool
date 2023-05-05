@@ -1,7 +1,14 @@
 import os
-from bazelrio_gentool.utils import TEMPLATE_BASE_DIR, write_file, render_template, render_templates
+from bazelrio_gentool.utils import (
+    TEMPLATE_BASE_DIR,
+    render_template,
+    render_templates,
+)
 from bazelrio_gentool.generate_shared_files import get_bazel_dependencies
-from bazelrio_gentool.generate_shared_files import write_shared_root_files, write_shared_test_files
+from bazelrio_gentool.generate_shared_files import (
+    write_shared_root_files,
+    write_shared_test_files,
+)
 
 
 def generate_toolchain(module_directory, container):
@@ -27,7 +34,13 @@ def generate_toolchain(module_directory, container):
 
     bazel_deps = get_bazel_dependencies()
 
-    render_templates(template_files, module_directory, os.path.join(TEMPLATE_BASE_DIR, "toolchains"), container=container, bazel_dependencies=bazel_deps)
+    render_templates(
+        template_files,
+        module_directory,
+        os.path.join(TEMPLATE_BASE_DIR, "toolchains"),
+        container=container,
+        bazel_dependencies=bazel_deps,
+    )
 
     for config in container.configs:
         template_file = os.path.join(

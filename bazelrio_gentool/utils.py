@@ -1,5 +1,5 @@
 import os
-from jinja2 import Template, Environment, BaseLoader, FileSystemLoader
+from jinja2 import Environment, FileSystemLoader
 
 SCRIPT_DIR = os.path.dirname(os.path.realpath(__file__))
 TEMPLATE_BASE_DIR = os.path.join(SCRIPT_DIR, "templates")
@@ -31,6 +31,7 @@ def render_template(template_file, output_file, **kwargs):
     except:
         print(f"Failed to render {template_file}")
         raise
+
 
 def render_templates(template_files, repo_dir, template_dir, **kwargs):
     for tf in template_files:

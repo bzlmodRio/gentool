@@ -34,7 +34,6 @@ class CppToolchainConfig:
         self.toolchain_version = toolchain_version
         self.year = year
 
-        
         self.bin_subfolder = bin_subfolder
         self.bin_prefix = bin_prefix
         self.sysroot_subfolder = sysroot_subfolder

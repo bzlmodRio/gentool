@@ -1,5 +1,5 @@
 from bazelrio_gentool.deps.sha256_helper import get_hash
-from bazelrio_gentool.deps.cc_dependency import CcDependency, CcMetaDependency
+from bazelrio_gentool.deps.cc_dependency import CcMetaDependency
 
 
 class JavaDependency:
