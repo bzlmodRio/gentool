@@ -31,3 +31,16 @@ def render_template(template_file, output_file, **kwargs):
     except:
         print(f"Failed to render {template_file}")
         raise
+
+def render_templates(template_files, repo_dir, template_dir, **kwargs):
+    for tf in template_files:
+        template_file = os.path.join(template_dir, tf + ".jinja2")
+        output_file = os.path.join(repo_dir, tf)
+        render_template(
+            template_file,
+            output_file,
+            **kwargs,
+        )
+
+        if output_file.endswith(".sh"):
+            os.chmod(output_file, 0o755)

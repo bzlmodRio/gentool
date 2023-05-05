@@ -1,5 +1,5 @@
 import os
-from bazelrio_gentool.utils import TEMPLATE_BASE_DIR, write_file, render_template
+from bazelrio_gentool.utils import TEMPLATE_BASE_DIR, write_file, render_template, render_templates
 from bazelrio_gentool.generate_shared_files import write_shared_root_files
 from bazelrio_gentool.generate_shared_files import get_bazel_dependencies
 from bazelrio_gentool.deps.dependency_container import DependencyContainer
@@ -35,9 +35,5 @@ def generate_styleguide_rule(module_directory, group: StyleguideGroup, mandatory
     
     bazel_dependencies=get_bazel_dependencies()
     
-    for tf in template_files:
-        template_file = os.path.join(TEMPLATE_BASE_DIR, "styleguide", tf + ".jinja2")
-        output_file = os.path.join(module_directory, tf)
-        render_template(template_file, output_file, group=group, bazel_dependencies=bazel_dependencies, mandatory_dependencies=mandatory_dependencies)
-        # render_template(template_file, output_file, group=config)
+    render_templates(template_files, module_directory, os.path.join(TEMPLATE_BASE_DIR, "styleguide"), group=group, bazel_dependencies=bazel_dependencies, mandatory_dependencies=mandatory_dependencies)
 

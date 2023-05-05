@@ -1,5 +1,5 @@
 import os
-from bazelrio_gentool.utils import render_template, write_file, TEMPLATE_BASE_DIR
+from bazelrio_gentool.utils import render_template, render_templates, write_file, TEMPLATE_BASE_DIR
 from bazelrio_gentool.load_cached_versions import load_cached_version_info
 from bazelrio_gentool.generate_shared_files import write_shared_root_files, write_shared_test_files
 from bazelrio_gentool.cli import GenericCliArgs
@@ -107,7 +107,7 @@ def create_default_mandatory_settings(generic_cli: GenericCliArgs):
     )
     default_rules_wpi_styleguide = MandetoryDependencySetting(
         "rules_wpi_styleguide",
-        "1",
+        "1.0.0",
         generic_cli.use_local_rules_wpi_styleguide,
     )
 
@@ -152,24 +152,13 @@ def generate_module_project_files(
     write_shared_test_files(module_directory, group)
 
     template_files = [
-        # ".bazelrc",
-        # ".bazelrc-buildbuddy",
-        # ".bazelignore",
-        # ".gitignore",
-        # "BUILD.bazel",
-        # "README.md",
         "maven_cpp_deps.bzl",
         "MODULE.bazel",
-        # "WORKSPACE.bzlmod",
         "WORKSPACE",
         "private/non_bzlmod_dependencies/BUILD.bazel",
         "private/non_bzlmod_dependencies/download_dependencies.bzl",
         "private/non_bzlmod_dependencies/setup_dependencies.bzl",
-        # "tests/.bazelrc",
-        # "tests/.bazelrc-buildbuddy",
-        # "tests/.bazelversion",
         "tests/MODULE.bazel",
-        # "tests/WORKSPACE.bzlmod",
         "tests/WORKSPACE",
     ]
 
@@ -182,34 +171,14 @@ def generate_module_project_files(
             ]
         )
 
-    for tf in template_files:
-        template_file = os.path.join(TEMPLATE_BASE_DIR, "library_wrapper", tf + ".jinja2")
-        output_file = os.path.join(module_directory, tf)
-        render_template(
-            template_file,
-            output_file,
+    render_templates(template_files, module_directory, os.path.join(TEMPLATE_BASE_DIR, "library_wrapper"), 
             group=group,
             mandatory_dependencies=mandatory_dependencies,
             bazel_dependencies=get_bazel_dependencies(),
-            no_roborio=no_roborio,
-        )
-
-        if output_file.endswith(".sh"):
-            os.chmod(output_file, 0o755)
+            no_roborio=no_roborio,)
 
     if group.java_deps:
-        for tf in [
-            "maven_java_deps.bzl",
-        ]:
-            template_file = os.path.join(TEMPLATE_BASE_DIR, "library_wrapper", tf + ".jinja2")
-            output_file = os.path.join(module_directory, tf)
-            render_template(
-                template_file,
-                output_file,
+        render_templates(["maven_java_deps.bzl"], module_directory, os.path.join(TEMPLATE_BASE_DIR, "library_wrapper"), 
                 group=group,
                 mandatory_dependencies=mandatory_dependencies,
-                no_roborio=no_roborio,
-            )
-
-            if output_file.endswith(".sh"):
-                os.chmod(output_file, 0o755)
+                no_roborio=no_roborio,)

@@ -8,12 +8,10 @@ def generate_vendordep_raw_libs(module_directory, group):
         "private/cpp/BUILD.bazel",
     ]
 
-    for tf in template_files:
-        template_file = os.path.join(TEMPLATE_BASE_DIR, "vendordeps", tf + ".jinja2")
-        output_file = os.path.join(module_directory, tf)
-        render_template(
+    render_templates(
             template_file,
-            output_file,
+            module_directory,
+            os.path.join(TEMPLATE_BASE_DIR, "vendordeps"),
             group=group,
             visibility=f'["@{group.repo_name}//:__subpackages__"]',
         )
