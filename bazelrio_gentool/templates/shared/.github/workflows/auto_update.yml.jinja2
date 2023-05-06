@@ -30,6 +30,20 @@ jobs:
         path: gentool
         ref: refactor_dev
 
+
+{%- endraw %}
+{% for name, module_dep in group.module_dependencies.items() %}
+    # Checkout name
+    - uses: actions/checkout@v3
+      with:
+        repository: 'bzlmodRio/{{name}}.git'
+        fetch-depth: 0
+        path: rules/{{group.repo_name}}/{{module_dep.local_rel_folder}}
+        ref: refactor_dev
+{% endfor %}
+{% raw %}
+
+
     # Checkout BCR
     - uses: actions/checkout@v3
       with:
