@@ -24,6 +24,9 @@ def write_shared_root_files(
         ".styleguide-license",
     ]
 
+    if os.path.exists(os.path.join(module_directory, "generate", "auto_update.py")):
+        template_files.append(".github/workflows/auto_update.yml")
+
     render_templates(
         template_files,
         module_directory,
