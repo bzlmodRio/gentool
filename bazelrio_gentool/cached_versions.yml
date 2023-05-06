@@ -80,8 +80,8 @@ rules_pmd:
     sha: f15d3ea527d7a5ae10eed808789f0a61cc1b39c0bef64decaeb03c2f0f22cd51
 rules_spotless:
   2.34.0:
-    commitish: 19fe3c2473e90b8939c47e3e46614d46377acfa0
-    sha: f54af971944701b8ae4e35dabccd9fd4fc71c8b1691a134a2e382a3b8ffa25e8
+    commitish: e6cd15da99b18e17724c9d3839d3e33d9ad9e06f
+    sha: 0351ea8dda87d1d6697b27bce381c59a1717084b3d8c226dbc9ec3103b8fd285
 rules_wpi_styleguide:
   0.0.0:
     commitish: db2fe56f433b2957ca795d8885673e64660e7641
@@ -90,8 +90,8 @@ rules_wpi_styleguide:
     commitish: ''
     sha: 8bef5845cb4fbc4637910522630767c2cf83d8a2370ecdf990dc4daebdb8bc50
   1.0.0:
-    commitish: 5999067117c7bbb403b57dea9c8d13925b0ca498
-    sha: b3d8ff596b81cbf3b50419a074b5ac0cf2fc8579d1962e15aa2a42bd014ecf83
+    commitish: f9bed960951c3efadcdb0dd57503f8ced60766bb
+    sha: 767ae068dcbbfce024afcc42d0a39c3e8241d2325146eec141509c8ec72398c2
 rules_wpiformat:
   '2022.30':
     commitish: d35b37d8b9eaf2f31ba84dbe9938afbe1ea07e3b
