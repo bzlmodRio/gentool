@@ -10,8 +10,8 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  publish_module:
-    name: "Publish Module"
+  auto_update_module:
+    name: "Auto Update Module"
     runs-on: ubuntu-latest
     steps:
     - name: Set up Go 1.15.x
@@ -53,6 +53,16 @@ jobs:
         ref: refactor_dev
 {% endfor %}
 {% raw %}
+
+    - name: Setup Cache
+      uses: actions/cache@v3
+      with:
+        path: |
+          ~/bzlmod_cache/*.sha256
+        key: ${{ runner.os }}-${{ hashFiles('**/generate/**') }}
+        restore-keys: |
+          ${{ runner.os }}-
+          ${{ runner.os }}
 
     # Run update
     - name: Run update
