@@ -117,6 +117,9 @@ jobs:
     - run: bazel ${{ matrix.bazel_options }} ${{ matrix.command }} //... -k ${{ matrix.config }} --verbose_failures --config=remote
       working-directory: tests
 
+{%- endraw %}
+{% if include_raspi_compiler %}
+{%- raw %}
 
 
   build_raspi32:
@@ -140,4 +143,4 @@ jobs:
     - run: bazel ${{ matrix.bazel_options }} ${{ matrix.command }} //... -k ${{ matrix.config }} --verbose_failures --config=remote
       working-directory: tests
 {%- endraw %}
-
+{% endif %}

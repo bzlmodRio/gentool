@@ -61,5 +61,5 @@ def generate_toolchain(module_directory, container):
         )
         render_template(template_file, output_file, config=config)
 
-    write_shared_root_files(module_directory, container)
+    write_shared_root_files(module_directory, container, include_raspi_compiler=True)
     write_shared_test_files(module_directory, container)
