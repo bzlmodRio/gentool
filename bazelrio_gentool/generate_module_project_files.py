@@ -150,9 +150,9 @@ class MandatoryDependencySettings:
 
 
 def generate_module_project_files(
-    module_directory, group, mandatory_dependencies, no_roborio=False
+    module_directory, group, mandatory_dependencies, no_roborio=False, test_macos=True
 ):
-    write_shared_root_files(module_directory, group)
+    write_shared_root_files(module_directory, group, test_macos=test_macos)
     write_shared_test_files(module_directory, group)
 
     template_files = [

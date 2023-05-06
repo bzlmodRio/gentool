@@ -5,7 +5,7 @@ from bazelrio_gentool.utils import (
 )
 
 
-def write_shared_root_files(module_directory, group, include_raspi_compiler=False):
+def write_shared_root_files(module_directory, group, include_raspi_compiler=False, test_macos=True):
     template_files = [
         ".github/workflows/build.yml",
         ".github/workflows/lint.yml",
@@ -28,6 +28,7 @@ def write_shared_root_files(module_directory, group, include_raspi_compiler=Fals
         os.path.join(TEMPLATE_BASE_DIR, "shared"),
         group=group,
         include_raspi_compiler=include_raspi_compiler,
+        test_macos=test_macos,
     )
 
 
