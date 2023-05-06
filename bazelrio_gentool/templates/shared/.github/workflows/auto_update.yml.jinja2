@@ -1,11 +1,9 @@
 {%- raw -%}
 name: Auto Update
-on: [pull_request, push]
-# on:
-#   workflow_dispatch:
-#   push:
-#     tags:
-#     - '*'
+on:
+  push:
+    branches-ignore:    
+      - 'autoupdate'
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.head_ref || github.ref }}
@@ -16,11 +14,24 @@ jobs:
     name: "Publish Module"
     runs-on: ubuntu-latest
     steps:
+    - name: Set up Go 1.15.x
+      uses: actions/setup-go@v2
+      with:
+        go-version: 1.15.x
+      id: go
+
+    - uses: actions/checkout@v3
+
+    - name: Install Buildifier
+      run: |
+        cd $(mktemp -d)
+        GO111MODULE=on go get github.com/bazelbuild/buildtools/buildifier@6.0.0
+
     # Checkout repository
     - uses: actions/checkout@v3
       with:
 {%- endraw %}
-        path: rules/{{group.repo_name}}
+        path: {{"rules" if "rules" in repo else "libraries"}}/{{group.repo_name}}
 {% raw %}
     # Checkout gentool
     - uses: actions/checkout@v3
@@ -33,30 +44,36 @@ jobs:
 
 {%- endraw %}
 {% for name, module_dep in group.module_dependencies.items() %}
-    # Checkout name
+    # Checkout {{name}}
     - uses: actions/checkout@v3
       with:
         repository: 'bzlmodRio/{{name}}.git'
         fetch-depth: 0
-        path: rules/{{group.repo_name}}/{{module_dep.local_rel_folder}}
+        path: {{"rules" if "rules" in repo else "libraries"}}/{{group.repo_name}}/{{module_dep.local_rel_folder}}
         ref: refactor_dev
 {% endfor %}
 {% raw %}
 
-
-    # Checkout BCR
-    - uses: actions/checkout@v3
-      with:
-        repository: 'bzlmodRio/bazel-central-registry.git'
-        fetch-depth: 0
-        path: bazel-central-registry
-        ref: refactor_dev
-
     # Run update
-    - run: bazel run //:auto_update
+    - name: Run update
+      run: bazel run //:auto_update
 {%- endraw %}
-      working-directory: rules/{{group.repo_name}}/generate
+      working-directory: {{"rules" if "rules" in repo else "libraries"}}/{{group.repo_name}}/generate
 {%- raw %}
+
+    - name: Generate if changed
+      run: |
+        if [[ $(git --no-pager diff --exit-code HEAD) != '' ]]; then
+          echo "Something changed, need to re-generate"
+          bazel run //:generate
+          buildifier --lint=fix -r ..
+        else
+          echo "No changes!"
+        fi;
+{%- endraw %}
+      working-directory: {{"rules" if "rules" in repo else "libraries"}}/{{group.repo_name}}/generate
+{%- raw %}
+
 
     # Create pull requests
     - name: Create Pull Request
@@ -65,7 +82,7 @@ jobs:
         GITHUB_TOKEN: ${{ secrets.AUTO_UPDATE_KEY }}
       with:
 {%- endraw %}
-        path: rules/{{group.repo_name}}
+        path: {{"rules" if "rules" in repo else "libraries"}}/{{group.repo_name}}
 {%- raw %}
         base: refactor_dev
         token: ${{ secrets.AUTO_UPDATE_KEY }}
