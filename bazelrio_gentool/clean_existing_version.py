@@ -20,9 +20,8 @@ def clean_existing_version(
         DIR_BLACKLIST.extend(extra_dir_blacklist)
 
     file_blacklist = file_blacklist or []
-    file_blacklist += ".git"
-    file_blacklist = [os.path.join(module_directory, x) for x in file_blacklist]
-    # print(file_blacklist)
+    file_blacklist += [".git"] # for submodules, where the .git is a file
+    file_blacklist = [os.path.join(module_directory, x).replace("\\", "/") for x in file_blacklist]
 
     for root, dirs, files in os.walk(module_directory):
         dirs[:] = [d for d in dirs if d not in DIR_BLACKLIST]
