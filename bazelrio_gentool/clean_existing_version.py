@@ -20,6 +20,7 @@ def clean_existing_version(
         DIR_BLACKLIST.extend(extra_dir_blacklist)
 
     file_blacklist = file_blacklist or []
+    file_blacklist += ".git"
     file_blacklist = [os.path.join(module_directory, x) for x in file_blacklist]
     # print(file_blacklist)
 
