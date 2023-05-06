@@ -118,7 +118,7 @@ jobs:
       working-directory: tests
 
 
-      
+
   build_raspi32:
     strategy:
       fail-fast: false
@@ -128,7 +128,7 @@ jobs:
         - { name: "windows - raspi32",         os: windows-latest, command: "build", config: "--config=raspi32", bazel_options: "--output_user_root=C:\\bazelroot", }
         - { name: "ubuntu  - raspi32",         os: ubuntu-latest,  command: "build", config: "--config=raspi32", bazel_options: "",                                 }
       # - { name: "macos   - raspi32",         os: macos-latest,   command: "build", config: "--config=raspi32", bazel_options: "",                                 }
-        
+
         # Build bzlmod, bullseye32:
       # - { name: "windows - bzlmod raspi32",  os: windows-latest, command: "build", config: "--enable_bzlmod --config=raspi32", bazel_options: "--output_user_root=C:\\bazelroot", }
         - { name: "ubuntu  - bzlmod raspi32",  os: ubuntu-latest,  command: "build", config: "--enable_bzlmod --config=raspi32", bazel_options: "",                                 }

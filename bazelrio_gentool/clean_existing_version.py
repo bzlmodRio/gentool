@@ -4,7 +4,7 @@ import os
 def clean_existing_version(
     module_directory, extra_dir_blacklist=None, file_blacklist=None, force_tests=False
 ):
-    module_directory = os.path.abspath(module_directory)
+    module_directory = os.path.abspath(module_directory).replace("\\", "/")
 
     DIR_BLACKLIST = [
         ".git",

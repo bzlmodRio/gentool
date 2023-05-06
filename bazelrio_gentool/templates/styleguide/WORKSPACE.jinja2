@@ -2,6 +2,26 @@ workspace(name = "{{group.repo_name}}")
 
 load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive")
 
+{% if group.include_wpiformat %}
+# WPI Formatter
+{{  mandatory_dependencies.rules_wpiformat.download_repository(0,native=False) }}
+
+{{ bazel_dependencies.rules_python.download_repository(0, maybe=False) }}
+
+load("@rules_wpiformat//dependencies:load_rule_dependencies.bzl", "load_wpiformat_rule_dependencies")
+
+load_wpiformat_rule_dependencies()
+
+load("@rules_wpiformat//dependencies:load_dependencies.bzl", "load_wpiformat_dependencies")
+
+load_wpiformat_dependencies()
+
+load("@rules_wpiformat_pip//:requirements.bzl", "install_deps")
+
+
+install_deps()
+{% endif %}
+
 # Rule Dependencies
 load("//dependencies:load_rule_dependencies.bzl", "load_{{ group.short_name }}_rule_dependencies")
 
@@ -24,25 +44,5 @@ load("@rules_{{ group.short_name }}_pip//:requirements.bzl", "install_deps")
 
 install_deps()
 
-{% endif %}
-
-{% if group.include_wpiformat %}
-# WPI Formatter
-{{  mandatory_dependencies.rules_wpiformat.download_repository(0,native=False) }}
-
-{{ bazel_dependencies.rules_python.download_repository(0, maybe=False) }}
-
-load("@rules_wpiformat//dependencies:load_rule_dependencies.bzl", "load_wpiformat_rule_dependencies")
-
-load_wpiformat_rule_dependencies()
-
-load("@rules_wpiformat//dependencies:load_dependencies.bzl", "load_wpiformat_dependencies")
-
-load_wpiformat_dependencies()
-
-load("@rules_wpiformat_pip//:requirements.bzl", "install_deps")
-
-
-install_deps()
 {% endif %}
 
