@@ -80,8 +80,8 @@ rules_pmd:
     sha: f15d3ea527d7a5ae10eed808789f0a61cc1b39c0bef64decaeb03c2f0f22cd51
 rules_spotless:
   2.34.0:
-    commitish: 8b29ac7593343f17c4fdb60c2e3e6c43ddb7ea96
-    sha: d0c8e5684123f7ed925725b5e7e7d383f4973386433b726f47c51084c3134b19
+    commitish: 19fe3c2473e90b8939c47e3e46614d46377acfa0
+    sha: f54af971944701b8ae4e35dabccd9fd4fc71c8b1691a134a2e382a3b8ffa25e8
 rules_wpi_styleguide:
   0.0.0:
     commitish: db2fe56f433b2957ca795d8885673e64660e7641
