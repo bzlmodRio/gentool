@@ -3,8 +3,6 @@ from urllib.request import urlopen, Request
 
 
 def download_url(url):
-    print(f"Downloading from {url}")
-
     req = Request(url)
     with urlopen(req) as x:
         contents = x.read()
@@ -29,10 +27,6 @@ def split_tag(tag):
     parts = tag.split(".")
     year = parts[0]
     raw_version = ".".join(parts[1:])
-
-    print("Before")
-    print(year)
-    print(raw_version)
 
     if "-" in year:
         hyphen_start = year.index("-")
