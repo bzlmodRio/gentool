@@ -1,0 +1,36 @@
+py_library(
+    name = "get_{{library_name}}_dependencies",
+    srcs = ["get_{{library_name}}_dependencies.py"],
+    visibility = ["//visibility:public"],
+    deps = [
+        "@bzlmodrio-allwpilib-gentool//:get_allwpilib_dependencies",
+        "@bzlmodrio-gentool//bazelrio_gentool",
+    ],
+)
+
+py_binary(
+    name = "generate",
+    srcs = ["generate.py"],
+    deps = [
+        ":get_{{library_name}}_dependencies",
+        "@bzlmodrio-gentool//bazelrio_gentool",
+    ],
+)
+
+py_binary(
+    name = "publish",
+    srcs = ["publish.py"],
+    deps = [
+        ":get_{{library_name}}_dependencies",
+        "@bzlmodrio-gentool//bazelrio_gentool",
+    ],
+)
+
+py_binary(
+    name = "auto_update",
+    srcs = ["auto_update.py"],
+    deps = [
+        ":generate",
+        "@bzlmodrio-gentool//bazelrio_gentool",
+    ],
+)

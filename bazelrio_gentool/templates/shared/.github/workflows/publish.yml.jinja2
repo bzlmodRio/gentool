@@ -19,7 +19,7 @@ jobs:
     - uses: actions/checkout@v3
       with:
 {%- endraw %}
-        path: rules/{{group.repo_name}}
+        path: {{"rules" if "rules" in repo else "libraries"}}/{{group.repo_name}}
 {% raw %}
 
 {%- endraw %}
@@ -55,7 +55,7 @@ jobs:
     # Run publishing
     - run: bazel run //:publish
 {%- endraw %}
-      working-directory: rules/{{group.repo_name}}/generate
+      working-directory: {{"rules" if "rules" in repo else "libraries"}}/{{group.repo_name}}/generate
 {%- raw %}
 
     # Create pull requests

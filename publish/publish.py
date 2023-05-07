@@ -1,5 +1,5 @@
 import os
-from bazelrio_gentool.generate_json import generate_json
+from bazelrio_gentool.publish_module import publish_module
 from bazelrio_gentool.deps.dependency_container import DependencyContainer
 
 
@@ -19,7 +19,7 @@ def main():
     module_json_template = os.path.join(SCRIPT_DIR, "module_config.json.jinja2")
 
     os.chdir(SCRIPT_DIR)
-    generate_json(registry_location, group, module_json_template, module_template)
+    publish_module(registry_location, group, module_json_template, module_template)
 
 
 if __name__ == "__main__":

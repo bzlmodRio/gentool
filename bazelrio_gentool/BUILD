@@ -10,3 +10,11 @@ py_library(
         requirement("pyyaml"),
     ],
 )
+
+py_binary(
+    name = "create_vendordep_library",
+    srcs = ["create_vendordep_library.py"],
+    deps = [
+        ":bazelrio_gentool",
+    ]
+)
