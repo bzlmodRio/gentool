@@ -21,6 +21,21 @@ jobs:
 {%- endraw %}
         path: rules/{{group.repo_name}}
 {% raw %}
+
+{%- endraw %}
+{% if group.module_dependencies %}
+{% for name, module_dep in group.module_dependencies.items() %}
+    # Checkout {{name}}
+    - uses: actions/checkout@v3
+      with:
+        repository: 'bzlmodRio/{{name}}.git'
+        fetch-depth: 0
+        path: {{"rules" if "rules" in repo else "libraries"}}/{{group.repo_name}}/{{module_dep.local_rel_folder}}
+        ref: refactor_dev
+{% endfor %}
+{% endif %}
+{% raw %}
+
     # Checkout gentool
     - uses: actions/checkout@v3
       with:
