@@ -90,7 +90,7 @@ rules_wpi_styleguide:
     commitish: ''
     sha: 8bef5845cb4fbc4637910522630767c2cf83d8a2370ecdf990dc4daebdb8bc50
   1.0.0:
-    commitish: f9bed960951c3efadcdb0dd57503f8ced60766bb
+    commitish: e3b76bf02aee06b657feff18b2c672a2c743aac6
     sha: 767ae068dcbbfce024afcc42d0a39c3e8241d2325146eec141509c8ec72398c2
 rules_wpiformat:
   '2022.30':
