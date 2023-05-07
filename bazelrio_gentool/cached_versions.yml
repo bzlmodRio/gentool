@@ -22,7 +22,7 @@ bzlmodrio-imgui:
     sha: 1844237b840c8764f04dbdce47e7ea3b2799efe8471e6e99f6b5bbca307338a1
 bzlmodrio-libssh:
   0.95-6:
-    commitish: 2cfe60e03ea661f93161438e8fd326bd5efb6bcd
+    commitish: 7daf27ce67b936b8d9d8728ec92d7ad8754dc0fb
     sha: 6048f0ae0c053becc5f7256f9e7b445c9d8c008fc34238f4bd19cd22d5e78ffa
 bzlmodrio-navx:
   2023.0.0:
