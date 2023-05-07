@@ -39,7 +39,7 @@ bzlmodrio-navx:
     sha: b613031755021dec5a40eb693c65de2e607e608efd578c8184f29151c8209b37
 bzlmodrio-ni:
   2023.3.0:
-    commitish: 0fb1d87e0e64441ddaebd1ca2a84deebc7bea3ff
+    commitish: 0b4b338191cff07684045f153b28325440bc0589
     sha: 0169bded6cc9e3fef1092bdafd3216e2f8bdcf247c9d7116f02a2a261c5350f6
 bzlmodrio-opencv:
   4.6.0-4:
