@@ -12,24 +12,26 @@ from bazelrio_gentool.generate_shared_files import (
 
 
 def generate_toolchain(module_directory, container):
+    write_shared_root_files(module_directory, container, include_raspi_compiler=True)
+    write_shared_test_files(module_directory, container)
 
     template_files = [
         "extensions.bzl",
         "maven_deps.bzl",
+        ".styleguide",
         "WORKSPACE",
-        "toolchains/BUILD",
+        "toolchains/BUILD.bazel",
         "toolchains/configure_cross_compiler.bzl",
         "toolchains/load_toolchains.bzl",
-        "toolchains/cross_compiler/BUILD",
+        "toolchains/cross_compiler/BUILD.bazel",
         "toolchains/cross_compiler/BUILD.tpl",
-        "toolchains/cross_compiler/BUILD",
+        "toolchains/cross_compiler/BUILD.bazel",
         "toolchains/cross_compiler/cc-toolchain-config.bzl",
         "toolchains/cross_compiler/command_wrapper.tpl",
         "MODULE.bazel",
         "tests/BUILD.bazel",
         "tests/MODULE.bazel",
         "tests/WORKSPACE",
-        "tests/WORKSPACE.bzlmod",
     ]
 
     bazel_deps = get_bazel_dependencies()
@@ -61,5 +63,3 @@ def generate_toolchain(module_directory, container):
         )
         render_template(template_file, output_file, config=config)
 
-    write_shared_root_files(module_directory, container, include_raspi_compiler=True)
-    write_shared_test_files(module_directory, container)

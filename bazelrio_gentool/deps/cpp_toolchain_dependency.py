@@ -70,6 +70,7 @@ class ToolchainDependencyContainer:
         self.repo_name = repo_name
         self.version = version
         self.year = year
+        self.patch = ""
         self.configs = []
 
         self.sanitized_version = self.version.replace("+", "-")

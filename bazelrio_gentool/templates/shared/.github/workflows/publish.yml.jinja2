@@ -19,7 +19,7 @@ jobs:
     - uses: actions/checkout@v3
       with:
 {%- endraw %}
-        path: {{"rules" if "rules" in repo else "libraries"}}/{{group.repo_name}}
+        path: {{"rules" if "rules" in group.repo_name else "libraries"}}/{{group.repo_name}}
 {% raw %}
 
 {%- endraw %}
@@ -30,7 +30,7 @@ jobs:
       with:
         repository: 'bzlmodRio/{{name}}.git'
         fetch-depth: 0
-        path: {{"rules" if "rules" in repo else "libraries"}}/{{group.repo_name}}/{{module_dep.local_rel_folder}}
+        path: {{"rules" if "rules" in group.repo_name else "libraries"}}/{{group.repo_name}}/{{module_dep.local_rel_folder}}
         ref: refactor_dev
 {% endfor %}
 {% endif %}
@@ -55,7 +55,7 @@ jobs:
     # Run publishing
     - run: bazel run //:publish
 {%- endraw %}
-      working-directory: {{"rules" if "rules" in repo else "libraries"}}/{{group.repo_name}}/generate
+      working-directory: {{"rules" if "rules" in group.repo_name else "libraries"}}/{{group.repo_name}}/generate
 {%- raw %}
 
     # Create pull requests

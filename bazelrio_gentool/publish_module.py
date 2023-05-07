@@ -29,7 +29,7 @@ def publish_module(
             TEMPLATE_BASE_DIR, "publish", "module_config.jinja2"
         )
 
-    hash = (
+    commitish = (
         subprocess.check_output(args=["git", "rev-parse", "HEAD"])
         .decode("utf-8")
         .strip()
@@ -67,7 +67,7 @@ def publish_module(
         module_bazel_file,
         group=group,
         module_bazel_file=module_bazel_file,
-        hash=hash,
+        hash=commitish,
         mandatory_dependencies=mandatory_dependencies,
         bazel_dependencies=get_bazel_dependencies(),
         **kwargs
@@ -85,25 +85,25 @@ def publish_module(
         json_file,
         group=group,
         module_bazel_file=module_bazel_file,
-        hash=hash,
+        hash=commitish,
         **kwargs
     )
 
     os.path.join(central_registery_location, "json", group.repo_name)
 
     create_module(central_registery_location, json_file)
-    update_cached_versions(group, json_file, hash)
+    update_cached_versions(group, json_file, commitish)
 
     return json_file
 
 
-def update_cached_versions(group, json_file, hash):
+def update_cached_versions(group, json_file, commitish):
     json_info = json.load(open(json_file, "r"))
     url_result = urlopen(json_info["url"])
     data = url_result.read()
     sha256 = hashlib.sha256(data).hexdigest()
 
-    update_cached_version(group.repo_name, group.version, sha256, hash)
+    update_cached_version(group.repo_name, group.version, sha256, commitish)
 
 
 def create_module(central_registery_location, json_file):
