@@ -63,4 +63,3 @@ def generate_toolchain(module_directory, container, mandatory_dependencies):
             f"platforms/{config.short_name.replace('-', '')}/BUILD.bazel",
         )
         render_template(template_file, output_file, config=config)
-

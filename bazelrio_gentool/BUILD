@@ -16,5 +16,5 @@ py_binary(
     srcs = ["create_vendordep_library.py"],
     deps = [
         ":bazelrio_gentool",
-    ]
+    ],
 )

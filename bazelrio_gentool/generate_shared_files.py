@@ -150,7 +150,11 @@ def get_bazel_dependencies():
         version="1.12.1",
         sha="24564e3b712d3eb30ac9a85d92f7d720f60cc0173730ac166f27dda7fed76cb2",
     )
-    add_dep(repo_name="rules_proto", version="5.3.0-21.7", sha="dc3fb206a2cb3441b485eb1e423165b231235a1ea9b031b4433cf7bc1fa460dd")
+    add_dep(
+        repo_name="rules_proto",
+        version="5.3.0-21.7",
+        sha="dc3fb206a2cb3441b485eb1e423165b231235a1ea9b031b4433cf7bc1fa460dd",
+    )
     add_dep(
         repo_name="bazel_skylib",
         version="1.4.1",

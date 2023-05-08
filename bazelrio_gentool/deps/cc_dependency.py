@@ -76,20 +76,18 @@ class CcDependency(MultiResourceDependency):
         "osxuniversalstatic": "@rules_bazelrio//conditions:osx",
         "osxuniversalstaticdebug": "@rules_bazelrio//conditions:osx_debug",
         # Cross Compilers
-        "linuxathena"             : "@rules_bzlmodrio_toolchains//constraints/is_roborio:roborio",
-        "linuxathenadebug"        : "@rules_bzlmodrio_toolchains//constraints/is_roborio:roborio_debug",
-        "linuxathenastatic"       : "@rules_bzlmodrio_toolchains//constraints/is_roborio:roborio",
-        "linuxathenastaticdebug"  : "@rules_bzlmodrio_toolchains//constraints/is_roborio:roborio_debug",
-        
-        "linuxarm32"             : "@rules_bzlmodrio_toolchains//constraints/is_bullseye32:bullseye32",
-        "linuxarm32debug"        : "@rules_bzlmodrio_toolchains//constraints/is_bullseye32:bullseye32_debug",
-        "linuxarm32static"       : "@rules_bzlmodrio_toolchains//constraints/is_bullseye32:bullseye32",
-        "linuxarm32staticdebug"  : "@rules_bzlmodrio_toolchains//constraints/is_bullseye32:bullseye32_debug",
-        
-        "linuxarm64"             : "@rules_bzlmodrio_toolchains//constraints/is_bullseye64:bullseye64",
-        "linuxarm64debug"        : "@rules_bzlmodrio_toolchains//constraints/is_bullseye64:bullseye64_debug",
-        "linuxarm64static"       : "@rules_bzlmodrio_toolchains//constraints/is_bullseye64:bullseye64",
-        "linuxarm64staticdebug"  : "@rules_bzlmodrio_toolchains//constraints/is_bullseye64:bullseye64_debug",
+        "linuxathena": "@rules_bzlmodrio_toolchains//constraints/is_roborio:roborio",
+        "linuxathenadebug": "@rules_bzlmodrio_toolchains//constraints/is_roborio:roborio_debug",
+        "linuxathenastatic": "@rules_bzlmodrio_toolchains//constraints/is_roborio:roborio",
+        "linuxathenastaticdebug": "@rules_bzlmodrio_toolchains//constraints/is_roborio:roborio_debug",
+        "linuxarm32": "@rules_bzlmodrio_toolchains//constraints/is_bullseye32:bullseye32",
+        "linuxarm32debug": "@rules_bzlmodrio_toolchains//constraints/is_bullseye32:bullseye32_debug",
+        "linuxarm32static": "@rules_bzlmodrio_toolchains//constraints/is_bullseye32:bullseye32",
+        "linuxarm32staticdebug": "@rules_bzlmodrio_toolchains//constraints/is_bullseye32:bullseye32_debug",
+        "linuxarm64": "@rules_bzlmodrio_toolchains//constraints/is_bullseye64:bullseye64",
+        "linuxarm64debug": "@rules_bzlmodrio_toolchains//constraints/is_bullseye64:bullseye64_debug",
+        "linuxarm64static": "@rules_bzlmodrio_toolchains//constraints/is_bullseye64:bullseye64",
+        "linuxarm64staticdebug": "@rules_bzlmodrio_toolchains//constraints/is_bullseye64:bullseye64_debug",
     }
 
     def __make_ignored_platforms(base_platform):
