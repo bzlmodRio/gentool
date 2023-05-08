@@ -11,7 +11,7 @@ from bazelrio_gentool.generate_shared_files import (
 )
 
 
-def generate_toolchain(module_directory, container):
+def generate_toolchain(module_directory, container, mandatory_dependencies):
     write_shared_root_files(module_directory, container, include_raspi_compiler=True)
     write_shared_test_files(module_directory, container)
 
@@ -40,8 +40,9 @@ def generate_toolchain(module_directory, container):
         template_files,
         module_directory,
         os.path.join(TEMPLATE_BASE_DIR, "toolchains"),
-        container=container,
+        group=container,
         bazel_dependencies=bazel_deps,
+        mandatory_dependencies=mandatory_dependencies,
     )
 
     for config in container.configs:

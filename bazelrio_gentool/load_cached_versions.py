@@ -8,18 +8,20 @@ __CACHED_FILE = os.path.join(__SCRIPT_DIR, "cached_versions.yml")
 
 def load_cached_versions():
     with open(__CACHED_FILE, "r") as file:
-        return yaml.load(file, Loader=yaml.SafeLoader)
+        output = yaml.load(file, Loader=yaml.SafeLoader)
+    return output or {}
 
 
 def load_cached_version_info(repo_name, version, throw_on_missing=True):
     data = load_cached_versions()
 
-    repo_info = data[repo_name]
+    repo_info = data.get(repo_name, {})
     if version in repo_info:
         return repo_info[version]
 
-    if throw_on_missing:
-        raise Exception(f"{repo_name}:{version} Not found!")
+    # if throw_on_missing:
+    #     raise Exception(f"{repo_name}:{version} Not found!")
+    return {"sha": None, "version": None, "commitish": None}
 
     return None
 

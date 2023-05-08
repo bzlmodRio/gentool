@@ -61,7 +61,17 @@ class BazelDependencySetting:
         self.use_zip = use_zip
         self.use_long_form = use_long_form
 
-    def download_repository(self, indent, maybe=True):
+    def download_repository(self, indent_num, maybe=True):
+        indent = " " * indent_num
+
+        if self.repo_name == "googletest":
+            return """http_archive(
+    name = "googletest",
+    sha256 = "24564e3b712d3eb30ac9a85d92f7d720f60cc0173730ac166f27dda7fed76cb2",
+    strip_prefix = "googletest-release-1.12.1",
+    urls = ["https://github.com/google/googletest/archive/release-1.12.1.zip"],
+)"""
+
         file_extension = "zip" if self.use_zip else "tar.gz"
         output = ""
 
@@ -71,32 +81,39 @@ class BazelDependencySetting:
     """
 
             if maybe:
-                output += "maybe(\n    http_archive,"
+                output += f"maybe(\n    http_archive,"
             else:
-                output += "http_archive("
+                output += f"http_archive("
 
             output += f"""
-    name = "{self.repo_name}",
-    sha256 = {self.repo_name.upper()}_SHA,
-    strip_prefix = "{self.repo_name}-{{}}".format({self.repo_name.upper()}_COMMITISH),
-    url = "https://github.com/bazelbuild/{self.repo_name}/archive/{{}}.{file_extension}".format({self.repo_name.upper()}_COMMITISH),
+{indent}    name = "{self.repo_name}",
+{indent}    sha256 = {self.repo_name.upper()}_SHA,
+{indent}    strip_prefix = "{self.repo_name}-{{}}".format({self.repo_name.upper()}_COMMITISH),
+{indent}    url = "https://github.com/bazelbuild/{self.repo_name}/archive/{{}}.{file_extension}".format({self.repo_name.upper()}_COMMITISH),
 )"""
             return output
 
         output = ""
         if maybe:
-            output += "maybe(\n    http_archive,"
+            output += f"{indent}maybe(\n    http_archive,"
         else:
-            output += "http_archive("
+            output += f"{indent}http_archive("
+
+        archive_name = self.repo_name
+        if archive_name == "bazel_skylib":
+            archive_name = archive_name.replace("_", "-")
 
         output += f"""
-    name = "{self.repo_name}",
-    sha256 = "{self.sha}",
-    strip_prefix = "{self.repo_name}-{self.version}",
-    url = "https://github.com/bazelbuild/{self.repo_name}/archive/refs/tags/{self.version}.tar.gz",
+{indent}    name = "{self.repo_name}",
+{indent}    sha256 = "{self.sha}",
+{indent}    strip_prefix = "{archive_name}-{self.version}",
+{indent}    url = "https://github.com/bazelbuild/{archive_name}/archive/refs/tags/{self.version}.tar.gz",
 )"""
 
         return output
+
+    def module_dep(self):
+        return f'bazel_dep(name = "{self.repo_name}", version = "{self.version}")'
 
 
 def get_bazel_dependencies():
@@ -133,7 +150,7 @@ def get_bazel_dependencies():
         version="1.12.1",
         sha="24564e3b712d3eb30ac9a85d92f7d720f60cc0173730ac166f27dda7fed76cb2",
     )
-    add_dep(repo_name="rules_proto", version="5.3.0-21.7", sha="")
+    add_dep(repo_name="rules_proto", version="5.3.0-21.7", sha="dc3fb206a2cb3441b485eb1e423165b231235a1ea9b031b4433cf7bc1fa460dd")
     add_dep(
         repo_name="bazel_skylib",
         version="1.4.1",

@@ -1,98 +1,40 @@
-bzlmodrio:
-  '2022.1':
-    commitish: c04b11447efdfcaac894d55f2d1b5762ac16f040
-    sha: 0c243f97dc8888f2d7309cd496280c195c58a5c7585787010818269fb95b18e8
 bzlmodrio-allwpilib:
-  2023.1.1:
-    commitish: 9bc5585f440b3000a0ac36f25d8bda2a38635c89
-    sha: 6c0f78beb6b28685949ec52b5b91c37a7c516a974ce08186cb62734977473cdc
-  2023.2.1:
-    commitish: d117e8d80d584960d70fc83e858aab83511d3737
-    sha: 4421ec2ef4e4904af632e7f38c6e0fe1b7fe5fd6d10955759b26e76d76551d55
   2023.3.2:
-    commitish: 1c51d6c1058f83091e2f0d1cf2bee5e1cd8caf1f
-    sha: 2faa5dedf3ded5191d08638a62840ad59e938c25fc0905c9f7072d1865020479
-bzlmodrio-apriltaglib:
-  3.2.0-3:
-    commitish: 739577fb603c2f18c1c55bef154e41561b25c5e3
-    sha: ff73fa6782897049a9c707b66c2ac4d4942a7b4c9fcfda898d11193c6261df2f
-bzlmodrio-imgui:
-  1.89.1-1:
-    commitish: db4a160ce2190810fe86ce99a3ed88f9ebed8aff
-    sha: 1844237b840c8764f04dbdce47e7ea3b2799efe8471e6e99f6b5bbca307338a1
-bzlmodrio-libssh:
-  0.95-6:
-    commitish: 2cfe60e03ea661f93161438e8fd326bd5efb6bcd
-    sha: 6048f0ae0c053becc5f7256f9e7b445c9d8c008fc34238f4bd19cd22d5e78ffa
-bzlmodrio-navx:
-  2023.0.0:
-    commitish: 3975a1fc7294b0b29db8aed4d54a6991f1420cf9
-    sha: 758acac8ab1fdf9b610360d4196e91f0f6ff41e11e753593e551582595ac4b5c
-  2023.0.1:
-    commitish: 23890d74bc05d27b038de95b15ca1bf4993f1b84
-    sha: d6378138a3b6e44d1a3760e62699ad50eedea585e83928b53cfaa19ca34dfba8
-  2023.0.2:
-    commitish: 804c0288bca67509233bb15e3d0cde575369f487
-    sha: 23692cb7c1328753e9c344fe060fd2291fb321e691713c0f248de46c76d55e24
-  2023.0.3:
-    commitish: e1f2d1ac68c87d636656e834721eecb00fcf3228
-    sha: b613031755021dec5a40eb693c65de2e607e608efd578c8184f29151c8209b37
+    commitish: 0c43fb89c78aa00ecbcc9eb32ca99fd16fec1e0e
+    sha: 4c944b1e9a3de134614565f8da49bd278ee1f086615a8dcdc5e0a75692b68f13
 bzlmodrio-ni:
   2023.3.0:
-    commitish: 0fb1d87e0e64441ddaebd1ca2a84deebc7bea3ff
-    sha: 0169bded6cc9e3fef1092bdafd3216e2f8bdcf247c9d7116f02a2a261c5350f6
+    commitish: c6a2aaba7b6197fa95ad39d7570a3bddca47150e
+    sha: 46de316b2209cb3a854928810413850ff77306ae858cbffe16428df7cc816686
 bzlmodrio-opencv:
   4.6.0-4:
-    commitish: 672abc2f3453cfbd1331c03cde02b6674a0f6425
-    sha: 7cf977af07ab17bcefc84daba4975b35f9d0696a46a7b2182ff79141fdce83a5
-bzlmodrio-phoenix:
-  5.30.2:
-    commitish: e90da8a80a28c9265b156b5f3ea5d00093a4050a
-    sha: bf4aaeb1837c5f1012efdcdf7b6857d35ebb05189e3f26e5f3685a8c72e579ec
-  5.30.3+23.0.4:
-    commitish: 75344b90a9a38c45be6b6411cd4f020020f3dd2e
-    sha: 792c2cd4563a0db5b37b53a0508371ec72f3655fdd01346eee8bf52e2415ad6e
-bzlmodrio-revlib:
-  2023.1.1:
-    commitish: 296cd3ef71268fb5089e6e76d39e15f1c430f644
-    sha: 884c5a96f466577bc42eaf25dda96ea29452784352c01c59710b44eb9521c8be
-  2023.1.2:
-    commitish: ebf77120c2a1e12f2f8740520e0bb0c3866afd8a
-    sha: cf0776dcdac517ec7ae376fc32dcfb9bb89af6b2d64f0c2a59a854143ac5e8b9
+    commitish: bec1a5a7deaf005fd4422c56ebc080eba6108e6a
+    sha: a92e0d7851590601e0c8eb839d0751dfae4d8a11bde23a6d877660bd565b07a5
 rules_bazelrio:
-  0.0.9:
-    commitish: b993d8c380540720e0bee755b3960c33c5942c6f
-    sha: 8679cf2ef1b47c184d336bfef97ac0f98fed56546b69e1a5ed02c17833bbf025
+  0.0.10:
+    commitish: a1c6a92e518cb060fe19de28e529ea558cc34ec7
+    sha: 378c92e50e9f04a600b8963d4d3dab3bdb07c1ee360caacea3b4df0ede84b4c1
 rules_bzlmodrio_toolchains:
   2023-7:
-    commitish: 3fdada728adb8b939922fe766469bd46a2e53c95
-    sha: b24d5813300ebe9a252c5e1c69a421c0d112f50da0d7b22c8de5efd7bca6babf
+    commitish: a5140d701d746e3f843643e9ca8822a26ae88f6e
+    sha: 1c566358f97b093916e150de10b65d6527ad268e5bd8bc0a0a8bfd04b390751a
 rules_checkstyle:
   '10.1':
-    commitish: c3f2c9ea1f3a46b084f3c9c9c51a0bf4bd834678
-    sha: dc1282d77bed576c4a2720b30ea9664421a3b71ab49827d3ce6759917dfc8567
+    commitish: cac905bc09b8f41841bd49781d0ee6612f57730c
+    sha: 94c5696d9948cc6d77168262e66845e41d37843831447dc71755a686d546c346
 rules_pmd:
-  6.39.0:
-    commitish: ''
-    sha: 6007cf19e55cb06ef4ff4933e857a833f079a57ef89b7603b0c168f46ca400d4
   6.43.0:
-    commitish: 849520e7880f362e63391fa68dbcfa7ef33c18b6
-    sha: f15d3ea527d7a5ae10eed808789f0a61cc1b39c0bef64decaeb03c2f0f22cd51
+    commitish: bdd74a59ddeecdd3d670a78bcdc37bed049025de
+    sha: 4bec86ee0d5bfc94fcebafb21afdb3d2c7740bc4bd6d7657fb9f63e94affbfae
 rules_spotless:
   2.34.0:
-    commitish: e6cd15da99b18e17724c9d3839d3e33d9ad9e06f
-    sha: 0351ea8dda87d1d6697b27bce381c59a1717084b3d8c226dbc9ec3103b8fd285
+    commitish: b316553ee9404620c069c4988a8e557222aee9a4
+    sha: b77138dab419a72194fbaeadc09467f198268a99c45242792fa5291acf02be1d
 rules_wpi_styleguide:
-  0.0.0:
-    commitish: db2fe56f433b2957ca795d8885673e64660e7641
-    sha: 5bdf5bf15b8854a3e36be410d114f7bea561acd6b998d89de8f4d70539f7c577
-  '1':
-    commitish: ''
-    sha: 8bef5845cb4fbc4637910522630767c2cf83d8a2370ecdf990dc4daebdb8bc50
   1.0.0:
-    commitish: f9bed960951c3efadcdb0dd57503f8ced60766bb
-    sha: 767ae068dcbbfce024afcc42d0a39c3e8241d2325146eec141509c8ec72398c2
+    commitish: d2b72f8bfc6f7acb227a30f772ed75c101c3e0b1
+    sha: d0f717a73d18b40f5e7f921e434692cffa1dea5b3138c2cc64c5355530f4eb47
 rules_wpiformat:
   '2022.30':
-    commitish: d35b37d8b9eaf2f31ba84dbe9938afbe1ea07e3b
-    sha: 871885dc981cbb892894589ef3965b38c7a438880da434693669cba4ad2d5369
+    commitish: 14d6b45e74966adcbd38147c5332c38fa85225e0
+    sha: b5a2a5cdff940e4dcd9d0188d5579cd260d2d96571b74b087acb701617bd27ad

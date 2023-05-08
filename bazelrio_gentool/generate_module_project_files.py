@@ -25,6 +25,9 @@ class MandetoryDependencySetting:
     def __repr__(self):
         return f"MandetoryDependencySetting: {self.repo_name}, {self.version}, {self.use_local_version}"
 
+    def module_dep(self):
+        return f'bazel_dep(name = "{self.repo_name}", version = "{self.version}")'
+
     def maybe_local_repository(self):
         local_path = f"../../../rules/{self.repo_name}"
         if self.use_local_version:
@@ -78,7 +81,7 @@ local_path_override(
 
 
 def create_default_mandatory_settings(generic_cli: GenericCliArgs):
-    default_rules_roborio_toolchain = MandetoryDependencySetting(
+    default_rules_bzlmodrio_toolchain = MandetoryDependencySetting(
         "rules_bzlmodrio_toolchains",
         "2023-7",
         generic_cli.use_local_roborio,
@@ -116,7 +119,7 @@ def create_default_mandatory_settings(generic_cli: GenericCliArgs):
 
     return MandatoryDependencySettings(
         bcr_branch="megadiff",
-        rules_roborio_toolchain=default_rules_roborio_toolchain,
+        rules_bzlmodrio_toolchain=default_rules_bzlmodrio_toolchain,
         rules_bazelrio=default_rules_bazelrio,
         rules_pmd=default_rules_pmd,
         rules_checkstyle=default_rules_checkstyle,
@@ -129,7 +132,7 @@ def create_default_mandatory_settings(generic_cli: GenericCliArgs):
 class MandatoryDependencySettings:
     def __init__(
         self,
-        rules_roborio_toolchain,
+        rules_bzlmodrio_toolchain,
         rules_bazelrio,
         rules_pmd,
         rules_checkstyle,
@@ -139,7 +142,7 @@ class MandatoryDependencySettings:
         bcr_branch="main",
     ):
         self.bcr_branch = bcr_branch
-        self.rules_roborio_toolchain = rules_roborio_toolchain
+        self.rules_bzlmodrio_toolchain = rules_bzlmodrio_toolchain
         self.rules_bazelrio = rules_bazelrio
         self.rules_pmd = rules_pmd
         self.rules_checkstyle = rules_checkstyle

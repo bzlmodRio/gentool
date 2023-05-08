@@ -25,9 +25,7 @@ def publish_module(
         )
 
     if module_template is None:
-        module_template = os.path.join(
-            TEMPLATE_BASE_DIR, "publish", "module_config.jinja2"
-        )
+        raise Exception("Dont do this anymore")
 
     if not module_template.startswith(TEMPLATE_BASE_DIR):
         raise Exception("Dont do this anymore")

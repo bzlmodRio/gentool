@@ -49,8 +49,7 @@ local_path_override(
         return f"""    http_archive(
         name = "{self.container.repo_name}",
         sha256 = "{ self.remote_sha }",
-        strip_prefix = "{self.remote_repo}-{self.container.version}{self.container.patch}",
-        url = "https://github.com/bzlmodRio/{self.remote_repo}/archive/refs/tags/{self.container.version}{self.container.patch}.tar.gz",
+        url = "https://github.com/bzlmodRio/{self.remote_repo}/releases/download/{self.container.version}{self.container.patch}/{self.remote_repo}-{self.container.version}.tar.gz",
     )"""
 
 
