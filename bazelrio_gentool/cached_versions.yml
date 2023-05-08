@@ -10,6 +10,14 @@ bzlmodrio-imgui:
   1.89.1-1:
     commitish: 560241260ff288abd2f03e3338d428927558c04f
     sha: a99218be374079e69455d69fbd113e9b3969fdb21ae5e47783ec1310b442e9f9
+bzlmodrio-libssh:
+  0.95-6:
+    commitish: e42b6b16ebb3ca0b709fa4fc8f0b46cac55c6054
+    sha: 9908279dfecd0acf4a644117f61f480b21cc1185a9ab772bf697f78f7b676277
+bzlmodrio-navx:
+  2023.0.3:
+    commitish: 6a15bbd6736f783ebe102527fff6cd4ae25a1d66
+    sha: bdfebf177f64267ed68be277ca1b074fc8ca5f24907371667cd5dbb568e1aadc
 bzlmodrio-ni:
   2023.3.0:
     commitish: c6a2aaba7b6197fa95ad39d7570a3bddca47150e
@@ -18,6 +26,14 @@ bzlmodrio-opencv:
   4.6.0-4:
     commitish: bec1a5a7deaf005fd4422c56ebc080eba6108e6a
     sha: a92e0d7851590601e0c8eb839d0751dfae4d8a11bde23a6d877660bd565b07a5
+bzlmodrio-phoenix:
+  5.30.4:
+    commitish: c98b60e6b039aa4c530c16d312e43b0de79fe071
+    sha: f2ff8dbf753f30c8759aa393e31585d0812c7a3f496d6c53f256f3c913016177
+bzlmodrio-revlib:
+  2023.1.3:
+    commitish: 6e1e6845771dcd43c6b20103f0d605d16ee01e4a
+    sha: 103052eb158fb8c544a250c7642090b674ecbc805cfb1325e63aec32fa9d5dbf
 rules_bazelrio:
   0.0.10:
     commitish: a1c6a92e518cb060fe19de28e529ea558cc34ec7
