@@ -47,3 +47,4 @@ def update_vendor_dep(vendordep_path):
     new_vendordep = download_url(latest_url)
     with open(vendordep_path, "wb") as f:
         f.write(new_vendordep)
+        f.write(b"\n")
