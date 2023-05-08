@@ -153,8 +153,21 @@ class CcDependency(MultiResourceDependency):
         return self.__get_select(shared_resources, "shared_jni_libs")
 
     def has_incompatible_targets(self):
-        if "linuxathena" not in self.resources:
-            return True
+        return len(self.get_incompatible_targets()) != 0
+
+    def get_incompatible_targets(self):
+        output = []
+
+        def invalid_resource(resource_base, toolchain_name):
+            if resource_base not in self.resources and resource_base + "static" not in self.resources:
+                output.append(toolchain_name)
+
+
+        invalid_resource("linuxathena", "roborio")
+        invalid_resource("linuxarm32", "bullseye32")
+        invalid_resource("linuxarm64", "bullseye64")
+
+        return output
 
 
 class CcMetaDependency:
