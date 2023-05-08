@@ -158,14 +158,27 @@ class CcDependency(MultiResourceDependency):
     def get_incompatible_targets(self):
         output = []
 
-        def invalid_resource(resource_base, toolchain_name):
-            if resource_base not in self.resources and resource_base + "static" not in self.resources:
-                output.append(toolchain_name)
+        def is_invalid_resource(resource_base):
+            return resource_base not in self.resources and resource_base + "static" not in self.resources
+
+        def invalid_resource(resource_base, toolchain_name, is_custom_toolchain):
+            if is_invalid_resource(resource_base):
+                if is_custom_toolchain:
+                    output.append(f"@rules_bzlmodrio_toolchains//constraints/is_{toolchain_name}:{toolchain_name}")
+                else:
+                    output.append(f"@bazel_tools//src/conditions:{toolchain_name}")
 
 
-        invalid_resource("linuxathena", "roborio")
-        invalid_resource("linuxarm32", "bullseye32")
-        invalid_resource("linuxarm64", "bullseye64")
+        invalid_resource("linuxathena", "roborio", True)
+        invalid_resource("linuxarm32", "bullseye32", True)
+        invalid_resource("linuxarm64", "bullseye64", True)
+
+        invalid_resource("windowsx86-64", "windows", False)
+        invalid_resource("linuxx86-64", "linux_x86_64", False)
+
+        if is_invalid_resource("osxx86-64") and is_invalid_resource("osxuniversal"):
+            print("Not mac? ", self.resources)
+            output.append(f"@bazel_tools//src/conditions:darwin")
 
         return output
 
