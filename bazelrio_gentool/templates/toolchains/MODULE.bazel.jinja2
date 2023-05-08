@@ -1,29 +1,28 @@
 module(
-    name = "{{container.repo_name}}",
-    version = "{{container.version}}",
-    compatibility_level = {{container.year}},
+    name = "{{group.repo_name}}",
+    version = "{{group.version}}",
+    compatibility_level = {{group.year}},
 )
 
-bazel_dep(name = "platforms", version = "{{bazel_dependencies.platforms.version}}")
-bazel_dep(name = "rules_cc", version = "{{bazel_dependencies.rules_cc.version}}")
-bazel_dep(name = "bazel_skylib", version = "{{bazel_dependencies.bazel_skylib.version}}")
+{{bazel_dependencies.platforms.module_dep()}}
+{{bazel_dependencies.rules_cc.module_dep()}}
+{{bazel_dependencies.bazel_skylib.module_dep()}}
 
 deps = use_extension("//:maven_deps.bzl", "deps")
 use_repo(
     deps,
-{%- for config in container.configs %}
+{%- for config in group.configs %}
     "bazelrio_{{config.short_name_underscore}}_toolchain_linux",
     "bazelrio_{{config.short_name_underscore}}_toolchain_macos",
     "bazelrio_{{config.short_name_underscore}}_toolchain_windows",
 {%- endfor %}
 )
 
-sh_configure = use_extension("@{{container.repo_name}}//:extensions.bzl", "sh_configure")
-use_repo(sh_configure, {%- for config in container.configs %}"local_{{config.short_name_underscore}}", {% endfor %})
-
+sh_configure = use_extension("@{{group.repo_name}}//:extensions.bzl", "sh_configure")
+use_repo(sh_configure, {% for config in group.configs %}"local_{{config.short_name_underscore}}"{% if not loop.last %}, {% endif %}{% endfor %})
 
 register_toolchains(
-{%- for config in container.configs %}
+{%- for config in group.configs %}
     "@local_{{config.short_name_underscore}}//:macos",
     "@local_{{config.short_name_underscore}}//:linux",
     "@local_{{config.short_name_underscore}}//:windows",

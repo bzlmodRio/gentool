@@ -4,7 +4,7 @@ local_path_override(
     path = "..",
 )
 
-{{ mandatory_dependencies.rules_roborio_toolchain.local_module_override() }}
+{{ mandatory_dependencies.rules_bzlmodrio_toolchain.local_module_override() }}
 {{ mandatory_dependencies.rules_pmd.local_module_override() }}
 {{ mandatory_dependencies.rules_checkstyle.local_module_override() }}
 {{ mandatory_dependencies.rules_spotless.local_module_override() }}
@@ -14,19 +14,20 @@ local_path_override(
 {{ module_dep.local_module_override() }}
 {%- endfor %}
 
-bazel_dep(name = "googletest", version = "{{bazel_dependencies.googletest.version}}")
-bazel_dep(name = "rules_cc", version = "{{bazel_dependencies.rules_cc.version}}")
-bazel_dep(name = "rules_jvm_external", version = "{{bazel_dependencies.rules_jvm_external.version}}")
-bazel_dep(name = "rules_bazelrio", version = "{{mandatory_dependencies.rules_bazelrio.version}}")
-bazel_dep(name = "rules_bzlmodrio_toolchains", version = "{{mandatory_dependencies.rules_roborio_toolchain.version}}")
+{{bazel_dependencies.googletest.module_dep()}}
+{{bazel_dependencies.rules_cc.module_dep()}}
+{{bazel_dependencies.rules_jvm_external.module_dep()}}
+{{mandatory_dependencies.rules_bazelrio.module_dep()}}
+{{mandatory_dependencies.rules_bzlmodrio_toolchain.module_dep()}}
+
 {%- for name, module_dep in group.module_dependencies.items() %}
 bazel_dep(name = "{{name}}", version = "{{module_dep.container.version}}{{module_dep.container.patch}}")
 {%- endfor %}
-bazel_dep(name = "rules_pmd", version = "{{mandatory_dependencies.rules_pmd.version}}")
-bazel_dep(name = "rules_checkstyle", version = "{{mandatory_dependencies.rules_checkstyle.version}}")
-bazel_dep(name = "rules_wpiformat", version = "{{mandatory_dependencies.rules_wpiformat.version}}")
-bazel_dep(name = "rules_wpi_styleguide", version = "{{mandatory_dependencies.rules_wpi_styleguide.version}}")
-bazel_dep(name = "rules_spotless", version = "{{mandatory_dependencies.rules_spotless.version}}")
+{{mandatory_dependencies.rules_pmd.module_dep()}}
+{{mandatory_dependencies.rules_checkstyle.module_dep()}}
+{{mandatory_dependencies.rules_wpiformat.module_dep()}}
+{{mandatory_dependencies.rules_wpi_styleguide.module_dep()}}
+{{mandatory_dependencies.rules_spotless.module_dep()}}
 
 maven = use_extension("@rules_jvm_external//:extensions.bzl", "maven")
 maven.install(

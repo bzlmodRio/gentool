@@ -1,8 +1,8 @@
-bazel_dep(name = "{{container.repo_name}}", version = "")
+bazel_dep(name = "{{group.repo_name}}", version = "")
 local_path_override(
-    module_name = "{{container.repo_name}}",
+    module_name = "{{group.repo_name}}",
     path = "..",
 )
 
-bazel_dep(name = "googletest", version = "{{bazel_dependencies.googletest.version}}")
+{{bazel_dependencies.googletest.module_dep()}}
 

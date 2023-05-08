@@ -71,8 +71,7 @@ local_path_override(
         output += f"""
 {indent}name = "{self.repo_name}",
 {indent}sha256 = "{ self.sha }",
-{indent}strip_prefix = "{self.repo_name}-{self.version}",
-{indent}url = "https://github.com/bzlmodRio/{self.repo_name}/archive/refs/tags/{self.version}.tar.gz",
+{indent}url = "https://github.com/bzlmodRio/{self.repo_name}/releases/download/{self.version}/{self.repo_name}-{self.version}.tar.gz",
     )"""
 
         return output
@@ -86,7 +85,7 @@ def create_default_mandatory_settings(generic_cli: GenericCliArgs):
     )
     default_rules_bazelrio = MandetoryDependencySetting(
         "rules_bazelrio",
-        "0.0.9",
+        "0.0.10",
         generic_cli.use_local_bazelrio,
     )
     default_rules_pmd = MandetoryDependencySetting(

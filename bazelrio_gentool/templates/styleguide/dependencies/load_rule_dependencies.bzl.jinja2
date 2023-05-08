@@ -7,23 +7,9 @@ def load_{{ group.short_name }}_rule_dependencies():
     {{ bazel_dependencies.rules_jvm_external.download_repository(4)}}
 {% endif %}
 {% if group.is_python %}
-    maybe(
-        http_archive,
-        name = "rules_python",
-        sha256 = "48a838a6e1983e4884b26812b2c748a35ad284fd339eb8e2a6f3adf95307fbcd",
-        strip_prefix = "rules_python-0.16.2",
-        url = "https://github.com/bazelbuild/rules_python/archive/refs/tags/0.16.2.tar.gz",
-    )
+{{ bazel_dependencies.rules_python.download_repository(4, maybe=True) }}
 {% endif %}
 {% if group.has_protobuf %}
-    maybe(
-        http_archive,
-        name = "rules_proto",
-        sha256 = "dc3fb206a2cb3441b485eb1e423165b231235a1ea9b031b4433cf7bc1fa460dd",
-        strip_prefix = "rules_proto-5.3.0-21.7",
-        urls = [
-            "https://github.com/bazelbuild/rules_proto/archive/refs/tags/5.3.0-21.7.tar.gz",
-        ],
-    )
+{{ bazel_dependencies.rules_proto.download_repository(4, maybe=True) }}
 {% endif %}
 

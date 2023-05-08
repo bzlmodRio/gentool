@@ -1,28 +1,23 @@
 load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive")
 
 local_repository(
-    name = "{{container.repo_name}}",
+    name = "{{group.repo_name}}",
     path = "..",
 )
 
 # Google Test
-http_archive(
-    name = "googletest",
-    sha256 = "{{bazel_dependencies.googletest.sha}}",
-    strip_prefix = "googletest-release-{{bazel_dependencies.googletest.version}}",
-    urls = ["https://github.com/google/googletest/archive/release-{{bazel_dependencies.googletest.version}}.zip"],
-)
+{{bazel_dependencies.googletest.download_repository(indent_num=0) }}
 
-load("@{{container.repo_name}}//:maven_deps.bzl", "setup_legacy_setup_toolchains_dependencies")
+load("@{{group.repo_name}}//:maven_deps.bzl", "setup_legacy_setup_toolchains_dependencies")
 
 setup_legacy_setup_toolchains_dependencies()
 
-load("@{{container.repo_name}}//toolchains:load_toolchains.bzl", "load_toolchains")
+load("@{{group.repo_name}}//toolchains:load_toolchains.bzl", "load_toolchains")
 
 load_toolchains()
 
 register_toolchains(
-{%- for config in container.configs %}
+{%- for config in group.configs %}
     "@local_{{config.short_name_underscore}}//:macos",
     "@local_{{config.short_name_underscore}}//:linux",
     "@local_{{config.short_name_underscore}}//:windows",
@@ -30,19 +25,9 @@ register_toolchains(
 )
 
 # Styleguide
-http_archive(
-    name = "rules_wpiformat",
-    sha256 = "871885dc981cbb892894589ef3965b38c7a438880da434693669cba4ad2d5369",
-    strip_prefix = "rules_wpiformat-2022.30",
-    url = "https://github.com/bzlmodRio/rules_wpiformat/archive/refs/tags/2022.30.tar.gz",
-)
+{{ mandatory_dependencies.rules_wpiformat.download_repository(0, maybe=False) }}
 
-http_archive(
-    name = "rules_python",
-    sha256 = "48a838a6e1983e4884b26812b2c748a35ad284fd339eb8e2a6f3adf95307fbcd",
-    strip_prefix = "rules_python-0.16.2",
-    url = "https://github.com/bazelbuild/rules_python/archive/refs/tags/0.16.2.tar.gz",
-)
+{{ bazel_dependencies.rules_python.download_repository(0, maybe=False) }}
 
 load("@rules_wpiformat//dependencies:load_rule_dependencies.bzl", "load_wpiformat_rule_dependencies")
 

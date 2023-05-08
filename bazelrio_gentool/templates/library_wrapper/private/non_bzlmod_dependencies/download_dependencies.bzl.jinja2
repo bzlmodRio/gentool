@@ -9,7 +9,7 @@ def download_dependencies():
 {%- if not no_roborio %}
 
     # Roborio Toolchain
-{{ mandatory_dependencies.rules_roborio_toolchain.download_repository(4) }}
+{{ mandatory_dependencies.rules_bzlmodrio_toolchain.download_repository(4) }}
 {%- endif %}
 
     ########################

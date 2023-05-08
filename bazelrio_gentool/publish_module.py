@@ -29,6 +29,9 @@ def publish_module(
             TEMPLATE_BASE_DIR, "publish", "module_config.jinja2"
         )
 
+    if not module_template.startswith(TEMPLATE_BASE_DIR):
+        raise Exception("Dont do this anymore")
+
     commitish = (
         subprocess.check_output(args=["git", "rev-parse", "HEAD"])
         .decode("utf-8")

@@ -9,7 +9,7 @@ filegroup_all = """filegroup(
 """
 
 def __setup_toolchains_dependencies(mctx):
-    {%- for config in container.configs %}
+    {%- for config in group.configs %}
     # {{config.short_name}}
     {%- for platform_config in config.cpp_platform_configs %}
     maybe(

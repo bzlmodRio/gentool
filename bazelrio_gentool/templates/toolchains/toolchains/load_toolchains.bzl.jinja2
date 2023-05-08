@@ -1,7 +1,7 @@
 load("//toolchains:configure_cross_compiler.bzl", "configure_cross_compiler")
 
 def load_toolchains():
-{%- for config in container.configs %}
+{%- for config in group.configs %}
     configure_cross_compiler(
         name = "local_{{config.short_name_underscore}}",
         compiler = "{{config.short_name}}",

@@ -5,7 +5,7 @@ module(
     version = "{{group.version}}{{group.patch}}",
 )
 
-bazel_dep(name = "rules_python", version = "0.16.1")
+{{ bazel_dependencies.rules_python.module_dependency() }}
 
 python = use_extension("@rules_python//python:extensions.bzl", "python")
 
