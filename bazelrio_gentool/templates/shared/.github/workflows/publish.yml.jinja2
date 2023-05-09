@@ -95,7 +95,7 @@ jobs:
         base: bzlmodrio
         token: ${{ secrets.AUTO_UPDATE_KEY }}
         reviewers: pjreiniger
-        branch: autoupdate/rules_wpi_styleguid_update
+        branch: autoupdate/{{group.repo_name}}_update
 {%- endraw %}
         title: "Auto-update latest {{group.repo_name}} module release"
 

@@ -95,6 +95,10 @@ def publish_module(
     create_module(central_registery_location, json_file)
     update_cached_versions(group, json_file, commitish)
 
+    if True:
+        os.remove(json_file)
+        os.remove(module_bazel_file)
+
     return json_file
 
 

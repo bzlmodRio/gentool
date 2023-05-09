@@ -4,16 +4,16 @@ bzlmodrio-allwpilib:
     sha: 4c944b1e9a3de134614565f8da49bd278ee1f086615a8dcdc5e0a75692b68f13
 bzlmodrio-apriltaglib:
   3.2.0-3:
-    commitish: 37136671ab2c29d32afa349e58b2423fb1a43a76
-    sha: 285e85275133fdac20e8be7d93370d9ec140f0ec80139805a819db48e0795fb6
+    commitish: 2305bcdf263da6c557fd7f6ad714b6e82255e5bc
+    sha: 9b46ac1ea1257fc6bc38cef90d48498a1458ee6cbdce9ab320d98e1c7482c7de
 bzlmodrio-imgui:
   1.89.1-1:
-    commitish: 560241260ff288abd2f03e3338d428927558c04f
-    sha: a99218be374079e69455d69fbd113e9b3969fdb21ae5e47783ec1310b442e9f9
+    commitish: ab09317f461812217a244ce0d551d51f46eb63d9
+    sha: c194346f6c15f252fc5e7a60069e114fc54108a5b0661a80b4b8e8e44ca91df9
 bzlmodrio-libssh:
   0.95-6:
-    commitish: e42b6b16ebb3ca0b709fa4fc8f0b46cac55c6054
-    sha: 9908279dfecd0acf4a644117f61f480b21cc1185a9ab772bf697f78f7b676277
+    commitish: 111a70edf72fd4372d18b8de71317b942c6fbbd9
+    sha: ae78e44438c17516842d071deeeedeadf3aac3703f9accc19cf6e0e8c1067133
 bzlmodrio-navx:
   2023.0.3:
     commitish: 6a15bbd6736f783ebe102527fff6cd4ae25a1d66
