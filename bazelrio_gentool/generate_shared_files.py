@@ -12,6 +12,7 @@ def write_shared_root_files(
         ".github/workflows/build.yml",
         ".github/workflows/lint.yml",
         ".github/workflows/publish.yml",
+        "generate/WORKSPACE",
         ".bazelignore",
         ".bazelrc-buildbuddy",
         ".bazelversion",
