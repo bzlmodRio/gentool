@@ -159,15 +159,19 @@ class CcDependency(MultiResourceDependency):
         output = []
 
         def is_invalid_resource(resource_base):
-            return resource_base not in self.resources and resource_base + "static" not in self.resources
+            return (
+                resource_base not in self.resources
+                and resource_base + "static" not in self.resources
+            )
 
         def invalid_resource(resource_base, toolchain_name, is_custom_toolchain):
             if is_invalid_resource(resource_base):
                 if is_custom_toolchain:
-                    output.append(f"@rules_bzlmodrio_toolchains//constraints/is_{toolchain_name}:{toolchain_name}")
+                    output.append(
+                        f"@rules_bzlmodrio_toolchains//constraints/is_{toolchain_name}:{toolchain_name}"
+                    )
                 else:
                     output.append(f"@bazel_tools//src/conditions:{toolchain_name}")
-
 
         invalid_resource("linuxathena", "roborio", True)
         invalid_resource("linuxarm32", "bullseye32", True)
