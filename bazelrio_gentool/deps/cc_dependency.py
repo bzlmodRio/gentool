@@ -172,6 +172,7 @@ class CcDependency(MultiResourceDependency):
         invalid_resource("linuxathena", "roborio", True)
         invalid_resource("linuxarm32", "bullseye32", True)
         invalid_resource("linuxarm64", "bullseye64", True)
+        invalid_resource("raspi32", "raspi32", True)
 
         invalid_resource("windowsx86-64", "windows", False)
         invalid_resource("linuxx86-64", "linux_x86_64", False)
