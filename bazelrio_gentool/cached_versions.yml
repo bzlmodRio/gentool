@@ -60,5 +60,5 @@ rules_wpi_styleguide:
     sha: d0f717a73d18b40f5e7f921e434692cffa1dea5b3138c2cc64c5355530f4eb47
 rules_wpiformat:
   '2022.30':
-    commitish: 14d6b45e74966adcbd38147c5332c38fa85225e0
-    sha: b5a2a5cdff940e4dcd9d0188d5579cd260d2d96571b74b087acb701617bd27ad
+    commitish: 31c254e8a724215f94b7b75ff7bd958c77393548
+    sha: 3e5edc1516a8e2edb0c89d7e9e5b90f66e7fb6ec1dccd8c9bb2c12589a746176
