@@ -9,9 +9,6 @@ module(
 {{bazel_dependencies.rules_jvm_external.module_dep()}}
 {%- endif %}
 
-{% if group.has_skylib %}
-{{bazel_dependencies.bazel_skylib.module_dep()}}
-{% endif %}
 {%- if group.is_python %}
 
 {{bazel_dependencies.rules_python.module_dep()}}

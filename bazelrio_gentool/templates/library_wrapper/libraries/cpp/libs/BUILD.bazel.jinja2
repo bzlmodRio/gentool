@@ -7,9 +7,9 @@ alias(
 cc_library(
     name = "shared",
     linkstatic = 1,
-    {%- if target.has_incompatible_targets() %}
+    {%- if target.get_shared_incompatible_targets() %}
     target_compatible_with = select({
-        {%- for toolchain in target.get_incompatible_targets() %}
+        {%- for toolchain in target.get_shared_incompatible_targets() %}
         "{{toolchain}}": ["@platforms//:incompatible"],
         {%- endfor %}
         "//conditions:default": [],
@@ -28,9 +28,9 @@ cc_library(
 cc_library(
     name = "static",
     linkstatic = 1,
-    {%- if target.has_incompatible_targets() %}
+    {%- if target.get_static_incompatible_targets() %}
     target_compatible_with = select({
-        {%- for toolchain in target.get_incompatible_targets() %}
+        {%- for toolchain in target.get_static_incompatible_targets() %}
         "{{toolchain}}": ["@platforms//:incompatible"],
         {%- endfor %}
         "//conditions:default": [],

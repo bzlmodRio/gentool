@@ -155,37 +155,52 @@ class CcDependency(MultiResourceDependency):
     def has_incompatible_targets(self):
         return len(self.get_incompatible_targets()) != 0
 
-    def get_incompatible_targets(self):
+
+    def __is_invalid_resource(self, resource_base):
+        return resource_base not in self.resources
+
+    def __get_invalid_toolchain(self, resource_base, toolchain_name, is_custom_toolchain):
+        if self.__is_invalid_resource(resource_base):
+            if is_custom_toolchain:
+                return f"@rules_bzlmodrio_toolchains//constraints/is_{toolchain_name}:{toolchain_name}"
+            else:
+                return f"@bazel_tools//src/conditions:{toolchain_name}"
+
+
+    def get_shared_incompatible_targets(self):
         output = []
 
-        def is_invalid_resource(resource_base):
-            return (
-                resource_base not in self.resources
-                and resource_base + "static" not in self.resources
-            )
+        output.append(self.__get_invalid_toolchain("linuxathena", "roborio", True))
+        output.append(self.__get_invalid_toolchain("linuxarm32", "bullseye32", True))
+        output.append(self.__get_invalid_toolchain("linuxarm64", "bullseye64", True))
+        output.append(self.__get_invalid_toolchain("raspi32", "raspi32", True))
+        
+        output.append(self.__get_invalid_toolchain("windowsx86-64", "windows", False))
+        output.append(self.__get_invalid_toolchain("linuxx86-64", "linux_x86_64", False))
 
-        def invalid_resource(resource_base, toolchain_name, is_custom_toolchain):
-            if is_invalid_resource(resource_base):
-                if is_custom_toolchain:
-                    output.append(
-                        f"@rules_bzlmodrio_toolchains//constraints/is_{toolchain_name}:{toolchain_name}"
-                    )
-                else:
-                    output.append(f"@bazel_tools//src/conditions:{toolchain_name}")
-
-        invalid_resource("linuxathena", "roborio", True)
-        invalid_resource("linuxarm32", "bullseye32", True)
-        invalid_resource("linuxarm64", "bullseye64", True)
-        invalid_resource("raspi32", "raspi32", True)
-
-        invalid_resource("windowsx86-64", "windows", False)
-        invalid_resource("linuxx86-64", "linux_x86_64", False)
-
-        if is_invalid_resource("osxx86-64") and is_invalid_resource("osxuniversal"):
-            print("Not mac? ", self.resources)
+        if self.__is_invalid_resource("osxx86-64") and self.__is_invalid_resource("osxuniversal"):
             output.append(f"@bazel_tools//src/conditions:darwin")
 
-        return output
+        return [x for x in output if x is not None]
+
+    def get_static_incompatible_targets(self):
+        output = []
+        
+        output.append(self.__get_invalid_toolchain("linuxathenastatic", "roborio", True))
+        output.append(self.__get_invalid_toolchain("linuxarm32static", "bullseye32", True))
+        output.append(self.__get_invalid_toolchain("linuxarm64static", "bullseye64", True))
+        output.append(self.__get_invalid_toolchain("raspi32static", "raspi32", True))
+        
+        output.append(self.__get_invalid_toolchain("windowsx86-64static", "raspi32", False))
+        output.append(self.__get_invalid_toolchain("linuxx86-64static", "linux_x86_64", False))
+
+        if self.__is_invalid_resource("osxx86-64static") and self.__is_invalid_resource("osxuniversalstatic"):
+            output.append(f"@bazel_tools//src/conditions:darwin")
+
+        return [x for x in output if x is not None]
+
+    def get_jni_incompatible_targets(self):
+        return self.get_shared_incompatible_targets()
 
 
 class CcMetaDependency:

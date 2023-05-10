@@ -56,19 +56,19 @@ def write_shared_test_files(module_directory, group):
 
 
 class BazelDependencySetting(BaseDependencyWriterHelper):
-    def __init__(self, repo_name, version, sha, needs_stripped_prefix=False):
+    def __init__(self, repo_name, version, sha, needs_stripped_prefix=False, old_release_style=False):
         BaseDependencyWriterHelper.__init__(
-            self, repo_name, version, sha, "https://github.com/bazelbuild", needs_stripped_prefix=needs_stripped_prefix
+            self, repo_name, version, sha, "https://github.com/bazelbuild", old_release_style=old_release_style, needs_stripped_prefix=needs_stripped_prefix
         )
 
     def download_repository(self, indent_num, maybe=True):
-#         if self.repo_name == "googletest":
-#             return """http_archive(
-#     name = "googletest",
-#     sha256 = "24564e3b712d3eb30ac9a85d92f7d720f60cc0173730ac166f27dda7fed76cb2",
-#     strip_prefix = "googletest-release-1.12.1",
-#     urls = ["https://github.com/google/googletest/archive/release-1.12.1.zip"],
-# )"""
+        if self.repo_name == "googletest":
+            return """http_archive(
+    name = "googletest",
+    sha256 = "24564e3b712d3eb30ac9a85d92f7d720f60cc0173730ac166f27dda7fed76cb2",
+    strip_prefix = "googletest-release-1.12.1",
+    urls = ["https://github.com/google/googletest/archive/release-1.12.1.zip"],
+)"""
 #         if self.use_long_form:
 #             return self.temp_longform_http_archive(indent_num, maybe)
         return self.http_archive(indent_num=indent_num, maybe=maybe, native=False)
@@ -116,7 +116,8 @@ def get_bazel_dependencies():
     add_dep(
         repo_name="rules_jvm_external",
         version="5.2",
-        sha="3824ac95d9edf8465c7a42b7fcb88a5c6b85d2bac0e98b941ba13f235216f313",
+        sha="f86fd42a809e1871ca0aabe89db0d440451219c3ce46c58da240c7dcdc00125f",
+        needs_stripped_prefix=True,
         # use_zip=True,
         # use_long_form=True,
     )
@@ -130,6 +131,8 @@ def get_bazel_dependencies():
         repo_name="rules_proto",
         version="5.3.0-21.7",
         sha="dc3fb206a2cb3441b485eb1e423165b231235a1ea9b031b4433cf7bc1fa460dd",
+        old_release_style=True,
+        needs_stripped_prefix=True,
     )
     add_dep(
         repo_name="bazel_skylib",

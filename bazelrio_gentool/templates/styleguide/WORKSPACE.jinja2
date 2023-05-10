@@ -6,11 +6,13 @@ load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive")
 # WPI Formatter
 {{  mandatory_dependencies.rules_wpiformat.download_repository(0,native=False) }}
 
-{{ bazel_dependencies.rules_python.download_repository(0, maybe=False) }}
-
 load("@rules_wpiformat//dependencies:load_rule_dependencies.bzl", "load_wpiformat_rule_dependencies")
 
 load_wpiformat_rule_dependencies()
+
+load("@rules_wpiformat//dependencies:load_transitive_dependencies.bzl", "load_wpiformat_transitive_dependencies")
+
+load_wpiformat_transitive_dependencies()
 
 load("@rules_wpiformat//dependencies:load_dependencies.bzl", "load_wpiformat_dependencies")
 
@@ -32,7 +34,11 @@ load("//dependencies:load_rule_dependencies.bzl", "load_{{ group.short_name }}_r
 load_{{ group.short_name }}_rule_dependencies()
 
 # Transitive Dependencies
+{%- if group.is_python %}
+load("//dependencies:load_transitive_dependencies.bzl", "load_{{ group.short_name }}_transitive_dependencies")
 
+load_{{ group.short_name }}_transitive_dependencies()
+{% endif %}
 load("//dependencies:load_dependencies.bzl", "load_{{ group.short_name }}_dependencies")
 
 load_{{ group.short_name }}_dependencies()
