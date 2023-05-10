@@ -52,8 +52,8 @@ rules_pmd:
     sha: 4bec86ee0d5bfc94fcebafb21afdb3d2c7740bc4bd6d7657fb9f63e94affbfae
 rules_spotless:
   2.34.0:
-    commitish: b316553ee9404620c069c4988a8e557222aee9a4
-    sha: b77138dab419a72194fbaeadc09467f198268a99c45242792fa5291acf02be1d
+    commitish: 5bf3e04533ea066394fb1a819d9f7be2fb148490
+    sha: d0a49b0dd1c3e7a4efb7debb1cc39584345e10bf35494cd051d0e4e8a4d54241
 rules_wpi_styleguide:
   1.0.0:
     commitish: d2b72f8bfc6f7acb227a30f772ed75c101c3e0b1
