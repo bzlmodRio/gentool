@@ -44,8 +44,8 @@ rules_bzlmodrio_toolchains:
     sha: 1c566358f97b093916e150de10b65d6527ad268e5bd8bc0a0a8bfd04b390751a
 rules_checkstyle:
   '10.1':
-    commitish: cac905bc09b8f41841bd49781d0ee6612f57730c
-    sha: 94c5696d9948cc6d77168262e66845e41d37843831447dc71755a686d546c346
+    commitish: 3f1928cfc2182ff0ebb225dd0f8fce2119e8c804
+    sha: 08c80009bf6e8af6d3e2e8b6493b86012ea4ab5bf0f62c527d53557552a03d77
 rules_pmd:
   6.43.0:
     commitish: bdd74a59ddeecdd3d670a78bcdc37bed049025de
