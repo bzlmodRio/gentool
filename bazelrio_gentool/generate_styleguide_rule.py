@@ -15,6 +15,7 @@ class StyleguideGroup(DependencyContainer):
         is_java=False,
         is_python=False,
         has_protobuf=False,
+        has_skylib=False,
         include_wpiformat=True,
         **kwargs
     ):
@@ -22,6 +23,7 @@ class StyleguideGroup(DependencyContainer):
         self.short_name = short_name
         self.is_java = is_java
         self.is_python = is_python
+        self.has_skylib = has_skylib
         self.has_protobuf = has_protobuf
         self.include_wpiformat = include_wpiformat
 

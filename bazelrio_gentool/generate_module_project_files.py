@@ -11,73 +11,26 @@ from bazelrio_gentool.generate_shared_files import (
 from bazelrio_gentool.cli import GenericCliArgs
 from bazelrio_gentool.generate_shared_files import get_bazel_dependencies
 
+from bazelrio_gentool.dependency_helpers import BaseLocalDependencyWriterHelper
 
-class MandetoryDependencySetting:
+
+class MandetoryDependencySetting(BaseLocalDependencyWriterHelper):
     def __init__(self, repo_name, version, use_local_version):
-        self.repo_name = repo_name
-        self.version = version
-        self.use_local_version = use_local_version
 
         cached_version = load_cached_version_info(repo_name, version)
-        self.sha = cached_version["sha"]
         self.commitish = cached_version["commitish"]
+
+        BaseLocalDependencyWriterHelper.__init__(
+            self,
+            repo_name=repo_name,
+            version=version,
+            sha=cached_version["sha"],
+            url_base="https://github.com/bzlmodRio",
+            use_local_version=use_local_version,
+        )
 
     def __repr__(self):
         return f"MandetoryDependencySetting: {self.repo_name}, {self.version}, {self.use_local_version}"
-
-    def module_dep(self):
-        return f'bazel_dep(name = "{self.repo_name}", version = "{self.version}")'
-
-    def maybe_local_repository(self):
-        local_path = f"../../../rules/{self.repo_name}"
-        if self.use_local_version:
-            return f"""
-local_repository(
-    name = "{self.repo_name}",
-    path = "{local_path}",
-)"""
-        return ""
-
-    def local_module_override(self):
-        if self.use_local_version:
-            return f"""
-local_path_override(
-    module_name = "{self.repo_name}",
-    path = "../../{self.repo_name}",
-)"""
-
-        return ""
-
-    def download_repository(self, num_indent, native=True, maybe=False):
-        indent = " " * num_indent
-        native_text = "native." if native else ""
-        local_path = f"../../../rules/{self.repo_name}"
-        if self.use_local_version:
-            output = f"{indent}"
-            if maybe:
-                output += f"maybe(\n    {indent}{native_text}local_repository,"
-            else:
-                output += "http_archive("
-
-            output += f"""
-{indent}    name = "{self.repo_name}",
-{indent}    path = "{local_path}",
-{indent})"""
-            return output
-
-        output = f"{indent}"
-        if maybe:
-            output += "maybe(\n    http_archive,"
-        else:
-            output += "http_archive("
-
-        output += f"""
-{indent}name = "{self.repo_name}",
-{indent}sha256 = "{ self.sha }",
-{indent}url = "https://github.com/bzlmodRio/{self.repo_name}/releases/download/{self.version}/{self.repo_name}-{self.version}.tar.gz",
-    )"""
-
-        return output
 
 
 def create_default_mandatory_settings(generic_cli: GenericCliArgs):

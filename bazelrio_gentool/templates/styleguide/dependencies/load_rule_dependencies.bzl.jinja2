@@ -4,7 +4,7 @@ load("@bazel_tools//tools/build_defs/repo:utils.bzl", "maybe")
 def load_{{ group.short_name }}_rule_dependencies():
 {% if group.is_java %}
     # JVM External
-    {{ bazel_dependencies.rules_jvm_external.download_repository(4)}}
+{{ bazel_dependencies.rules_jvm_external.download_repository(4)}}
 {% endif %}
 {% if group.is_python %}
 {{ bazel_dependencies.rules_python.download_repository(4, maybe=True) }}

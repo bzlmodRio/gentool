@@ -3,9 +3,10 @@ from bazelrio_gentool.deps.java_dependency import JavaDependency, JavaMetaDepend
 from bazelrio_gentool.deps.java_native_tool_dependency import JavaNativeToolDependency
 from bazelrio_gentool.deps.executable_tool_dependency import ExecutableToolDependency
 from bazelrio_gentool.load_cached_versions import load_cached_version_info
+from bazelrio_gentool.dependency_helpers import BaseLocalDependencyWriterHelper
 
 
-class ModuleDependency:
+class ModuleDependency(BaseLocalDependencyWriterHelper):
     def __init__(
         self,
         container,
@@ -18,7 +19,6 @@ class ModuleDependency:
         if override_version:
             container.version = override_version
         self.local_rel_folder = local_rel_folder
-        self.use_local_version = use_local_version
 
         cached_version = load_cached_version_info(
             container.repo_name, container.version
@@ -27,30 +27,15 @@ class ModuleDependency:
         self.remote_commitish = cached_version["commitish"]
         self.remote_repo = remote_repo
 
-    def local_module_override(self):
-        if self.use_local_version:
-            return f"""
-local_path_override(
-    module_name = "{remote_repo}",
-    path = "../../{remote_repo}",
-)"""
+        BaseLocalDependencyWriterHelper.__init__(
+            self,
+            repo_name=self.container.repo_name,
+            version=container.version,
+            sha=self.remote_sha,
+            url_base="https://github.com/bzlmodRio",
+            use_local_version = use_local_version
+        )
 
-        return ""
-
-    def download_repository(self, num_indent):
-        " " * num_indent
-        if self.use_local_version:
-            return f"""
-    native.local_repository(
-        name = "{self.container.repo_name}",
-        path = "../../{self.container.repo_name}",
-    )"""
-
-        return f"""    http_archive(
-        name = "{self.container.repo_name}",
-        sha256 = "{ self.remote_sha }",
-        url = "https://github.com/bzlmodRio/{self.remote_repo}/releases/download/{self.container.version}{self.container.patch}/{self.remote_repo}-{self.container.version}.tar.gz",
-    )"""
 
 
 class DependencyContainer:
