@@ -1,5 +1,13 @@
 class BaseDependencyWriterHelper:
-    def __init__(self, repo_name, version, sha, url_base, needs_stripped_prefix=False, old_release_style=False):
+    def __init__(
+        self,
+        repo_name,
+        version,
+        sha,
+        url_base,
+        needs_stripped_prefix=False,
+        old_release_style=False,
+    ):
         self.repo_name = repo_name
         self.version = version
         self.sha = sha
@@ -45,7 +53,11 @@ local_path_override(
         else:
             output += "http_archive("
 
-        strip_prefix = f'{indent}    strip_prefix = "{self.repo_name}-{self.version}",' if self.needs_stripped_prefix else ""
+        strip_prefix = (
+            f'{indent}    strip_prefix = "{self.repo_name}-{self.version}",'
+            if self.needs_stripped_prefix
+            else ""
+        )
 
         output += f"""
 {indent}    name = "{self.repo_name}",
@@ -87,5 +99,7 @@ class BaseLocalDependencyWriterHelper(BaseDependencyWriterHelper):
 
     def download_repository(self, num_indent, native=False, maybe=False):
         if self.use_local_version:
-            return self.local_repository_override(num_indent, maybe=maybe, native=native)
+            return self.local_repository_override(
+                num_indent, maybe=maybe, native=native
+            )
         return self.http_archive(indent_num=num_indent, maybe=maybe, native=native)

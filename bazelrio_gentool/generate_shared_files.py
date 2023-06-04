@@ -56,9 +56,22 @@ def write_shared_test_files(module_directory, group):
 
 
 class BazelDependencySetting(BaseDependencyWriterHelper):
-    def __init__(self, repo_name, version, sha, needs_stripped_prefix=False, old_release_style=False):
+    def __init__(
+        self,
+        repo_name,
+        version,
+        sha,
+        needs_stripped_prefix=False,
+        old_release_style=False,
+    ):
         BaseDependencyWriterHelper.__init__(
-            self, repo_name, version, sha, "https://github.com/bazelbuild", old_release_style=old_release_style, needs_stripped_prefix=needs_stripped_prefix
+            self,
+            repo_name,
+            version,
+            sha,
+            "https://github.com/bazelbuild",
+            old_release_style=old_release_style,
+            needs_stripped_prefix=needs_stripped_prefix,
         )
 
     def download_repository(self, indent_num, maybe=True):
@@ -69,9 +82,10 @@ class BazelDependencySetting(BaseDependencyWriterHelper):
     strip_prefix = "googletest-release-1.12.1",
     urls = ["https://github.com/google/googletest/archive/release-1.12.1.zip"],
 )"""
-#         if self.use_long_form:
-#             return self.temp_longform_http_archive(indent_num, maybe)
+        #         if self.use_long_form:
+        #             return self.temp_longform_http_archive(indent_num, maybe)
         return self.http_archive(indent_num=indent_num, maybe=maybe, native=False)
+
 
 #     def temp_longform_http_archive(self, indent_num, maybe):
 #         indent = " " * indent_num

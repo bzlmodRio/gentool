@@ -33,9 +33,8 @@ class ModuleDependency(BaseLocalDependencyWriterHelper):
             version=container.version,
             sha=self.remote_sha,
             url_base="https://github.com/bzlmodRio",
-            use_local_version = use_local_version
+            use_local_version=use_local_version,
         )
-
 
 
 class DependencyContainer:
