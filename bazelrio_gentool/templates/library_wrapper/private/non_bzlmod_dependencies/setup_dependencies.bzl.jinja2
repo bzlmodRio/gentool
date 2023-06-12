@@ -8,9 +8,6 @@ load("@{{group.repo_name}}//:maven_java_deps.bzl",
   {%- if group.java_deps %} "setup_legacy_{{group.sanitized_repo_name}}_java_dependencies"
 {%- endif -%})
 {%- endif -%}
-{%- if group.has_direct_maven_deps() or group.java_deps %}
-load("@rules_jvm_external//:repositories.bzl", "rules_jvm_external_deps")
-{%- endif -%}
 
 
 {%- for name, module_dep in group.module_dependencies.items() %}
@@ -23,11 +20,14 @@ load("@{{name}}//:maven_java_deps.bzl",
 {%- endif -%})
 {%- endif %}
 {%- endfor %}
+load("@rules_bazelrio//:nonbzlmod_setup.bzl", "setup_rules_bazelrio")
 load("@rules_bzlmodrio_toolchains//:maven_deps.bzl", "setup_legacy_setup_toolchains_dependencies")
 load("@rules_bzlmodrio_toolchains//toolchains:load_toolchains.bzl", "load_toolchains")
-load("@rules_bazelrio//:nonbzlmod_setup.bzl", "setup_rules_bazelrio")
 {%- if False or needs_robot %}
 load("@rules_jvm_external//:defs.bzl", "maven_install")
+{%- endif %}
+{%- if group.has_direct_maven_deps() or group.java_deps %}
+load("@rules_jvm_external//:repositories.bzl", "rules_jvm_external_deps")
 {%- endif %}
 
 def _setup_toolchains():

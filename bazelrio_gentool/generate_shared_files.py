@@ -109,8 +109,8 @@ class BazelDependencySetting(BaseDependencyWriterHelper):
 
 
 def get_bazel_dependencies():
-    def add_dep(repo_name, **kwargs):
-        output[repo_name] = BazelDependencySetting(repo_name, **kwargs)
+    def add_dep(repo_name, sha = "", **kwargs):
+        output[repo_name] = BazelDependencySetting(repo_name, sha = sha, **kwargs)
 
     output = {}
 
@@ -123,7 +123,7 @@ def get_bazel_dependencies():
     )
     add_dep(
         repo_name="rules_java",
-        version="5.5.0",
+        version="6.0.0",
         sha="",  # "f90111a597b2aa77b7104dbdc685fd35ea0cca3b7c3f807153765e22319cbd88",
         # use_long_form=True,
     )
@@ -150,8 +150,8 @@ def get_bazel_dependencies():
     )
     add_dep(
         repo_name="bazel_skylib",
-        version="1.4.1",
-        sha="b8a1527901774180afc798aeb28c4634bdccf19c4d98e7bdd1ce79d1fe9aaad7",
+        version="1.4.2",
+        # sha="b8a1527901774180afc798aeb28c4634bdccf19c4d98e7bdd1ce79d1fe9aaad7",
     )
 
     return output

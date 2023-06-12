@@ -1,4 +1,6 @@
-{%- if target.get_shared_library_select() != "," -%}
+load("@rules_cc//cc:defs.bzl", "cc_library")
+
+{% if target.get_shared_library_select() != "," -%}
 cc_library(
     name = "shared",
     linkstatic = 1,

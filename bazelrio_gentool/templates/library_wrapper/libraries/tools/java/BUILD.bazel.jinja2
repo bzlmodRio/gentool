@@ -7,6 +7,8 @@ java_tool_launcher(
     main_class = "{{target.main_class}}",
 )
 {%- else -%}
+load("@rules_java//java:defs.bzl", "java_binary")
+
 java_binary(
     name = "{{target.artifact_name}}",
     main_class = "{{target.main_class}}",

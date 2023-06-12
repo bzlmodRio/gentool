@@ -54,7 +54,7 @@ local_path_override(
             output += "http_archive("
 
         strip_prefix = (
-            f'{indent}    strip_prefix = "{self.repo_name}-{self.version}",'
+            f'{indent}    strip_prefix = "{self.repo_name}-{self.version}",\n'
             if self.needs_stripped_prefix
             else ""
         )
@@ -62,9 +62,8 @@ local_path_override(
         output += f"""
 {indent}    name = "{self.repo_name}",
 {indent}    sha256 = "{self.sha}",
-{strip_prefix}
-{indent}    url = "{self.get_repository_url()}",
-)"""
+{strip_prefix}{indent}    url = "{self.get_repository_url()}",
+{indent})"""
 
         return output
 
@@ -91,10 +90,9 @@ class BaseLocalDependencyWriterHelper(BaseDependencyWriterHelper):
         else:
             output += "local_repository("
 
-        output += f"""
-{indent}    name = "{self.repo_name}",
+        output += f"""{indent}    name = "{self.repo_name}",
 {indent}    path = "{self.local_path}",
-)"""
+{indent})"""
         return output
 
     def download_repository(self, num_indent, native=False, maybe=False):

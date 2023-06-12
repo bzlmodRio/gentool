@@ -39,7 +39,7 @@ class CcDependency(MultiResourceDependency):
         return self.get_archive_name("headers")
 
     def __repr__(self):
-        return f"CcDependency: name={self.name}"
+        return f"CcDependency: name={self.name}, parent_folder={self.parent_folder}"
 
     def get_build_file_content(self, resource):
         if resource == "headers":
@@ -50,6 +50,19 @@ class CcDependency(MultiResourceDependency):
             return "cc_library_shared"
         else:
             return "cc_library_static"
+
+    def get_sorted_dependencies(self):
+        def sort_helper(dep):
+            if type(dep) == dict:
+                repo_name = dep['repo_name']
+                parent_folder = dep['parent_folder']
+            else:
+                repo_name = dep.repo_name
+                parent_folder = dep.parent_folder
+            return (repo_name, parent_folder)
+
+        output = sorted(self.dependencies, key=sort_helper)
+        return output
 
     # CONDITIONS_LOOKUP = {
     #     "@bazel_tools//src/conditions:windows": ["windowsx86-64"],
@@ -116,7 +129,7 @@ class CcDependency(MultiResourceDependency):
             # if condition:
             #     lines.append(f'        "{condition}": ["@{self.get_archive_name(res)}//:shared_libs"]')
 
-        return ",\n".join(lines) + ","
+        return ",\n".join(sorted(lines)) + ","
 
     def get_shared_library_select(self):
         shared_resources = []
@@ -155,17 +168,17 @@ class CcDependency(MultiResourceDependency):
     def has_incompatible_targets(self):
         return len(self.get_incompatible_targets()) != 0
 
-
     def __is_invalid_resource(self, resource_base):
         return resource_base not in self.resources
 
-    def __get_invalid_toolchain(self, resource_base, toolchain_name, is_custom_toolchain):
+    def __get_invalid_toolchain(
+        self, resource_base, toolchain_name, is_custom_toolchain
+    ):
         if self.__is_invalid_resource(resource_base):
             if is_custom_toolchain:
                 return f"@rules_bzlmodrio_toolchains//constraints/is_{toolchain_name}:{toolchain_name}"
             else:
                 return f"@bazel_tools//src/conditions:{toolchain_name}"
-
 
     def get_shared_incompatible_targets(self):
         output = []
@@ -174,14 +187,18 @@ class CcDependency(MultiResourceDependency):
         output.append(self.__get_invalid_toolchain("linuxarm32", "bullseye32", True))
         output.append(self.__get_invalid_toolchain("linuxarm64", "bullseye64", True))
         output.append(self.__get_invalid_toolchain("raspi32", "raspi32", True))
-        
-        output.append(self.__get_invalid_toolchain("windowsx86-64", "windows", False))
-        output.append(self.__get_invalid_toolchain("linuxx86-64", "linux_x86_64", False))
 
-        if self.__is_invalid_resource("osxx86-64") and self.__is_invalid_resource("osxuniversal"):
+        output.append(self.__get_invalid_toolchain("windowsx86-64", "windows", False))
+        output.append(
+            self.__get_invalid_toolchain("linuxx86-64", "linux_x86_64", False)
+        )
+
+        if self.__is_invalid_resource("osxx86-64") and self.__is_invalid_resource(
+            "osxuniversal"
+        ):
             output.append(f"@bazel_tools//src/conditions:darwin")
 
-        return [x for x in output if x is not None]
+        return sorted([x for x in output if x is not None])
 
     def get_static_incompatible_targets(self):
         output = []
@@ -197,7 +214,7 @@ class CcDependency(MultiResourceDependency):
         if self.__is_invalid_resource("osxx86-64static") and self.__is_invalid_resource("osxuniversalstatic"):
             output.append(f"@bazel_tools//src/conditions:darwin")
 
-        return [x for x in output if x is not None]
+        return sorted([x for x in output if x is not None])
 
     def get_jni_incompatible_targets(self):
         return self.get_shared_incompatible_targets()

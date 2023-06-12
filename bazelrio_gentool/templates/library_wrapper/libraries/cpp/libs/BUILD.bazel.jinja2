@@ -1,3 +1,5 @@
+load("@rules_cc//cc:defs.bzl", "cc_library")
+
 alias(
     name = "{{target.parent_folder}}",
     actual = {% if target.get_shared_library_select() != "," %}":shared"{% else %}":static"{%endif%},
@@ -17,7 +19,7 @@ cc_library(
     {%- endif %}
     visibility = {{ visibility }},
     deps = [
-      {%- for dep in target.dependencies %}
+      {%- for dep in target.get_sorted_dependencies() %}
         "@{{dep.repo_name}}//libraries/cpp/{{dep.parent_folder}}:shared",
       {%- endfor %}
     ] + [
@@ -38,7 +40,7 @@ cc_library(
     {%- endif %}
     visibility = {{ visibility }},
     deps = [
-      {%- for dep in target.dependencies %}
+      {%- for dep in target.get_sorted_dependencies() %}
         "@{{dep.repo_name}}//libraries/cpp/{{dep.parent_folder}}:static",
       {%- endfor %}
     ] + [

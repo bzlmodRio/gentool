@@ -33,6 +33,10 @@ load("@rules_wpiformat//dependencies:load_rule_dependencies.bzl", "load_wpiforma
 
 load_wpiformat_rule_dependencies()
 
+load("@rules_wpiformat//dependencies:load_transitive_dependencies.bzl", "load_wpiformat_transitive_dependencies")
+
+load_wpiformat_transitive_dependencies()
+
 load("@rules_wpiformat//dependencies:load_dependencies.bzl", "load_wpiformat_dependencies")
 
 load_wpiformat_dependencies()
@@ -40,5 +44,4 @@ load_wpiformat_dependencies()
 load("@rules_wpiformat_pip//:requirements.bzl", "install_deps")
 
 install_deps()
-
 
