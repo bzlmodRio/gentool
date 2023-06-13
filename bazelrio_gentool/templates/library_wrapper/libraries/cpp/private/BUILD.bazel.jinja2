@@ -17,6 +17,7 @@ cc_library(
     srcs = select({
 {{target.get_shared_library_interface_select()}}
     }),
+    tags = ["manual"],
 )
 
 cc_library(
