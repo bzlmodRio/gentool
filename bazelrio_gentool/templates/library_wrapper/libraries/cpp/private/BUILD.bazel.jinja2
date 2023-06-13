@@ -2,6 +2,24 @@ load("@rules_cc//cc:defs.bzl", "cc_library")
 
 {% if target.get_shared_library_select() != "," -%}
 cc_library(
+    name = "shared_interface",
+    linkstatic = True,
+    {%- if target.get_shared_incompatible_targets() %}
+    target_compatible_with = select({
+        {%- for toolchain in target.get_shared_incompatible_targets() %}
+        "{{toolchain}}": ["@platforms//:incompatible"],
+        {%- endfor %}
+        "//conditions:default": [],
+    }),
+    {%- endif %}
+    visibility = ["@{{group.repo_name}}//:__subpackages__"],
+    {% if target.headers %}deps = ["@{{target.get_header_archive_name()}}//:headers"],{% endif %}
+    srcs = select({
+{{target.get_shared_library_interface_select()}}
+    }),
+)
+
+cc_library(
     name = "shared",
     alwayslink = 1,
     {%- if target.get_shared_incompatible_targets() %}
@@ -13,7 +31,10 @@ cc_library(
     }),
     {%- endif %}
     visibility = ["@{{group.repo_name}}//:__subpackages__"],
-    {% if target.headers %}deps = ["@{{target.get_header_archive_name()}}//:headers"],{% endif %}
+    deps = select({
+        "@rules_bazelrio//conditions:windows": [":shared_interface"],
+        "//conditions:default": [],
+    }){% if target.headers %} + ["@{{target.get_header_archive_name()}}//:headers"]{% endif %},
     srcs = select({
 {{target.get_shared_library_select()}}
     }),

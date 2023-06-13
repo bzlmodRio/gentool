@@ -65,10 +65,7 @@ filegroup(
 
 filegroup(
     name = "shared_libs",
-    srcs = shared_srcs + select({
-        "@rules_bazelrio//conditions:windows": static_srcs,
-        "//conditions:default": [],
-    }),
+    srcs = shared_srcs,
     visibility = ["//visibility:public"],
 )
 

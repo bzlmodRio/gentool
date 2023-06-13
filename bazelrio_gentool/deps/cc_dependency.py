@@ -131,6 +131,16 @@ class CcDependency(MultiResourceDependency):
 
         return ",\n".join(sorted(lines)) + ","
 
+    def get_shared_library_interface_select(self):
+        shared_resources = []
+        for res in self.resources:
+            if res.endswith("staticdebug") or res.endswith("static"):
+                pass
+            elif "windows" in res:
+                shared_resources.append(res)
+
+        return self.__get_select(shared_resources, "static_libs")
+
     def get_shared_library_select(self):
         shared_resources = []
         for res in self.resources:
