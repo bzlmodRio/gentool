@@ -3,7 +3,7 @@ load("@rules_cc//cc:defs.bzl", "cc_library")
 {% if target.get_shared_library_select() != "," -%}
 cc_library(
     name = "shared",
-    linkstatic = 1,
+    alwayslink = 1,
     {%- if target.get_shared_incompatible_targets() %}
     target_compatible_with = select({
         {%- for toolchain in target.get_shared_incompatible_targets() %}
@@ -13,7 +13,8 @@ cc_library(
     }),
     {%- endif %}
     visibility = ["@{{group.repo_name}}//:__subpackages__"],
-    deps = {% if target.headers %}["@{{target.get_header_archive_name()}}//:headers"] + {% endif %}select({
+    {% if target.headers %}deps = ["@{{target.get_header_archive_name()}}//:headers"],{% endif %}
+    srcs = select({
 {{target.get_shared_library_select()}}
     }),
 )
@@ -50,7 +51,8 @@ cc_library(
     }),
     {%- endif %}
     visibility = ["@{{group.repo_name}}//:__subpackages__"],
-    deps = {% if target.headers %}["@{{target.get_header_archive_name()}}//:headers"] + {% endif %}select({
+    {% if target.headers %}deps = ["@{{target.get_header_archive_name()}}//:headers"],{% endif %}
+    srcs = select({
 {{target.get_jni_shared_library_select()}}
     }),
 )

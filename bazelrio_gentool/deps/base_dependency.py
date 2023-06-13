@@ -20,6 +20,7 @@ class BaseDependency:
         if year_search:
             group_underscore = group_underscore.replace(year_search[0], "")
 
+        #archive_name = f"bazelrio_{self.artifact_name.lower()}"
         archive_name = f"bazelrio_{group_underscore}_{self.artifact_name.lower()}"
         if suffix:
             archive_name += f"_{suffix}"
