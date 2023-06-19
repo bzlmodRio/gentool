@@ -15,7 +15,9 @@ cc_library(
     visibility = ["@{{group.repo_name}}//:__subpackages__"],
     {% if target.headers %}deps = ["@{{target.get_header_archive_name()}}//:headers"],{% endif %}
     srcs = select({
+{%- if target.get_shared_library_interface_select() != "," %}
 {{target.get_shared_library_interface_select()}}
+{%- endif %}
     }),
     tags = ["manual"],
 )
