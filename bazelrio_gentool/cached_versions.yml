@@ -8,8 +8,8 @@ bzlmodrio-apriltaglib:
     sha: 4ab8a9a3b74b96ceccc7a74b931aea034c6aee325a79f2a8d5e01885502fce5d
 bzlmodrio-imgui:
   1.89.1-1:
-    commitish: c1dbd30a4b3f0ed11fc48fc73b8dc4da48ea5927
-    sha: e8c161d2ee651780e61651df16a44f17fc74b7070d7e0b6a173a371884e8fb49
+    commitish: 75c0873bd677d44731963c6e5902a1d0a9380fb1
+    sha: 338a9911cd8ae339281e6a0fceb741445f76bf0163066ea6ceea3219abb06512
 bzlmodrio-libssh:
   0.95-6:
     commitish: 3d52faf1714d8539d775f99263c00b768849dc56
