@@ -1,6 +1,7 @@
 load("@rules_cc//cc:defs.bzl", "cc_library")
 
 {% if target.get_shared_library_select() != "," -%}
+{%- if target.get_shared_library_interface_select() != "," %}
 cc_library(
     name = "shared_interface",
     linkstatic = True,
@@ -15,12 +16,11 @@ cc_library(
     visibility = ["@{{group.repo_name}}//:__subpackages__"],
     {% if target.headers %}deps = ["@{{target.get_header_archive_name()}}//:headers"],{% endif %}
     srcs = select({
-{%- if target.get_shared_library_interface_select() != "," %}
 {{target.get_shared_library_interface_select()}}
-{%- endif %}
     }),
     tags = ["manual"],
 )
+{%- endif %}
 
 cc_library(
     name = "shared",
@@ -34,10 +34,13 @@ cc_library(
     }),
     {%- endif %}
     visibility = ["@{{group.repo_name}}//:__subpackages__"],
-    deps = select({
+    {% if target.get_shared_library_interface_select() != "," %} hello world {% endif %}
+{%- if target.headers or target.get_shared_library_interface_select() != "," %}
+    deps = {% if target.get_shared_library_interface_select() != "," %}bbbselect({
         "@rules_bazelrio//conditions:windows": [":shared_interface"],
         "//conditions:default": [],
-    }){% if target.headers %} + ["@{{target.get_header_archive_name()}}//:headers"]{% endif %},
+    }){% if target.headers %} + {% endif %}{% endif %}{% endif %}{% if target.headers %} ["@{{target.get_header_archive_name()}}//:headers"],
+{% endif %}
     srcs = select({
 {{target.get_shared_library_select()}}
     }),
