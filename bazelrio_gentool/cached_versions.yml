@@ -4,8 +4,8 @@ bzlmodrio-allwpilib:
     sha: 4c944b1e9a3de134614565f8da49bd278ee1f086615a8dcdc5e0a75692b68f13
 bzlmodrio-apriltaglib:
   3.2.0-3:
-    commitish: d56b459c304e6313fbc9b6b5f246f75c3c47a226
-    sha: 4ab8a9a3b74b96ceccc7a74b931aea034c6aee325a79f2a8d5e01885502fce5d
+    commitish: 90813acd860ec50103749706f7a5abe2762292da
+    sha: 314812473f33c00e23b8af7865ddf0e43b38a37cafb97c504c9cb533ddac776f
 bzlmodrio-imgui:
   1.89.1-1:
     commitish: c1dbd30a4b3f0ed11fc48fc73b8dc4da48ea5927
