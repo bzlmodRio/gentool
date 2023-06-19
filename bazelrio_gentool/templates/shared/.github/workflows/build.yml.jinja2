@@ -27,7 +27,9 @@ jobs:
     steps:
     - uses: actions/checkout@v3
     - uses: actions/setup-python@v4
-    - run: bazel ${{ matrix.bazel_options }} build -k ${{ matrix.config }} --verbose_failures --config=remote //... {% endraw %}@{{group.repo_name}}//...{%raw%} || true
+    - run: bazel ${{ matrix.bazel_options }} build -k ${{ matrix.config }} {% endraw %}@{{group.repo_name}}//...{%raw%}
+      working-directory: tests
+    - run: bazel ${{ matrix.bazel_options }} build -k ${{ matrix.config }} --verbose_failures --config=remote //... || true
       working-directory: tests
     - run: bazel ${{ matrix.bazel_options }} ${{ matrix.command }} //... -k ${{ matrix.config }} --verbose_failures --config=remote
       working-directory: tests

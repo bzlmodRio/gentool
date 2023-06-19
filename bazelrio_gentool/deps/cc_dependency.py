@@ -51,6 +51,53 @@ class CcDependency(MultiResourceDependency):
         else:
             return "cc_library_static"
 
+    def maybe_patch_args(self, resource):
+        if "shared" not in self.get_build_file_content(resource):
+            return ""
+        if "osx" not in resource:
+            return ""
+
+        patches = ""
+
+        artifact_name = self.artifact_name.replace("-cpp", "")
+        # print(artifact_name)
+        if artifact_name == "hal":
+            artifact_name = "wpiHal"
+
+        if artifact_name == "opencv":
+            return ""
+        
+        for dep in self.get_sorted_dependencies():
+            print(dep)
+            if isinstance(dep, dict):
+                dep_name = dep['parent_folder']
+            else:
+                dep_name = dep.artifact_name
+                
+            dep_name = dep_name.replace("-cpp", "")
+    
+            if dep_name == "ni":
+                continue
+                
+            if dep_name == "opencv":
+                continue
+                
+            if dep_name == "hal":
+                dep_name = "wpiHal"
+
+            # print(type(dep_name), dep_name)
+            patches += f'    "install_name_tool -change lib{dep_name}.dylib @rpath/lib{dep_name}.dylib osx/universal/shared/lib{artifact_name}.dylib",\n'
+
+        # if not patches:
+        #     return ""
+
+        output = "patch_cmds = [\n"
+        output += f'    "install_name_tool -id @rpath/lib{artifact_name}.dylib osx/universal/shared/lib{artifact_name}.dylib",\n'
+        output += patches
+        output += "]\n"
+
+        return output
+
     def get_sorted_dependencies(self):
         def sort_helper(dep):
             if type(dep) == dict:
@@ -231,7 +278,7 @@ class CcDependency(MultiResourceDependency):
 
 
 class CcMetaDependency:
-    def __init__(self, repo_name, name, deps, platform_deps, has_static, jni_deps):
+    def __init__(self, repo_name, name, deps, platform_deps, has_static, jni_deps, shared_library_name=None):
         self.repo_name = repo_name
         self.name = name
         self.deps = deps
@@ -239,3 +286,4 @@ class CcMetaDependency:
         self.platform_deps = platform_deps
         self.has_static = has_static
         self.jni_deps = jni_deps
+        self.shared_library_name = shared_library_name

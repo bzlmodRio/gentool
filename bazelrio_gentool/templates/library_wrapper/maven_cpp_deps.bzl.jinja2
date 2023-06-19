@@ -34,25 +34,25 @@ cc_library(
 
 cc_library_shared = """
 JNI_PATTERN=[
-    "**/*jni.dll", 
-    "**/*jni.so*", 
-    "**/*.jni.dylib", 
-    "**/*_java*.dll", 
-    "**/lib*_java*.dylib", 
+    "**/*jni.dll",
+    "**/*jni.so*",
+    "**/*jni.dylib",
+    "**/*_java*.dll",
+    "**/lib*_java*.dylib",
     "**/lib*_java*.so",
 ]
 
 static_srcs = glob([
-        "**/*.lib", 
+        "**/*.lib",
         "**/*.a"
-    ], 
+    ],
     exclude=["**/*jni.lib"]
 )
 shared_srcs = glob([
-        "**/*.dll", 
-        "**/*.so*", 
+        "**/*.dll",
+        "**/*.so*",
         "**/*.dylib",
-    ], 
+    ],
     exclude=JNI_PATTERN + ["**/*.so.debug"]
 )
 shared_jni_srcs = glob(JNI_PATTERN, exclude=["**/*.so.debug"])
@@ -105,6 +105,7 @@ def __setup_{{group.sanitized_repo_name}}_cpp_dependencies(mctx):
         url = "{{cpp_dep.get_url(resource)}}",
         sha256 = "{{sha256}}",
         build_file_content = {{cpp_dep.get_build_file_content(resource)}},
+        {{cpp_dep.maybe_patch_args(resource)}}
     )
     {%- endif %}
     {%- endfor %}

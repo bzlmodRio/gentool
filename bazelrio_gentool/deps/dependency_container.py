@@ -200,7 +200,7 @@ class DependencyContainer:
         return '"' + '",\n    "'.join(output) + '",'
 
     def add_cc_meta_dependency(
-        self, name, deps, platform_deps, has_static=False, jni_deps=None
+        self, name, deps, platform_deps, shared_library_name=None, has_static=False, jni_deps=None
     ):
 
         dependencies = [self.dep_lookup[d] for d in deps]
@@ -213,7 +213,7 @@ class DependencyContainer:
                 jnid[k] = [self.dep_lookup[d] for d in v]
             # platform_deps = {k, v for self.dep_lookup[d] for d in platform_deps]
 
-        dep = CcMetaDependency(self.repo_name, name, dependencies, pd, has_static, jnid)
+        dep = CcMetaDependency(self.repo_name, name, dependencies, pd, has_static, jnid, shared_library_name=shared_library_name)
         self.cc_meta_deps.append(dep)
         self.dep_lookup[name] = dep
 
