@@ -20,8 +20,8 @@ bzlmodrio-navx:
     sha: bdfebf177f64267ed68be277ca1b074fc8ca5f24907371667cd5dbb568e1aadc
 bzlmodrio-ni:
   2023.3.0:
-    commitish: 3a18d45729428739f3e0488412e930a32705d655
-    sha: 8a9cc2b43691a696f07dee869765f76370cc36165f78cd0f3507efec04d7dbd7
+    commitish: 86f8befc702a4366c37129b0797a5c13d9f7ea3b
+    sha: cf1532c896bb95f4eb73c8cf5bac968f74f6986c12de141d8c4f5d8ff95cd520
 bzlmodrio-opencv:
   4.6.0-4:
     commitish: 4cd34b0fd9505bedf3e9709d35d686b813fa86f7
