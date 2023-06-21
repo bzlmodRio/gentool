@@ -4,7 +4,12 @@ from bazelrio_gentool.deps.dependency_container import DependencyContainer
 
 
 def vendordep_dependency(
-    module_name, vendor_file, year, fail_on_hash_miss, has_static_libraries, install_name_lookup = None
+    module_name,
+    vendor_file,
+    year,
+    fail_on_hash_miss,
+    has_static_libraries,
+    install_name_lookup=None,
 ):
     install_name_lookup = install_name_lookup or {}
 
@@ -45,14 +50,13 @@ def vendordep_dependency(
             if cpp_dep["artifactId"] in install_name_lookup:
                 d = install_name_lookup[cpp_dep["artifactId"]]
                 has_install_name_patches = True
-                artifact_install_name = d['artifact_install_name']
-                extra_install_name_dependencies = d['deps']
+                artifact_install_name = d["artifact_install_name"]
+                extra_install_name_dependencies = d["deps"]
             else:
                 print(cpp_dep["artifactId"])
                 has_install_name_patches = False
                 artifact_install_name = None
                 extra_install_name_dependencies = None
-
 
             maven_dep.create_cc_dependency(
                 name=cpp_dep["artifactId"],
@@ -78,7 +82,6 @@ def vendordep_dependency(
                 parent_folder="parent",
                 version=java_dep["version"],
             )
-
 
         for cc_dep in maven_dep.cc_deps:
             if cc_dep.extra_install_name_dependencies is None:

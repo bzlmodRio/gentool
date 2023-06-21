@@ -10,7 +10,6 @@ from bazelrio_gentool.load_vendordep_dependency import vendordep_dependency
 
 
 def create_vendordep_library(vendordep, base_output_directory):
-
     if not os.path.exists(base_output_directory):
         os.makedirs(base_output_directory)
 

@@ -16,9 +16,9 @@ class CcDependency(MultiResourceDependency):
         has_jni,
         repo_name,
         fail_on_hash_miss=True,
-        has_install_name_patches = True,
-        artifact_install_name = None,
-        extra_install_name_dependencies = None,
+        has_install_name_patches=True,
+        artifact_install_name=None,
+        extra_install_name_dependencies=None,
     ):
         MultiResourceDependency.__init__(
             self,
@@ -75,7 +75,7 @@ class CcDependency(MultiResourceDependency):
 
         def get_dependent_patches(dep):
             if type(dep) == dict:
-                artifact_install_name = dep['parent_folder']
+                artifact_install_name = dep["parent_folder"]
                 has_install_name_patches = False
                 return []
             else:
@@ -87,12 +87,14 @@ class CcDependency(MultiResourceDependency):
                 return output
 
             if self != dep:
-                output.append(f'    "install_name_tool -change lib{artifact_install_name}.dylib @rpath/lib{artifact_install_name}.dylib osx/universal/shared/lib{self.artifact_install_name}.dylib",\n')
-            
+                output.append(
+                    f'    "install_name_tool -change lib{artifact_install_name}.dylib @rpath/lib{artifact_install_name}.dylib osx/universal/shared/lib{self.artifact_install_name}.dylib",\n'
+                )
+
             for dep in dep.get_sorted_dependencies():
                 output.extend(get_dependent_patches(dep))
             return output
-            
+
         def get_extra_dependent_patches(extra_dep):
             patches = []
             for dep in extra_dep.extra_install_name_dependencies:
@@ -108,61 +110,23 @@ class CcDependency(MultiResourceDependency):
         # output += patches
 
         patches = set()
-            
+
         patches.update(get_dependent_patches(self))
         patches.update(get_extra_dependent_patches(self))
 
         patches = sorted(patches)
-        
+
         output += "\n".join(patches)
-            
+
         output += "\n]\n"
-        
-
-        # patches = ""
-
-        # artifact_name = self.artifact_name.replace("-cpp", "")
-        # # print(artifact_name)
-        # if artifact_name == "hal":
-        #     artifact_name = "wpiHal"
-
-        # if artifact_name == "opencv":
-        #     return ""
-        
-        # for dep in self.get_sorted_dependencies():
-        #     print(dep)
-        #     if isinstance(dep, dict):
-        #         dep_name = dep['parent_folder']
-        #     else:
-        #         dep_name = dep.artifact_name
-                
-        #     dep_name = dep_name.replace("-cpp", "")
-    
-        #     if dep_name == "ni":
-        #         continue
-                
-        #     if dep_name == "opencv":
-        #         continue
-                
-        #     if dep_name == "hal":
-        #         dep_name = "wpiHal"
-
-        #     # print(type(dep_name), dep_name)
-        #     patches += f'    "install_name_tool -change lib{dep_name}.dylib @rpath/lib{dep_name}.dylib osx/universal/shared/lib{artifact_name}.dylib",\n'
-
-        # if not patches:
-        #     return ""
-
-
         return output
-        # return ""
 
     def get_sorted_dependencies(self):
         def sort_helper(dep):
             if type(dep) == dict:
                 print(dep)
-                repo_name = dep['repo_name']
-                parent_folder = dep['parent_folder']
+                repo_name = dep["repo_name"]
+                parent_folder = dep["parent_folder"]
             else:
                 repo_name = dep.repo_name
                 parent_folder = dep.parent_folder
@@ -183,12 +147,10 @@ class CcDependency(MultiResourceDependency):
         "windowsx86-64debug": "@rules_bazelrio//conditions:windows_debug",
         "windowsx86-64static": "@rules_bazelrio//conditions:windows",
         "windowsx86-64staticdebug": "@rules_bazelrio//conditions:windows_debug",
-        
         "windowsarm64": "@rules_bazelrio//conditions:windows_arm",
         "windowsarm64debug": "@rules_bazelrio//conditions:windows_arm_debug",
         "windowsarm64static": "@rules_bazelrio//conditions:windows_arm",
         "windowsarm64staticdebug": "@rules_bazelrio//conditions:windows_arm_debug",
-
         "linuxx86-64": "@rules_bazelrio//conditions:linux_x86_64",
         "linuxx86-64debug": "@rules_bazelrio//conditions:linux_x86_64_debug",
         "linuxx86-64static": "@rules_bazelrio//conditions:linux_x86_64",
@@ -325,12 +287,12 @@ class CcDependency(MultiResourceDependency):
 
     def get_static_incompatible_targets(self):
         output = []
-        
+
         output.append(self.__get_invalid_toolchain("linuxathenastatic", "roborio", True))
         output.append(self.__get_invalid_toolchain("linuxarm32static", "bullseye32", True))
         output.append(self.__get_invalid_toolchain("linuxarm64static", "bullseye64", True))
         output.append(self.__get_invalid_toolchain("raspi32static", "raspi32", True))
-        
+
         output.append(self.__get_invalid_toolchain("windowsx86-64static", "raspi32", False))
         output.append(self.__get_invalid_toolchain("linuxx86-64static", "linux_x86_64", False))
 
@@ -344,7 +306,16 @@ class CcDependency(MultiResourceDependency):
 
 
 class CcMetaDependency:
-    def __init__(self, repo_name, name, deps, platform_deps, has_static, jni_deps, shared_library_name=None):
+    def __init__(
+        self,
+        repo_name,
+        name,
+        deps,
+        platform_deps,
+        has_static,
+        jni_deps,
+        shared_library_name=None,
+    ):
         self.repo_name = repo_name
         self.name = name
         self.deps = deps

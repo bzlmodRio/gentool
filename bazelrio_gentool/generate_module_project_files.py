@@ -16,7 +16,6 @@ from bazelrio_gentool.dependency_helpers import BaseLocalDependencyWriterHelper
 
 class MandetoryDependencySetting(BaseLocalDependencyWriterHelper):
     def __init__(self, repo_name, version, use_local_version):
-
         cached_version = load_cached_version_info(repo_name, version)
         self.commitish = cached_version["commitish"]
 

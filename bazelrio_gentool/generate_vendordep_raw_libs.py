@@ -3,7 +3,6 @@ from bazelrio_gentool.utils import TEMPLATE_BASE_DIR
 
 
 def generate_vendordep_raw_libs(module_directory, group):
-
     template_files = [
         "private/cpp/BUILD.bazel",
     ]

@@ -109,8 +109,8 @@ class BazelDependencySetting(BaseDependencyWriterHelper):
 
 
 def get_bazel_dependencies():
-    def add_dep(repo_name, sha = "", **kwargs):
-        output[repo_name] = BazelDependencySetting(repo_name, sha = sha, **kwargs)
+    def add_dep(repo_name, sha="", **kwargs):
+        output[repo_name] = BazelDependencySetting(repo_name, sha=sha, **kwargs)
 
     output = {}
 
