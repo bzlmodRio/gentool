@@ -97,6 +97,14 @@ class DependencyContainer:
         self.cc_deps.append(dep)
         self.dep_lookup[name] = dep
 
+    def get_cc_dependency(self, name):
+        for dep in self.cc_deps:
+            print(dep.name)
+            if dep.name == name:
+                return dep
+        else:
+            raise
+
     def create_java_dependency(self, name, dependencies=[], version=None, **kwargs):
         if version is None:
             version = self.version

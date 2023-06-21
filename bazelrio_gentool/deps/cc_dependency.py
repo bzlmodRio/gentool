@@ -16,6 +16,9 @@ class CcDependency(MultiResourceDependency):
         has_jni,
         repo_name,
         fail_on_hash_miss=True,
+        has_install_name_patches = True,
+        artifact_install_name = None,
+        extra_install_name_dependencies = None,
     ):
         MultiResourceDependency.__init__(
             self,
@@ -35,6 +38,13 @@ class CcDependency(MultiResourceDependency):
         self.sources = sources
         self.dependencies = dependencies
 
+        self.has_install_name_patches = has_install_name_patches
+        if has_install_name_patches and artifact_install_name is None:
+            self.artifact_install_name = self.parent_folder
+        else:
+            self.artifact_install_name = artifact_install_name
+        self.extra_install_name_dependencies = extra_install_name_dependencies or []
+
     def get_header_archive_name(self):
         return self.get_archive_name("headers")
 
@@ -51,56 +61,106 @@ class CcDependency(MultiResourceDependency):
         else:
             return "cc_library_static"
 
+    def set_install_name_patches(patches):
+        self.install_name_patches = patches
+
     def maybe_patch_args(self, resource):
         if "shared" not in self.get_build_file_content(resource):
             return ""
         if "osx" not in resource:
             return ""
 
-        patches = ""
-
-        artifact_name = self.artifact_name.replace("-cpp", "")
-        # print(artifact_name)
-        if artifact_name == "hal":
-            artifact_name = "wpiHal"
-
-        if artifact_name == "opencv":
+        if not self.has_install_name_patches:
             return ""
-        
-        for dep in self.get_sorted_dependencies():
-            print(dep)
-            if isinstance(dep, dict):
-                dep_name = dep['parent_folder']
-            else:
-                dep_name = dep.artifact_name
-                
-            dep_name = dep_name.replace("-cpp", "")
-    
-            if dep_name == "ni":
-                continue
-                
-            if dep_name == "opencv":
-                continue
-                
-            if dep_name == "hal":
-                dep_name = "wpiHal"
 
-            # print(type(dep_name), dep_name)
-            patches += f'    "install_name_tool -change lib{dep_name}.dylib @rpath/lib{dep_name}.dylib osx/universal/shared/lib{artifact_name}.dylib",\n'
+        def get_dependent_patches(dep):
+            if type(dep) == dict:
+                artifact_install_name = dep['parent_folder']
+                has_install_name_patches = False
+                return []
+            else:
+                artifact_install_name = dep.artifact_install_name
+                has_install_name_patches = dep.has_install_name_patches
+            output = []
+
+            if not has_install_name_patches:
+                return output
+
+            if self != dep:
+                output.append(f'    "install_name_tool -change lib{artifact_install_name}.dylib @rpath/lib{artifact_install_name}.dylib osx/universal/shared/lib{self.artifact_install_name}.dylib",\n')
+            
+            for dep in dep.get_sorted_dependencies():
+                output.extend(get_dependent_patches(dep))
+            return output
+            
+        def get_extra_dependent_patches(extra_dep):
+            patches = []
+            for dep in extra_dep.extra_install_name_dependencies:
+                patches.extend(get_extra_dependent_patches(dep))
+
+            for dep in extra_dep.extra_install_name_dependencies:
+                patches.extend(get_dependent_patches(dep))
+
+            return patches
+
+        output = "patch_cmds = [\n"
+        output += f'    "install_name_tool -id @rpath/lib{self.artifact_install_name}.dylib osx/universal/shared/lib{self.artifact_install_name}.dylib",\n'
+        # output += patches
+
+        patches = set()
+            
+        patches.update(get_dependent_patches(self))
+        patches.update(get_extra_dependent_patches(self))
+
+        patches = sorted(patches)
+        
+        output += "\n".join(patches)
+            
+        output += "\n]\n"
+        
+
+        # patches = ""
+
+        # artifact_name = self.artifact_name.replace("-cpp", "")
+        # # print(artifact_name)
+        # if artifact_name == "hal":
+        #     artifact_name = "wpiHal"
+
+        # if artifact_name == "opencv":
+        #     return ""
+        
+        # for dep in self.get_sorted_dependencies():
+        #     print(dep)
+        #     if isinstance(dep, dict):
+        #         dep_name = dep['parent_folder']
+        #     else:
+        #         dep_name = dep.artifact_name
+                
+        #     dep_name = dep_name.replace("-cpp", "")
+    
+        #     if dep_name == "ni":
+        #         continue
+                
+        #     if dep_name == "opencv":
+        #         continue
+                
+        #     if dep_name == "hal":
+        #         dep_name = "wpiHal"
+
+        #     # print(type(dep_name), dep_name)
+        #     patches += f'    "install_name_tool -change lib{dep_name}.dylib @rpath/lib{dep_name}.dylib osx/universal/shared/lib{artifact_name}.dylib",\n'
 
         # if not patches:
         #     return ""
 
-        output = "patch_cmds = [\n"
-        output += f'    "install_name_tool -id @rpath/lib{artifact_name}.dylib osx/universal/shared/lib{artifact_name}.dylib",\n'
-        output += patches
-        output += "]\n"
 
         return output
+        # return ""
 
     def get_sorted_dependencies(self):
         def sort_helper(dep):
             if type(dep) == dict:
+                print(dep)
                 repo_name = dep['repo_name']
                 parent_folder = dep['parent_folder']
             else:
@@ -123,6 +183,12 @@ class CcDependency(MultiResourceDependency):
         "windowsx86-64debug": "@rules_bazelrio//conditions:windows_debug",
         "windowsx86-64static": "@rules_bazelrio//conditions:windows",
         "windowsx86-64staticdebug": "@rules_bazelrio//conditions:windows_debug",
+        
+        "windowsarm64": "@rules_bazelrio//conditions:windows_arm",
+        "windowsarm64debug": "@rules_bazelrio//conditions:windows_arm_debug",
+        "windowsarm64static": "@rules_bazelrio//conditions:windows_arm",
+        "windowsarm64staticdebug": "@rules_bazelrio//conditions:windows_arm_debug",
+
         "linuxx86-64": "@rules_bazelrio//conditions:linux_x86_64",
         "linuxx86-64debug": "@rules_bazelrio//conditions:linux_x86_64_debug",
         "linuxx86-64static": "@rules_bazelrio//conditions:linux_x86_64",
@@ -171,7 +237,7 @@ class CcDependency(MultiResourceDependency):
                     f'        "{self.CONDITIONS_LOOKUP[full_res]}": ["@{self.get_archive_name(res)}//:{library_build}"]'
                 )
             elif full_res not in self.IGNORED_PLATFORMS:
-                print("Unknown", full_res)
+                print("Unknown resource for select: ", full_res)
             # condition = self.__resource_type_to_condition(res)
             # if condition:
             #     lines.append(f'        "{condition}": ["@{self.get_archive_name(res)}//:shared_libs"]')

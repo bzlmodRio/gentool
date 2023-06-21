@@ -4,8 +4,10 @@ from bazelrio_gentool.deps.dependency_container import DependencyContainer
 
 
 def vendordep_dependency(
-    module_name, vendor_file, year, fail_on_hash_miss, has_static_libraries
+    module_name, vendor_file, year, fail_on_hash_miss, has_static_libraries, install_name_lookup = None
 ):
+    install_name_lookup = install_name_lookup or {}
+
     PLATFORM_BLACKLIST = set(
         [
             "windowsx86",
@@ -40,6 +42,18 @@ def vendordep_dependency(
                     if has_static_libraries:
                         resources.append(platform + "static")
 
+            if cpp_dep["artifactId"] in install_name_lookup:
+                d = install_name_lookup[cpp_dep["artifactId"]]
+                has_install_name_patches = True
+                artifact_install_name = d['artifact_install_name']
+                extra_install_name_dependencies = d['deps']
+            else:
+                print(cpp_dep["artifactId"])
+                has_install_name_patches = False
+                artifact_install_name = None
+                extra_install_name_dependencies = None
+
+
             maven_dep.create_cc_dependency(
                 name=cpp_dep["artifactId"],
                 parent_folder=cpp_dep["artifactId"],
@@ -50,6 +64,9 @@ def vendordep_dependency(
                 version=cpp_dep["version"],
                 has_jni=False,
                 fail_on_hash_miss=fail_on_hash_miss,
+                has_install_name_patches=has_install_name_patches,
+                artifact_install_name=artifact_install_name,
+                extra_install_name_dependencies=extra_install_name_dependencies,
             )
 
         for java_dep in sorted(
@@ -61,5 +78,18 @@ def vendordep_dependency(
                 parent_folder="parent",
                 version=java_dep["version"],
             )
+
+
+        for cc_dep in maven_dep.cc_deps:
+            if cc_dep.extra_install_name_dependencies is None:
+                continue
+
+            resolved_extra_deps = []
+            for extra_dep in cc_dep.extra_install_name_dependencies:
+                if type(extra_dep) == str:
+                    resolved_extra_deps.append(maven_dep.get_cc_dependency(extra_dep))
+                else:
+                    resolved_extra_deps.append(extra_dep)
+            cc_dep.extra_install_name_dependencies = resolved_extra_deps
 
         return maven_dep
