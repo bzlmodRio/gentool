@@ -44,7 +44,7 @@ jobs:
         repository: 'bzlmodRio/{{name}}.git'
         fetch-depth: 0
         path: {{"rules" if "rules" in group.repo_name else "libraries"}}/{{group.repo_name}}/{{module_dep.local_rel_folder}}
-        ref: refactor_dev
+        ref: main
 {% endfor %}
 {% endif %}
 {% raw %}

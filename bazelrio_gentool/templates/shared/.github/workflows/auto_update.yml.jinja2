@@ -15,10 +15,10 @@ jobs:
     name: "Auto Update Module"
     runs-on: ubuntu-latest
     steps:
-    - name: Set up Go 1.15.x
-      uses: actions/setup-go@v2
+    - name: Set up Go 1.20.x
+      uses: actions/setup-go@v4
       with:
-        go-version: 1.15.x
+        go-version: 1.20.x
       id: go
 
     - uses: actions/checkout@v3
@@ -26,7 +26,7 @@ jobs:
     - name: Install Buildifier
       run: |
         cd $(mktemp -d)
-        GO111MODULE=on go get github.com/bazelbuild/buildtools/buildifier@6.0.0
+        GO111MODULE=on go install github.com/bazelbuild/buildtools/buildifier@latest
 
     # Checkout repository
     - uses: actions/checkout@v3
@@ -51,7 +51,7 @@ jobs:
         repository: 'bzlmodRio/{{name}}.git'
         fetch-depth: 0
         path: {{"rules" if "rules" in repo else "libraries"}}/{{group.repo_name}}/{{module_dep.local_rel_folder}}
-        ref: refactor_dev
+        ref: main
 {% endfor %}
 {% raw %}
 
@@ -95,7 +95,7 @@ jobs:
 {%- endraw %}
         path: {{"rules" if "rules" in repo else "libraries"}}/{{group.repo_name}}
 {%- raw %}
-        base: refactor_dev
+        base: main
         token: ${{ secrets.AUTO_UPDATE_KEY }}
         reviewers: pjreiniger
 {%- endraw %}
