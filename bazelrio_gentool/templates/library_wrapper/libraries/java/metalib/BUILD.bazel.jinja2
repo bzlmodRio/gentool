@@ -1,3 +1,5 @@
+load("@rules_java//java:defs.bzl", "java_import")
+
 java_import(
     name = "{{target.parent_folder}}",
     jars = ["@{{target.import_repo_name}}//jar:file"],

@@ -88,7 +88,7 @@ class CcDependency(MultiResourceDependency):
 
             if self != dep:
                 output.append(
-                    f'    "install_name_tool -change lib{artifact_install_name}.dylib @rpath/lib{artifact_install_name}.dylib osx/universal/shared/lib{self.artifact_install_name}.dylib",\n'
+                    f'            "install_name_tool -change lib{artifact_install_name}.dylib @rpath/lib{artifact_install_name}.dylib osx/universal/shared/lib{self.artifact_install_name}.dylib",'
                 )
 
             for dep in dep.get_sorted_dependencies():
@@ -105,8 +105,8 @@ class CcDependency(MultiResourceDependency):
 
             return patches
 
-        output = "patch_cmds = [\n"
-        output += f'    "install_name_tool -id @rpath/lib{self.artifact_install_name}.dylib osx/universal/shared/lib{self.artifact_install_name}.dylib",\n'
+        output = "\n        patch_cmds = [\n"
+        output += f'            "install_name_tool -id @rpath/lib{self.artifact_install_name}.dylib osx/universal/shared/lib{self.artifact_install_name}.dylib",'
         # output += patches
 
         patches = set()
@@ -115,10 +115,10 @@ class CcDependency(MultiResourceDependency):
         patches.update(get_extra_dependent_patches(self))
 
         patches = sorted(patches)
+        if patches:
+            output += "\n" + "\n".join(patches)
 
-        output += "\n".join(patches)
-
-        output += "\n]\n"
+        output += "\n        ],"
         return output
 
     def get_sorted_dependencies(self):

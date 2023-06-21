@@ -104,8 +104,7 @@ def __setup_{{group.sanitized_repo_name}}_cpp_dependencies(mctx):
         "{{cpp_dep.get_archive_name(resource)}}",
         url = "{{cpp_dep.get_url(resource)}}",
         sha256 = "{{sha256}}",
-        build_file_content = {{cpp_dep.get_build_file_content(resource)}},
-        {{cpp_dep.maybe_patch_args(resource)}}
+        build_file_content = {{cpp_dep.get_build_file_content(resource)}},{{ cpp_dep.maybe_patch_args(resource)}}
     )
     {%- endif %}
     {%- endfor %}

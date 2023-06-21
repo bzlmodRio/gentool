@@ -1,3 +1,5 @@
+load("@rules_cc//cc:defs.bzl", "cc_library")
+
 alias(
     name = "{{target.parent_folder}}",
     actual = ":shared",
@@ -8,7 +10,7 @@ cc_library(
     name = "shared",
     linkstatic = 1,
     visibility = {{ visibility }},
-    deps = {% if target.deps %}[
+    deps ={% if target.deps %} [
       {%- for dep in target.deps %}
         "@{{dep.repo_name}}//libraries/cpp/{{dep.parent_folder}}:shared",
       {%- endfor %}
