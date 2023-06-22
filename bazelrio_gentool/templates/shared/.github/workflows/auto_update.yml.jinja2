@@ -85,6 +85,9 @@ jobs:
       working-directory: {{"rules" if "rules" in repo else "libraries"}}/{{group.repo_name}}/generate
 {%- raw %}
 
+    - name: Store new version
+      run: echo "NEW_VERSION=$(bazel run //:get_version)" >> $GITHUB_ENV
+      working-directory: libraries/bzlmodrio-apriltaglib/generate
 
     # Create pull requests
     - name: Create Pull Request
@@ -98,7 +101,7 @@ jobs:
         base: main
         token: ${{ secrets.AUTO_UPDATE_KEY }}
         reviewers: pjreiniger
-{%- endraw %}
         branch: autoupdate
-        title: "Auto-update"
+        title: "Auto Update to '${{ env.NEW_VERSION }}'"
+{%- endraw %}
 

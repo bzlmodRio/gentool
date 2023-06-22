@@ -83,7 +83,7 @@ jobs:
         reviewers: pjreiniger
 {%- endraw %}
         branch: autoupdate/{{group.repo_name}}_update
-        title: "Auto-update latest {{group.repo_name}} module release"
+        title: "Auto Update {{group.repo_name}} module to ${GITHUB_REF_NAME}"
 {%- raw %}
 
     - name: Create BCR Pull Request
@@ -97,5 +97,5 @@ jobs:
         reviewers: pjreiniger
 {%- endraw %}
         branch: autoupdate/{{group.repo_name}}_update
-        title: "Auto-update latest {{group.repo_name}} module release"
+        title: "Auto Update latest {{group.repo_name}} to ${GITHUB_REF_NAME}"
 
