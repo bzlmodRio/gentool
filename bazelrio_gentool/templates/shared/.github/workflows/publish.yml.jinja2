@@ -71,6 +71,11 @@ jobs:
       working-directory: {{"rules" if "rules" in group.repo_name else "libraries"}}/{{group.repo_name}}/generate
 {%- raw %}
 
+    - name: Store version
+      run: echo "NEW_VERSION=$(bazel run //:get_version)" >> $GITHUB_ENV
+      working-directory: {%endraw%}{{"rules" if "rules" in repo else "libraries"}}/{{group.repo_name}}/generate{% raw %}
+
+
     # Create pull requests
     - name: Create Gentool Pull Request
       uses: peter-evans/create-pull-request@v4
@@ -83,7 +88,7 @@ jobs:
         reviewers: pjreiniger
 {%- endraw %}
         branch: autoupdate/{{group.repo_name}}_update
-        title: "Auto Update {{group.repo_name}} module to ${GITHUB_REF_NAME}"
+        title: "Auto Update {{group.repo_name}} module to {% raw %}'${{ env.NEW_VERSION }}'"{% endraw %}
 {%- raw %}
 
     - name: Create BCR Pull Request
@@ -97,5 +102,5 @@ jobs:
         reviewers: pjreiniger
 {%- endraw %}
         branch: autoupdate/{{group.repo_name}}_update
-        title: "Auto Update latest {{group.repo_name}} to ${GITHUB_REF_NAME}"
+        title: "Auto Update latest {{group.repo_name}} to {% raw %}'${{ env.NEW_VERSION }}'"{% endraw %}
 
