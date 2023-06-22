@@ -7,7 +7,11 @@ from bazelrio_gentool.dependency_helpers import BaseDependencyWriterHelper
 
 
 def write_shared_root_files(
-    module_directory, group, include_raspi_compiler=False, test_macos=True, include_windows_arm_compiler=False,
+    module_directory,
+    group,
+    include_raspi_compiler=False,
+    test_macos=True,
+    include_windows_arm_compiler=False,
 ):
     template_files = [
         ".github/workflows/build.yml",
