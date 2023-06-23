@@ -40,7 +40,7 @@ def create_default_mandatory_settings(generic_cli: GenericCliArgs):
     )
     default_rules_bazelrio = MandetoryDependencySetting(
         "rules_bazelrio",
-        "0.0.11",
+        "0.0.12",
         generic_cli.use_local_bazelrio,
     )
     default_rules_pmd = MandetoryDependencySetting(
