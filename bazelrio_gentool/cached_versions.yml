@@ -2,6 +2,9 @@ bzlmodrio-allwpilib:
   2023.3.2:
     commitish: 3e8f673f6c4b14187e008b18c7a8682453413b5a
     sha: 100843ca4a248c1031cf19edb8d5aa7507d71c2e18bdd4e88f0dfa31b6bff91b
+  2023.4.1:
+    commitish: 765c32c5521dc87a0b9ddefa05a2570f8fe3f512
+    sha: 0d32829f65b5b1d68c6b1ff536c2274755531fe15a363fb75ef3e65d09b811e3
 bzlmodrio-apriltaglib:
   3.2.0-3:
     commitish: 90813acd860ec50103749706f7a5abe2762292da
