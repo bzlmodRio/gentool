@@ -57,8 +57,8 @@ rules_bazelrio:
     commitish: e81e22a2ae5bf6c428a694e800f2831116e047db
     sha: c7a7fac8a976caa78233dad09c68decf892ad197ba6a1fc7a4a4dffdfef1b3d9
   0.0.12:
-    commitish: 4b3ace4a33228e8c8162927c0212c40cb6cbe029
-    sha: abe4d7dfc66474f40229da86159168d5681afa70541639f025634babbefa6ba3
+    commitish: e35b329547251e47f542a6f778976485c260b98a
+    sha: 0caf6c4da67b08abbb8cc619729928fa0516a0d5ce01adf4141d1dd378466bc6
 rules_bzlmodrio_toolchains:
   2023-7:
     commitish: a5140d701d746e3f843643e9ca8822a26ae88f6e
