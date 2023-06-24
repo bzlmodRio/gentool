@@ -53,7 +53,6 @@ def vendordep_dependency(
                 artifact_install_name = d["artifact_install_name"]
                 extra_install_name_dependencies = d["deps"]
             else:
-                print(cpp_dep["artifactId"])
                 has_install_name_patches = False
                 artifact_install_name = None
                 extra_install_name_dependencies = None

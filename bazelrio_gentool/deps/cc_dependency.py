@@ -124,7 +124,6 @@ class CcDependency(MultiResourceDependency):
     def get_sorted_dependencies(self):
         def sort_helper(dep):
             if type(dep) == dict:
-                print(dep)
                 repo_name = dep["repo_name"]
                 parent_folder = dep["parent_folder"]
             else:

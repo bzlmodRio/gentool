@@ -99,7 +99,6 @@ class DependencyContainer:
 
     def get_cc_dependency(self, name):
         for dep in self.cc_deps:
-            print(dep.name)
             if dep.name == name:
                 return dep
         else:
