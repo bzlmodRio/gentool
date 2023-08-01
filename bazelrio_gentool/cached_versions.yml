@@ -38,6 +38,9 @@ bzlmodrio-libssh:
   0.95-7:
     commitish: 8a6529751bd7dd9f0dd1f0a5904ad51a3939b59f
     sha: 9bd9cf66727ebf965adf6bb502b4d72cbbd54b1276035589559af022f9976970
+  0.95-8:
+    commitish: 60ae9bd5d912fe86f0960e7261f33ab1f58bdc5f
+    sha: ce013d4f906558335f5fbb40c4fe8a6bd808e929c7c184c736d3b41d09194d85
 bzlmodrio-navx:
   2023.0.3:
     commitish: 11f1d098ed06825d94e0f69da08318f01753245a
