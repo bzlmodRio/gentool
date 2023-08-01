@@ -21,6 +21,9 @@ bzlmodrio-apriltaglib:
   3.2.0-5:
     commitish: 00825c78dfbedc21ac679e06eeb1ce23306eb986
     sha: 16d6b5d16b76faf0da6a59ae07179bc4a7e4d9c919216dd6beebca343f6feac2
+  3.2.0-8:
+    commitish: 2a0f717c584e8e5ba835b000fbc6121806bb55ae
+    sha: 58ef7eba4bd88b3eb68b41af0c8ccfb60ae431f0cffb7bf1827d736d2391516a
 bzlmodrio-imgui:
   1.89.1-1:
     commitish: 75c0873bd677d44731963c6e5902a1d0a9380fb1
