@@ -81,11 +81,11 @@ class BazelDependencySetting(BaseDependencyWriterHelper):
 
     def download_repository(self, indent_num, maybe=True):
         if self.repo_name == "googletest":
-            return """http_archive(
+            return f"""http_archive(
     name = "googletest",
-    sha256 = "24564e3b712d3eb30ac9a85d92f7d720f60cc0173730ac166f27dda7fed76cb2",
-    strip_prefix = "googletest-release-1.12.1",
-    urls = ["https://github.com/google/googletest/archive/release-1.12.1.zip"],
+    sha256 = "{self.sha}",
+    strip_prefix = "googletest-{self.version}",
+    urls = ["https://github.com/google/googletest/archive/refs/tags/v{self.version}.tar.gz"],
 )"""
         #         if self.use_long_form:
         #             return self.temp_longform_http_archive(indent_num, maybe)
@@ -119,32 +119,32 @@ def get_bazel_dependencies():
 
     output = {}
 
-    add_dep(repo_name="platforms", version="0.0.6", sha="")
+    add_dep(repo_name="platforms", version="0.0.7", sha="")
     add_dep(
         repo_name="rules_python",
-        version="0.21.0",
-        sha="94750828b18044533e98a129003b6a68001204038dc4749f40b195b24c38f49f",
+        version="0.24.0",
+        sha="0a8003b044294d7840ac7d9d73eef05d6ceb682d7516781a4ec62eeb34702578",
         needs_stripped_prefix=True,
     )
     add_dep(
         repo_name="rules_java",
-        version="6.0.0",
-        sha="",  # "f90111a597b2aa77b7104dbdc685fd35ea0cca3b7c3f807153765e22319cbd88",
+        version="6.4.0",
+        sha="27abf8d2b26f4572ba4112ae8eb4439513615018e03a299f85a8460f6992f6a3",
         # use_long_form=True,
     )
     add_dep(
         repo_name="rules_jvm_external",
-        version="5.2",
-        sha="f86fd42a809e1871ca0aabe89db0d440451219c3ce46c58da240c7dcdc00125f",
+        version="5.3",
+        sha="d31e369b854322ca5098ea12c69d7175ded971435e55c18dd9dd5f29cc5249ac",
         needs_stripped_prefix=True,
         # use_zip=True,
         # use_long_form=True,
     )
-    add_dep(repo_name="rules_cc", version="0.0.6", sha="")
+    add_dep(repo_name="rules_cc", version="0.0.8", sha="")
     add_dep(
         repo_name="googletest",
-        version="1.12.1",
-        sha="24564e3b712d3eb30ac9a85d92f7d720f60cc0173730ac166f27dda7fed76cb2",
+        version="1.14.0",
+        sha="8ad598c73ad796e0d8280b082cebd82a630d73e73cd3c70057938a6501bba5d7",
     )
     add_dep(
         repo_name="rules_proto",
