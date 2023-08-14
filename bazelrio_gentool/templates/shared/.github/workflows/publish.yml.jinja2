@@ -87,7 +87,7 @@ jobs:
         token: ${{ secrets.AUTO_UPDATE_KEY }}
         reviewers: pjreiniger
 {%- endraw %}
-        branch: autoupdate/{{group.repo_name}}_update
+        branch: autoupdate/{{group.repo_name}}_update_{% raw %}${{ env.NEW_VERSION }}{% endraw %}
         title: "Auto Update {{group.repo_name}} module to {% raw %}'${{ env.NEW_VERSION }}'"{% endraw %}
 {%- raw %}
 
@@ -101,6 +101,6 @@ jobs:
         token: ${{ secrets.AUTO_UPDATE_KEY }}
         reviewers: pjreiniger
 {%- endraw %}
-        branch: autoupdate/{{group.repo_name}}_update
+        branch: autoupdate/{{group.repo_name}}_update_{% raw %}${{ env.NEW_VERSION }}{% endraw %}
         title: "Auto Update latest {{group.repo_name}} to {% raw %}'${{ env.NEW_VERSION }}'"{% endraw %}
 

@@ -101,7 +101,7 @@ jobs:
         base: main
         token: ${{ secrets.AUTO_UPDATE_KEY }}
         reviewers: pjreiniger
-        branch: autoupdate
+        branch: autoupdate_${{ env.NEW_VERSION }}
         title: "Auto Update to '${{ env.NEW_VERSION }}'"
 {%- endraw %}
 
