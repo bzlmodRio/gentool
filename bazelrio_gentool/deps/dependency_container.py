@@ -135,8 +135,15 @@ class DependencyContainer:
         )
 
     def create_executable_tool(
-        self, group_id, artifact_name, resources, lower_target_name=False
+        self,
+        group_id,
+        artifact_name,
+        resources,
+        lower_target_name=False,
+        fail_on_hash_miss=None,
     ):
+        if fail_on_hash_miss is None:
+            fail_on_hash_miss = self.fail_on_hash_miss
         self.executable_tools.append(
             ExecutableToolDependency(
                 group_id=group_id,
@@ -145,7 +152,7 @@ class DependencyContainer:
                 maven_url=self.maven_url,
                 version=self.version,
                 repo_name=self.repo_name,
-                fail_on_hash_miss=self.fail_on_hash_miss,
+                fail_on_hash_miss=fail_on_hash_miss,
                 lower_target_name=lower_target_name,
             )
         )

@@ -16,6 +16,7 @@ bazelrio_java_binary(
 bazelrio_java_test(
     name = "test",
     srcs = ["BasicTest.java"],
+    javacopts = ["-Werror"],
     args = [
         "--select-package",
         "bazelrio_test",
