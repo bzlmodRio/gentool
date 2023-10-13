@@ -38,6 +38,9 @@ bzlmodrio-imgui:
     commitish: 7d318cf7968e0b99a20b2da6a93758a23c0e40d7
     sha: 9d3841b267e3c33cf52d2f8734ec59e703305097c2c0bbb383c8b903fc960ea3
 bzlmodrio-libssh:
+  0.105-1:
+    commitish: 61e4fcfee98be1a7ccd528c4dd99ac53eac3678c
+    sha: 4d01f4cee8b44c58893554d22194a4309eb3ad38daed16c9a28f9f1ecf876e54
   0.95-6:
     commitish: c8d867d2ef1b869c2543cc2d9bacc3eb1e35a4be
     sha: e2d0ffdf4928bec8f4a4d73f971542196148892ea8ed5fe5e17702d72cde3ab0
