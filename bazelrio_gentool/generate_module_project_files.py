@@ -109,13 +109,11 @@ def generate_module_project_files(
     mandatory_dependencies,
     no_roborio=False,
     test_macos=True,
-    include_windows_arm_compiler=False,
 ):
     write_shared_root_files(
         module_directory,
         group,
         test_macos=test_macos,
-        include_windows_arm_compiler=include_windows_arm_compiler,
     )
     write_shared_test_files(module_directory, group)
 
