@@ -44,6 +44,7 @@ jobs:
 
 
 {%- endraw %}
+{%- if group.module_dependencies %}
 {% for name, module_dep in group.module_dependencies.items() %}
     # Checkout {{name}}
     - uses: actions/checkout@v3
@@ -53,6 +54,7 @@ jobs:
         path: {{"rules" if "rules" in repo else "libraries"}}/{{group.repo_name}}/{{module_dep.local_rel_folder}}
         ref: main
 {% endfor %}
+{% endif %}
 {% raw %}
 
     - name: Setup Cache
