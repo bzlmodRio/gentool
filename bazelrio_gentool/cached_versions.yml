@@ -105,6 +105,9 @@ rules_bzlmodrio_toolchains:
   2023-7:
     commitish: a5140d701d746e3f843643e9ca8822a26ae88f6e
     sha: 1c566358f97b093916e150de10b65d6527ad268e5bd8bc0a0a8bfd04b390751a
+  2024-1:
+    commitish: 704a98e8c8544911fc02bcd4e313f433336ff828
+    sha: cd3ff046427e9c6dbc0c86a458c8cf081b8045fc3fb4265d08c0ebfc17f9cb30
 rules_checkstyle:
   '10.1':
     commitish: 3f1928cfc2182ff0ebb225dd0f8fce2119e8c804
