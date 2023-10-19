@@ -56,7 +56,7 @@ def publish_module(
         central_registery_location,
         "json",
         group.repo_name,
-        group.version + group.patch,
+        group.sanitized_version + group.patch,
         "MODULE.bazel",
     )
 
