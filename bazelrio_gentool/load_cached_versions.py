@@ -36,4 +36,4 @@ def update_cached_version(repo_name, version, sha, commitish):
     repo_info[version] = dict(sha=sha, commitish=commitish)
 
     with open(__CACHED_FILE, "w") as file:
-        yaml.dump(data, file)
+        yaml.dump(data, file, sort_keys=False)

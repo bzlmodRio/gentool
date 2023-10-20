@@ -30,6 +30,9 @@ bzlmodrio-apriltaglib:
   3.3.0-1:
     commitish: 1013e4d39274cf7e77d195b62a6d0cbf42287646
     sha: b804e10cd1440645554de7838ec4c984fd27b22427e62ef41ef962b439bafa5d
+  2024.3.3.0-1:
+    sha: 99debf50e054d93babf2392b19e66648b2368ddf73687683dc19893adf5e16b2
+    commitish: c95efe029c3cf4df3c9c720e8ccb82b94799ed1d
 bzlmodrio-imgui:
   1.89.1-1:
     commitish: 75c0873bd677d44731963c6e5902a1d0a9380fb1
@@ -103,6 +106,9 @@ bzlmodrio-revlib:
   2023.1.3:
     commitish: 36f65d9351e8bc921317a5429b103d39bf03c897
     sha: 94f3a09162ebe120863e5b755b9597b8aae0224447eb1c1e109c227057c2e42c
+  2024.0.0:
+    sha: f0204ebb707201a080f973f7bdd816cf78cad622792bfe4c5a75c6996eefb055
+    commitish: 7d8766418b024bbc5e4317ca8ae0caaf95302919
 rules_bazelrio:
   0.0.10:
     commitish: a1c6a92e518cb060fe19de28e529ea558cc34ec7

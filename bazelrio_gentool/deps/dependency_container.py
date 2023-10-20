@@ -102,7 +102,7 @@ class DependencyContainer:
             if dep.name == name:
                 return dep
         else:
-            raise
+            raise Exception(f"Could not find dep {name}")
 
     def create_java_dependency(self, name, dependencies=[], version=None, **kwargs):
         if version is None:
