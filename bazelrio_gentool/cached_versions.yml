@@ -15,6 +15,9 @@ bzlmodrio-allwpilib:
     commitish: db102c0df418b942f931ca77d28650f05a6bcfe5
     sha: 23e77cfedef9b04874161c0f53e486061251c4182be1b623c1281036bcafb72a
 bzlmodrio-apriltaglib:
+  2024.3.3.0-1:
+    commitish: c95efe029c3cf4df3c9c720e8ccb82b94799ed1d
+    sha: 99debf50e054d93babf2392b19e66648b2368ddf73687683dc19893adf5e16b2
   3.2.0-3:
     commitish: 90813acd860ec50103749706f7a5abe2762292da
     sha: 314812473f33c00e23b8af7865ddf0e43b38a37cafb97c504c9cb533ddac776f
@@ -77,6 +80,9 @@ bzlmodrio-ni:
     commitish: 79f3826052b582ea5f34cf10e337af8e60ff4350
     sha: cc15dcf0e83a46aa27aede4f4627bdf67170c413b15568787ac73ab371c0c10a
 bzlmodrio-opencv:
+  2024.4.8.0-1:
+    commitish: 06b5678d601a868d8dc02a63c41e8695eb66c6d7
+    sha: 761b152ef922e6bb386b79b06830fdf085b905d132d967c31d3ab4f33b8a8366
   4.6.0-4:
     commitish: bcbc5d24b9ae68b083dd79f4c874428910e24924
     sha: b237805c8429382723aaa50885e3a5b088ef44dba29b5eee22cdadf94b50dc9f
@@ -86,9 +92,6 @@ bzlmodrio-opencv:
   4.8.0-1:
     commitish: 06b5678d601a868d8dc02a63c41e8695eb66c6d7
     sha: 352020dfdfbfd8e748ca158edd0dd11c0b00dc3b348dac35b4a058a7c73f448e
-  2024.4.8.0-1:
-    commitish: 06b5678d601a868d8dc02a63c41e8695eb66c6d7
-    sha: 761b152ef922e6bb386b79b06830fdf085b905d132d967c31d3ab4f33b8a8366
 bzlmodrio-phoenix:
   5.30.4:
     commitish: afe60c54cd56b6b90fca3fd54f6999c871814102
