@@ -1,3 +1,5 @@
+load("@rules_python//python:defs.bzl", "py_binary", "py_library")
+
 py_library(
     name = "get_{{library_name}}_dependencies",
     srcs = ["get_{{library_name}}_dependencies.py"],
@@ -34,3 +36,14 @@ py_binary(
         "@bzlmodrio-gentool//bazelrio_gentool",
     ],
 )
+
+py_binary(
+    name = "get_version",
+    srcs = ["get_version.py"],
+    visibility = ["//visibility:public"],
+    deps = [
+        ":get_{{library_name}}_dependencies",
+        "@bzlmodrio-gentool//bazelrio_gentool",
+    ],
+)
+

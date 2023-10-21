@@ -7,20 +7,21 @@ from bazelrio_gentool.utils import (
 )
 from bazelrio_gentool.auto_update_utils import download_url
 from bazelrio_gentool.load_vendordep_dependency import vendordep_dependency
+from bazelrio_gentool.generate_shared_files import get_bazel_dependencies
 
 
-def create_vendordep_library(vendordep, base_output_directory):
+def create_vendordep_library(vendordep, library_name, base_output_directory):
+    print(base_output_directory)
     if not os.path.exists(base_output_directory):
         os.makedirs(base_output_directory)
 
     os.chdir(base_output_directory)
 
-    library_name = "new"
     fail_on_hash_miss = False
     has_static_libraries = False
     # subprocess.check_call(["git", "init", library_name])
 
-    output_directory = os.path.join(base_output_directory, library_name)
+    output_directory = os.path.join(base_output_directory)
 
     template_files = [
         "generate/auto_update.py",
@@ -35,6 +36,7 @@ def create_vendordep_library(vendordep, base_output_directory):
         output_directory,
         os.path.join(TEMPLATE_BASE_DIR, "create_vendordep_library"),
         library_name=library_name,
+        bazel_dependencies=get_bazel_dependencies(),
     )
 
     local_vendor_dep_file = os.path.join(
@@ -68,10 +70,11 @@ def create_vendordep_library(vendordep, base_output_directory):
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("--vendordep", required=True)
+    parser.add_argument("--library_name", required=True)
     parser.add_argument("--output_directory", required=True)
     args = parser.parse_args()
 
-    create_vendordep_library(args.vendordep, args.output_directory)
+    create_vendordep_library(args.vendordep, args.library_name, args.output_directory)
 
 
 if __name__ == "__main__":
