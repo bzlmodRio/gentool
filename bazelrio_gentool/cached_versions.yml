@@ -98,6 +98,9 @@ bzlmodrio-opencv:
   2024.4.8.0-1:
     commitish: 06b5678d601a868d8dc02a63c41e8695eb66c6d7
     sha: 761b152ef922e6bb386b79b06830fdf085b905d132d967c31d3ab4f33b8a8366
+  2024.4.8.0-2:
+    sha: 52c1faf679c9460a31eff158f2a11e8833323ef95af45e26d3f316db95c58e8f
+    commitish: f25ecb67adb9e20e0d9e241dedad1bdc63475a2f
 bzlmodrio-phoenix:
   5.30.4:
     commitish: afe60c54cd56b6b90fca3fd54f6999c871814102
