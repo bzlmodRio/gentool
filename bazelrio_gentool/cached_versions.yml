@@ -200,3 +200,6 @@ bzlmodrio-phoenix6:
   24.0.0-beta-1:
     sha: 4b67c794f7e89ed3fc4ecebbd7c4c0382f5b0c2d25c688d4b61df15175c71c95
     commitish: dfef0ef44bc1fabcf1808467e464c1790d045ea6
+  24.0.0-beta-2:
+    sha: 521207d510f193bd6072cb29570a166c76c97de93715ceb90976c4ce0b4ad347
+    commitish: b084a6310ba43af62c20a8ea14b7c0e5ff3ca79f
