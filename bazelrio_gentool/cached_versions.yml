@@ -91,6 +91,9 @@ bzlmodrio-ni:
   2024.1.1:
     commitish: 79f3826052b582ea5f34cf10e337af8e60ff4350
     sha: cc15dcf0e83a46aa27aede4f4627bdf67170c413b15568787ac73ab371c0c10a
+  2024.2.0:
+    sha: f4101925d260c385f6a5c0a79451692db35f433cab8b8cc4092dd3ab93424559
+    commitish: 98c9459808ce8a506d34e0d07691cf82d02fe8f0
 bzlmodrio-opencv:
   4.6.0-4:
     commitish: bcbc5d24b9ae68b083dd79f4c874428910e24924
