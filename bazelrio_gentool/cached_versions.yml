@@ -137,7 +137,7 @@ bzlmodrio-phoenix:
     commitish: 917f029651d1ab6c250789a448e68524475a9640
   5.32.0-beta-4:
     sha: c313897949d19b7dc1f7b3af931c6efb095c52f094e177ab8110b4ddfe11f236
-    commitish: 37b0201eb62c3b3c9579d6d9447ddff143e0d127
+    commitish: 5824552f39d6cb33416049b87005ce0ef56aaf7f
 bzlmodrio-revlib:
   2023.1.3:
     commitish: 36f65d9351e8bc921317a5429b103d39bf03c897
