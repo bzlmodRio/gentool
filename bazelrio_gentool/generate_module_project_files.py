@@ -38,11 +38,12 @@ def create_default_mandatory_settings(generic_cli: GenericCliArgs):
         "2024-1",
         generic_cli.use_local_roborio,
     )
-    default_rules_bzlmodrio_jdk = MandetoryDependencySetting(
-        "rules_bzlmodrio_jdk",
-        "17.0.8+7",
-        generic_cli.use_local_roborio,
-    )
+    # default_rules_bzlmodrio_jdk = MandetoryDependencySetting(
+    #     "rules_bzlmodrio_jdk",
+    #     "17.0.8+7",
+    #     generic_cli.use_local_roborio,
+    # )
+    default_rules_bzlmodrio_jdk = None
     default_rules_bazelrio = MandetoryDependencySetting(
         "rules_bazelrio",
         "0.0.14",

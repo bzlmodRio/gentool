@@ -63,6 +63,48 @@ def write_shared_test_files(module_directory, group):
         group=group,
     )
 
+def write_shared_generator_files(
+    module_directory,
+    group,
+    dependencies
+):
+    template_files = [
+        ".bazelversion",
+        "WORKSPACE.bzlmod",
+    ]
+
+    render_templates(
+        template_files,
+        os.path.join(module_directory, "generate"),
+        os.path.join(TEMPLATE_BASE_DIR, "shared"),
+        group=group,
+    )
+    
+    template_files = [
+        "WORKSPACE",
+        "MODULE.bazel",
+    ]
+
+    # dependencies = []
+
+    # if group.repo_name in ["bzlmodrio-allwpilib", "bzlmodrio-phoenix", "bzlmodrio-phoenix6", "bzlmodrio-navx", "bzlmodrio-revlib", "bzlmodrio-photonlib", "bzlmodrio-pathplannerlib"]:
+    #     dependencies.append("bzlmodrio-opencv")
+    #     dependencies.append("bzlmodrio-ni")
+        
+    # if group.repo_name in ["bzlmodrio-phoenix"]:
+    #     dependencies = ["bzlmodrio-allwpilib", "bzlmodrio-phoenix6"] + dependencies
+        
+    # if group.repo_name in ["bzlmodrio-navx", "bzlmodrio-revlib", "bzlmodrio-phoenix6", "bzlmodrio-photonlib", "bzlmodrio-pathplannerlib"]:
+    #     dependencies = ["bzlmodrio-allwpilib"] + dependencies
+
+    render_templates(
+        template_files,
+        os.path.join(module_directory, "generate"),
+        os.path.join(TEMPLATE_BASE_DIR, "generator"),
+        group=group,
+        bazel_dependencies=get_bazel_dependencies(),
+        dependencies=dependencies
+    )
 
 class BazelDependencySetting(BaseDependencyWriterHelper):
     def __init__(

@@ -1,0 +1,20 @@
+module(
+    name = "{{group.repo_name}}-gentool",
+)
+
+{{ bazel_dependencies.rules_python.module_dep() }}
+bazel_dep(name = "bzlmodrio-gentool", version = "")
+{% for dep in dependencies %}
+bazel_dep(name = "{{dep}}-gentool", version = "")
+{% endfor %}
+local_path_override(
+    module_name = "bzlmodrio-gentool",
+    path = "../../../gentool",
+)
+
+{% for dep in dependencies %}
+local_path_override(
+    module_name = "{{dep}}-gentool",
+    path = "../../{{dep.replace("bzlmodrio", "bzlmodRio")}}/generate",
+)
+{% endfor %}
