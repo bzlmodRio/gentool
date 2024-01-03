@@ -6,7 +6,6 @@ from bazelrio_gentool.deps.dependency_container import DependencyContainer
 def vendordep_dependency(
     module_name,
     vendor_file,
-    year,
     fail_on_hash_miss,
     has_static_libraries,
     install_name_lookup=None,
@@ -30,6 +29,7 @@ def vendordep_dependency(
         if maven_url.endswith("/"):
             maven_url = maven_url[:-1]
         version = vendor_dep["version"]
+        year = vendor_dep["frcYear"]
 
         maven_dep = DependencyContainer(
             module_name, version=version, year=year, maven_url=maven_url
