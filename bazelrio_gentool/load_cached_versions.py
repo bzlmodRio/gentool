@@ -15,7 +15,10 @@ def load_cached_versions():
 def load_cached_version_info(repo_name, version, throw_on_missing=True):
     data = load_cached_versions()
 
-    repo_info = data.get(repo_name, {})
+    if repo_name not in data:
+        print(f"No thing for {repo_name}")
+        data[repo_name] = {}
+    repo_info = data[repo_name]
     if version in repo_info:
         return repo_info[version]
 

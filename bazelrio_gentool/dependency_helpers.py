@@ -15,6 +15,8 @@ class BaseDependencyWriterHelper:
         self.needs_stripped_prefix = needs_stripped_prefix
         self.old_release_style = old_release_style
 
+        self.sanitized_version = version.replace("+", "-")
+
         self.local_path = f"../../../rules/{self.repo_name}"
 
     def get_repository_url(self):
@@ -68,7 +70,7 @@ local_path_override(
         return output
 
     def module_dep(self):
-        return f'bazel_dep(name = "{self.repo_name}", version = "{self.version}")'
+        return f'bazel_dep(name = "{self.repo_name}", version = "{self.sanitized_version}")'
 
 
 class BaseLocalDependencyWriterHelper(BaseDependencyWriterHelper):

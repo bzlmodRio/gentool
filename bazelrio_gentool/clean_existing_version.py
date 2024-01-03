@@ -20,7 +20,11 @@ def clean_existing_version(
         DIR_BLACKLIST.extend(extra_dir_blacklist)
 
     file_blacklist = file_blacklist or []
-    file_blacklist += [".git"]  # for submodules, where the .git is a file
+    file_blacklist += [
+        ".git",  # for submodules, where the .git is a file
+        "MODULE.bazel.lock",
+        "tests/MODULE.bazel.lock",
+    ]
     file_blacklist = [
         os.path.join(module_directory, x).replace("\\", "/") for x in file_blacklist
     ]

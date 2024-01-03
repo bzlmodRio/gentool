@@ -22,6 +22,8 @@ def write_shared_root_files(
         ".bazelrc-buildbuddy",
         ".bazelversion",
         ".bazelrc",
+        ".bazelrc-cc",
+        ".bazelrc-java",
         ".gitignore",
         "BUILD.bazel",
         "README.md",
@@ -49,6 +51,8 @@ def write_shared_test_files(module_directory, group):
         ".bazelrc-buildbuddy",
         ".bazelversion",
         ".bazelrc",
+        ".bazelrc-cc",
+        ".bazelrc-java",
         "WORKSPACE.bzlmod",
     ]
 
@@ -140,7 +144,7 @@ def get_bazel_dependencies():
         # use_zip=True,
         # use_long_form=True,
     )
-    add_dep(repo_name="rules_cc", version="0.0.8", sha="")
+    add_dep(repo_name="rules_cc", version="0.0.9", sha="")
     add_dep(
         repo_name="googletest",
         version="1.14.0",

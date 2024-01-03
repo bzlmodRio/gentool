@@ -38,9 +38,14 @@ def create_default_mandatory_settings(generic_cli: GenericCliArgs):
         "2024-1",
         generic_cli.use_local_roborio,
     )
+    default_rules_bzlmodrio_jdk = MandetoryDependencySetting(
+        "rules_bzlmodrio_jdk",
+        "17.0.8+7",
+        generic_cli.use_local_roborio,
+    )
     default_rules_bazelrio = MandetoryDependencySetting(
         "rules_bazelrio",
-        "0.0.13",
+        "0.0.14",
         generic_cli.use_local_bazelrio,
     )
     default_rules_pmd = MandetoryDependencySetting(
@@ -72,6 +77,7 @@ def create_default_mandatory_settings(generic_cli: GenericCliArgs):
     return MandatoryDependencySettings(
         bcr_branch="megadiff",
         rules_bzlmodrio_toolchain=default_rules_bzlmodrio_toolchain,
+        rules_bzlmodrio_jdk=default_rules_bzlmodrio_jdk,
         rules_bazelrio=default_rules_bazelrio,
         rules_pmd=default_rules_pmd,
         rules_checkstyle=default_rules_checkstyle,
@@ -85,6 +91,7 @@ class MandatoryDependencySettings:
     def __init__(
         self,
         rules_bzlmodrio_toolchain,
+        rules_bzlmodrio_jdk,
         rules_bazelrio,
         rules_pmd,
         rules_checkstyle,
@@ -95,6 +102,7 @@ class MandatoryDependencySettings:
     ):
         self.bcr_branch = bcr_branch
         self.rules_bzlmodrio_toolchain = rules_bzlmodrio_toolchain
+        self.rules_bzlmodrio_jdk = rules_bzlmodrio_jdk
         self.rules_bazelrio = rules_bazelrio
         self.rules_pmd = rules_pmd
         self.rules_checkstyle = rules_checkstyle

@@ -73,7 +73,7 @@ jobs:
 
     - name: Store version
       run: echo "NEW_VERSION=$(bazel run //:get_version)" >> $GITHUB_ENV
-      working-directory: {%endraw%}{{"rules" if "rules" in repo else "libraries"}}/{{group.repo_name}}/generate{% raw %}
+      working-directory: {%endraw%}{{"rules" if "rules" in group.repo_name else "libraries"}}/{{group.repo_name}}/generate{% raw %}
 
 
     # Create pull requests
