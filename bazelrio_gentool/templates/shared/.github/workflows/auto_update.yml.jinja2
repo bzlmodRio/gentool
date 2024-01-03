@@ -32,7 +32,7 @@ jobs:
     - uses: actions/checkout@v3
       with:
 {%- endraw %}
-        path: {{"rules" if "rules" in repo else "libraries"}}/{{group.repo_name}}
+        path: {{"rules" if "rules" in group.repo_name else "libraries"}}/{{group.repo_name}}
 {% raw %}
     # Checkout gentool
     - uses: actions/checkout@v3
@@ -51,7 +51,7 @@ jobs:
       with:
         repository: 'bzlmodRio/{{name}}.git'
         fetch-depth: 0
-        path: {{"rules" if "rules" in repo else "libraries"}}/{{group.repo_name}}/{{module_dep.local_rel_folder}}
+        path: {{"rules" if "rules" in group.repo_name else "libraries"}}/{{group.repo_name}}/{{module_dep.local_rel_folder}}
         ref: main
 {% endfor %}
 {%- endif %}
@@ -71,7 +71,7 @@ jobs:
     - name: Run update
       run: bazel run //:auto_update
 {%- endraw %}
-      working-directory: {{"rules" if "rules" in repo else "libraries"}}/{{group.repo_name}}/generate
+      working-directory: {{"rules" if "rules" in group.repo_name else "libraries"}}/{{group.repo_name}}/generate
 {%- raw %}
 
     - name: Generate if changed
@@ -88,12 +88,12 @@ jobs:
           echo "No changes!"
         fi;
 {%- endraw %}
-      working-directory: {{"rules" if "rules" in repo else "libraries"}}/{{group.repo_name}}/generate
+      working-directory: {{"rules" if "rules" in group.repo_name else "libraries"}}/{{group.repo_name}}/generate
 {%- raw %}
 
     - name: Store new version
       run: echo "NEW_VERSION=$(bazel run //:get_version)" >> $GITHUB_ENV
-      working-directory: {% endraw %}{{"rules" if "rules" in repo else "libraries"}}/{{group.repo_name}}/generate{% raw %}
+      working-directory: {% endraw %}{{"rules" if "rules" in group.repo_name else "libraries"}}/{{group.repo_name}}/generate{% raw %}
 
     # Create pull requests
     - name: Create Pull Request
@@ -102,7 +102,7 @@ jobs:
         GITHUB_TOKEN: ${{ secrets.AUTO_UPDATE_KEY }}
       with:
 {%- endraw %}
-        path: {{"rules" if "rules" in repo else "libraries"}}/{{group.repo_name}}
+        path: {{"rules" if "rules" in group.repo_name else "libraries"}}/{{group.repo_name}}
 {%- raw %}
         base: main
         token: ${{ secrets.AUTO_UPDATE_KEY }}
