@@ -273,6 +273,7 @@ class CcDependency(MultiResourceDependency):
         output.append(self.__get_invalid_toolchain("raspi32", "raspi32", True))
 
         output.append(self.__get_invalid_toolchain("windowsx86-64", "windows", False))
+        # output.append(self.__get_invalid_toolchain("windowsarm64", "windows_arm64", True))
         output.append(
             self.__get_invalid_toolchain("linuxx86-64", "linux_x86_64", False)
         )
