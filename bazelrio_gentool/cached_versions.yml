@@ -157,6 +157,9 @@ bzlmodrio-revlib:
   2024.1.1:
     sha: 1a4c6b4c0877a661610c30fc2c18333eed42329eb42b1b12984bc1dc2c284523
     commitish: 1e8ec2bc655defba789962253d15e2389a11ff14
+  2024.2.0:
+    sha: 8a67b5c1016a6f0ca3ab6c59818a02a696cd4a0e798c5d3d67277f792eb2d916
+    commitish: 0da6233bb4225e6a1c4eea5809775e0e11fae5da
 rules_bazelrio:
   0.0.10:
     commitish: a1c6a92e518cb060fe19de28e529ea558cc34ec7
