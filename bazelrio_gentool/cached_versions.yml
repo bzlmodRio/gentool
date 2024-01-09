@@ -87,6 +87,9 @@ bzlmodrio-navx:
   2024.0.1-beta-4:
     sha: 8b189b2fa7e9772e6016f4d89b4933a9e53d409a29de711e4e83bbbd61e42831
     commitish: b10489c3a0b64f906c66c6c0716d2e153018cf5c
+  2024.1.0:
+    sha: 0660a0f3b3fde090a2ec73b4e28c7e604daf8adced063a84e33f4bdbb7668a5c
+    commitish: 709118d23c1de0f0761f0a349a554d77e497fd3d
 bzlmodrio-ni:
   2023.3.0:
     commitish: 86f8befc702a4366c37129b0797a5c13d9f7ea3b
