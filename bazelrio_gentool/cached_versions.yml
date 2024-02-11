@@ -326,3 +326,6 @@ bzlmodrio-phoenix6:
   24.1.0:
     sha: 13793b4d5dff4a15e63e65a7be417ea3212fff609373deb994533c0ed2341082
     commitish: aee3eda1dcafcb0334f3d39708e4e91364a60fef
+  24.2.0:
+    sha: 6bd6fb6055fbedc39830ff256d54c8ef41ee4bd97e64c1835bf9ee7595903170
+    commitish: e96046da4a5f51eec83d413b5db09b291b36eeac
