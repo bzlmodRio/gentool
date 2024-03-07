@@ -72,12 +72,13 @@ class JavaDependency:
 
 
 class JavaMetaDependency:
-    def __init__(self, repo_name, name, group_id, deps):
+    def __init__(self, repo_name, name, group_id, deps, maven_deps):
         self.repo_name = repo_name
         self.name = name
         self.deps = deps
         self.parent_folder = name
         self.group_id = group_id
+        self.maven_deps = maven_deps
 
         self.group_id_underscore = self.group_id.replace(".", "_").lower()
         self.import_repo_name = (

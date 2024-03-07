@@ -40,6 +40,12 @@ def main():
     )
     generate_meta_deps(output_dir, group, force_tests=args.force_tests)
 
+    manual_cleanup(REPO_DIR)
+
+
+def manual_cleanup(repo_dir):
+    # Manual cleanup
+    pass
 
 if __name__ == "__main__":
     main()

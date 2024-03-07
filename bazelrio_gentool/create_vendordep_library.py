@@ -27,14 +27,30 @@ def create_vendordep_library(vendordep, library_name, base_output_directory):
         "generate/auto_update.py",
         "generate/BUILD.bazel",
         "generate/generate.py",
+        "generate/get_version.py",
         "generate/publish.py",
+        "generate/MODULE.bazel",
         "generate/WORKSPACE",
+        "generate/WORKSPACE.bzlmod",
     ]
 
     render_templates(
         template_files,
         output_directory,
         os.path.join(TEMPLATE_BASE_DIR, "create_vendordep_library"),
+        library_name=library_name,
+        bazel_dependencies=get_bazel_dependencies(),
+    )
+    
+
+    template_files = [
+        ".bazelversion",
+    ]
+
+    render_templates(
+        template_files,
+        os.path.join(output_directory, "generate"),
+        os.path.join(TEMPLATE_BASE_DIR, "shared"),
         library_name=library_name,
         bazel_dependencies=get_bazel_dependencies(),
     )

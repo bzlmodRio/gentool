@@ -11,9 +11,9 @@ def get_{{library_name}}_dependencies(
     use_local_allwpilib=False,
     use_local_opencv=False,
     use_local_ni=True,
-    allwpilib_version_override="2023.3.2",
-    opencv_version_override="4.6.0-4",
-    ni_version_override="2023.3.0",
+    allwpilib_version_override="2024.1.1",
+    opencv_version_override="2024.4.8.0-1",
+    ni_version_override="2024.2.1",
 ):
     SCRIPT_DIR = os.path.dirname(os.path.realpath(__file__))
 
@@ -33,7 +33,6 @@ def get_{{library_name}}_dependencies(
     group = vendordep_dependency(
         "bzlmodrio-{{library_name}}",
         os.path.join(SCRIPT_DIR, f"vendor_dep.json"),
-        year=2023,
         fail_on_hash_miss={{fail_on_hash_miss}},
         has_static_libraries={{has_static_libraries}},
     )

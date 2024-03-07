@@ -163,6 +163,11 @@ class DependencyContainer:
                 # print("Has maven deps....", java_dep)
                 return True
 
+        for java_dep in self.java_meta_deps:
+            if java_dep.maven_deps:
+                # print("Has maven deps....", java_dep)
+                return True
+
         return False
 
     def has_any_maven_deps(self):
@@ -180,6 +185,11 @@ class DependencyContainer:
         all_maven_deps = set()
 
         for java_dep in self.java_deps:
+            # all_maven_deps.add((f"{java_dep.group_id}", f"{java_dep.name}:{java_dep.version}"))
+            all_maven_deps.update(java_dep.maven_deps)
+            
+
+        for java_dep in self.java_meta_deps:
             # all_maven_deps.add((f"{java_dep.group_id}", f"{java_dep.name}:{java_dep.version}"))
             all_maven_deps.update(java_dep.maven_deps)
 
@@ -244,11 +254,12 @@ class DependencyContainer:
         self.cc_meta_deps.append(dep)
         self.dep_lookup[name] = dep
 
-    def add_java_meta_dependency(self, name, deps, group_id):
+    def add_java_meta_dependency(self, name, deps, group_id, maven_deps = None):
+        maven_deps = maven_deps or []
         dependencies = [self.dep_lookup[d] for d in deps]
 
         dep = JavaMetaDependency(
-            self.repo_name, name, deps=dependencies, group_id=group_id
+            self.repo_name, name, deps=dependencies, group_id=group_id, maven_deps=maven_deps,
         )
         self.java_meta_deps.append(dep)
         self.dep_lookup[name] = dep
