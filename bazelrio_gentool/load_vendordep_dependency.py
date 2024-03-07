@@ -9,8 +9,10 @@ def vendordep_dependency(
     fail_on_hash_miss,
     has_static_libraries,
     install_name_lookup=None,
+    maven_dependency_ignore_list=None
 ):
     install_name_lookup = install_name_lookup or {}
+    maven_dependency_ignore_list = maven_dependency_ignore_list or []
 
     PLATFORM_BLACKLIST = set(
         [
@@ -40,6 +42,9 @@ def vendordep_dependency(
         for cpp_dep in sorted(
             vendor_dep["cppDependencies"], key=lambda x: x["artifactId"]
         ):
+            if cpp_dep["artifactId"] in maven_dependency_ignore_list:
+                continue
+
             resources = []
             for platform in cpp_dep["binaryPlatforms"]:
                 if platform not in PLATFORM_BLACKLIST:
@@ -75,6 +80,8 @@ def vendordep_dependency(
         for java_dep in sorted(
             vendor_dep["javaDependencies"], key=lambda x: x["artifactId"]
         ):
+            if java_dep["artifactId"] in maven_dependency_ignore_list:
+                continue
             maven_dep.create_java_dependency(
                 name=java_dep["artifactId"],
                 group_id=java_dep["groupId"],
