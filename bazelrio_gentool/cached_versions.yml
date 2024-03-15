@@ -32,6 +32,9 @@ bzlmodrio-allwpilib:
   2024.3.1:
     sha: 124d12e8c9ecb0f1eba8b0434d3b363e88966e6851e63313ec0b177a2acc2fa7
     commitish: fb52a78d517f824d7350854e788aedb40b297ea7
+  2024.3.2:
+    sha: f0d477e7236df5d46980566943a64045f6ed69b498fd7a959c58425a6afcf6db
+    commitish: 051d79ab84b3ccf35869335f7f781cdc018d6bfa
 bzlmodrio-apriltaglib:
   3.2.0-3:
     commitish: 90813acd860ec50103749706f7a5abe2762292da
