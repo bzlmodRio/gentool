@@ -57,7 +57,46 @@ class CcDependency(MultiResourceDependency):
         elif resource == "sources":
             return "cc_library_sources"
         elif "static" not in resource:
-            return "cc_library_shared"
+            if resource in ["linuxx86-64", "linuxathena", "linuxarm32", "linuxarm64"]:
+                output = f''' """
+cc_library(
+    name = "shared",
+    srcs = ["linux/x86-64/shared/lib{self.name.replace('-cpp', '')}.so"],
+    # linkstatic = 1,
+    visibility = ["//visibility:public"],
+    deps = [
+        "@bazelrio_edu_wpi_first_{self.name.replace('-cpp', '')}_{self.name.replace('-cpp', '')}-cpp_headers//:headers",
+'''
+                for dep in self.get_sorted_dependencies():
+                    print(dep)
+                    if isinstance(dep, dict):
+                        output += f'''        "@{dep['repo_name']}//libraries/cpp/{dep['parent_folder']}:shared",\n'''
+                    else:
+                        output += f'''        "@{dep.repo_name}//libraries/cpp/{dep.parent_folder}:shared",\n'''
+      
+
+                output += f'''
+    ],
+)
+cc_library(
+    name = "jni",
+    srcs = ["linux/x86-64/shared/lib{self.name.replace('-cpp', '')}jni.so"],
+    # linkstatic = 1,
+    visibility = ["//visibility:public"],
+    deps = [
+        ":shared",
+    ],
+)
+""" '''
+                return output
+            elif resource == "osxuniversal":
+                return '""'
+            elif resource in ["windowsx86-64", "windowsarm64"]:
+                return '""'
+            else:
+                print(resource)
+                raise
+
         else:
             return "cc_library_static"
 
@@ -195,7 +234,7 @@ class CcDependency(MultiResourceDependency):
             full_res = res
             if full_res in self.CONDITIONS_LOOKUP:
                 lines.append(
-                    f'        "{self.CONDITIONS_LOOKUP[full_res]}": ["@{self.get_archive_name(res)}//:{library_build}"]'
+                    f'        "{self.CONDITIONS_LOOKUP[full_res]}": "@{self.get_archive_name(res)}//:{library_build}"'
                 )
             elif full_res not in self.IGNORED_PLATFORMS:
                 print("Unknown resource for select: ", full_res)
@@ -223,7 +262,7 @@ class CcDependency(MultiResourceDependency):
             else:
                 shared_resources.append(res)
 
-        return self.__get_select(shared_resources, "shared_libs")
+        return self.__get_select(shared_resources, "shared")
 
     def get_static_library_select(self):
         shared_resources = []
@@ -247,7 +286,7 @@ class CcDependency(MultiResourceDependency):
             else:
                 shared_resources.append(res)
 
-        return self.__get_select(shared_resources, "shared_jni_libs")
+        return self.__get_select(shared_resources, "jni")
 
     def has_incompatible_targets(self):
         return len(self.get_incompatible_targets()) != 0
