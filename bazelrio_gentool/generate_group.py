@@ -83,6 +83,28 @@ def __generate_private_raw_libraries(base_output_directory, group):
             visibility='["//visibility:public"]',
         )
 
+        if cc_dep.get_shared_library_select() != ",":
+            template_file = os.path.join(template_base, "private", "shared.BUILD.bazel.jinja2")
+            output_file = os.path.join(private_dir, "shared.BUILD.bazel")
+            render_template(
+                template_file,
+                output_file,
+                group=group,
+                target=cc_dep,
+                visibility='["//visibility:public"]',
+            )
+
+        if cc_dep.get_static_library_select() != ",":
+            template_file = os.path.join(template_base, "private", "static.BUILD.bazel.jinja2")
+            output_file = os.path.join(private_dir, "static.BUILD.bazel")
+            render_template(
+                template_file,
+                output_file,
+                group=group,
+                target=cc_dep,
+                visibility='["//visibility:public"]',
+            )
+
 
 def generate_meta_deps(base_output_directory, group, force_tests):
     if "dependencies" in base_output_directory:

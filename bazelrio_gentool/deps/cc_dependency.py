@@ -56,16 +56,21 @@ class CcDependency(MultiResourceDependency):
             return "cc_library_headers"
         elif resource == "sources":
             return "cc_library_sources"
-        elif "static" not in resource:
-            return "cc_library_shared"
         else:
-            return "cc_library_static"
+            raise Exception(f"Unknown resources type '{resource}'")
+
+    def get_build_file_path(self, resource):
+        base = f'@{self.repo_name}//private/cpp/{self.parent_folder}:'
+        if "static" in resource:
+            return base + "static.BUILD.bazel"
+        else:
+            return base + "shared.BUILD.bazel"
 
     def set_install_name_patches(patches):
         self.install_name_patches = patches
 
     def maybe_patch_args(self, resource):
-        if "shared" not in self.get_build_file_content(resource):
+        if "static" in resource:
             return ""
         if "osx" not in resource:
             return ""
