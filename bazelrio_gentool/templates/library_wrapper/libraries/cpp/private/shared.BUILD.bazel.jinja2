@@ -1,3 +1,4 @@
+load("@rules_cc//cc:defs.bzl", "cc_library")
 
 JNI_PATTERN=[
     "**/*jni.dll",
@@ -23,20 +24,28 @@ shared_srcs = glob([
 )
 shared_jni_srcs = glob(JNI_PATTERN, exclude=["**/*.so.debug"])
 
+{%- if target.get_shared_library_interface_select() != "," %}
 filegroup(
-    name = "static_libs",
+    name = "shared_interface",
     srcs = static_srcs,
-    visibility = ["//visibility:public"],
+    visibility = ["@{{group.repo_name}}//:__subpackages__"],
 )
+{%- endif %}
+
+{% if target.get_shared_library_select() != "," -%}
 
 filegroup(
-    name = "shared_libs",
+    name = "shared",
     srcs = shared_srcs,
-    visibility = ["//visibility:public"],
+    visibility = ["@{{group.repo_name}}//:__subpackages__"],
 )
+{%+ endif %}
+{%- if target.has_jni %}
 
 filegroup(
-    name = "shared_jni_libs",
+    name = "jni",
     srcs = shared_jni_srcs,
-    visibility = ["//visibility:public"],
+    visibility = ["@{{group.repo_name}}//:__subpackages__"],
 )
+{%- endif %}
+

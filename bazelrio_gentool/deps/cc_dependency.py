@@ -228,7 +228,7 @@ class CcDependency(MultiResourceDependency):
             else:
                 shared_resources.append(res)
 
-        return self.__get_select(shared_resources, "shared_libs")
+        return self.__get_select(shared_resources, "shared")
 
     def get_static_library_select(self):
         shared_resources = []
@@ -252,7 +252,7 @@ class CcDependency(MultiResourceDependency):
             else:
                 shared_resources.append(res)
 
-        return self.__get_select(shared_resources, "shared_jni_libs")
+        return self.__get_select(shared_resources, "jni")
 
     def has_incompatible_targets(self):
         return len(self.get_incompatible_targets()) != 0
