@@ -37,7 +37,10 @@ cc_library(
     {%- endif %}
     visibility = ["@{{group.repo_name}}//:__subpackages__"],
 {%- if target.headers or target.get_shared_library_interface_select() != "," %}
-    deps = {% if target.get_shared_library_interface_select() != "," %}select({
+    deps = [
+      {%- for dep in target.get_sorted_dependencies() %}
+        "@{{dep.repo_name}}//libraries/cpp/{{dep.parent_folder}}:shared",
+      {%- endfor %}] + {% if target.get_shared_library_interface_select() != "," %}select({
         "@rules_bazelrio//conditions:windows": [":shared_interface"],
         "//conditions:default": [],
     }){% if target.headers %} + {% else %},{% endif %}{% endif %}{% endif %}{% if target.headers %}["@{{target.get_header_archive_name()}}//:headers"],
@@ -80,7 +83,9 @@ cc_library(
     }),
     {%- endif %}
     visibility = ["@{{group.repo_name}}//:__subpackages__"],
-    {% if target.headers %}deps = ["@{{target.get_header_archive_name()}}//:headers"],{% endif %}
+    deps = [{% if target.headers %}"@{{target.get_header_archive_name()}}//:headers",{% endif %}":shared"]
 )
 {%- endif %}
 
+
+        

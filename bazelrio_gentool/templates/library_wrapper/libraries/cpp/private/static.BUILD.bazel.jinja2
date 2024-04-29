@@ -1,0 +1,11 @@
+
+cc_library(
+    name = "static_libs",
+    srcs = glob(["**/*.lib", "**/*.a"]),
+    visibility = {{ visibility }},
+    deps = [
+      {%- for dep in target.get_sorted_dependencies() %}
+        "@{{dep.repo_name}}//libraries/cpp/{{dep.parent_folder}}:static",
+      {%- endfor %}
+    ],
+)

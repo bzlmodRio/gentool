@@ -56,16 +56,21 @@ class CcDependency(MultiResourceDependency):
             return "cc_library_headers"
         elif resource == "sources":
             return "cc_library_sources"
-        elif "static" not in resource:
-            return "cc_library_shared"
         else:
-            return "cc_library_static"
+            raise Exception(f"Unknown resources type '{resource}'")
+
+    def get_build_file_path(self, resource):
+        base = f"@{self.repo_name}//private/cpp/{self.parent_folder}:"
+        if "static" in resource:
+            return base + "static.BUILD.bazel"
+        else:
+            return base + "shared.BUILD.bazel"
 
     def set_install_name_patches(patches):
         self.install_name_patches = patches
 
     def maybe_patch_args(self, resource):
-        if "shared" not in self.get_build_file_content(resource):
+        if "static" in resource:
             return ""
         if "osx" not in resource:
             return ""
@@ -213,7 +218,7 @@ class CcDependency(MultiResourceDependency):
             elif "windows" in res:
                 shared_resources.append(res)
 
-        return self.__get_select(shared_resources, "static_libs")
+        return self.__get_select(shared_resources, "shared_interface")
 
     def get_shared_library_select(self):
         shared_resources = []
@@ -223,7 +228,7 @@ class CcDependency(MultiResourceDependency):
             else:
                 shared_resources.append(res)
 
-        return self.__get_select(shared_resources, "shared_libs")
+        return self.__get_select(shared_resources, "shared")
 
     def get_static_library_select(self):
         shared_resources = []
@@ -247,7 +252,7 @@ class CcDependency(MultiResourceDependency):
             else:
                 shared_resources.append(res)
 
-        return self.__get_select(shared_resources, "shared_jni_libs")
+        return self.__get_select(shared_resources, "jni")
 
     def has_incompatible_targets(self):
         return len(self.get_incompatible_targets()) != 0

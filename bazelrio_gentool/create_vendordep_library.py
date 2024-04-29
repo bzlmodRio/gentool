@@ -41,7 +41,6 @@ def create_vendordep_library(vendordep, library_name, base_output_directory):
         library_name=library_name,
         bazel_dependencies=get_bazel_dependencies(),
     )
-    
 
     template_files = [
         ".bazelversion",

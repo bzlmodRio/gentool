@@ -105,7 +105,9 @@ def update_cached_versions(group, json_file, commitish):
     data = url_result.read()
     sha256 = hashlib.sha256(data).hexdigest()
 
-    update_cached_version(group.repo_name, group.sanitized_version + group.patch, sha256, commitish)
+    update_cached_version(
+        group.repo_name, group.sanitized_version + group.patch, sha256, commitish
+    )
 
 
 def create_module(central_registery_location, json_file):
