@@ -60,7 +60,7 @@ class CcDependency(MultiResourceDependency):
             raise Exception(f"Unknown resources type '{resource}'")
 
     def get_build_file_path(self, resource):
-        base = f'@{self.repo_name}//private/cpp/{self.parent_folder}:'
+        base = f"@{self.repo_name}//private/cpp/{self.parent_folder}:"
         if "static" in resource:
             return base + "static.BUILD.bazel"
         else:

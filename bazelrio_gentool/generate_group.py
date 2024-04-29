@@ -84,7 +84,9 @@ def __generate_private_raw_libraries(base_output_directory, group):
         )
 
         if cc_dep.get_shared_library_select() != ",":
-            template_file = os.path.join(template_base, "private", "shared.BUILD.bazel.jinja2")
+            template_file = os.path.join(
+                template_base, "private", "shared.BUILD.bazel.jinja2"
+            )
             output_file = os.path.join(private_dir, "shared.BUILD.bazel")
             render_template(
                 template_file,
@@ -95,7 +97,9 @@ def __generate_private_raw_libraries(base_output_directory, group):
             )
 
         if cc_dep.get_static_library_select() != ",":
-            template_file = os.path.join(template_base, "private", "static.BUILD.bazel.jinja2")
+            template_file = os.path.join(
+                template_base, "private", "static.BUILD.bazel.jinja2"
+            )
             output_file = os.path.join(private_dir, "static.BUILD.bazel")
             render_template(
                 template_file,
@@ -164,9 +168,11 @@ def generate_group(base_output_directory, group, force_tests):
         lib_dir = os.path.join(
             base_output_directory,
             "tools",
-            exe_tool.artifact_name.lower()
-            if exe_tool.lower_target_name
-            else exe_tool.artifact_name,
+            (
+                exe_tool.artifact_name.lower()
+                if exe_tool.lower_target_name
+                else exe_tool.artifact_name
+            ),
         )
         # test_dir = os.path.join(base_output_directory, "..", "tests", "tools", exe_tool.artifact_name)
 

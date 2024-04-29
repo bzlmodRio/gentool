@@ -9,7 +9,7 @@ def vendordep_dependency(
     fail_on_hash_miss,
     has_static_libraries,
     install_name_lookup=None,
-    maven_dependency_ignore_list=None
+    maven_dependency_ignore_list=None,
 ):
     install_name_lookup = install_name_lookup or {}
     maven_dependency_ignore_list = maven_dependency_ignore_list or []

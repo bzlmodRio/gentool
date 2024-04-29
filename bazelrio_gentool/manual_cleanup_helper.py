@@ -1,4 +1,3 @@
-
 def manual_cleanup_helper(filename, callback):
     with open(filename, "r") as f:
         contents = f.read()
