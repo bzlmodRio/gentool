@@ -218,7 +218,7 @@ class CcDependency(MultiResourceDependency):
             elif "windows" in res:
                 shared_resources.append(res)
 
-        return self.__get_select(shared_resources, "static_libs")
+        return self.__get_select(shared_resources, "shared_interface")
 
     def get_shared_library_select(self):
         shared_resources = []
