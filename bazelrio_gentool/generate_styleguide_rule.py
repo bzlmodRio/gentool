@@ -36,6 +36,7 @@ def generate_styleguide_rule(
     template_files = [
         ".github/workflows/build.yml",
         ".github/workflows/lint.yml",
+        ".bazelrc-java",
         "MODULE.bazel",
         "WORKSPACE",
         "dependencies/BUILD.bazel",

@@ -396,3 +396,7 @@ bzlmodrio-choreolib:
   2024.2.2:
     sha: 88479c77917161d49c8db4346ae40c025c1551a6f9d004e5a52c6e7b6b883959
     commitish: 1e1709bcd24f36de6570a05139a5f61fba36ad3d
+rules_bzlmodrio_jdk:
+  17.0.8-7:
+    sha: 36cd468c867817ec460d76c28ec0ccd2d9fac4a2cf966af3935243a8a4a08108
+    commitish: fdd56846b12ea3cfa9abd9bcce9b22cae634eb09

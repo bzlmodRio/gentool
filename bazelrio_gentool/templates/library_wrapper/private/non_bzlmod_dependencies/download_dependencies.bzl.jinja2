@@ -1,6 +1,9 @@
 load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive")
 
 def download_dependencies():
+    # Rules Java
+{{ bazel_dependencies.rules_java.download_repository(indent_num=4, maybe=False) }}
+
     # JVM External
 {{ bazel_dependencies.rules_jvm_external.download_repository(4, maybe=False)}}
 

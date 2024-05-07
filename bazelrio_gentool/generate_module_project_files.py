@@ -74,6 +74,11 @@ def create_default_mandatory_settings(generic_cli: GenericCliArgs):
         "1.0.0",
         generic_cli.use_local_rules_wpi_styleguide,
     )
+    default_rules_bzlmodrio_jdk = MandetoryDependencySetting(
+        "rules_bzlmodrio_jdk",
+        "17.0.8-7",
+        generic_cli.use_local_rules_bzlmodrio_jdk,
+    )
 
     return MandatoryDependencySettings(
         bcr_branch="megadiff",
@@ -85,6 +90,7 @@ def create_default_mandatory_settings(generic_cli: GenericCliArgs):
         rules_spotless=default_rules_spotless,
         rules_wpiformat=default_rules_wpiformat,
         rules_wpi_styleguide=default_rules_wpi_styleguide,
+        default_rules_bzlmodrio_jdk=default_rules_bzlmodrio_jdk,
     )
 
 
@@ -99,6 +105,7 @@ class MandatoryDependencySettings:
         rules_spotless,
         rules_wpiformat,
         rules_wpi_styleguide,
+        default_rules_bzlmodrio_jdk,
         bcr_branch="main",
     ):
         self.bcr_branch = bcr_branch
@@ -108,6 +115,7 @@ class MandatoryDependencySettings:
         self.rules_pmd = rules_pmd
         self.rules_checkstyle = rules_checkstyle
         self.rules_spotless = rules_spotless
+        self.default_rules_bzlmodrio_jdk = default_rules_bzlmodrio_jdk
         self.rules_wpiformat = rules_wpiformat
         self.rules_wpi_styleguide = rules_wpi_styleguide
 
@@ -132,11 +140,13 @@ def generate_module_project_files(
         "maven_cpp_deps.bzl",
         "MODULE.bazel",
         "WORKSPACE",
+        ".bazelrc-java",
         "private/non_bzlmod_dependencies/BUILD.bazel",
         "private/non_bzlmod_dependencies/download_dependencies.bzl",
         "private/non_bzlmod_dependencies/setup_dependencies.bzl",
         "tests/MODULE.bazel",
         "tests/WORKSPACE",
+        "tests/.bazelrc-java",
     ]
 
     if group.executable_tools or group.java_native_tools:

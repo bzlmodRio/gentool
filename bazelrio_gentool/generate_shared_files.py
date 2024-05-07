@@ -23,7 +23,6 @@ def write_shared_root_files(
         ".bazelversion",
         ".bazelrc",
         ".bazelrc-cc",
-        ".bazelrc-java",
         ".gitignore",
         "BUILD.bazel",
         "README.md",
@@ -52,7 +51,6 @@ def write_shared_test_files(module_directory, group):
         ".bazelversion",
         ".bazelrc",
         ".bazelrc-cc",
-        ".bazelrc-java",
         "WORKSPACE.bzlmod",
     ]
 
@@ -163,7 +161,7 @@ def get_bazel_dependencies():
 
     output = {}
 
-    add_dep(repo_name="platforms", version="0.0.7", sha="")
+    add_dep(repo_name="platforms", version="0.0.9", sha="")
     add_dep(
         repo_name="rules_python",
         version="0.30.0",
@@ -172,14 +170,14 @@ def get_bazel_dependencies():
     )
     add_dep(
         repo_name="rules_java",
-        version="6.4.0",
-        sha="27abf8d2b26f4572ba4112ae8eb4439513615018e03a299f85a8460f6992f6a3",
+        version="7.5.0",
+        sha="4da3761f6855ad916568e2bfe86213ba6d2637f56b8360538a7fb6125abf6518",
         # use_long_form=True,
     )
     add_dep(
         repo_name="rules_jvm_external",
-        version="5.3",
-        sha="d31e369b854322ca5098ea12c69d7175ded971435e55c18dd9dd5f29cc5249ac",
+        version="6.1",
+        sha="08ea921df02ffe9924123b0686dc04fd0ff875710bfadb7ad42badb931b0fd50",
         needs_stripped_prefix=True,
         # use_zip=True,
         # use_long_form=True,

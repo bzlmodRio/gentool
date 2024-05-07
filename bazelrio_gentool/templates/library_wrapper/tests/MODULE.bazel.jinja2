@@ -29,6 +29,9 @@ bazel_dep(name = "{{name}}", version = "{{module_dep.container.version}}{{module
 {{mandatory_dependencies.rules_wpiformat.module_dep()}}
 {{mandatory_dependencies.rules_wpi_styleguide.module_dep()}}
 {{mandatory_dependencies.rules_spotless.module_dep()}}
+{% if group.java_deps %}
+{{mandatory_dependencies.rules_bzlmodrio_jdk.module_dep()}}
+{% endif %}
 
 maven = use_extension("@rules_jvm_external//:extensions.bzl", "maven")
 maven.install(

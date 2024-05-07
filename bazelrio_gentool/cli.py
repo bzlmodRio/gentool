@@ -6,6 +6,7 @@ def add_generic_cli(parser):
     parser.add_argument("--use_local_rules_wpiformat", action="store_true")
     parser.add_argument("--use_local_rules_spotless", action="store_true")
     parser.add_argument("--use_local_rules_wpi_styleguide", action="store_true")
+    parser.add_argument("--use_local_rules_bzlmodrio_jdk", action="store_true")
     parser.add_argument("--force_tests", action="store_true")
 
 
@@ -19,6 +20,7 @@ class GenericCliArgs:
         self.use_local_rules_wpiformat = args.use_local_rules_wpiformat
         self.use_local_rules_spotless = args.use_local_rules_spotless
         self.use_local_rules_wpi_styleguide = args.use_local_rules_wpi_styleguide
+        self.use_local_rules_bzlmodrio_jdk = args.use_local_rules_bzlmodrio_jdk
 
         # self.use_local_rules_pmd = True
         # self.use_local_rules_checkstyle = True
