@@ -400,3 +400,6 @@ rules_bzlmodrio_jdk:
   17.0.8-7:
     sha: 36cd468c867817ec460d76c28ec0ccd2d9fac4a2cf966af3935243a8a4a08108
     commitish: fdd56846b12ea3cfa9abd9bcce9b22cae634eb09
+  17.0.8.1-1:
+    sha: a00d5fa971fbcad8a17b1968cdc5350688397035e90b0cb94e040d375ecd97b4
+    commitish: 451430e0c8794f61091c5a4c423b7b0a2c5d77dc
