@@ -41,6 +41,7 @@ def publish_module(
         use_local_rules_wpiformat: bool = False
         use_local_rules_spotless: bool = False
         use_local_rules_wpi_styleguide: bool = False
+        use_local_rules_bzlmodrio_jdk: bool = False
 
     mandatory_dependencies = create_default_mandatory_settings(
         GenericCliArgs(DummyArgs())
