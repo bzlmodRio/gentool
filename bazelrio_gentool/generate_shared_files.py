@@ -17,6 +17,7 @@ def write_shared_root_files(
         ".github/workflows/build.yml",
         ".github/workflows/lint.yml",
         ".github/workflows/publish.yml",
+        ".gitattributes",
         # "generate/WORKSPACE",
         ".bazelignore",
         ".bazelrc-buildbuddy",
@@ -170,8 +171,8 @@ def get_bazel_dependencies():
     )
     add_dep(
         repo_name="rules_java",
-        version="7.5.0",
-        sha="4da3761f6855ad916568e2bfe86213ba6d2637f56b8360538a7fb6125abf6518",
+        version="7.6.1",
+        sha="f8ae9ed3887df02f40de9f4f7ac3873e6dd7a471f9cddf63952538b94b59aeb3",
         # use_long_form=True,
     )
     add_dep(
@@ -197,8 +198,8 @@ def get_bazel_dependencies():
     )
     add_dep(
         repo_name="bazel_skylib",
-        version="1.4.2",
-        sha="66ffd9315665bfaafc96b52278f57c7e2dd09f5ede279ea6d39b2be471e7e3aa",
+        version="1.6.1",
+        sha="9f38886a40548c6e96c106b752f242130ee11aaa068a56ba7e56f4511f33e4f2",
     )
 
     return output
