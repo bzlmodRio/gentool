@@ -78,6 +78,9 @@ jobs:
     - name: Build
       run: bazel ${{ matrix.bazel_options }} ${{ matrix.command }} //... -k ${{ matrix.config }} --verbose_failures --config=remote
       working-directory: tests
+{%- endraw %}
+{%- if include_bullseye_compiler %}
+{%- raw %}
 
   build_bullseye32:
     strategy:
@@ -145,6 +148,7 @@ jobs:
       working-directory: tests
 
 {%- endraw %}
+{%- endif %}
 {% if include_raspi_compiler %}
 {%- raw %}
 
