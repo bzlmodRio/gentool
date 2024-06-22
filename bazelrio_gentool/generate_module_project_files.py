@@ -51,17 +51,17 @@ def create_default_mandatory_settings(generic_cli: GenericCliArgs):
     )
     default_rules_pmd = MandetoryDependencySetting(
         "rules_pmd",
-        "6.43.0",
+        "7.2.0",
         generic_cli.use_local_rules_pmd,
     )
     default_rules_checkstyle = MandetoryDependencySetting(
         "rules_checkstyle",
-        "10.1",
+        "10.12.2",
         generic_cli.use_local_rules_checkstyle,
     )
     default_rules_spotless = MandetoryDependencySetting(
         "rules_spotless",
-        "2.34.0",
+        "2.40.0",
         generic_cli.use_local_rules_spotless,
     )
     default_rules_wpiformat = MandetoryDependencySetting(
@@ -71,7 +71,7 @@ def create_default_mandatory_settings(generic_cli: GenericCliArgs):
     )
     default_rules_wpi_styleguide = MandetoryDependencySetting(
         "rules_wpi_styleguide",
-        "1.0.0",
+        "2024.06.22",
         generic_cli.use_local_rules_wpi_styleguide,
     )
     default_rules_bzlmodrio_jdk = MandetoryDependencySetting(

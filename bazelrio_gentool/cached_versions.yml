@@ -241,6 +241,9 @@ rules_wpi_styleguide:
   1.0.0:
     commitish: 10cbb56dae6f6ab8189c57cbb2644c65b5550438
     sha: c5c032e8e8b04cdd74d2a637c39e787156cd289d128cd9747b5c8c6d87d4f252
+  2024.06.22:
+    sha: 3a39b5ec2762b3510a08c8648ac7a24689f626d20fcb297aa7541021c1efba42
+    commitish: 812c06b23d9c4afe3d7a2bccb729851648f20acf
 rules_wpiformat:
   '2022.30':
     commitish: 31c254e8a724215f94b7b75ff7bd958c77393548
