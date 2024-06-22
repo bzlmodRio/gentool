@@ -30,7 +30,7 @@ jobs:
       run: echo "ARCHIVE_NAME={{"rules" if "rules" in group.repo_name else "libraries"}}/{{group.repo_name}}/{{group.repo_name}}-${GITHUB_REF_NAME}.tar.gz" >> "$GITHUB_ENV"
 {% raw %}
     - name: Release
-      uses: softprops/action-gh-release@v1
+      uses: softprops/action-gh-release@v2
       if: startsWith(github.ref, 'refs/tags/')
       with:
         files: "${{ env.ARCHIVE_NAME }}"
@@ -78,28 +78,26 @@ jobs:
 
     # Create pull requests
     - name: Create Gentool Pull Request
-      uses: peter-evans/create-pull-request@v4
+      uses: peter-evans/create-pull-request@v6
       env:
         GITHUB_TOKEN: ${{ secrets.AUTO_UPDATE_KEY }}
       with:
         path: gentool
         base: refactor_dev
         token: ${{ secrets.AUTO_UPDATE_KEY }}
-        reviewers: pjreiniger
 {%- endraw %}
         branch: autoupdate/{{group.repo_name}}_update_{% raw %}${{ env.NEW_VERSION }}{% endraw %}
         title: "Auto Update {{group.repo_name}} module to {% raw %}'${{ env.NEW_VERSION }}'"{% endraw %}
 {%- raw %}
 
     - name: Create BCR Pull Request
-      uses: peter-evans/create-pull-request@v4
+      uses: peter-evans/create-pull-request@v6
       env:
         GITHUB_TOKEN: ${{ secrets.AUTO_UPDATE_KEY }}
       with:
         path: bazel-central-registry
         base: bzlmodrio
         token: ${{ secrets.AUTO_UPDATE_KEY }}
-        reviewers: pjreiniger
 {%- endraw %}
         branch: autoupdate/{{group.repo_name}}_update_{% raw %}${{ env.NEW_VERSION }}{% endraw %}
         title: "Auto Update latest {{group.repo_name}} to {% raw %}'${{ env.NEW_VERSION }}'"{% endraw %}
