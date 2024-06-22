@@ -220,6 +220,9 @@ rules_checkstyle:
   '10.1':
     commitish: 3f1928cfc2182ff0ebb225dd0f8fce2119e8c804
     sha: 08c80009bf6e8af6d3e2e8b6493b86012ea4ab5bf0f62c527d53557552a03d77
+  10.12.2:
+    sha: 7194b5ceb525b997d13e0b37604df2c057ea99e15fd88501cd00847dd6b41697
+    commitish: a106ed14650a8551d609160fadbbc4f9139e6910
 rules_pmd:
   6.43.0:
     commitish: 21c168a40ea10c41eac30a637f2b924e0d8f71a5
