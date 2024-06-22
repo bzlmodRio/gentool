@@ -224,6 +224,9 @@ rules_pmd:
   6.43.0:
     commitish: 21c168a40ea10c41eac30a637f2b924e0d8f71a5
     sha: 920de7134c12a6f5fb465aec0a4684451fe5dd992c5f4aae86551e6307d4cbe2
+  7.2.0:
+    sha: 88a484cc3f76f3cac59075233ae2afbff8993f5084de7e76cba8b2fef61c3033
+    commitish: 0b2c83a0923f60550381162897f35cd7aa0aa179
 rules_spotless:
   2.34.0:
     commitish: 5bf3e04533ea066394fb1a819d9f7be2fb148490
