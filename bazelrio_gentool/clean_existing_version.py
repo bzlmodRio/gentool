@@ -23,7 +23,9 @@ def clean_existing_version(
     file_blacklist += [
         ".git",  # for submodules, where the .git is a file
         "MODULE.bazel.lock",
+        ".buildbuddy-auth.rc",
         "tests/MODULE.bazel.lock",
+        "tests/.buildbuddy-auth.rc",
     ]
     file_blacklist = [
         os.path.join(module_directory, x).replace("\\", "/") for x in file_blacklist
