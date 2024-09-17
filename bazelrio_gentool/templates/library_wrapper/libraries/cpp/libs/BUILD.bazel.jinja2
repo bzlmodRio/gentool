@@ -6,6 +6,14 @@ alias(
     visibility = {{ visibility }},
 )
 
+{%- if target.headers %}
+alias(
+    name = "header_files",
+    actual = "@{{group.repo_name}}//private/cpp/{{target.parent_folder}}:header_files",
+    visibility = {{ visibility }},
+)
+{%- endif %}
+
 {% if target.get_static_library_select() != "," %}
 alias(
     name = "static",
@@ -36,6 +44,12 @@ alias(
     {%- endif %}
     visibility = {{ visibility }},
     actual = "@{{group.repo_name}}//private/cpp/{{target.parent_folder}}:shared",
+)
+
+alias(
+    name = "shared_raw",
+    actual = "@{{group.repo_name}}//private/cpp/{{target.parent_folder}}:shared_raw",
+    visibility = {{ visibility }},
 )
 {% endif %}
 {%- if target.has_jni %}

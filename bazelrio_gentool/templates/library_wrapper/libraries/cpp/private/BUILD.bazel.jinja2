@@ -1,4 +1,13 @@
 load("@rules_cc//cc:defs.bzl", "cc_library")
+
+{%- if target.headers %}
+alias(
+    name = "header_files",
+    actual = "@{{target.get_header_archive_name()}}//:header_files",
+    visibility = ["@{{group.repo_name}}//:__subpackages__"],
+)
+{% endif %}
+
 {% if target.get_shared_library_select() != "," -%}
 {%- if target.get_shared_library_interface_select() != "," %}
 cc_library(
@@ -22,11 +31,17 @@ cc_library(
 )
 {%- endif %}
 
-cc_library(
-    name = "shared",
+filegroup(
+    name = "shared_raw",
     srcs = select({
 {{target.get_shared_library_select()}}
     }),
+    visibility = ["@{{group.repo_name}}//:__subpackages__"],
+)
+
+cc_library(
+    name = "shared",
+    srcs = [":shared_raw"],
     {%- if target.get_shared_incompatible_targets() %}
     target_compatible_with = select({
         {%- for toolchain in target.get_shared_incompatible_targets() %}

@@ -15,6 +15,7 @@ def write_shared_root_files(
     include_windows_arm_compiler=True,
 ):
     template_files = [
+        ".github/actions/setup-build-buddy/action.yml",
         ".github/workflows/build.yml",
         ".github/workflows/lint.yml",
         ".github/workflows/publish.yml",
@@ -164,17 +165,22 @@ def get_bazel_dependencies():
 
     output = {}
 
-    add_dep(repo_name="platforms", version="0.0.9", sha="")
     add_dep(
-        repo_name="rules_python",
-        version="0.30.0",
-        sha="3b8b4cdc991bc9def8833d118e4c850f1b7498b3d65d5698eea92c3528b8cf2c",
-        needs_stripped_prefix=True,
+        repo_name="bazel_skylib",
+        version="1.6.1",
+        sha="9f38886a40548c6e96c106b752f242130ee11aaa068a56ba7e56f4511f33e4f2",
     )
     add_dep(
+        repo_name="googletest",
+        version="1.14.0",
+        sha="8ad598c73ad796e0d8280b082cebd82a630d73e73cd3c70057938a6501bba5d7",
+    )
+    add_dep(repo_name="platforms", version="0.0.9", sha="")
+    add_dep(repo_name="rules_cc", version="0.0.9", sha="")
+    add_dep(
         repo_name="rules_java",
-        version="7.6.1",
-        sha="f8ae9ed3887df02f40de9f4f7ac3873e6dd7a471f9cddf63952538b94b59aeb3",
+        version="7.6.5",
+        sha="8afd053dd2a7b85a4f033584f30a7f1666c5492c56c76e04eec4428bdb2a86cf",
         # use_long_form=True,
     )
     add_dep(
@@ -185,12 +191,6 @@ def get_bazel_dependencies():
         # use_zip=True,
         # use_long_form=True,
     )
-    add_dep(repo_name="rules_cc", version="0.0.9", sha="")
-    add_dep(
-        repo_name="googletest",
-        version="1.14.0",
-        sha="8ad598c73ad796e0d8280b082cebd82a630d73e73cd3c70057938a6501bba5d7",
-    )
     add_dep(
         repo_name="rules_proto",
         version="5.3.0-21.7",
@@ -199,9 +199,10 @@ def get_bazel_dependencies():
         needs_stripped_prefix=True,
     )
     add_dep(
-        repo_name="bazel_skylib",
-        version="1.6.1",
-        sha="9f38886a40548c6e96c106b752f242130ee11aaa068a56ba7e56f4511f33e4f2",
+        repo_name="rules_python",
+        version="0.30.0",
+        sha="3b8b4cdc991bc9def8833d118e4c850f1b7498b3d65d5698eea92c3528b8cf2c",
+        needs_stripped_prefix=True,
     )
 
     return output

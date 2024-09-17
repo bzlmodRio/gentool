@@ -7,6 +7,12 @@ cc_library_headers = """cc_library(
     includes = ["."],
     visibility = ["//visibility:public"],
 )
+
+filegroup(
+    name = "header_files",
+    srcs = glob(["**"]),
+    visibility = ["//visibility:public"],
+)
 """
 
 cc_library_sources = """filegroup(
