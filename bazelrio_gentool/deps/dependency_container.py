@@ -38,7 +38,8 @@ class ModuleDependency(BaseLocalDependencyWriterHelper):
 
 
 class DependencyContainer:
-    def __init__(self, repo_name, version, year, maven_url, patch=""):
+    def __init__(self, repo_name, version, year, maven_url, patch="", organization="bzlmodRio"):
+        self.organization = organization
         self.repo_name = repo_name
         self.sanitized_repo_name = repo_name.replace("-", "_")
         self.version = version
