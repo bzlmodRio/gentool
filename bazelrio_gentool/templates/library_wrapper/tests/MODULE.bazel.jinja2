@@ -22,7 +22,7 @@ local_path_override(
 {{mandatory_dependencies.rules_bzlmodrio_toolchain.module_dep()}}
 
 {%- for name, module_dep in group.module_dependencies.items() %}
-bazel_dep(name = "{{name}}", version = "{{module_dep.container.version}}{{module_dep.container.patch}}")
+bazel_dep(name = "{{name}}", version = "{{module_dep.container.version}}")
 {%- endfor %}
 {{mandatory_dependencies.rules_pmd.module_dep()}}
 {{mandatory_dependencies.rules_checkstyle.module_dep()}}
