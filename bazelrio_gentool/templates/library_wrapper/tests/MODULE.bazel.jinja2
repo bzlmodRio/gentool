@@ -36,9 +36,9 @@ bazel_dep(name = "{{name}}", version = "{{module_dep.container.version}}{{module
 maven = use_extension("@rules_jvm_external//:extensions.bzl", "maven")
 maven.install(
     artifacts = [
-        "org.junit.jupiter:junit-jupiter-api:5.8.2",
-        "org.junit.jupiter:junit-jupiter-params:5.8.2",
-        "org.junit.jupiter:junit-jupiter-engine:5.8.2",
+        "org.junit.jupiter:junit-jupiter-api:5.10.1",
+        "org.junit.jupiter:junit-jupiter-params:5.10.1",
+        "org.junit.jupiter:junit-jupiter-engine:5.10.1",
         "org.junit.platform:junit-platform-commons:1.6.1",
         "org.junit.platform:junit-platform-console:1.6.1",
         "org.junit.platform:junit-platform-engine:1.6.1",

@@ -35,6 +35,7 @@ filegroup(
     name = "shared_raw",
     srcs = select({
 {{target.get_shared_library_select()}}
+        "//conditions:default": [],
     }),
     visibility = ["@{{group.repo_name}}//:__subpackages__"],
 )
@@ -56,7 +57,7 @@ cc_library(
       {%- for dep in target.get_sorted_dependencies() %}
         "@{{dep.repo_name}}//libraries/cpp/{{dep.parent_folder}}:shared",
       {%- endfor %}] + {% if target.get_shared_library_interface_select() != "," %}select({
-        "@rules_bazelrio//conditions:windows": [":shared_interface"],
+        "@rules_bzlmodrio_toolchains//conditions:windows": [":shared_interface"],
         "//conditions:default": [],
     }){% if target.headers %} + {% else %},{% endif %}{% endif %}{% endif %}{% if target.headers %}["@{{target.get_header_archive_name()}}//:headers"],
 {%- endif %}

@@ -15,7 +15,9 @@ from bazelrio_gentool.dependency_helpers import BaseLocalDependencyWriterHelper
 
 
 class MandetoryDependencySetting(BaseLocalDependencyWriterHelper):
-    def __init__(self, repo_name, version, use_local_version):
+    def __init__(self, repo_name, version, use_local_version, url_base=None):
+        if url_base is None:
+            url_base = "https://github.com/bzlmodRio"
         cached_version = load_cached_version_info(repo_name, version)
         self.commitish = cached_version["commitish"]
 
@@ -24,7 +26,7 @@ class MandetoryDependencySetting(BaseLocalDependencyWriterHelper):
             repo_name=repo_name,
             version=version,
             sha=cached_version["sha"],
-            url_base="https://github.com/bzlmodRio",
+            url_base=url_base,
             use_local_version=use_local_version,
         )
 
@@ -35,8 +37,9 @@ class MandetoryDependencySetting(BaseLocalDependencyWriterHelper):
 def create_default_mandatory_settings(generic_cli: GenericCliArgs):
     default_rules_bzlmodrio_toolchain = MandetoryDependencySetting(
         "rules_bzlmodrio_toolchains",
-        "2024-1",
+        "2024-1.bcr1",
         generic_cli.use_local_roborio,
+        url_base = "https://github.com/wpilibsuite",
     )
     # default_rules_bzlmodrio_jdk = MandetoryDependencySetting(
     #     "rules_bzlmodrio_jdk",
@@ -78,6 +81,7 @@ def create_default_mandatory_settings(generic_cli: GenericCliArgs):
         "rules_bzlmodrio_jdk",
         "17.0.8-7",
         generic_cli.use_local_rules_bzlmodrio_jdk,
+        url_base = "https://github.com/wpilibsuite",
     )
 
     return MandatoryDependencySettings(

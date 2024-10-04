@@ -10,7 +10,6 @@ module(
 {%- if group.has_direct_maven_deps() %}
 {{bazel_dependencies.rules_jvm_external.module_dep()}}
 {%- endif %}
-{{mandatory_dependencies.rules_bazelrio.module_dep()}}
 {%- if not no_roborio %}
 {{mandatory_dependencies.rules_bzlmodrio_toolchain.module_dep()}}
 {%- endif %}

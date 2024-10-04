@@ -37,6 +37,8 @@ jobs:
 {%- endraw %}
 {%- if group.module_dependencies %}
 
+{%- if include_bzlmodrio_publishing %}
+
 {% for name, module_dep in group.module_dependencies.items() %}
     # Checkout {{name}}
     - uses: actions/checkout@v4
@@ -101,4 +103,7 @@ jobs:
 {%- endraw %}
         branch: autoupdate/{{group.repo_name}}_update_{% raw %}${{ env.NEW_VERSION }}{% endraw %}
         title: "Auto Update latest {{group.repo_name}} to {% raw %}'${{ env.NEW_VERSION }}'"{% endraw %}
+
+
+{% endif %}
 
