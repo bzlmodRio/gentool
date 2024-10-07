@@ -38,6 +38,7 @@ jobs:
 {%- if group.module_dependencies %}
 
 {% for name, module_dep in group.module_dependencies.items() %}
+{%- if name not in ["bzlmodrio-opencv", "bzlmodrio-ni"] %}
     # Checkout {{name}}
     - uses: actions/checkout@v4
       with:
@@ -45,8 +46,18 @@ jobs:
         fetch-depth: 0
         path: {{"rules" if "rules" in group.repo_name else "libraries"}}/{{group.repo_name}}/{{module_dep.local_rel_folder}}
         ref: main
+{%- endif -%}
 {% endfor %}
+{% if "bzlmodrio-opencv" in group.module_dependencies or "bzlmodrio-ni" in group.module_dependencies %}
+    # Checkout backdoor generation of wpilibsuite libraries
+    - uses: actions/checkout@v4
+      with:
+        repository: 'bzlmodRio/wpilibsuite_generator.git'
+        fetch-depth: 0
+        path: libraries/bzlmodrio-choreolib/../../wpilibsuite_gen
+        ref: main
 {% endif %}
+{%- endif %}
 {% raw %}
 
     # Checkout gentool
