@@ -1,4 +1,4 @@
-load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive"{% if group.java_native_tools %}, "http_jar"{% endif %})
+load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive"{% if group.java_native_tools %}, "http_jar"{% endif %}, "http_file")
 load("@bazel_tools//tools/build_defs/repo:utils.bzl", "maybe")
 
 cc_library_headers = """cc_library(
@@ -76,6 +76,18 @@ def __setup_{{group.sanitized_repo_name}}_cpp_dependencies(mctx):
         url = "{{tool_dep.get_url(resource)}}",
         sha256 = "{{tool_dep.get_sha256(resource)}}",
         build_file_content = "filegroup(name='all', srcs=glob(['**']), visibility=['//visibility:public'])",
+    )
+    {%- endfor %}
+    {%- endfor %}
+
+    {%- for tool_dep in group.single_file_binaries %}
+    {%- for resource in tool_dep.resources %}
+    maybe(
+        http_file,
+        name = "{{tool_dep.get_archive_name(resource)}}",
+        url = "{{tool_dep.get_url(resource)}}",
+        executable = True,
+        sha256 = "{{tool_dep.get_sha256(resource)}}",
     )
     {%- endfor %}
     {%- endfor %}
