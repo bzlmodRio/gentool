@@ -3,6 +3,7 @@ from bazelrio_gentool.deps.java_dependency import JavaDependency, JavaMetaDepend
 from bazelrio_gentool.deps.java_native_tool_dependency import JavaNativeToolDependency
 from bazelrio_gentool.deps.executable_tool_dependency import ExecutableToolDependency
 from bazelrio_gentool.deps.single_file_binary_dependency import SingleFileBinaryDependency
+from bazelrio_gentool.deps.bundled_executable_tools_dependency import BundledExecutableToolsDependency
 from bazelrio_gentool.load_cached_versions import load_cached_version_info
 from bazelrio_gentool.dependency_helpers import BaseLocalDependencyWriterHelper
 
@@ -53,6 +54,7 @@ class DependencyContainer:
         self.java_native_tools = []
         self.executable_tools = []
         self.single_file_binaries = []
+        self.bundled_executable_tools = []
         self.module_dependencies = {}
         self.dep_lookup = {}
         self.repository_url = None
@@ -169,6 +171,13 @@ class DependencyContainer:
             SingleFileBinaryDependency(**kwargs)
         )
 
+    def create_bundled_executable_tools(self, fail_on_hash_miss=None, **kwargs):
+        if fail_on_hash_miss is None:
+            fail_on_hash_miss = self.fail_on_hash_miss
+        self.bundled_executable_tools.append(
+            BundledExecutableToolsDependency(fail_on_hash_miss = fail_on_hash_miss, **kwargs)
+        )
+
     def has_direct_maven_deps(self):
         for java_dep in self.java_deps:
             if java_dep.maven_deps:
@@ -231,6 +240,10 @@ class DependencyContainer:
                 output.append(f"{tool_dep.get_archive_name(resource)}")
 
         for tool_dep in self.single_file_binaries:
+            for resource in tool_dep.resources:
+                output.append(f"{tool_dep.get_archive_name(resource)}")
+
+        for tool_dep in self.bundled_executable_tools:
             for resource in tool_dep.resources:
                 output.append(f"{tool_dep.get_archive_name(resource)}")
 

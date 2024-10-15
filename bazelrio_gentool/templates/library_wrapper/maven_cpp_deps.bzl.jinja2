@@ -92,6 +92,18 @@ def __setup_{{group.sanitized_repo_name}}_cpp_dependencies(mctx):
     {%- endfor %}
     {%- endfor %}
 
+    {%- for tool_dep in group.bundled_executable_tools %}
+    {%- for resource in tool_dep.resources %}
+    maybe(
+        http_archive,
+        name = "{{tool_dep.get_archive_name(resource)}}",
+        url = "{{tool_dep.get_url(resource)}}",
+        sha256 = "{{tool_dep.get_sha256(resource)}}",
+        build_file_content = """exports_files([{%- for child_tool in tool_dep.children_tools %}"{{child_tool}}", {% endfor %}])""",
+    )
+    {%- endfor %}
+    {%- endfor %}
+
 def setup_legacy_{{group.sanitized_repo_name}}_cpp_dependencies():
     __setup_{{group.sanitized_repo_name}}_cpp_dependencies(None)
 

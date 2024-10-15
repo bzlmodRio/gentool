@@ -1,0 +1,9 @@
+alias(
+    name = "{{child_tool}}",
+    actual = select({
+        "@rules_bzlmodrio_toolchains//conditions:linux_x86_64": "@{{target.get_archive_name("linux-x86_64-standalone")}}//:{{child_tool}}",
+        "@rules_bzlmodrio_toolchains//conditions:osx": "@{{target.get_archive_name("macos-x86_64-standalone")}}//:{{child_tool}}",
+        "@rules_bzlmodrio_toolchains//conditions:windows": "@{{target.get_archive_name("windows-x86_64-standalone")}}//:{{child_tool}}",
+    }),
+)
+
