@@ -38,12 +38,15 @@ def vendordep_dependency(
         )
         maven_dep.extra_maven_repos.append(maven_url)
 
+        cc_artifacts = set()
+
         # Add all the headers and sources first
         for cpp_dep in sorted(
             vendor_dep["cppDependencies"], key=lambda x: x["artifactId"]
         ):
             if cpp_dep["artifactId"] in maven_dependency_ignore_list:
                 continue
+            cc_artifacts.add(cpp_dep["artifactId"])
 
             resources = []
             for platform in cpp_dep["binaryPlatforms"]:
@@ -100,5 +103,45 @@ def vendordep_dependency(
                 else:
                     resolved_extra_deps.append(extra_dep)
             cc_dep.extra_install_name_dependencies = resolved_extra_deps
+            
+        for cpp_dep in sorted(
+            vendor_dep["jniDependencies"], key=lambda x: x["artifactId"]
+        ):
+            if cpp_dep["artifactId"] in maven_dependency_ignore_list:
+                continue
+            if cpp_dep["artifactId"] in cc_artifacts:
+                continue
+
+            resources = []
+            for platform in cpp_dep["validPlatforms"]:
+                if platform not in PLATFORM_BLACKLIST:
+                    resources.append(platform)
+                    if has_static_libraries:
+                        resources.append(platform + "static")
+
+            if cpp_dep["artifactId"] in install_name_lookup:
+                d = install_name_lookup[cpp_dep["artifactId"]]
+                has_install_name_patches = True
+                artifact_install_name = d["artifact_install_name"]
+                extra_install_name_dependencies = d["deps"]
+            else:
+                has_install_name_patches = False
+                artifact_install_name = None
+                extra_install_name_dependencies = None
+
+            maven_dep.create_cc_dependency(
+                name=cpp_dep["artifactId"],
+                parent_folder=cpp_dep["artifactId"],
+                headers=cpp_dep.get("headerClassifier", None),
+                sources=cpp_dep.get("sourcesClassifier", None),
+                resources=resources,
+                group_id=cpp_dep["groupId"],
+                version=cpp_dep["version"],
+                has_jni=False,
+                fail_on_hash_miss=fail_on_hash_miss,
+                has_install_name_patches=has_install_name_patches,
+                artifact_install_name=artifact_install_name,
+                extra_install_name_dependencies=extra_install_name_dependencies,
+            )
 
         return maven_dep
