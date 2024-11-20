@@ -69,12 +69,12 @@ def create_default_mandatory_settings(generic_cli: GenericCliArgs):
     )
     default_rules_wpiformat = MandetoryDependencySetting(
         "rules_wpiformat",
-        "2024.34",
+        "2024.45",
         generic_cli.use_local_rules_wpiformat,
     )
     default_rules_wpi_styleguide = MandetoryDependencySetting(
         "rules_wpi_styleguide",
-        "2024.06.22",
+        "2024.11.19",
         generic_cli.use_local_rules_wpi_styleguide,
     )
     default_rules_bzlmodrio_jdk = MandetoryDependencySetting(
