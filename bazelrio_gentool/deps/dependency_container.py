@@ -2,8 +2,12 @@ from bazelrio_gentool.deps.cc_dependency import CcDependency, CcMetaDependency
 from bazelrio_gentool.deps.java_dependency import JavaDependency, JavaMetaDependency
 from bazelrio_gentool.deps.java_native_tool_dependency import JavaNativeToolDependency
 from bazelrio_gentool.deps.executable_tool_dependency import ExecutableToolDependency
-from bazelrio_gentool.deps.single_file_binary_dependency import SingleFileBinaryDependency
-from bazelrio_gentool.deps.bundled_executable_tools_dependency import BundledExecutableToolsDependency
+from bazelrio_gentool.deps.single_file_binary_dependency import (
+    SingleFileBinaryDependency,
+)
+from bazelrio_gentool.deps.bundled_executable_tools_dependency import (
+    BundledExecutableToolsDependency,
+)
 from bazelrio_gentool.load_cached_versions import load_cached_version_info
 from bazelrio_gentool.dependency_helpers import BaseLocalDependencyWriterHelper
 
@@ -40,7 +44,9 @@ class ModuleDependency(BaseLocalDependencyWriterHelper):
 
 
 class DependencyContainer:
-    def __init__(self, repo_name, version, year, maven_url, patch="", organization="bzlmodRio"):
+    def __init__(
+        self, repo_name, version, year, maven_url, patch="", organization="bzlmodRio"
+    ):
         self.organization = organization
         self.repo_name = repo_name
         self.sanitized_repo_name = repo_name.replace("-", "_")
@@ -162,20 +168,18 @@ class DependencyContainer:
             )
         )
 
-    def create_single_file_binary(self, 
-        fail_on_hash_miss=None,
-        **kwargs):
+    def create_single_file_binary(self, fail_on_hash_miss=None, **kwargs):
         if fail_on_hash_miss is None:
             fail_on_hash_miss = self.fail_on_hash_miss
-        self.single_file_binaries.append(
-            SingleFileBinaryDependency(**kwargs)
-        )
+        self.single_file_binaries.append(SingleFileBinaryDependency(**kwargs))
 
     def create_bundled_executable_tools(self, fail_on_hash_miss=None, **kwargs):
         if fail_on_hash_miss is None:
             fail_on_hash_miss = self.fail_on_hash_miss
         self.bundled_executable_tools.append(
-            BundledExecutableToolsDependency(fail_on_hash_miss = fail_on_hash_miss, **kwargs)
+            BundledExecutableToolsDependency(
+                fail_on_hash_miss=fail_on_hash_miss, **kwargs
+            )
         )
 
     def has_direct_maven_deps(self):

@@ -103,7 +103,7 @@ def vendordep_dependency(
                 else:
                     resolved_extra_deps.append(extra_dep)
             cc_dep.extra_install_name_dependencies = resolved_extra_deps
-            
+
         for cpp_dep in sorted(
             vendor_dep["jniDependencies"], key=lambda x: x["artifactId"]
         ):

@@ -39,7 +39,7 @@ def create_default_mandatory_settings(generic_cli: GenericCliArgs):
         "rules_bzlmodrio_toolchains",
         "2024-1.bcr1",
         generic_cli.use_local_roborio,
-        url_base = "https://github.com/wpilibsuite",
+        url_base="https://github.com/wpilibsuite",
     )
     # default_rules_bzlmodrio_jdk = MandetoryDependencySetting(
     #     "rules_bzlmodrio_jdk",
@@ -81,7 +81,7 @@ def create_default_mandatory_settings(generic_cli: GenericCliArgs):
         "rules_bzlmodrio_jdk",
         "17.0.8-7",
         generic_cli.use_local_rules_bzlmodrio_jdk,
-        url_base = "https://github.com/wpilibsuite",
+        url_base="https://github.com/wpilibsuite",
     )
 
     return MandatoryDependencySettings(

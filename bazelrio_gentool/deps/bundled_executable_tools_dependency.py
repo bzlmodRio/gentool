@@ -1,8 +1,10 @@
-
 from bazelrio_gentool.deps.sha256_helper import get_hash
 
+
 class BundledExecutableToolsDependency:
-    def __init__(self, url_base, tool_name, children_tools, fail_on_hash_miss, version, resources):
+    def __init__(
+        self, url_base, tool_name, children_tools, fail_on_hash_miss, version, resources
+    ):
         self.url_base = url_base
         self.resources = resources
         self.tool_name = tool_name

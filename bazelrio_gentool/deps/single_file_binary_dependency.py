@@ -1,5 +1,5 @@
-
 from bazelrio_gentool.deps.sha256_helper import get_hash
+
 
 class SingleFileBinaryDependency:
     def __init__(self, url_base, tool_name, version, resources):
