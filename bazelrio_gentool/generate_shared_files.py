@@ -31,6 +31,7 @@ def write_shared_root_files(
         "BUILD.bazel",
         "README.md",
         "WORKSPACE.bzlmod",
+        ".clang-format",
         ".styleguide",
         ".styleguide-license",
     ]
