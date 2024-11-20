@@ -132,7 +132,7 @@ def generate_module_project_files(
     test_macos=True,
     include_windows_arm_compiler=True,
     include_bullseye_compiler=True,
-    include_bookworm_compiler=True,
+    include_bookworm_compiler=False,
 ):
     write_shared_root_files(
         module_directory,
