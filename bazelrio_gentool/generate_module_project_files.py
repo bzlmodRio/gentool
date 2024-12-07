@@ -79,7 +79,7 @@ def create_default_mandatory_settings(generic_cli: GenericCliArgs):
     )
     default_rules_bzlmodrio_jdk = MandetoryDependencySetting(
         "rules_bzlmodrio_jdk",
-        "17.0.8-7",
+        "17.0.12-7",
         generic_cli.use_local_rules_bzlmodrio_jdk,
         url_base="https://github.com/wpilibsuite",
     )
