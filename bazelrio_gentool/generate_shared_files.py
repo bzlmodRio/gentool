@@ -11,7 +11,8 @@ def write_shared_root_files(
     group,
     include_raspi_compiler=False,
     include_bullseye_compiler=True,
-    include_bookworm_compiler=False,
+    include_bookworm32_compiler=False,
+    include_bookworm64_compiler=False,
     test_macos=True,
     include_windows_arm_compiler=True,
 ):
@@ -46,7 +47,8 @@ def write_shared_root_files(
         group=group,
         include_raspi_compiler=include_raspi_compiler,
         include_bullseye_compiler=include_bullseye_compiler,
-        include_bookworm_compiler=include_bookworm_compiler,
+        include_bookworm32_compiler=include_bookworm32_compiler,
+        include_bookworm64_compiler=include_bookworm64_compiler,
         include_windows_arm_compiler=include_windows_arm_compiler,
         test_macos=test_macos,
     )

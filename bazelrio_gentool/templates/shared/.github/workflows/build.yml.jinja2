@@ -166,8 +166,7 @@ jobs:
 {%- endraw %}
 {%- endif %}
 
-{%- if include_bookworm_compiler %}
-{#
+{%- if include_bookworm32_compiler %}
 {%- raw %}
 
   build_bookworm32:
@@ -205,7 +204,9 @@ jobs:
     - name: Build
       run: bazel ${{ matrix.bazel_options }} ${{ matrix.command }} //... -k ${{ matrix.config }} --verbose_failures --config=ci
       working-directory: tests
-#}
+{%- endraw %}
+{%- endif %}
+{%- if include_bookworm64_compiler %}
 {%- raw %}
 
   build_bookworm64:
