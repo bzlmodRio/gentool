@@ -58,6 +58,7 @@ jobs:
         ref: main
 {% endif %}
 {%- endif %}
+{%- if group.organization != "wpilibsuite" %}
 {% raw %}
 
     # Checkout gentool
@@ -112,4 +113,5 @@ jobs:
 {%- endraw %}
         branch: autoupdate/{{group.repo_name}}_update_{% raw %}${{ env.NEW_VERSION }}{% endraw %}
         title: "Auto Update latest {{group.repo_name}} to {% raw %}'${{ env.NEW_VERSION }}'"{% endraw %}
+{%- endif %}
 
