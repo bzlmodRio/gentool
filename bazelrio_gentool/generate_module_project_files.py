@@ -37,7 +37,7 @@ class MandetoryDependencySetting(BaseLocalDependencyWriterHelper):
 def create_default_mandatory_settings(generic_cli: GenericCliArgs):
     default_rules_bzlmodrio_toolchain = MandetoryDependencySetting(
         "rules_bzlmodrio_toolchains",
-        "2024-1.bcr1",
+        "2025-1",
         generic_cli.use_local_roborio,
         url_base="https://github.com/wpilibsuite",
     )
