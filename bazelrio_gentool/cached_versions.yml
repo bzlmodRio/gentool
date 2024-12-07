@@ -255,6 +255,9 @@ rules_bzlmodrio_toolchains:
   2024-1.bcr1:
     commitish: TODO
     sha: 2ef1cafce7f4fd4e909bb5de8b0dc771a934646afd55d5f100ff31f6b500df98
+  2025-1:
+    sha: fe267e2af53c1def1e962700a9aeda9e8fdfa9fb46b72167c615ec0e25447dd6
+    commitish: 07620eb3471fdeb33ef324751d4dc518d02be451
 rules_checkstyle:
   '10.1':
     commitish: 3f1928cfc2182ff0ebb225dd0f8fce2119e8c804
