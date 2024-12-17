@@ -64,7 +64,7 @@ class JdkBazelDependencySetting(MandetoryDependencySetting):
 def create_default_mandatory_settings(generic_cli: GenericCliArgs):
     default_rules_bzlmodrio_toolchain = MandetoryDependencySetting(
         "rules_bzlmodrio_toolchains",
-        "2024-1.bcr1",
+        "2025-1",
         generic_cli.use_local_roborio,
         url_base="https://github.com/wpilibsuite",
     )
@@ -106,7 +106,7 @@ def create_default_mandatory_settings(generic_cli: GenericCliArgs):
     )
     default_rules_bzlmodrio_jdk = JdkBazelDependencySetting(
         "rules_bzlmodrio_jdk",
-        "17.0.8-7",
+        "17.0.12-7",
         generic_cli.use_local_rules_bzlmodrio_jdk,
         url_base="https://github.com/wpilibsuite",
     )
