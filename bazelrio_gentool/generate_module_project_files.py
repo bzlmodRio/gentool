@@ -50,6 +50,15 @@ class JdkBazelDependencySetting(MandetoryDependencySetting):
 """
         return output
 
+    def download_repository(self, num_indent, native=False, maybe=False):
+        return """http_archive(
+    name = "rules_bzlmodrio_jdk",
+    sha256 = "43a475e46852305ffc87f7499e772a42dc5343d7bfcc7631dbca83568712f44f",
+    strip_prefix = "rules_bzlmodrio_jdk-d5f0db20a611e4ec4b26f95d9c772e2436b69b55",
+    urls = ["https://github.com/wpilibsuite/rules_bzlmodRio_jdk/archive/d5f0db20a611e4ec4b26f95d9c772e2436b69b55.tar.gz"],
+)
+"""
+
 
 
 def create_default_mandatory_settings(generic_cli: GenericCliArgs):
