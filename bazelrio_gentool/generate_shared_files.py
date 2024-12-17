@@ -143,27 +143,6 @@ class BazelDependencySetting(BaseDependencyWriterHelper):
         return self.http_archive(indent_num=indent_num, maybe=maybe, native=False)
 
 
-#     def temp_longform_http_archive(self, indent_num, maybe):
-#         indent = " " * indent_num
-#         file_extension = "zip" if self.use_zip else "tar.gz"
-#         output = f"""{indent}{self.repo_name.upper()}_COMMITISH = "{self.version}"
-#     {self.repo_name.upper()}_SHA = "{self.sha}"
-#     """
-
-#         if maybe:
-#             output += f"maybe(\n    http_archive,"
-#         else:
-#             output += f"http_archive("
-
-#         output += f"""
-# {indent}    name = "{self.repo_name}",
-# {indent}    sha256 = {self.repo_name.upper()}_SHA,
-# {indent}    strip_prefix = "{self.repo_name}-{{}}".format({self.repo_name.upper()}_COMMITISH),
-# {indent}    url = "https://github.com/bazelbuild/{self.repo_name}/archive/{{}}.{file_extension}".format({self.repo_name.upper()}_COMMITISH),
-# )"""
-#         return output
-
-
 def get_bazel_dependencies():
     def add_dep(repo_name, sha="", **kwargs):
         output[repo_name] = BazelDependencySetting(repo_name, sha=sha, **kwargs)

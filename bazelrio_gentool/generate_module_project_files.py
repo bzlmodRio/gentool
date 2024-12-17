@@ -34,6 +34,24 @@ class MandetoryDependencySetting(BaseLocalDependencyWriterHelper):
         return f"MandetoryDependencySetting: {self.repo_name}, {self.version}, {self.use_local_version}"
 
 
+class JdkBazelDependencySetting(MandetoryDependencySetting):
+    def __init__(self, *kargs, **kwargs):
+        MandetoryDependencySetting.__init__(self, *kargs, **kwargs)
+        
+    def module_dep(self, include_override=False):
+        output = f'bazel_dep(name = "{self.repo_name}", version = "{self.sanitized_version}")'
+        if include_override:
+            output += """\narchive_override(
+    module_name = "rules_bzlmodrio_jdk",
+    integrity = "sha256-Q6R15GhSMF/8h/dJnncqQtxTQ9e/zHYx28qDVocS9E8=",
+    strip_prefix = "rules_bzlmodrio_jdk-d5f0db20a611e4ec4b26f95d9c772e2436b69b55",
+    urls = ["https://github.com/wpilibsuite/rules_bzlmodRio_jdk/archive/d5f0db20a611e4ec4b26f95d9c772e2436b69b55.tar.gz"],
+)
+"""
+        return output
+
+
+
 def create_default_mandatory_settings(generic_cli: GenericCliArgs):
     default_rules_bzlmodrio_toolchain = MandetoryDependencySetting(
         "rules_bzlmodrio_toolchains",
@@ -77,7 +95,7 @@ def create_default_mandatory_settings(generic_cli: GenericCliArgs):
         "2024.11.19",
         generic_cli.use_local_rules_wpi_styleguide,
     )
-    default_rules_bzlmodrio_jdk = MandetoryDependencySetting(
+    default_rules_bzlmodrio_jdk = JdkBazelDependencySetting(
         "rules_bzlmodrio_jdk",
         "17.0.12-7",
         generic_cli.use_local_rules_bzlmodrio_jdk,

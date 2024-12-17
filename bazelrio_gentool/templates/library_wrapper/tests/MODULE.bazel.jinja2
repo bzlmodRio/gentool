@@ -30,7 +30,7 @@ bazel_dep(name = "{{name}}", version = "{{module_dep.container.version}}")
 {{mandatory_dependencies.rules_wpi_styleguide.module_dep()}}
 {{mandatory_dependencies.rules_spotless.module_dep()}}
 {% if group.java_deps %}
-{{mandatory_dependencies.rules_bzlmodrio_jdk.module_dep()}}
+{{mandatory_dependencies.rules_bzlmodrio_jdk.module_dep(include_override=True)}}
 {% endif %}
 
 maven = use_extension("@rules_jvm_external//:extensions.bzl", "maven")
