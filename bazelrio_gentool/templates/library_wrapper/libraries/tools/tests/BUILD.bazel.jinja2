@@ -3,6 +3,7 @@
     actual = "@bzlmodrio-allwpilib//libraries/tools/{% if True %}{{target.artifact_name.lower()}}{%else%} TODO {%endif%}",
     tags = [
         "no-bullseye",
+        "no-bookworm",
         "no-raspi",
         "no-roborio",
     ],
@@ -15,6 +16,7 @@ alias(
     actual = "@bzlmodrio-allwpilib//libraries/tools/{{target.artifact_name}}",
     tags = [
         "no-bullseye",
+        "no-bookworm",
         "no-raspi",
         "no-roborio",
     ],

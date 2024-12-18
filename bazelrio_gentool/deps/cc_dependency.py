@@ -172,14 +172,14 @@ class CcDependency(MultiResourceDependency):
         "linuxathenadebug": "@rules_bzlmodrio_toolchains//constraints/is_roborio:roborio_debug",
         "linuxathenastatic": "@rules_bzlmodrio_toolchains//constraints/is_roborio:roborio",
         "linuxathenastaticdebug": "@rules_bzlmodrio_toolchains//constraints/is_roborio:roborio_debug",
-        "linuxarm32": "@rules_bzlmodrio_toolchains//constraints/is_bullseye32:bullseye32",
-        "linuxarm32debug": "@rules_bzlmodrio_toolchains//constraints/is_bullseye32:bullseye32_debug",
-        "linuxarm32static": "@rules_bzlmodrio_toolchains//constraints/is_bullseye32:bullseye32",
-        "linuxarm32staticdebug": "@rules_bzlmodrio_toolchains//constraints/is_bullseye32:bullseye32_debug",
-        "linuxarm64": "@rules_bzlmodrio_toolchains//constraints/is_bullseye64:bullseye64",
-        "linuxarm64debug": "@rules_bzlmodrio_toolchains//constraints/is_bullseye64:bullseye64_debug",
-        "linuxarm64static": "@rules_bzlmodrio_toolchains//constraints/is_bullseye64:bullseye64",
-        "linuxarm64staticdebug": "@rules_bzlmodrio_toolchains//constraints/is_bullseye64:bullseye64_debug",
+        "linuxarm32": "@rules_bzlmodrio_toolchains//constraints/is_bookworm32:bookworm32",
+        "linuxarm32debug": "@rules_bzlmodrio_toolchains//constraints/is_bookworm32:bookworm32_debug",
+        "linuxarm32static": "@rules_bzlmodrio_toolchains//constraints/is_bookworm32:bookworm32",
+        "linuxarm32staticdebug": "@rules_bzlmodrio_toolchains//constraints/is_bookworm32:bookworm32_debug",
+        "linuxarm64": "@rules_bzlmodrio_toolchains//constraints/is_bookworm64:bookworm64",
+        "linuxarm64debug": "@rules_bzlmodrio_toolchains//constraints/is_bookworm64:bookworm64_debug",
+        "linuxarm64static": "@rules_bzlmodrio_toolchains//constraints/is_bookworm64:bookworm64",
+        "linuxarm64staticdebug": "@rules_bzlmodrio_toolchains//constraints/is_bookworm64:bookworm64_debug",
         
         "linuxsystemcore": "@rules_bzlmodrio_toolchains//constraints/is_bookworm64:bookworm64",
         "linuxsystemcoredebug": "@rules_bzlmodrio_toolchains//constraints/is_bookworm64:bookworm64_debug",
@@ -278,8 +278,8 @@ class CcDependency(MultiResourceDependency):
         output = []
 
         output.append(self.__get_invalid_toolchain("linuxathena", "roborio", True))
-        output.append(self.__get_invalid_toolchain("linuxarm32", "bullseye32", True))
-        output.append(self.__get_invalid_toolchain("linuxarm64", "bullseye64", True))
+        output.append(self.__get_invalid_toolchain("linuxarm32", "bookworm32", True))
+        output.append(self.__get_invalid_toolchain("linuxarm64", "bookworm64", True))
         output.append(self.__get_invalid_toolchain("raspi32", "raspi32", True))
 
         output.append(self.__get_invalid_toolchain("windowsx86-64", "windows", False))
@@ -299,8 +299,8 @@ class CcDependency(MultiResourceDependency):
         output = []
 
         output.append(self.__get_invalid_toolchain("linuxathenastatic", "roborio", True))
-        output.append(self.__get_invalid_toolchain("linuxarm32static", "bullseye32", True))
-        output.append(self.__get_invalid_toolchain("linuxarm64static", "bullseye64", True))
+        output.append(self.__get_invalid_toolchain("linuxarm32static", "bookworm32", True))
+        output.append(self.__get_invalid_toolchain("linuxarm64static", "bookworm64", True))
         output.append(self.__get_invalid_toolchain("raspi32static", "raspi32", True))
 
         output.append(self.__get_invalid_toolchain("windowsx86-64static", "raspi32", False))
