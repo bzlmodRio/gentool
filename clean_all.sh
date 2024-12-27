@@ -4,7 +4,7 @@ bazel clean --expunge
 cd /home/pjreiniger/git/bzlmodRio/bzlmodRio-rev/tests
 bazel clean --expunge
 
-cd /home/pjreiniger/git/bzlmodRio/bzlmodRio-navx/tests
+cd /home/pjreiniger/git/bzlmodRio/bzlmodRio-studica/tests
 bazel clean --expunge
 
 cd /home/pjreiniger/git/bzlmodRio/bzlmodRio-allwpilib/tests
