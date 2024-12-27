@@ -559,3 +559,7 @@ rules_bzlmodrio_jdk:
   17.0.12-7:
     sha: 81869fe9860e39b17e4a9bc1d33c1ca2faede7e31d9538ed0712406f753a2163
     commitish: eefb89916654dcc8b71d0b99ee987f9cdb8f1831
+bzlmodrio-studica:
+  2025.1.1-beta-4:
+    sha: 92861b89ccb4fc33ab695f89d02ceb4f725f85ba56a143b5974de56125d9ee7c
+    commitish: 2f500dff8f71ef09e7d334b56b4313410c03d249
