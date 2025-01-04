@@ -159,10 +159,10 @@ class CcDependency(MultiResourceDependency):
         "linuxx86-64debug": "@rules_bzlmodrio_toolchains//conditions:linux_x86_64_debug",
         "linuxx86-64static": "@rules_bzlmodrio_toolchains//conditions:linux_x86_64",
         "linuxx86-64staticdebug": "@rules_bzlmodrio_toolchains//conditions:linux_x86_64_debug",
-        "osxx86-64": "@rules_bzlmodrio_toolchains//conditions:osx",
-        "osxx86-64debug": "@rules_bzlmodrio_toolchains//conditions:osx_debug",
-        "osxx86-64static": "@rules_bzlmodrio_toolchains//conditions:osx",
-        "osxx86-64staticdebug": "@rules_bzlmodrio_toolchains//conditions:osx_debug",
+        # "osxx86-64": "@rules_bzlmodrio_toolchains//conditions:osx",
+        # "osxx86-64debug": "@rules_bzlmodrio_toolchains//conditions:osx_debug",
+        # "osxx86-64static": "@rules_bzlmodrio_toolchains//conditions:osx",
+        # "osxx86-64staticdebug": "@rules_bzlmodrio_toolchains//conditions:osx_debug",
         "osxuniversal": "@rules_bzlmodrio_toolchains//conditions:osx",
         "osxuniversaldebug": "@rules_bzlmodrio_toolchains//conditions:osx_debug",
         "osxuniversalstatic": "@rules_bzlmodrio_toolchains//conditions:osx",
@@ -172,19 +172,21 @@ class CcDependency(MultiResourceDependency):
         "linuxathenadebug": "@rules_bzlmodrio_toolchains//constraints/is_roborio:roborio_debug",
         "linuxathenastatic": "@rules_bzlmodrio_toolchains//constraints/is_roborio:roborio",
         "linuxathenastaticdebug": "@rules_bzlmodrio_toolchains//constraints/is_roborio:roborio_debug",
-        "linuxarm32": "@rules_bzlmodrio_toolchains//constraints/is_bookworm32:bookworm32",
-        "linuxarm32debug": "@rules_bzlmodrio_toolchains//constraints/is_bookworm32:bookworm32_debug",
-        "linuxarm32static": "@rules_bzlmodrio_toolchains//constraints/is_bookworm32:bookworm32",
-        "linuxarm32staticdebug": "@rules_bzlmodrio_toolchains//constraints/is_bookworm32:bookworm32_debug",
+
+        "linuxarm32": "@rules_bzlmodrio_toolchains//constraints/is_raspibookworm32:raspibookworm32",
+        "linuxarm32debug": "@rules_bzlmodrio_toolchains//constraints/is_raspibookworm32:raspibookworm32_debug",
+        "linuxarm32static": "@rules_bzlmodrio_toolchains//constraints/is_raspibookworm32:raspibookworm32",
+        "linuxarm32staticdebug": "@rules_bzlmodrio_toolchains//constraints/is_raspibookworm32:raspibookworm32_debug",
+
         "linuxarm64": "@rules_bzlmodrio_toolchains//constraints/is_bookworm64:bookworm64",
         "linuxarm64debug": "@rules_bzlmodrio_toolchains//constraints/is_bookworm64:bookworm64_debug",
         "linuxarm64static": "@rules_bzlmodrio_toolchains//constraints/is_bookworm64:bookworm64",
         "linuxarm64staticdebug": "@rules_bzlmodrio_toolchains//constraints/is_bookworm64:bookworm64_debug",
         
-        "linuxsystemcore": "@rules_bzlmodrio_toolchains//constraints/is_bookworm64:bookworm64",
-        "linuxsystemcoredebug": "@rules_bzlmodrio_toolchains//constraints/is_bookworm64:bookworm64_debug",
-        "linuxsystemcorestatic": "@rules_bzlmodrio_toolchains//constraints/is_bookworm64:bookworm64",
-        "linuxsystemcorestaticdebug": "@rules_bzlmodrio_toolchains//constraints/is_bookworm64:bookworm64_debug",
+        # "linuxsystemcore": "@rules_bzlmodrio_toolchains//constraints/is_bookworm64:bookworm64",
+        # "linuxsystemcoredebug": "@rules_bzlmodrio_toolchains//constraints/is_bookworm64:bookworm64_debug",
+        # "linuxsystemcorestatic": "@rules_bzlmodrio_toolchains//constraints/is_bookworm64:bookworm64",
+        # "linuxsystemcorestaticdebug": "@rules_bzlmodrio_toolchains//constraints/is_bookworm64:bookworm64_debug",
     }
 
     def __make_ignored_platforms(base_platform):
@@ -278,9 +280,10 @@ class CcDependency(MultiResourceDependency):
         output = []
 
         output.append(self.__get_invalid_toolchain("linuxathena", "roborio", True))
-        output.append(self.__get_invalid_toolchain("linuxarm32", "bookworm32", True))
+        output.append(self.__get_invalid_toolchain("linuxarm32", "raspibookworm32", True))
         output.append(self.__get_invalid_toolchain("linuxarm64", "bookworm64", True))
-        output.append(self.__get_invalid_toolchain("raspi32", "raspi32", True))
+        # output.append(self.__get_invalid_toolchain("raspibullseye32", "raspibullseye32", True))
+        # output.append(self.__get_invalid_toolchain("raspibookworm32", "raspibookworm32", True))
 
         output.append(self.__get_invalid_toolchain("windowsx86-64", "windows", False))
         # output.append(self.__get_invalid_toolchain("windowsarm64", "windows_arm64", True))
@@ -301,9 +304,9 @@ class CcDependency(MultiResourceDependency):
         output.append(self.__get_invalid_toolchain("linuxathenastatic", "roborio", True))
         output.append(self.__get_invalid_toolchain("linuxarm32static", "bookworm32", True))
         output.append(self.__get_invalid_toolchain("linuxarm64static", "bookworm64", True))
-        output.append(self.__get_invalid_toolchain("raspi32static", "raspi32", True))
+        # output.append(self.__get_invalid_toolchain("raspi32static", "raspi32", True))
 
-        output.append(self.__get_invalid_toolchain("windowsx86-64static", "raspi32", False))
+        # output.append(self.__get_invalid_toolchain("windowsx86-64static", "raspi32", False))
         output.append(self.__get_invalid_toolchain("linuxx86-64static", "linux_x86_64", False))
 
         if self.__is_invalid_resource("osxx86-64static") and self.__is_invalid_resource("osxuniversalstatic"):

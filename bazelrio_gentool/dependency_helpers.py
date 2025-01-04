@@ -39,7 +39,7 @@ class BaseDependencyWriterHelper:
             return f"""
 local_path_override(
     module_name = "{self.repo_name}",
-    path = "../../{self.repo_name}",
+    path = "{self.local_path}",
 )"""
         return ""
 

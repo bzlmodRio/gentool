@@ -37,10 +37,10 @@ class MandetoryDependencySetting(BaseLocalDependencyWriterHelper):
 class BazelDependencyWithArchiveOverride(MandetoryDependencySetting):
     def __init__(self, commit_override, integrity, *kargs, **kwargs):
         MandetoryDependencySetting.__init__(self, *kargs, **kwargs)
-        
+
         self.commit_override = commit_override
         self.integrity = integrity
-        
+
     def module_dep(self, include_override=False):
         output = f'bazel_dep(name = "{self.repo_name}", version = "{self.sanitized_version}")'
         if include_override:
@@ -66,15 +66,10 @@ class BazelDependencyWithArchiveOverride(MandetoryDependencySetting):
 def create_default_mandatory_settings(generic_cli: GenericCliArgs):
     default_rules_bzlmodrio_toolchain = MandetoryDependencySetting(
         "rules_bzlmodrio_toolchains",
-        "2025-1",
-        generic_cli.use_local_roborio,
+        "2025-1.bcr1",
+        generic_cli.use_local_toolchains,
         url_base="https://github.com/wpilibsuite",
     )
-    # default_rules_bzlmodrio_jdk = MandetoryDependencySetting(
-    #     "rules_bzlmodrio_jdk",
-    #     "17.0.8+7",
-    #     generic_cli.use_local_roborio,
-    # )
     default_rules_bzlmodrio_jdk = None
     default_rules_bazelrio = MandetoryDependencySetting(
         "rules_bazelrio",
@@ -107,7 +102,7 @@ def create_default_mandatory_settings(generic_cli: GenericCliArgs):
         generic_cli.use_local_rules_wpi_styleguide,
     )
     default_rules_bzlmodrio_jdk = BazelDependencyWithArchiveOverride(
-        "4ecd4cbc97dfbfe2ceefa627de1228e2f2ca5773", 
+        "4ecd4cbc97dfbfe2ceefa627de1228e2f2ca5773",
         "sha256-SrikyrF2v2lENdqn9aFC//d0TkIE620lR60yXTrWFTs=",
         "rules_bzlmodrio_jdk",
         "17.0.12-7",
@@ -162,18 +157,16 @@ def generate_module_project_files(
     no_roborio=False,
     test_macos=True,
     include_windows_arm_compiler=True,
-    include_bullseye_compiler=True,
-    include_bookworm32_compiler=False,
-    include_bookworm64_compiler=False,
+    include_linuxarm32_compiler=True,
+    include_linuxarm64_compiler=True,
 ):
     write_shared_root_files(
         module_directory,
         group,
         test_macos=test_macos,
         include_windows_arm_compiler=include_windows_arm_compiler,
-        include_bullseye_compiler=include_bullseye_compiler,
-        include_bookworm32_compiler=include_bookworm32_compiler,
-        include_bookworm64_compiler=include_bookworm64_compiler,
+        include_linuxarm32_compiler=include_linuxarm32_compiler,
+        include_linuxarm64_compiler=include_linuxarm64_compiler,
     )
     write_shared_test_files(module_directory, group)
 

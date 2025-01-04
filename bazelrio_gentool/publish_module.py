@@ -34,7 +34,7 @@ def publish_module(
     )
 
     class DummyArgs(NamedTuple):
-        use_local_roborio: bool = False
+        use_local_toolchains: bool = False
         use_local_bazelrio: bool = False
         use_local_rules_pmd: bool = False
         use_local_rules_checkstyle: bool = False
@@ -47,7 +47,7 @@ def publish_module(
         GenericCliArgs(DummyArgs())
     )
 
-    # use_local_roborio=False,
+    # use_local_toolchains=False,
     # use_local_bazelrio=False,
     # use_local_rules_pmd=False,
     # use_local_rules_checkstyle=False,

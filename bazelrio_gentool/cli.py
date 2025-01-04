@@ -1,5 +1,5 @@
 def add_generic_cli(parser):
-    parser.add_argument("--use_local_roborio", action="store_true")
+    parser.add_argument("--use_local_toolchains", action="store_true")
     parser.add_argument("--use_local_bazelrio", action="store_true")
     parser.add_argument("--use_local_rules_pmd", action="store_true")
     parser.add_argument("--use_local_rules_checkstyle", action="store_true")
@@ -12,7 +12,7 @@ def add_generic_cli(parser):
 
 class GenericCliArgs:
     def __init__(self, args):
-        self.use_local_roborio = args.use_local_roborio
+        self.use_local_toolchains = args.use_local_toolchains
         self.use_local_bazelrio = args.use_local_bazelrio
 
         self.use_local_rules_pmd = args.use_local_rules_pmd

@@ -1,6 +1,6 @@
 module(
     name = "{{group.repo_name}}",
-    version = "{{group.version}}",
+    version = "{{group.version}}{{group.patch}}",
     compatibility_level = {{group.year}},
 )
 
@@ -14,6 +14,7 @@ use_repo(
 {%- for config in group.configs %}
     "bazelrio_{{config.short_name_underscore}}_toolchain_linux",
     "bazelrio_{{config.short_name_underscore}}_toolchain_macos",
+    "bazelrio_{{config.short_name_underscore}}_toolchain_macosarm",
     "bazelrio_{{config.short_name_underscore}}_toolchain_windows",
 {%- endfor %}
 )

@@ -120,6 +120,9 @@ bzlmodrio-ni:
   2025.0.0:
     sha: 197fceac88bf44fb8427d5e000b0083118d3346172dd2ad31eccf83a5e61b3ce
     commitish: f8a4fe51694b620153a54023b08db23cf23535ba
+  2025.2.0:
+    sha: fff62c3cb3e83f9a0d0a01f1739477c9ca5e9a6fac05be1ad59dafcd385801f7
+    commitish: 5e85982958f908860cc4bf6c01404fec2d7a8d81
 bzlmodrio-opencv:
   4.6.0-4:
     commitish: bcbc5d24b9ae68b083dd79f4c874428910e24924
@@ -145,6 +148,9 @@ bzlmodrio-opencv:
   2025.4.10.0-2:
     sha: 4f4a607956ca8555618736c3058dd96e09d02df19e95088c1e352d2319fd70c7
     commitish: b2e8515864229cb67184d4bc566401e8acee58bc
+  2025.4.10.0-3:
+    sha: 58c0069fc323259f3993750fe8245798f0db8b2fbf3772c5136253fa92912a16
+    commitish: 5e85982958f908860cc4bf6c01404fec2d7a8d81
 bzlmodrio-phoenix:
   5.30.4:
     commitish: afe60c54cd56b6b90fca3fd54f6999c871814102
@@ -254,6 +260,9 @@ rules_bzlmodrio_toolchains:
   2025-1:
     sha: fe267e2af53c1def1e962700a9aeda9e8fdfa9fb46b72167c615ec0e25447dd6
     commitish: 07620eb3471fdeb33ef324751d4dc518d02be451
+  2025-1.bcr1:
+    sha: 559ff5ddc402dca6266a765770c3a65db23e2060c45355c57612737bcc592b78
+    commitish: 5e85982958f908860cc4bf6c01404fec2d7a8d81
 rules_checkstyle:
   '10.1':
     commitish: 3f1928cfc2182ff0ebb225dd0f8fce2119e8c804

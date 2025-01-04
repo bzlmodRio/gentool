@@ -11,13 +11,19 @@ from bazelrio_gentool.generate_shared_files import (
 )
 
 
-def generate_toolchain(module_directory, container, mandatory_dependencies, 
-    include_raspi_compiler = True,
-    include_bullseye_compiler=True,
-    include_bookworm32_compiler=False,
-    include_bookworm64_compiler=False,
-    ):
-    write_shared_root_files(module_directory, container, include_raspi_compiler=include_raspi_compiler, include_bullseye_compiler=include_bullseye_compiler, include_bookworm32_compiler=include_bookworm32_compiler, include_bookworm64_compiler=include_bookworm64_compiler)
+def generate_toolchain(
+    module_directory,
+    container,
+    mandatory_dependencies,
+    include_linuxarm32_compiler=True,
+    include_linuxarm64_compiler=True,
+):
+    write_shared_root_files(
+        module_directory,
+        container,
+        include_linuxarm32_compiler=include_linuxarm32_compiler,
+        include_linuxarm64_compiler=include_linuxarm64_compiler,
+    )
     write_shared_test_files(module_directory, container)
 
     template_files = [
