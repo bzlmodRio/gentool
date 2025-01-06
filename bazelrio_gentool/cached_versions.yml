@@ -571,3 +571,6 @@ bzlmodrio-studica:
   2025.1.1-beta-4:
     sha: 92861b89ccb4fc33ab695f89d02ceb4f725f85ba56a143b5974de56125d9ee7c
     commitish: 2f500dff8f71ef09e7d334b56b4313410c03d249
+  2025.0.0:
+    sha: 1e651ed7bc41d457204e533d6b53e177d19809f9605cf9e17ce27e663ef8ddd4
+    commitish: 0b23ca093bf4db7bcddc08da9dddba63b568c91e
