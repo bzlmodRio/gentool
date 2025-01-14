@@ -36,7 +36,7 @@ def _setup_toolchains():
     load_toolchains()
 
     native.register_toolchains(
-{%- for compiler_short_name in ["roborio", "systemcore", "raspi_bullseye32", "raspi_bookworm_32", "bullseye_32", "bullseye_64", "bookworm_32", "bookworm_64"] %}
+{%- for compiler_short_name in ["roborio", "systemcore", "raspi_bullseye_32", "raspi_bookworm_32", "bullseye_32", "bullseye_64", "bookworm_32", "bookworm_64"] %}
         "@local_{{ compiler_short_name }}//:macos",
         "@local_{{ compiler_short_name }}//:linux",
         "@local_{{ compiler_short_name }}//:windows",

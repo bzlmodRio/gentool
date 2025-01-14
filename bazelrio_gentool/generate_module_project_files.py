@@ -44,8 +44,9 @@ class BazelDependencyWithArchiveOverride(MandetoryDependencySetting):
     def module_dep(self, include_override=False):
         output = f'bazel_dep(name = "{self.repo_name}", version = "{self.sanitized_version}")'
         if include_override:
-            output += f"""\n# TODO - TEMPORARY OVERRIDE
-archive_override(
+            if "jdk" not in self.repo_name:
+                output += "\n# TODO - TEMPORARY OVERRIDE"
+            output += f"""\narchive_override(
     module_name = "{self.repo_name}",
     integrity = "{self.integrity}",
     strip_prefix = "{self.repo_name}-{self.commit_override}",
@@ -56,14 +57,17 @@ archive_override(
 
     def download_repository(self, num_indent, native=False, maybe=False):
         indent = " " * num_indent
-        return f"""# TODO - TEMPORARY OVERRIDE
-{indent}http_archive(
+        output = ""
+        if "jdk" not in self.repo_name:
+            output = "# TODO - TEMPORARY OVERRIDE\n"
+        output += f"""{indent}http_archive(
 {indent}    name = "{self.repo_name}",
 {indent}    integrity = "{self.integrity}",
 {indent}    strip_prefix = "{self.repo_name}-{self.commit_override}",
 {indent}    urls = ["https://github.com/wpilibsuite/{self.repo_name.replace('bzlmodrio', 'bzlmodRio')}/archive/{self.commit_override}.tar.gz"],
 )
 """
+        return output
 
 
 def create_default_mandatory_settings(generic_cli: GenericCliArgs):
