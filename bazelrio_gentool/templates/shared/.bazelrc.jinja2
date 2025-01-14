@@ -7,45 +7,14 @@ import .bazelrc-buildbuddy
 
 build --test_env=LD_LIBRARY_PATH=.
 build --test_env=DYLD_LIBRARY_PATH=.
-
-# Roborio
-build:roborio --platforms=@rules_bzlmodrio_toolchains//platforms/roborio
-build:roborio --build_tag_filters=-no-roborio
-build:roborio --platform_suffix=roborio
-
-# bullseye32
-build:bullseye32 --platforms=@rules_bzlmodrio_toolchains//platforms/bullseye32
-build:bullseye32 --build_tag_filters=-no-bullseye
-build:bullseye32 --platform_suffix=bullseye32
-
-# bullseye64
-build:bullseye64 --platforms=@rules_bzlmodrio_toolchains//platforms/bullseye64
-build:bullseye64 --build_tag_filters=-no-bullseye
-build:bullseye64 --platform_suffix=bullseye64
-
-# bookworm32
-build:bookworm32 --platforms=@rules_bzlmodrio_toolchains//platforms/bookworm32
-build:bookworm32 --build_tag_filters=-no-bookworm
-build:bookworm32 --platform_suffix=bookworm32
-
-# bookworm64
-build:bookworm64 --platforms=@rules_bzlmodrio_toolchains//platforms/bookworm64
-build:bookworm64 --build_tag_filters=-no-bookworm
-build:bookworm64 --platform_suffix=bookworm64
-
-# rasppi bullseye
-build:raspibullseye32 --platforms=@rules_bzlmodrio_toolchains//platforms/raspibullseye32
-build:raspibullseye32 --build_tag_filters=-no-raspi
-build:raspibullseye32 --platform_suffix=raspibullseye32
-
-# rasppi bookworm
-build:raspibookworm32 --platforms=@rules_bzlmodrio_toolchains//platforms/raspibookworm32
-build:raspibookworm32 --build_tag_filters=-no-raspi
-build:raspibookworm32 --platform_suffix=raspibookworm32
-
+{% for compiler_short_name in ["roborio", "systemcore", "bullseye32", "bullseye64", "bookworm32", "bookworm64", "raspibullseye32", "raspibookworm32"] %}
+# {{compiler_short_name}}
+build:{{compiler_short_name}} --platforms=@rules_bzlmodrio_toolchains//platforms/{{compiler_short_name}}
+build:{{compiler_short_name}} --build_tag_filters=-no-{{compiler_short_name}}
+build:{{compiler_short_name}} --platform_suffix={{compiler_short_name}}
+{% endfor %}
 # Alias toolchain names to what wpilibsuite uses for CI/Artifact naming
 build:athena --config=roborio
-build:systemcore --config=bookworm64
 build:linuxarm32 --config=raspibookworm32
 build:linuxarm64 --config=bookworm64
 

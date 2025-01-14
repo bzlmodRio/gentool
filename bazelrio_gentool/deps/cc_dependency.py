@@ -183,10 +183,10 @@ class CcDependency(MultiResourceDependency):
         "linuxarm64static": "@rules_bzlmodrio_toolchains//constraints/is_bookworm64:bookworm64",
         "linuxarm64staticdebug": "@rules_bzlmodrio_toolchains//constraints/is_bookworm64:bookworm64_debug",
         
-        # "linuxsystemcore": "@rules_bzlmodrio_toolchains//constraints/is_bookworm64:bookworm64",
-        # "linuxsystemcoredebug": "@rules_bzlmodrio_toolchains//constraints/is_bookworm64:bookworm64_debug",
-        # "linuxsystemcorestatic": "@rules_bzlmodrio_toolchains//constraints/is_bookworm64:bookworm64",
-        # "linuxsystemcorestaticdebug": "@rules_bzlmodrio_toolchains//constraints/is_bookworm64:bookworm64_debug",
+        "linuxsystemcore": "@rules_bzlmodrio_toolchains//constraints/is_systemcore:systemcore",
+        "linuxsystemcoredebug": "@rules_bzlmodrio_toolchains//constraints/is_systemcore:systemcore_debug",
+        "linuxsystemcorestatic": "@rules_bzlmodrio_toolchains//constraints/is_systemcore:systemcore",
+        "linuxsystemcorestaticdebug": "@rules_bzlmodrio_toolchains//constraints/is_systemcore:systemcore_debug",
     }
 
     def __make_ignored_platforms(base_platform):

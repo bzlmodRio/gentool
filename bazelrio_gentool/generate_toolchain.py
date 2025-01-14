@@ -57,6 +57,7 @@ def generate_toolchain(
     )
 
     for config in container.configs:
+        print(config)
         template_file = os.path.join(
             TEMPLATE_BASE_DIR, "toolchains", "per_toolchain", "constraint_build.jinja2"
         )
