@@ -10,10 +10,15 @@ def write_shared_root_files(
     module_directory,
     group,
     include_linuxarm32_compiler=True,
-    include_linuxarm64_compiler=False,
+    include_linuxarm64_compiler=True,
+    include_systemcore_compiler=False,
     test_macos=True,
     include_windows_arm_compiler=True,
 ):
+    if not include_linuxarm32_compiler:
+        raise
+    if not include_linuxarm64_compiler:
+        raise
     template_files = [
         ".github/actions/setup-build-buddy/action.yml",
         ".github/workflows/build.yml",
@@ -45,6 +50,7 @@ def write_shared_root_files(
         group=group,
         include_linuxarm32_compiler=include_linuxarm32_compiler,
         include_linuxarm64_compiler=include_linuxarm64_compiler,
+        include_systemcore_compiler=include_systemcore_compiler,
         include_windows_arm_compiler=include_windows_arm_compiler,
         test_macos=test_macos,
     )

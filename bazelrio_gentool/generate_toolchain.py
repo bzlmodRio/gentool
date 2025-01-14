@@ -17,12 +17,21 @@ def generate_toolchain(
     mandatory_dependencies,
     include_linuxarm32_compiler=True,
     include_linuxarm64_compiler=True,
+    include_systemcore_compiler=True,
 ):
+    if not include_linuxarm32_compiler:
+        raise
+    if not include_linuxarm64_compiler:
+        raise
+    if not include_systemcore_compiler:
+        raise
+
     write_shared_root_files(
         module_directory,
         container,
         include_linuxarm32_compiler=include_linuxarm32_compiler,
         include_linuxarm64_compiler=include_linuxarm64_compiler,
+        include_systemcore_compiler=include_systemcore_compiler,
     )
     write_shared_test_files(module_directory, container)
 

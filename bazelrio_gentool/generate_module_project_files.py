@@ -44,27 +44,38 @@ class BazelDependencyWithArchiveOverride(MandetoryDependencySetting):
     def module_dep(self, include_override=False):
         output = f'bazel_dep(name = "{self.repo_name}", version = "{self.sanitized_version}")'
         if include_override:
-            output += f"""\narchive_override(
+            output += f"""\n# TODO - TEMPORARY OVERRIDE
+archive_override(
     module_name = "{self.repo_name}",
     integrity = "{self.integrity}",
     strip_prefix = "{self.repo_name}-{self.commit_override}",
-    urls = ["https://github.com/wpilibsuite/rules_bzlmodRio_jdk/archive/{self.commit_override}.tar.gz"],
+    urls = ["https://github.com/wpilibsuite/{self.repo_name.replace('bzlmodrio', 'bzlmodRio')}/archive/{self.commit_override}.tar.gz"],
 )
 """
         return output
 
     def download_repository(self, num_indent, native=False, maybe=False):
-        return f"""http_archive(
-    name = "{self.repo_name}",
-    integrity = "{self.integrity}",
-    strip_prefix = "rules_bzlmodrio_jdk-{self.commit_override}",
-    urls = ["https://github.com/wpilibsuite/rules_bzlmodRio_jdk/archive/{self.commit_override}.tar.gz"],
+        indent = " " * num_indent
+        return f"""# TODO - TEMPORARY OVERRIDE
+{indent}http_archive(
+{indent}    name = "{self.repo_name}",
+{indent}    integrity = "{self.integrity}",
+{indent}    strip_prefix = "{self.repo_name}-{self.commit_override}",
+{indent}    urls = ["https://github.com/wpilibsuite/{self.repo_name.replace('bzlmodrio', 'bzlmodRio')}/archive/{self.commit_override}.tar.gz"],
 )
 """
 
 
 def create_default_mandatory_settings(generic_cli: GenericCliArgs):
-    default_rules_bzlmodrio_toolchain = MandetoryDependencySetting(
+    # default_rules_bzlmodrio_toolchain = MandetoryDependencySetting(
+    #     "rules_bzlmodrio_toolchains",
+    #     "2025-1.bcr1",
+    #     generic_cli.use_local_toolchains,
+    #     url_base="https://github.com/wpilibsuite",
+    # )
+    default_rules_bzlmodrio_toolchain = BazelDependencyWithArchiveOverride(
+        "696c423fd86e9dd0dfbf17fb151295ddf1a03468",
+        "sha256-45EV1waPl/X8S1LocEDpYD6W3XMsX5W3f/1cLPS/VK8=",
         "rules_bzlmodrio_toolchains",
         "2025-1.bcr1",
         generic_cli.use_local_toolchains,
@@ -159,6 +170,7 @@ def generate_module_project_files(
     include_windows_arm_compiler=True,
     include_linuxarm32_compiler=True,
     include_linuxarm64_compiler=True,
+    include_systemcore_compiler=False,
 ):
     write_shared_root_files(
         module_directory,
@@ -167,6 +179,7 @@ def generate_module_project_files(
         include_windows_arm_compiler=include_windows_arm_compiler,
         include_linuxarm32_compiler=include_linuxarm32_compiler,
         include_linuxarm64_compiler=include_linuxarm64_compiler,
+        include_systemcore_compiler=include_systemcore_compiler,
     )
     write_shared_test_files(module_directory, group)
 
