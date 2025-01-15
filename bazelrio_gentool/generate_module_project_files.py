@@ -81,7 +81,7 @@ def create_default_mandatory_settings(generic_cli: GenericCliArgs):
         "696c423fd86e9dd0dfbf17fb151295ddf1a03468",
         "sha256-45EV1waPl/X8S1LocEDpYD6W3XMsX5W3f/1cLPS/VK8=",
         "rules_bzlmodrio_toolchains",
-        "2025-1.bcr1",
+        "2025-1.bcr2",
         generic_cli.use_local_toolchains,
         url_base="https://github.com/wpilibsuite",
     )
