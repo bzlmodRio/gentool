@@ -2,12 +2,9 @@
     name = "{{target.artifact_name}}",
     actual = "@bzlmodrio-allwpilib//libraries/tools/{% if True %}{{target.artifact_name.lower()}}{%else%} TODO {%endif%}",
     tags = [
-        "no-bullseye32",
-        "no-bullseye64",
-        "no-bookworm32",
-        "no-bookworm64",
-        "no-raspi",
-        "no-roborio",
+{%- for compiler in known_cross_compilers %}
+        "no-{{compiler}}", 
+{% endfor %}
     ],
 )
 
@@ -17,12 +14,9 @@ alias(
     name = "{{target.artifact_name}}",
     actual = "@bzlmodrio-allwpilib//libraries/tools/{{target.artifact_name}}",
     tags = [
-        "no-bullseye32",
-        "no-bullseye64",
-        "no-bookworm32",
-        "no-bookworm64",
-        "no-raspi",
-        "no-roborio",
+{%- for compiler in known_cross_compilers %}
+        "no-{{compiler}}", 
+{% endfor %}
     ],
 )
 {% endfor %}

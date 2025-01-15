@@ -7,7 +7,7 @@ import .bazelrc-buildbuddy
 
 build --test_env=LD_LIBRARY_PATH=.
 build --test_env=DYLD_LIBRARY_PATH=.
-{% for compiler_short_name in ["roborio", "systemcore", "bullseye32", "bullseye64", "bookworm32", "bookworm64", "raspibullseye32", "raspibookworm32"] %}
+{% for compiler_short_name in known_cross_compilers %}
 # {{compiler_short_name}}
 build:{{compiler_short_name}} --platforms=@rules_bzlmodrio_toolchains//platforms/{{compiler_short_name}}
 build:{{compiler_short_name}} --build_tag_filters=-no-{{compiler_short_name}}

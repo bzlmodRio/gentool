@@ -39,7 +39,7 @@ build:macos --cxxopt=-Wno-error=deprecated-enum-enum-conversion
 build:macos --cxxopt=-Wno-error=deprecated-anon-enum-enum-conversion
 build:macos --cxxopt=-Wno-error=inconsistent-missing-override
 build:macos --cxxopt=-Wno-error=overloaded-virtual
-{% for compiler_short_name in ["roborio", "systemcore", "bullseye32", "bullseye64", "bookworm32", "bookworm64", "raspibullseye32", "raspibookworm32"] %}
+{% for compiler_short_name in known_cross_compilers %}
 # {{compiler_short_name}}
 build:{{compiler_short_name}} --incompatible_enable_cc_toolchain_resolution
 build:{{compiler_short_name}} --copt=-std=c++20
