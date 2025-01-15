@@ -55,7 +55,10 @@ class BazelDependencyWithArchiveOverride(MandetoryDependencySetting):
 """
         return output
 
-    def download_repository(self, num_indent, native=False, maybe=False):
+    def download_repository(self, num_indent, native=False, maybe=False, include_override=False):
+        if not include_override:
+            return MandetoryDependencySetting.download_repository(self, num_indent, native, maybe)
+    
         indent = " " * num_indent
         output = ""
         if "jdk" not in self.repo_name:

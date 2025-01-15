@@ -276,7 +276,7 @@ rules_bzlmodrio_toolchains:
     sha: 559ff5ddc402dca6266a765770c3a65db23e2060c45355c57612737bcc592b78
     commitish: 5e85982958f908860cc4bf6c01404fec2d7a8d81
   2025-1.bcr2:
-    sha: cf0210d99945d5b7eb5f7ede8e75b17f76dfdf83bef7d874f3fd77e304e209bd
+    sha: ff25b5f9445cbd43759be4c6582b987d1065cf817c593eedc7ada1a699298c84
     commitish: b8b2fb96c77f73ac47eaf94b8a1670c90d392461
 rules_checkstyle:
   '10.1':

@@ -73,7 +73,7 @@ load("@rules_wpi_styleguide//dependencies:load_pins.bzl", "load_styleguide_pins"
 load_styleguide_pins()
 #####################
 {% if group.java_deps %}
-{{ mandatory_dependencies.rules_bzlmodrio_jdk.download_repository(0, native=False) }}
+{{ mandatory_dependencies.rules_bzlmodrio_jdk.download_repository(0, native=False, include_override=True) }}
 
 load("@rules_bzlmodrio_jdk//:maven_deps.bzl", "setup_legacy_setup_jdk_dependencies")
 
