@@ -395,6 +395,9 @@ bzlmodrio-photonlib:
   v2025.0.0-beta-8:
     sha: fc2025b04faafa08902b60b4f2cc7b562232426c652f7395b837f47c86161ede
     commitish: 1a35045b42b4041d40a9cefbe2fa9135ab57a050
+  v2025.1.1:
+    sha: a5c6ff465ac48fa0d1b9f5db95f3ace5fbde2941729846af1d0ca16d1bb8b66c
+    commitish: f9aeb71ed07d7b15a0e5b2c46ed2d0a36165cc66
 bzlmodrio-pathplannerlib:
   2023.4.4:
     sha: 3792f6e7e7e94c3956176b08b11157a6618fa0c94fc86bef2a48a71b8d741316
