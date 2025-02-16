@@ -7,6 +7,11 @@ def download_dependencies():
     # JVM External
 {{ bazel_dependencies.rules_jvm_external.download_repository(4, maybe=False)}}
 
+{%- if group.executable_tools %}
+    # Rules Shell
+{{ bazel_dependencies.rules_shell.download_repository(indent_num=4, maybe=False) }}
+{%- endif %}
+
     # Bazelrio Rules
 {{ mandatory_dependencies.rules_bazelrio.download_repository(4) }}
 {%- if not no_roborio %}

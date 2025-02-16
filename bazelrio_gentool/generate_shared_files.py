@@ -130,6 +130,13 @@ class BazelDependencySetting(BaseDependencyWriterHelper):
 )"""
         #         if self.use_long_form:
         #             return self.temp_longform_http_archive(indent_num, maybe)
+        if self.repo_name == "rules_shell":
+            return f"""{" " * indent_num}http_archive(
+    name = "{self.repo_name}",
+    sha256 = "{self.sha}",
+    strip_prefix = "rules_shell-{self.version}",
+    url = "https://github.com/bazelbuild/{self.repo_name}/releases/download/v{self.version}/rules_shell-v{self.version}.tar.gz",
+)"""
         return self.http_archive(indent_num=indent_num, maybe=maybe, native=False)
 
 
@@ -164,6 +171,12 @@ def get_bazel_dependencies():
         needs_stripped_prefix=True,
         # use_zip=True,
         # use_long_form=True,
+    )
+    add_dep(
+        repo_name="rules_shell",
+        version="0.4.0",
+        sha="3e114424a5c7e4fd43e0133cc6ecdfe54e45ae8affa14fadd839f29901424043",
+        needs_stripped_prefix=True,
     )
     add_dep(
         repo_name="rules_proto",
