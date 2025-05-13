@@ -13,16 +13,18 @@ static_srcs = glob([
         "**/*.lib",
         "**/*.a"
     ],
-    exclude=["**/*jni.lib"]
+    exclude=["**/*jni.lib"],
+    allow_empty=True,
 )
 shared_srcs = glob([
         "**/*.dll",
         "**/*.so*",
         "**/*.dylib",
     ],
-    exclude=JNI_PATTERN + ["**/*.so.debug"]
+    exclude=JNI_PATTERN + ["**/*.so.debug"],
+    allow_empty = True,
 )
-shared_jni_srcs = glob(JNI_PATTERN, exclude=["**/*.so.debug"])
+shared_jni_srcs = glob(JNI_PATTERN, exclude=["**/*.so.debug"], allow_empty=True)
 
 {%- if target.get_shared_library_interface_select() != "," %}
 filegroup(

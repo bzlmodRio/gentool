@@ -135,6 +135,9 @@ bzlmodrio-ni:
   2025.2.0:
     sha: fff62c3cb3e83f9a0d0a01f1739477c9ca5e9a6fac05be1ad59dafcd385801f7
     commitish: 5e85982958f908860cc4bf6c01404fec2d7a8d81
+  2025.2.0.bcr1:
+    sha: 5ee1e2d6c1a670eba178eaa5c933f31dccf550b7ab613d4b22c37ead45497c45
+    commitish: 2deb572e205e587cb2c405bcd6619b060d2cbc36
 bzlmodrio-opencv:
   4.6.0-4:
     commitish: bcbc5d24b9ae68b083dd79f4c874428910e24924
@@ -163,6 +166,9 @@ bzlmodrio-opencv:
   2025.4.10.0-3:
     sha: 58c0069fc323259f3993750fe8245798f0db8b2fbf3772c5136253fa92912a16
     commitish: 5e85982958f908860cc4bf6c01404fec2d7a8d81
+  2025.4.10.0-3.bcr2:
+    sha: 6e8544fae07ed5b4fedc146f6ad083d0d8947e3efb5332a20abc46601a52a1b5
+    commitish: 2deb572e205e587cb2c405bcd6619b060d2cbc36
 bzlmodrio-phoenix:
   5.30.4:
     commitish: afe60c54cd56b6b90fca3fd54f6999c871814102
