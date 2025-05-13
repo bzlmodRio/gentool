@@ -22,7 +22,16 @@ def render_template(template_file, output_file, **kwargs):
     template_file = os.path.join(TEMPLATE_BASE_DIR, template_file)
 
     template_contents = open(template_file, "r").read()
-    known_cross_compilers=["roborio", "systemcore", "bullseye32", "bullseye64", "bookworm32", "bookworm64", "raspibullseye32", "raspibookworm32"]
+    known_cross_compilers = [
+        "roborio",
+        "systemcore",
+        "bullseye32",
+        "bullseye64",
+        "bookworm32",
+        "bookworm64",
+        "raspibullseye32",
+        "raspibookworm32",
+    ]
     try:
         template = Environment(loader=FileSystemLoader(TEMPLATE_BASE_DIR)).from_string(
             template_contents
