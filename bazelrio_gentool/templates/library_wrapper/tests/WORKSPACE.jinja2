@@ -6,16 +6,43 @@ local_repository(
     path = "../",
 )
 
-# Google Test
-{{bazel_dependencies.googletest.download_repository(indent_num=0, maybe=False) }}
 
-load("@{{group.repo_name}}//private/non_bzlmod_dependencies:download_dependencies.bzl", "download_dependencies")
+########################
+# Download Dependencies
+########################
+{{ bazel_dependencies.rules_java.download_repository(indent_num=0, maybe=False) }}
+{{ bazel_dependencies.rules_jvm_external.download_repository(0, maybe=False)}}
+{%- if group.executable_tools %}
+{{ bazel_dependencies.rules_shell.download_repository(indent_num=0, maybe=False) }}
+{%- endif %}
+{{ mandatory_dependencies.rules_bazelrio.download_repository(0) }}
+{%- if not no_roborio %}
+{{ mandatory_dependencies.rules_bzlmodrio_toolchain.download_repository(0, include_override=False) }}
+{%- endif %}
+{% for name, module_dep in group.module_dependencies.items() %}
+{{ module_dep.download_repository(0) }}
+{% endfor %}
+{{bazel_dependencies.googletest.download_repository(0, maybe=False) }}
+{{ mandatory_dependencies.rules_pmd.download_repository(0, maybe=False) }}
+{{ mandatory_dependencies.rules_checkstyle.download_repository(0, maybe=False) }}
+{{ mandatory_dependencies.rules_wpiformat.download_repository(0, maybe=False) }}
+{{ mandatory_dependencies.rules_spotless.download_repository(0, maybe=False) }}
+{{ bazel_dependencies.rules_python.download_repository(0, maybe=False) }}
+{{ bazel_dependencies.rules_proto.download_repository(0, maybe=False) }}
+########################
 
-download_dependencies()
+########################
+# Setup Dependencies
+########################
+load("@rules_python//python:repositories.bzl", "py_repositories")
+
+py_repositories()
 
 load("@{{group.repo_name}}//private/non_bzlmod_dependencies:setup_dependencies.bzl", {% if group.has_any_maven_deps() %}"get_java_dependenicies", {% endif %}"setup_dependencies")
 
 setup_dependencies()
+########################
+
 {% if group.java_deps %}
 load("@rules_jvm_external//:defs.bzl", "maven_install")
 
@@ -46,30 +73,27 @@ maven_install(
 #####################
 # Styleguide
 #####################
-{{ mandatory_dependencies.rules_pmd.maybe_local_repository() }}
-{{ mandatory_dependencies.rules_checkstyle.maybe_local_repository() }}
-{{ mandatory_dependencies.rules_spotless.maybe_local_repository() }}
-{{ mandatory_dependencies.rules_wpiformat.maybe_local_repository() }}
 {{ mandatory_dependencies.rules_wpi_styleguide.download_repository(0, native=False) }}
 
-load("@rules_wpi_styleguide//dependencies:load_rule_dependencies.bzl", "load_styleguide_rule_dependencies")
+load("@rules_checkstyle//dependencies:load_rule_dependencies.bzl", "load_checkstyle_rule_dependencies")
+load("@rules_pmd//dependencies:load_rule_dependencies.bzl", "load_pmd_rule_dependencies")
+load("@rules_spotless//dependencies:load_rule_dependencies.bzl", "load_spotless_rule_dependencies")
+load("@rules_wpiformat//dependencies:load_rule_dependencies.bzl", "load_wpiformat_rule_dependencies")
 
-load_styleguide_rule_dependencies()
+load_pmd_rule_dependencies()
+load_checkstyle_rule_dependencies()
+load_wpiformat_rule_dependencies()
+load_spotless_rule_dependencies()
 
-load("@rules_wpi_styleguide//dependencies:load_dependencies.bzl", "load_styleguide_dependencies")
-
-load_styleguide_dependencies()
-
-load("@rules_wpi_styleguide//dependencies:load_transitive_dependencies.bzl", "load_styleguide_transitive_dependencies")
-
-load_styleguide_transitive_dependencies()
+load("@rules_wpiformat//dependencies:load_dependencies.bzl", "load_wpiformat_dependencies")
+load_wpiformat_dependencies()
 
 load("@rules_wpi_styleguide//dependencies:setup_styleguide.bzl", "setup_styleguide")
 
 setup_styleguide()
-
+ 
 load("@rules_wpi_styleguide//dependencies:load_pins.bzl", "load_styleguide_pins")
-
+ 
 load_styleguide_pins()
 #####################
 {% if group.java_deps %}

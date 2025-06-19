@@ -200,7 +200,6 @@ def generate_module_project_files(
         "WORKSPACE",
         ".bazelrc-java",
         "private/non_bzlmod_dependencies/BUILD.bazel",
-        "private/non_bzlmod_dependencies/download_dependencies.bzl",
         "private/non_bzlmod_dependencies/setup_dependencies.bzl",
         "tests/MODULE.bazel",
         "tests/WORKSPACE",
