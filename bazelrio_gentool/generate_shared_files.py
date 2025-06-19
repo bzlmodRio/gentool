@@ -156,18 +156,27 @@ def get_bazel_dependencies():
         version="1.14.0",
         sha="8ad598c73ad796e0d8280b082cebd82a630d73e73cd3c70057938a6501bba5d7",
     )
-    add_dep(repo_name="platforms", version="0.0.9", sha="")
-    add_dep(repo_name="rules_cc", version="0.0.9", sha="")
+    add_dep(
+        repo_name="platforms", 
+        version="0.0.9",
+        sha="",
+    )
+    add_dep(
+        repo_name="rules_cc", 
+        version="0.1.1", 
+        needs_stripped_prefix=True,
+        sha="712d77868b3152dd618c4d64faaddefcc5965f90f5de6e6dd1d5ddcd0be82d42",
+    )
     add_dep(
         repo_name="rules_java",
-        version="7.6.5",
-        sha="8afd053dd2a7b85a4f033584f30a7f1666c5492c56c76e04eec4428bdb2a86cf",
+        version="8.11.0",
+        sha="d31b6c69e479ffa45460b64dc9c7792a431cac721ef8d5219fc9f603fa2ff877",
         # use_long_form=True,
     )
     add_dep(
         repo_name="rules_jvm_external",
-        version="6.1",
-        sha="08ea921df02ffe9924123b0686dc04fd0ff875710bfadb7ad42badb931b0fd50",
+        version="6.3",
+        sha="c18a69d784bcd851be95897ca0eca0b57dc86bb02e62402f15736df44160eb02",
         needs_stripped_prefix=True,
         # use_zip=True,
         # use_long_form=True,

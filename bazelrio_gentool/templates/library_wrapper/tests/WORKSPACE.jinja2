@@ -10,6 +10,7 @@ local_repository(
 ########################
 # Download Dependencies
 ########################
+{{ bazel_dependencies.rules_cc.download_repository(indent_num=0, maybe=False) }}
 {{ bazel_dependencies.rules_java.download_repository(indent_num=0, maybe=False) }}
 {{ bazel_dependencies.rules_jvm_external.download_repository(0, maybe=False)}}
 {%- if group.executable_tools %}
@@ -29,14 +30,44 @@ local_repository(
 {{ mandatory_dependencies.rules_spotless.download_repository(0, maybe=False) }}
 {{ bazel_dependencies.rules_python.download_repository(0, maybe=False) }}
 {{ bazel_dependencies.rules_proto.download_repository(0, maybe=False) }}
+
+http_archive(
+    name = "com_google_protobuf",
+    sha256 = "da288bf1daa6c04d03a9051781caa52aceb9163586bff9aa6cfb12f69b9395aa",
+    strip_prefix = "protobuf-27.0",
+    urls = [
+        "https://github.com/protocolbuffers/protobuf/archive/v27.0.tar.gz",
+    ],
+)
 ########################
 
 ########################
 # Setup Dependencies
 ########################
+
+load("@com_google_protobuf//:protobuf_deps.bzl", "protobuf_deps")
+
+protobuf_deps()
+
+load("@rules_java//java:rules_java_deps.bzl", "rules_java_dependencies")
+
+rules_java_dependencies()
+
+load("@rules_java//java:repositories.bzl", "rules_java_toolchains")
+
+rules_java_toolchains()
+
 load("@rules_python//python:repositories.bzl", "py_repositories")
 
 py_repositories()
+
+load("@rules_jvm_external//:repositories.bzl", "rules_jvm_external_deps")
+
+rules_jvm_external_deps()
+
+load("@rules_jvm_external//:setup.bzl", "rules_jvm_external_setup")
+
+rules_jvm_external_setup()
 
 load("@{{group.repo_name}}//private/non_bzlmod_dependencies:setup_dependencies.bzl", {% if group.has_any_maven_deps() %}"get_java_dependenicies", {% endif %}"setup_dependencies")
 

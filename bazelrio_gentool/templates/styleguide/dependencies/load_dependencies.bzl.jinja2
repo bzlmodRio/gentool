@@ -9,12 +9,7 @@ load("@rules_python//python:pip.bzl", "pip_parse", "package_annotation")
 {% endif %}
 
 def load_{{ group.short_name }}_dependencies():
-    {% if group.has_protobuf %}
-    rules_proto_dependencies()
-    rules_proto_toolchains()
-    {% endif %}
     {% if group.is_java %}
-    rules_jvm_external_deps()
     maven_install(
         name = "{{group.repo_name}}_dependencies",
         artifacts = [
