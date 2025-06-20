@@ -323,6 +323,9 @@ rules_spotless:
   2.40.0:
     sha: 984b7b6f7da7b1963161812cf2a735e6e59958efdb641e2751af088ff4a03b97
     commitish: 0f47be29ff4c5b45d168277975d57b41465a6d51
+  2.40.0.bcr1:
+    sha: edb9b9768a44c23110b446624dcfd6717302cec51e5cad0b9156690d169bc8d5
+    commitish: c176a564090c48c0d9949b2ecdb745cb8e096e83
 rules_wpi_styleguide:
   1.0.0:
     commitish: 10cbb56dae6f6ab8189c57cbb2644c65b5550438
