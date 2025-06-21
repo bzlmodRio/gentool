@@ -309,6 +309,9 @@ rules_checkstyle:
   10.12.2:
     sha: 7194b5ceb525b997d13e0b37604df2c057ea99e15fd88501cd00847dd6b41697
     commitish: a106ed14650a8551d609160fadbbc4f9139e6910
+  10.12.2.bcr1:
+    sha: 7bfc1e0d587a30da4c6f0865fe8a8f2c5dfeaa188a3dd7047a4b9d0ba7192e4c
+    commitish: a3368468867d87093d138762e86dcf16e318861a
 rules_pmd:
   6.43.0:
     commitish: 21c168a40ea10c41eac30a637f2b924e0d8f71a5
