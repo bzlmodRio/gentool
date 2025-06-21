@@ -1,5 +1,7 @@
 workspace(name = "{{group.repo_name}}")
 
+load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive")
+
 
 load("@{{group.repo_name}}//:maven_deps.bzl", "setup_legacy_setup_toolchains_dependencies")
 
@@ -17,5 +19,4 @@ register_toolchains(
 {%- endfor %}
 )
 
-load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive")
 {{ bazel_dependencies.bazel_skylib.download_repository(indent_num=0, maybe=False) }}

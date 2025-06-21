@@ -41,12 +41,10 @@ def generate_styleguide_rule(
         "WORKSPACE",
         "dependencies/BUILD.bazel",
         "dependencies/load_dependencies.bzl",
-        "dependencies/load_rule_dependencies.bzl",
     ]
 
     if group.is_python:
         template_files.append("BUILD.bazel")
-        template_files.append("dependencies/load_transitive_dependencies.bzl")
 
     bazel_dependencies = get_bazel_dependencies()
 

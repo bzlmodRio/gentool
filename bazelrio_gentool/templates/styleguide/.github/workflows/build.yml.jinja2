@@ -13,9 +13,9 @@ jobs:
       matrix:
         include:
         # Build standard, native
-        - { name: "windows - native",        os: windows-2022,  command: "build",  config: "--config=windows", bazel_options: "", }
-        - { name: "ubuntu  - native",        os: ubuntu-22.04,  command: "build",  config: "--config=linux",   bazel_options: "", }
-        - { name: "macos   - native",        os: macos-14,      command: "build",  config: "--config=macos",   bazel_options: "", }
+        - { name: "windows - native",        os: windows-2022,  command: "build",  config: "--config=windows", bazel_options: "--noenable_bzlmod --enable_workspace", }
+        - { name: "ubuntu  - native",        os: ubuntu-22.04,  command: "build",  config: "--config=linux",   bazel_options: "--noenable_bzlmod --enable_workspace", }
+        - { name: "macos   - native",        os: macos-14,      command: "build",  config: "--config=macos",   bazel_options: "--noenable_bzlmod --enable_workspace", }
 
         # Build bzlmod, native
         - { name: "windows - bzlmod native", os: windows-2022,  command: "build",  config: "--enable_bzlmod --config=windows", bazel_options: "", }

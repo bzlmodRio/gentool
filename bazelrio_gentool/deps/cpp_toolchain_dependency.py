@@ -25,6 +25,8 @@ class CppToolchainConfig:
         sysroot_include_folder,
         cpp_url,
         cpp_platform_configs,
+        constraint_cpu,
+        target_cpu,
     ):
         self.repo_name = repo_name
         self.version = version
@@ -39,6 +41,8 @@ class CppToolchainConfig:
         self.sysroot_subfolder = sysroot_subfolder
         self.cxx_version = cxx_version
         self.sysroot_include_folder = sysroot_include_folder
+        self.constraint_cpu = constraint_cpu
+        self.target_cpu = target_cpu
 
         self.cpp_url = cpp_url
 

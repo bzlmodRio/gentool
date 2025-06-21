@@ -30,15 +30,8 @@ local_repository(
 {{ mandatory_dependencies.rules_spotless.download_repository(0, maybe=False) }}
 {{ bazel_dependencies.rules_python.download_repository(0, maybe=False) }}
 {{ bazel_dependencies.rules_proto.download_repository(0, maybe=False) }}
+{{ bazel_dependencies.protobuf.download_repository(0, maybe=False) }}
 
-http_archive(
-    name = "com_google_protobuf",
-    sha256 = "da288bf1daa6c04d03a9051781caa52aceb9163586bff9aa6cfb12f69b9395aa",
-    strip_prefix = "protobuf-27.0",
-    urls = [
-        "https://github.com/protocolbuffers/protobuf/archive/v27.0.tar.gz",
-    ],
-)
 ########################
 
 ########################
@@ -72,6 +65,12 @@ rules_jvm_external_setup()
 load("@{{group.repo_name}}//private/non_bzlmod_dependencies:setup_dependencies.bzl", {% if group.has_any_maven_deps() %}"get_java_dependenicies", {% endif %}"setup_dependencies")
 
 setup_dependencies()
+
+load("@rules_shell//shell:repositories.bzl", "rules_shell_dependencies", "rules_shell_toolchains")
+
+rules_shell_dependencies()
+
+rules_shell_toolchains()
 ########################
 
 {% if group.java_deps %}
@@ -108,13 +107,11 @@ maven_install(
 
 load("@rules_checkstyle//dependencies:load_rule_dependencies.bzl", "load_checkstyle_rule_dependencies")
 load("@rules_pmd//dependencies:load_rule_dependencies.bzl", "load_pmd_rule_dependencies")
-load("@rules_spotless//dependencies:load_rule_dependencies.bzl", "load_spotless_rule_dependencies")
 load("@rules_wpiformat//dependencies:load_rule_dependencies.bzl", "load_wpiformat_rule_dependencies")
 
 load_pmd_rule_dependencies()
 load_checkstyle_rule_dependencies()
 load_wpiformat_rule_dependencies()
-load_spotless_rule_dependencies()
 
 load("@rules_wpiformat//dependencies:load_dependencies.bzl", "load_wpiformat_dependencies")
 load_wpiformat_dependencies()

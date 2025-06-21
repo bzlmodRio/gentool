@@ -2,20 +2,21 @@ workspace(name = "{{group.repo_name}}")
 
 load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive")
 
+
+{{ bazel_dependencies.rules_python.download_repository(0, maybe=False) }}
+{{ bazel_dependencies.rules_jvm_external.download_repository(0, maybe=False) }}
+{{ bazel_dependencies.rules_cc.download_repository(0, maybe=False) }}
+{{ bazel_dependencies.bazel_skylib.download_repository(0, maybe=False) }}
+{{ bazel_dependencies.protobuf.download_repository(0, maybe=False) }}
+{{ bazel_dependencies.rules_proto.download_repository(0, maybe=False) }}
+{{ bazel_dependencies.rules_java.download_repository(0, maybe=False) }}
+
 {% if group.include_wpiformat %}
 # WPI Formatter
 {{  mandatory_dependencies.rules_wpiformat.download_repository(0,native=False) }}
 {% endif %}
 
-{% if group.has_skylib %}
-{{ bazel_dependencies.bazel_skylib.download_repository(0, maybe=False) }}
-{% endif %}
-
 # Rule Dependencies
-{% if group.has_protobuf %}
-{{ bazel_dependencies.rules_cc.download_repository(0, maybe=False) }}
-{{ bazel_dependencies.rules_jvm_external.download_repository(0, maybe=False) }}
-{{ bazel_dependencies.rules_java.download_repository(0, maybe=False) }}
 
 load("@com_google_protobuf//:protobuf_deps.bzl", "protobuf_deps")
 
@@ -41,18 +42,7 @@ rules_jvm_external_deps()
 load("@rules_jvm_external//:setup.bzl", "rules_jvm_external_setup")
 
 rules_jvm_external_setup()
-{% else %}
-load("//dependencies:load_rule_dependencies.bzl", "load_{{ group.short_name }}_rule_dependencies")
 
-load_{{ group.short_name }}_rule_dependencies()
-{% endif %}
-
-# Transitive Dependencies
-{%- if group.is_python %}
-load("//dependencies:load_transitive_dependencies.bzl", "load_{{ group.short_name }}_transitive_dependencies")
-
-load_{{ group.short_name }}_transitive_dependencies()
-{% endif %}
 load("//dependencies:load_dependencies.bzl", "load_{{ group.short_name }}_dependencies")
 
 load_{{ group.short_name }}_dependencies()

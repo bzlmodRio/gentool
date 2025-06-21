@@ -110,12 +110,12 @@ def create_default_mandatory_settings(generic_cli: GenericCliArgs):
     )
     default_rules_spotless = MandetoryDependencySetting(
         "rules_spotless",
-        "2.40.0",
+        "2.40.0.bcr1",
         generic_cli.use_local_rules_spotless,
     )
     default_rules_wpiformat = MandetoryDependencySetting(
         "rules_wpiformat",
-        "2024.45",
+        "2025.33",
         generic_cli.use_local_rules_wpiformat,
     )
     default_rules_wpi_styleguide = MandetoryDependencySetting(

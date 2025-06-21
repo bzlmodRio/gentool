@@ -122,14 +122,21 @@ class BazelDependencySetting(BaseDependencyWriterHelper):
 
     def download_repository(self, indent_num, maybe=True):
         if self.repo_name == "googletest":
+            version = self.version.replace(".bcr.1", "")
             return f"""http_archive(
     name = "googletest",
     sha256 = "{self.sha}",
-    strip_prefix = "googletest-{self.version}",
-    urls = ["https://github.com/google/googletest/archive/refs/tags/v{self.version}.tar.gz"],
+    strip_prefix = "googletest-{version}",
+    urls = ["https://github.com/google/googletest/archive/refs/tags/v{version}.tar.gz"],
 )"""
-        #         if self.use_long_form:
-        #             return self.temp_longform_http_archive(indent_num, maybe)
+        if self.repo_name == "protobuf":
+            version = self.version.replace(".bcr.1", "")
+            return f"""http_archive(
+    name = "com_google_protobuf",
+    sha256 = "{self.sha}",
+    strip_prefix = "protobuf-{version}",
+    urls = ["https://github.com/protocolbuffers/protobuf/archive/v{version}.tar.gz"],
+)"""
         if self.repo_name == "rules_shell":
             return f"""{" " * indent_num}http_archive(
     name = "{self.repo_name}",
@@ -148,12 +155,12 @@ def get_bazel_dependencies():
 
     add_dep(
         repo_name="bazel_skylib",
-        version="1.6.1",
-        sha="9f38886a40548c6e96c106b752f242130ee11aaa068a56ba7e56f4511f33e4f2",
+        version="1.7.1",
+        sha="bc283cdfcd526a52c3201279cda4bc298652efa898b10b4db0837dc51652756f",
     )
     add_dep(
         repo_name="googletest",
-        version="1.14.0",
+        version="1.14.0.bcr.1",
         sha="8ad598c73ad796e0d8280b082cebd82a630d73e73cd3c70057938a6501bba5d7",
     )
     add_dep(
@@ -189,15 +196,21 @@ def get_bazel_dependencies():
     )
     add_dep(
         repo_name="rules_proto",
-        version="5.3.0-21.7",
-        sha="dc3fb206a2cb3441b485eb1e423165b231235a1ea9b031b4433cf7bc1fa460dd",
+        version="7.0.2",
+        sha="0e5c64a2599a6e26c6a03d6162242d231ecc0de219534c38cb4402171def21e8",
         old_release_style=True,
         needs_stripped_prefix=True,
     )
     add_dep(
         repo_name="rules_python",
-        version="0.30.0",
-        sha="3b8b4cdc991bc9def8833d118e4c850f1b7498b3d65d5698eea92c3528b8cf2c",
+        version="0.40.0",
+        sha="690e0141724abb568267e003c7b6d9a54925df40c275a870a4d934161dc9dd53",
+        needs_stripped_prefix=True,
+    )
+    add_dep(
+        repo_name="protobuf",
+        version="29.0",
+        sha="10a0d58f39a1a909e95e00e8ba0b5b1dc64d02997f741151953a2b3659f6e78c",
         needs_stripped_prefix=True,
     )
 

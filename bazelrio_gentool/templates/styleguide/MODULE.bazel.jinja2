@@ -27,6 +27,10 @@ register_toolchains(
 {{bazel_dependencies.rules_proto.module_dep()}}
 {%- endif %}
 
+{%- if group.executable_tools %}
+{{bazel_dependencies.rules_shell.module_dep()}}
+{%- endif %}
+
 {%- if group.is_java %}
 
 maven = use_extension("@rules_jvm_external//:extensions.bzl", "maven")
