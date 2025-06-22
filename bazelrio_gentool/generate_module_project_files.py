@@ -100,12 +100,12 @@ def create_default_mandatory_settings(generic_cli: GenericCliArgs):
     )
     default_rules_pmd = MandetoryDependencySetting(
         "rules_pmd",
-        "7.2.0",
+        "7.2.0.bcr1",
         generic_cli.use_local_rules_pmd,
     )
     default_rules_checkstyle = MandetoryDependencySetting(
         "rules_checkstyle",
-        "10.12.2",
+        "10.12.2.bcr1",
         generic_cli.use_local_rules_checkstyle,
     )
     default_rules_spotless = MandetoryDependencySetting(
