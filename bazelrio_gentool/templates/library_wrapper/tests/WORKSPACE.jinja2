@@ -105,16 +105,31 @@ maven_install(
 #####################
 {{ mandatory_dependencies.rules_wpi_styleguide.download_repository(0, native=False) }}
 
+load("@rules_checkstyle//dependencies:load_dependencies.bzl", "load_checkstyle_dependencies")
+load("@rules_pmd//dependencies:load_dependencies.bzl", "load_pmd_dependencies")
+load("@rules_spotless//dependencies:load_dependencies.bzl", "load_spotless_dependencies")
 load("@rules_wpiformat//dependencies:load_dependencies.bzl", "load_wpiformat_dependencies")
+
+load_checkstyle_dependencies()
+
+load_pmd_dependencies()
+
 load_wpiformat_dependencies()
 
-load("@rules_wpi_styleguide//dependencies:setup_styleguide.bzl", "setup_styleguide")
+load_spotless_dependencies()
 
-setup_styleguide()
- 
-load("@rules_wpi_styleguide//dependencies:load_pins.bzl", "load_styleguide_pins")
- 
-load_styleguide_pins()
+load("@rules_checkstyle_dependencies//:defs.bzl", checkstyle_pinned_maven_install = "pinned_maven_install")
+load("@rules_pmd_dependencies//:defs.bzl", pmd_pinned_maven_install = "pinned_maven_install")
+load("@rules_spotless_dependencies//:defs.bzl", spotless_pinned_maven_install = "pinned_maven_install")
+load("@rules_wpiformat_pip//:requirements.bzl", "install_deps")
+
+install_deps()
+
+pmd_pinned_maven_install()
+
+checkstyle_pinned_maven_install()
+
+spotless_pinned_maven_install()
 #####################
 {% if group.java_deps %}
 {{ mandatory_dependencies.rules_bzlmodrio_jdk.download_repository(0, native=False, include_override=True) }}
