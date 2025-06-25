@@ -29,9 +29,16 @@ jobs:
     - name: Setup archive name
       run: echo "ARCHIVE_NAME={{"rules" if "rules" in group.repo_name else "libraries"}}/{{group.repo_name}}/{{group.repo_name}}-${GITHUB_REF_NAME}.tar.gz" >> "$GITHUB_ENV"
 {% raw %}
+    - name: Pre Release
+      uses: softprops/action-gh-release@v2
+      if: startsWith(github.ref, 'refs/tags/') && (contains(github.ref, 'alpha') || contains(github.ref, 'beta'))
+      with:
+        files: "${{ env.ARCHIVE_NAME }}"
+        prerelease: True
+
     - name: Release
       uses: softprops/action-gh-release@v2
-      if: startsWith(github.ref, 'refs/tags/')
+      if: startsWith(github.ref, 'refs/tags/') && !(contains(github.ref, 'alpha') || contains(github.ref, 'beta'))
       with:
         files: "${{ env.ARCHIVE_NAME }}"
 {%- endraw %}
