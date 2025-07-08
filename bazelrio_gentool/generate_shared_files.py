@@ -14,6 +14,7 @@ def write_shared_root_files(
     include_systemcore_compiler=False,
     test_macos=True,
     include_windows_arm_compiler=True,
+    include_styleguide=True,
 ):
     if not include_linuxarm32_compiler:
         raise
@@ -53,6 +54,7 @@ def write_shared_root_files(
         include_systemcore_compiler=include_systemcore_compiler,
         include_windows_arm_compiler=include_windows_arm_compiler,
         test_macos=test_macos,
+        include_styleguide=include_styleguide,
     )
 
 

@@ -113,6 +113,9 @@ bzlmodrio-libssh:
   2024.0.105-1:
     commitish: ab2c4ed8adec207e461b9a35dfa764ef829b079c
     sha: 56b8d02ee82dfc127ad1f41172858bbf244756c31f18d1264760d775f66c21ec
+  2024.0.105-1.bcr1:
+    sha: f8fef627c7b393f7f6ed638e12b80ff90b2cfea11488b15214f25ce1e470723a
+    commitish: 53bdaf1585427a327d7e191384a2b003f5cf4323
 bzlmodrio-ni:
   2023.3.0:
     commitish: 86f8befc702a4366c37129b0797a5c13d9f7ea3b
@@ -172,6 +175,9 @@ bzlmodrio-opencv:
   2025.4.10.0-3.bcr2:
     sha: 6e8544fae07ed5b4fedc146f6ad083d0d8947e3efb5332a20abc46601a52a1b5
     commitish: 2deb572e205e587cb2c405bcd6619b060d2cbc36
+  2025.4.10.0-3.bcr3:
+    sha: 27dff7aaedd00165b1a94867616ebf383220532e3956892cec649197077a9d01
+    commitish: 53bdaf1585427a327d7e191384a2b003f5cf4323
 bzlmodrio-phoenix:
   5.30.4:
     commitish: afe60c54cd56b6b90fca3fd54f6999c871814102

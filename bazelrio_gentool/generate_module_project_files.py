@@ -124,8 +124,8 @@ def create_default_mandatory_settings(generic_cli: GenericCliArgs):
         generic_cli.use_local_rules_wpi_styleguide,
     )
     default_rules_bzlmodrio_jdk = BazelDependencyWithArchiveOverride(
-        "4ecd4cbc97dfbfe2ceefa627de1228e2f2ca5773",
-        "sha256-SrikyrF2v2lENdqn9aFC//d0TkIE620lR60yXTrWFTs=",
+        "23a1c1fd1a9e1d1521164c854be10e3eb35e84cd",
+        "sha256-SrikyrF2v2lENdqn9aFC//daTkIE620lR60yXTrWFTs=",
         "rules_bzlmodrio_jdk",
         "17.0.12-7.bcr1",
         generic_cli.use_local_rules_bzlmodrio_jdk,

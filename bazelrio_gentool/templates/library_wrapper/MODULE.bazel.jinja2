@@ -17,7 +17,7 @@ module(
 {{mandatory_dependencies.rules_bzlmodrio_toolchain.module_dep()}}
 {%- endif %}
 {%- if group.java_deps %}
-{{mandatory_dependencies.rules_bzlmodrio_jdk.module_dep(include_override=True)}}
+{{mandatory_dependencies.rules_bzlmodrio_jdk.module_dep(include_override=False)}}
 {%- endif %}
 {%- for name, module_dep in group.module_dependencies.items() %}
 bazel_dep(name = "{{name}}", version = "{{module_dep.container.version}}")
