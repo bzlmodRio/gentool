@@ -24,10 +24,12 @@ local_repository(
 {{ module_dep.download_repository(0) }}
 {% endfor %}
 {{bazel_dependencies.googletest.download_repository(0, maybe=False) }}
+{%- if include_styleguide %}
 {{ mandatory_dependencies.rules_pmd.download_repository(0, maybe=False) }}
 {{ mandatory_dependencies.rules_checkstyle.download_repository(0, maybe=False) }}
 {{ mandatory_dependencies.rules_wpiformat.download_repository(0, maybe=False) }}
 {{ mandatory_dependencies.rules_spotless.download_repository(0, maybe=False) }}
+{%- endif %}
 {{ bazel_dependencies.rules_python.download_repository(0, maybe=False) }}
 {{ bazel_dependencies.rules_proto.download_repository(0, maybe=False) }}
 {{ bazel_dependencies.protobuf.download_repository(0, maybe=False) }}
@@ -100,6 +102,7 @@ maven_install(
     # maven_install_json = "//build_scripts/bazel/deps:maven_install.json",
 )
 {% endif %}
+{%- if include_styleguide %}
 #####################
 # Styleguide
 #####################
@@ -131,6 +134,7 @@ checkstyle_pinned_maven_install()
 
 spotless_pinned_maven_install()
 #####################
+{%- endif %}
 {% if group.java_deps %}
 {{ mandatory_dependencies.rules_bzlmodrio_jdk.download_repository(0, native=False, include_override=True) }}
 

@@ -3,7 +3,10 @@ platform(
     constraint_values = [
         "@platforms//os:linux",
         "@platforms//cpu:{{config.constraint_cpu}}",
+        {%- if not no_constraint %}
         "//constraints/is_{{config.short_name_no_dash}}:true",
+        {% endif %}
     ],
+    visibility = ["//visibility:public"],
 )
 

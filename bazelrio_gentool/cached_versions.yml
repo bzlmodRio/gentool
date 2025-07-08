@@ -305,6 +305,12 @@ rules_bzlmodrio_toolchains:
   2025-1.bcr2:
     sha: ff25b5f9445cbd43759be4c6582b987d1065cf817c593eedc7ada1a699298c84
     commitish: b8b2fb96c77f73ac47eaf94b8a1670c90d392461
+  2025-1.bcr3:
+    sha: 2bf0266dd899ce634549d5e610c04b871047b75b9d02ea72d37a4d3c28ac981f
+    commitish: b22a7520670be122f3e5391ae630a8c284e8589f
+  2025-1.bcr4:
+    sha: 37780b3d3f30de72aaca12d9f80edc4216f6d708bed5b261c424d4dde49e8531
+    commitish: b22a7520670be122f3e5391ae630a8c284e8589f
 rules_checkstyle:
   '10.1':
     commitish: 3f1928cfc2182ff0ebb225dd0f8fce2119e8c804
@@ -677,7 +683,10 @@ rules_bzlmodrio_jdk:
     commitish: 451430e0c8794f61091c5a4c423b7b0a2c5d77dc
   17.0.12-7:
     sha: 81869fe9860e39b17e4a9bc1d33c1ca2faede7e31d9538ed0712406f753a2163
-    commitish: eefb89916654dcc8b71d0b99ee987f9cdb8f1831
+    commitish: b22a7520670be122f3e5391ae630a8c284e8589f
+  17.0.12-7.bcr1:
+    sha: 623b8bcdba1c3140f56e940365f011d2e5d90d74c7a30ace6a8817c037c1dd61
+    commitish: b22a7520670be122f3e5391ae630a8c284e8589f
 bzlmodrio-studica:
   2025.1.1-beta-4:
     sha: 92861b89ccb4fc33ab695f89d02ceb4f725f85ba56a143b5974de56125d9ee7c

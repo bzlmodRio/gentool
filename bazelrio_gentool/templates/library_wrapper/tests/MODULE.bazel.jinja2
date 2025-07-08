@@ -5,11 +5,13 @@ local_path_override(
 )
 
 {{ mandatory_dependencies.rules_bzlmodrio_toolchain.local_module_override() }}
+{%- if include_styleguide %}
 {{ mandatory_dependencies.rules_pmd.local_module_override() }}
 {{ mandatory_dependencies.rules_checkstyle.local_module_override() }}
 {{ mandatory_dependencies.rules_spotless.local_module_override() }}
 {{ mandatory_dependencies.rules_wpiformat.local_module_override() }}
 {{ mandatory_dependencies.rules_wpi_styleguide.local_module_override() }}
+{%- endif %}
 {%- for name, module_dep in group.module_dependencies.items() %}
 {{ module_dep.local_module_override() }}
 {%- endfor %}
@@ -24,11 +26,13 @@ local_path_override(
 {%- for name, module_dep in group.module_dependencies.items() %}
 bazel_dep(name = "{{name}}", version = "{{module_dep.container.version}}")
 {%- endfor %}
+{%- if include_styleguide %}
 {{mandatory_dependencies.rules_pmd.module_dep()}}
 {{mandatory_dependencies.rules_checkstyle.module_dep()}}
 {{mandatory_dependencies.rules_wpiformat.module_dep()}}
 {{mandatory_dependencies.rules_wpi_styleguide.module_dep()}}
 {{mandatory_dependencies.rules_spotless.module_dep()}}
+{%- endif %}
 {% if group.java_deps %}
 {{mandatory_dependencies.rules_bzlmodrio_jdk.module_dep(include_override=True)}}
 {% endif %}

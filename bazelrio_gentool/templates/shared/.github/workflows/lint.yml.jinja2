@@ -9,6 +9,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - uses: psf/black@stable
+{%- endraw %}{% if include_styleguide %}
   wpiformat:
     name: "wpiformat"
     runs-on: ubuntu-22.04
@@ -34,6 +35,7 @@ jobs:
 
       - name: Check Output
         run: git --no-pager diff --exit-code HEAD
+{%- endif %}{% raw %}
   buildifier:
     name: "buildifier"
     runs-on: ubuntu-22.04

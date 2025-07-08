@@ -147,10 +147,10 @@ class CcDependency(MultiResourceDependency):
     # }
 
     CONDITIONS_LOOKUP = {
-        "windowsx86-64": "@rules_bzlmodrio_toolchains//conditions:windows",
-        "windowsx86-64debug": "@rules_bzlmodrio_toolchains//conditions:windows_debug",
-        "windowsx86-64static": "@rules_bzlmodrio_toolchains//conditions:windows",
-        "windowsx86-64staticdebug": "@rules_bzlmodrio_toolchains//conditions:windows_debug",
+        "windowsx86-64": "@rules_bzlmodrio_toolchains//conditions:windows_x86_64",
+        "windowsx86-64debug": "@rules_bzlmodrio_toolchains//conditions:windows_x86_64_debug",
+        "windowsx86-64static": "@rules_bzlmodrio_toolchains//conditions:windows_x86_64",
+        "windowsx86-64staticdebug": "@rules_bzlmodrio_toolchains//conditions:windows_x86_64_debug",
         "windowsarm64": "@rules_bzlmodrio_toolchains//conditions:windows_arm64",
         "windowsarm64debug": "@rules_bzlmodrio_toolchains//conditions:windows_arm64_debug",
         "windowsarm64static": "@rules_bzlmodrio_toolchains//conditions:windows_arm64",

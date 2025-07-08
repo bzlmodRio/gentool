@@ -88,7 +88,7 @@ def create_default_mandatory_settings(generic_cli: GenericCliArgs):
         "696c423fd86e9dd0dfbf17fb151295ddf1a03468",
         "sha256-45EV1waPl/X8S1LocEDpYD6W3XMsX5W3f/1cLPS/VK8=",
         "rules_bzlmodrio_toolchains",
-        "2025-1.bcr2",
+        "2025-1.bcr4",
         generic_cli.use_local_toolchains,
         url_base="https://github.com/wpilibsuite",
     )
@@ -127,7 +127,7 @@ def create_default_mandatory_settings(generic_cli: GenericCliArgs):
         "4ecd4cbc97dfbfe2ceefa627de1228e2f2ca5773",
         "sha256-SrikyrF2v2lENdqn9aFC//d0TkIE620lR60yXTrWFTs=",
         "rules_bzlmodrio_jdk",
-        "17.0.12-7",
+        "17.0.12-7.bcr1",
         generic_cli.use_local_rules_bzlmodrio_jdk,
         url_base="https://github.com/wpilibsuite",
     )
@@ -182,6 +182,7 @@ def generate_module_project_files(
     include_linuxarm32_compiler=True,
     include_linuxarm64_compiler=True,
     include_systemcore_compiler=False,
+    include_styleguide=True,
 ):
     write_shared_root_files(
         module_directory,
@@ -191,6 +192,7 @@ def generate_module_project_files(
         include_linuxarm32_compiler=include_linuxarm32_compiler,
         include_linuxarm64_compiler=include_linuxarm64_compiler,
         include_systemcore_compiler=include_systemcore_compiler,
+        include_styleguide=include_styleguide,
     )
     write_shared_test_files(module_directory, group)
 
@@ -223,6 +225,7 @@ def generate_module_project_files(
         mandatory_dependencies=mandatory_dependencies,
         bazel_dependencies=get_bazel_dependencies(),
         no_roborio=no_roborio,
+        include_styleguide=include_styleguide,
     )
 
     if group.java_deps:
