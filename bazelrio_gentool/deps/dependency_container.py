@@ -227,21 +227,21 @@ class DependencyContainer:
 
         for cpp_dep in self.cc_deps:
             if cpp_dep.headers:
-                output.append(f"{cpp_dep.get_archive_name('headers')}")
+                output.append(f"{cpp_dep.get_archive_name('headers').replace('bazelrio_edu_wpi_first_thirdparty_frc_opencv_opencv', 'edu_wpi_opencv')}")
             if cpp_dep.sources:
-                output.append(f"{cpp_dep.get_archive_name('sources')}")
+                output.append(f"{cpp_dep.get_archive_name('sources').replace('bazelrio_edu_wpi_first_thirdparty_frc_opencv_opencv', 'edu_wpi_opencv')}")
 
             for resource in cpp_dep.resources:
                 if cpp_dep.get_sha256(resource):
-                    output.append(f"{cpp_dep.get_archive_name(resource)}")
+                    output.append(f"{cpp_dep.get_archive_name(resource).replace('bazelrio_edu_wpi_first_thirdparty_frc_opencv_opencv', 'edu_wpi_opencv')}")
 
         for tool_dep in self.java_native_tools:
             for resource in tool_dep.resources:
-                output.append(f"{tool_dep.get_archive_name(resource)}")
+                output.append(f"{tool_dep.get_archive_name(resource).replace('bazelrio_edu_wpi_first_thirdparty_frc_opencv_opencv', 'edu_wpi_opencv')}")
 
         for tool_dep in self.executable_tools:
             for resource in tool_dep.resources:
-                output.append(f"{tool_dep.get_archive_name(resource)}")
+                output.append(f"{tool_dep.get_archive_name(resource).replace('bazelrio_edu_wpi_first_thirdparty_frc_opencv_opencv', 'edu_wpi_opencv')}")
 
         for tool_dep in self.single_file_binaries:
             for resource in tool_dep.resources:

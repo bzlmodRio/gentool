@@ -25,6 +25,8 @@ local_repository(
 {% endfor %}
 {{bazel_dependencies.googletest.download_repository(0, maybe=False) }}
 {%- if include_styleguide %}
+{{ bazel_dependencies.bazel_features.download_repository(0, maybe=False) }}
+{{ bazel_dependencies.bazel_skylib.download_repository(0, maybe=False) }}
 {{ mandatory_dependencies.rules_pmd.download_repository(0, maybe=False) }}
 {{ mandatory_dependencies.rules_checkstyle.download_repository(0, maybe=False) }}
 {{ mandatory_dependencies.rules_wpiformat.download_repository(0, maybe=False) }}
@@ -39,6 +41,12 @@ local_repository(
 ########################
 # Setup Dependencies
 ########################
+{%- if include_styleguide %}
+load("@bazel_features//:deps.bzl", "bazel_features_deps")
+
+bazel_features_deps()
+
+{%- endif %}
 
 load("@com_google_protobuf//:protobuf_deps.bzl", "protobuf_deps")
 

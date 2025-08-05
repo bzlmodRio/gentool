@@ -111,13 +111,14 @@ class BazelDependencySetting(BaseDependencyWriterHelper):
         sha,
         needs_stripped_prefix=False,
         old_release_style=False,
+        url_base = "https://github.com/bazelbuild"
     ):
         BaseDependencyWriterHelper.__init__(
             self,
             repo_name,
             version,
             sha,
-            "https://github.com/bazelbuild",
+            url_base,
             old_release_style=old_release_style,
             needs_stripped_prefix=needs_stripped_prefix,
         )
@@ -146,6 +147,13 @@ class BazelDependencySetting(BaseDependencyWriterHelper):
     strip_prefix = "rules_shell-{self.version}",
     url = "https://github.com/bazelbuild/{self.repo_name}/releases/download/v{self.version}/rules_shell-v{self.version}.tar.gz",
 )"""
+        if self.repo_name == "bazel_features":
+            return f"""{" " * indent_num}http_archive(
+    name = "{self.repo_name}",
+    sha256 = "{self.sha}",
+    strip_prefix = "bazel_features-{self.version}",
+    url = "https://github.com/bazel-contrib/{self.repo_name}/releases/download/v{self.version}/bazel_features-v{self.version}.tar.gz",
+)"""
         return self.http_archive(indent_num=indent_num, maybe=maybe, native=False)
 
 
@@ -156,9 +164,16 @@ def get_bazel_dependencies():
     output = {}
 
     add_dep(
+        repo_name="bazel_features",
+        version="1.31.0",
+        sha="a015f3f2ebf4f1ac3f4ca8ea371610acb63e1903514fa8725272d381948d2747",
+        needs_stripped_prefix=True,
+        url_base="https://github.com/bazel-contrib",
+    )
+    add_dep(
         repo_name="bazel_skylib",
-        version="1.7.1",
-        sha="bc283cdfcd526a52c3201279cda4bc298652efa898b10b4db0837dc51652756f",
+        version="1.8.1",
+        sha="51b5105a760b353773f904d2bbc5e664d0987fbaf22265164de65d43e910d8ac",
     )
     add_dep(
         repo_name="googletest",
@@ -172,14 +187,14 @@ def get_bazel_dependencies():
     )
     add_dep(
         repo_name="rules_cc", 
-        version="0.1.1", 
+        version="0.1.4", 
         needs_stripped_prefix=True,
-        sha="712d77868b3152dd618c4d64faaddefcc5965f90f5de6e6dd1d5ddcd0be82d42",
+        sha="0d3b4f984c4c2e1acfd1378e0148d35caf2ef1d9eb95b688f8e19ce0c41bdf5b",
     )
     add_dep(
         repo_name="rules_java",
-        version="8.11.0",
-        sha="d31b6c69e479ffa45460b64dc9c7792a431cac721ef8d5219fc9f603fa2ff877",
+        version="8.12.0",
+        sha="1558508fc6c348d7f99477bd21681e5746936f15f0436b5f4233e30832a590f9",
         # use_long_form=True,
     )
     add_dep(

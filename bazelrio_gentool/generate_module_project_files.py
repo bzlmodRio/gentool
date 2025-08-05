@@ -88,7 +88,7 @@ def create_default_mandatory_settings(generic_cli: GenericCliArgs):
         "696c423fd86e9dd0dfbf17fb151295ddf1a03468",
         "sha256-45EV1waPl/X8S1LocEDpYD6W3XMsX5W3f/1cLPS/VK8=",
         "rules_bzlmodrio_toolchains",
-        "2025-1.bcr4",
+        "2025-1.bcr5",
         generic_cli.use_local_toolchains,
         url_base="https://github.com/wpilibsuite",
     )
@@ -125,7 +125,7 @@ def create_default_mandatory_settings(generic_cli: GenericCliArgs):
     )
     default_rules_bzlmodrio_jdk = BazelDependencyWithArchiveOverride(
         "23a1c1fd1a9e1d1521164c854be10e3eb35e84cd",
-        "sha256-SrikyrF2v2lENdqn9aFC//daTkIE620lR60yXTrWFTs=",
+        "sha256-OrJI8gl3PiEw3J54p/jtNydjMY2xRlpI1yfKfPKnIYQ=",
         "rules_bzlmodrio_jdk",
         "17.0.12-7.bcr1",
         generic_cli.use_local_rules_bzlmodrio_jdk,
