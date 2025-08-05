@@ -86,10 +86,11 @@ def generate_toolchain(
         render_template(template_file, output_file, config=config)
 
     for extra_platform, cpu in [
-        ("linux_x86_64", "x86_64"), 
-        ("osx", "x86-64"), 
-        ("windows_arm64", "x86_64"), 
-        ("windows_x86_64", "x86_64")]:
+        ("linux_x86_64", "x86_64"),
+        ("osx", "x86-64"),
+        ("windows_arm64", "x86_64"),
+        ("windows_x86_64", "x86_64"),
+    ]:
         template_file = os.path.join(
             TEMPLATE_BASE_DIR, "toolchains", "per_toolchain", "platforms_build.jinja2"
         )
@@ -98,8 +99,12 @@ def generate_toolchain(
             f"platforms/{extra_platform}/BUILD.bazel",
         )
         print(output_file)
-        render_template(template_file, output_file, config=dict(
-            short_name_no_dash=extra_platform,
-            constraint_cpu=cpu,
-        ),
-        no_constraint=True)
+        render_template(
+            template_file,
+            output_file,
+            config=dict(
+                short_name_no_dash=extra_platform,
+                constraint_cpu=cpu,
+            ),
+            no_constraint=True,
+        )

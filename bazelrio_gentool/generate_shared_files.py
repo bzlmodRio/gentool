@@ -111,7 +111,7 @@ class BazelDependencySetting(BaseDependencyWriterHelper):
         sha,
         needs_stripped_prefix=False,
         old_release_style=False,
-        url_base = "https://github.com/bazelbuild"
+        url_base="https://github.com/bazelbuild",
     ):
         BaseDependencyWriterHelper.__init__(
             self,
@@ -181,13 +181,13 @@ def get_bazel_dependencies():
         sha="8ad598c73ad796e0d8280b082cebd82a630d73e73cd3c70057938a6501bba5d7",
     )
     add_dep(
-        repo_name="platforms", 
+        repo_name="platforms",
         version="0.0.9",
         sha="",
     )
     add_dep(
-        repo_name="rules_cc", 
-        version="0.1.4", 
+        repo_name="rules_cc",
+        version="0.1.4",
         needs_stripped_prefix=True,
         sha="0d3b4f984c4c2e1acfd1378e0148d35caf2ef1d9eb95b688f8e19ce0c41bdf5b",
     )

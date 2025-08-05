@@ -172,17 +172,14 @@ class CcDependency(MultiResourceDependency):
         "linuxathenadebug": "@rules_bzlmodrio_toolchains//constraints/is_roborio:roborio_debug",
         "linuxathenastatic": "@rules_bzlmodrio_toolchains//constraints/is_roborio:roborio",
         "linuxathenastaticdebug": "@rules_bzlmodrio_toolchains//constraints/is_roborio:roborio_debug",
-
         "linuxarm32": "@rules_bzlmodrio_toolchains//constraints/is_raspibookworm32:raspibookworm32",
         "linuxarm32debug": "@rules_bzlmodrio_toolchains//constraints/is_raspibookworm32:raspibookworm32_debug",
         "linuxarm32static": "@rules_bzlmodrio_toolchains//constraints/is_raspibookworm32:raspibookworm32",
         "linuxarm32staticdebug": "@rules_bzlmodrio_toolchains//constraints/is_raspibookworm32:raspibookworm32_debug",
-
         "linuxarm64": "@rules_bzlmodrio_toolchains//constraints/is_bookworm64:bookworm64",
         "linuxarm64debug": "@rules_bzlmodrio_toolchains//constraints/is_bookworm64:bookworm64_debug",
         "linuxarm64static": "@rules_bzlmodrio_toolchains//constraints/is_bookworm64:bookworm64",
         "linuxarm64staticdebug": "@rules_bzlmodrio_toolchains//constraints/is_bookworm64:bookworm64_debug",
-        
         "linuxsystemcore": "@rules_bzlmodrio_toolchains//constraints/is_systemcore:systemcore",
         "linuxsystemcoredebug": "@rules_bzlmodrio_toolchains//constraints/is_systemcore:systemcore_debug",
         "linuxsystemcorestatic": "@rules_bzlmodrio_toolchains//constraints/is_systemcore:systemcore",
@@ -280,7 +277,9 @@ class CcDependency(MultiResourceDependency):
         output = []
 
         output.append(self.__get_invalid_toolchain("linuxathena", "roborio", True))
-        output.append(self.__get_invalid_toolchain("linuxarm32", "raspibookworm32", True))
+        output.append(
+            self.__get_invalid_toolchain("linuxarm32", "raspibookworm32", True)
+        )
         output.append(self.__get_invalid_toolchain("linuxarm64", "bookworm64", True))
         # output.append(self.__get_invalid_toolchain("raspibullseye32", "raspibullseye32", True))
         # output.append(self.__get_invalid_toolchain("raspibookworm32", "raspibookworm32", True))
@@ -301,15 +300,25 @@ class CcDependency(MultiResourceDependency):
     def get_static_incompatible_targets(self):
         output = []
 
-        output.append(self.__get_invalid_toolchain("linuxathenastatic", "roborio", True))
-        output.append(self.__get_invalid_toolchain("linuxarm32static", "bookworm32", True))
-        output.append(self.__get_invalid_toolchain("linuxarm64static", "bookworm64", True))
+        output.append(
+            self.__get_invalid_toolchain("linuxathenastatic", "roborio", True)
+        )
+        output.append(
+            self.__get_invalid_toolchain("linuxarm32static", "bookworm32", True)
+        )
+        output.append(
+            self.__get_invalid_toolchain("linuxarm64static", "bookworm64", True)
+        )
         # output.append(self.__get_invalid_toolchain("raspi32static", "raspi32", True))
 
         # output.append(self.__get_invalid_toolchain("windowsx86-64static", "raspi32", False))
-        output.append(self.__get_invalid_toolchain("linuxx86-64static", "linux_x86_64", False))
+        output.append(
+            self.__get_invalid_toolchain("linuxx86-64static", "linux_x86_64", False)
+        )
 
-        if self.__is_invalid_resource("osxx86-64static") and self.__is_invalid_resource("osxuniversalstatic"):
+        if self.__is_invalid_resource("osxx86-64static") and self.__is_invalid_resource(
+            "osxuniversalstatic"
+        ):
             output.append(f"@bazel_tools//src/conditions:darwin")
 
         return sorted([x for x in output if x is not None])
