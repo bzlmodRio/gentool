@@ -8,11 +8,33 @@ CACHE_DIRECTORY = os.path.join(os.path.expanduser("~"), "bzlmod_cache")
 # print(f"Writing cache to {CACHE_DIRECTORY}")
 
 
+def __try_download_sha(cached_file, base_url):
+    url = base_url + ".sha256"
+    try:
+        url_result = urlopen(url)
+    except:
+        print(f"No uploaded sha256 hash at {url}")
+        return None
+        
+    if url_result.getcode() != 200:
+        raise Exception(f"Could not grab '{url}'")
+    data = url_result.read()
+
+    with open(cached_file, "wb") as f:
+        f.write(data)
+
+    return data.decode("utf-8")
+
+
 def __download_and_cache(cached_file, url, fail_on_miss):
     if not os.path.exists(CACHE_DIRECTORY):
         os.mkdir(CACHE_DIRECTORY)
 
     print(f"Cache miss for {url}")
+    direct_lookup = __try_download_sha(cached_file, url)
+    if direct_lookup:
+        return direct_lookup
+
     try:
         url_result = urlopen(url)
     except:

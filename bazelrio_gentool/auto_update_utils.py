@@ -10,12 +10,17 @@ def download_url(url):
     return contents
 
 
-def get_latest_tag(owner, repo):
+def get_latest_tag(owner, repo, forced_year="2026"):
     tags = json.loads(
         download_url(f"https://api.github.com/repos/{owner}/{repo}/tags").decode(
             "utf-8"
         )
     )
+
+    if forced_year:
+        for tag in tags:
+            if forced_year in tag["name"]:
+                return tag["name"]
 
     return tags[0]["name"]
 
