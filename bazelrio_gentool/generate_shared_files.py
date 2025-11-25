@@ -182,7 +182,7 @@ def get_bazel_dependencies():
     )
     add_dep(
         repo_name="platforms",
-        version="0.0.9",
+        version="0.0.11",
         sha="",
     )
     add_dep(
@@ -220,8 +220,8 @@ def get_bazel_dependencies():
     )
     add_dep(
         repo_name="rules_python",
-        version="0.40.0",
-        sha="690e0141724abb568267e003c7b6d9a54925df40c275a870a4d934161dc9dd53",
+        version="1.7.0",
+        sha="f609f341d6e9090b981b3f45324d05a819fd7a5a56434f849c761971ce2c47da",
         needs_stripped_prefix=True,
     )
     add_dep(
