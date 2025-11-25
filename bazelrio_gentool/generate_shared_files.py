@@ -37,8 +37,8 @@ def write_shared_root_files(
         "README.md",
         "WORKSPACE.bzlmod",
         ".clang-format",
-        ".styleguide",
-        ".styleguide-license",
+        ".wpiformat",
+        ".wpiformat-license",
     ]
 
     if os.path.exists(os.path.join(module_directory, "generate", "auto_update.py")):
