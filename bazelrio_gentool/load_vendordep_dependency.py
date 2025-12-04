@@ -32,6 +32,8 @@ def vendordep_dependency(
             maven_url = maven_url[:-1]
         version = vendor_dep["version"]
         year = vendor_dep["frcYear"]
+        if "beta" in year:
+            year = year.replace("beta", "")
 
         maven_dep = DependencyContainer(
             module_name, version=version, year=year, maven_url=maven_url
@@ -68,7 +70,7 @@ def vendordep_dependency(
             maven_dep.create_cc_dependency(
                 name=cpp_dep["artifactId"],
                 parent_folder=cpp_dep["artifactId"],
-                headers=cpp_dep["headerClassifier"],
+                headers=cpp_dep.get("headerClassifier", None),
                 sources=cpp_dep.get("sourcesClassifier", None),
                 resources=resources,
                 group_id=cpp_dep["groupId"],
