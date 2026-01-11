@@ -134,7 +134,7 @@ class BazelDependencySetting(BaseDependencyWriterHelper):
 )"""
         if self.repo_name == "protobuf":
             version = self.version.replace(".bcr.1", "")
-            return f"""http_archive(
+            return f"""{" " * indent_num}http_archive(
     name = "com_google_protobuf",
     sha256 = "{self.sha}",
     strip_prefix = "protobuf-{version}",
