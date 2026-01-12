@@ -612,6 +612,9 @@ bzlmodrio-pathplannerlib:
   2025.2.7:
     sha: c9d45fbd5c86e2c21ead5da73ca38cef6291e67cbe477e7d2a12ada7ce886130
     commitish: 05c14019da3bc668ff4eae306064849d64cd6b5f
+  2026.1.2:
+    sha: 65bed234ae22f52e2627425b758ba32add4e4529a262a85ed71dbf778019f065
+    commitish: 60a43754c989b00ac9473809730b1623d58ed977
 bzlmodrio-phoenix6:
   24.0.0-beta-1:
     sha: 4b67c794f7e89ed3fc4ecebbd7c4c0382f5b0c2d25c688d4b61df15175c71c95
