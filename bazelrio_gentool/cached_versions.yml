@@ -697,6 +697,9 @@ bzlmodrio-phoenix6:
   26.1.0:
     sha: dd275004dc2225d2dd0087467d34a00d24beb7cf014d863fa3fb852c47aa6203
     commitish: bd7ea1cea45fc9214980d450250eebbf66fe4723
+  26.1.1:
+    sha: 2e4aacc2ac339c76694c7fa4b7da6674d2da0e83e5fe0f3c63eaa1862bb13a18
+    commitish: a117964eda0f3909de02803bd288650ff966a20d
 bzlmodrio-choreolib:
   2024.1.2:
     sha: 9265783838a98a3938cc07ae057a5fcbfdbb442729df3341561e1e863fcfc518
