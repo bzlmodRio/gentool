@@ -7,6 +7,16 @@ bazel_dep(name = "bzlmodrio-gentool", version = "")
 {% for dep in dependencies %}
 bazel_dep(name = "{{dep}}-gentool", version = "")
 {% endfor %}
+python = use_extension("@rules_python//python/extensions:python.bzl", "python")
+python.toolchain(
+    python_version = "3.12",
+)
+use_repo(python, "python_versions")
+
+register_toolchains(
+    "@python_versions//:all",
+)
+
 local_path_override(
     module_name = "bzlmodrio-gentool",
     path = "../../../gentool",
@@ -15,6 +25,10 @@ local_path_override(
 {% for dep in dependencies %}
 local_path_override(
     module_name = "{{dep}}-gentool",
+{%- if "opencv" in dep or "-ni" in dep %}
+    path = "../../../wpilibsuite_gen/libraries/{{dep.replace("bzlmodrio", "bzlmodRio")}}/generate",
+{%- else %}
     path = "../../{{dep.replace("bzlmodrio", "bzlmodRio")}}/generate",
+{%- endif %}
 )
 {% endfor %}

@@ -4,11 +4,11 @@ module(
     compatibility_level = 2023,
 )
 
-bazel_dep(name = "rules_python", version = "0.24.0")
+bazel_dep(name = "rules_python", version = "1.7.0")
 
 python = use_extension("@rules_python//python/extensions:python.bzl", "python")
 python.toolchain(
-    python_version = "3.10",
+    python_version = "3.12",
 )
 use_repo(python, "python_versions")
 
@@ -19,6 +19,7 @@ register_toolchains(
 pip = use_extension("@rules_python//python/extensions:pip.bzl", "pip")
 pip.parse(
     hub_name = "bzlmodrio-gentool-pip",
+    python_version = "3.12",
     requirements_lock = "//:requirements_lock.txt",
 )
 use_repo(pip, "bzlmodrio-gentool-pip")
