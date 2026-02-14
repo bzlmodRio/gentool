@@ -306,6 +306,9 @@ bzlmodrio-revlib:
   2026.0.1:
     sha: f5f03234b35d34f7d1f3053dd253f883f780347f386a19a2e8a5453c01c96c84
     commitish: aa67f6c41e00cc5dad90c51c134ba67af2c18059
+  2026.0.2:
+    sha: 86858c687b777d51ed3363a8d79d9d40347728187ea42af2daa4be770e2bb880
+    commitish: c346b6c07d8909f9abe100cd28cc75abdeb7a981
 rules_bazelrio:
   0.0.10:
     commitish: a1c6a92e518cb060fe19de28e529ea558cc34ec7
