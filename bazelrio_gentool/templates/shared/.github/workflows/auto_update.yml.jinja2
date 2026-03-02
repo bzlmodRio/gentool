@@ -81,7 +81,7 @@ jobs:
 
     # Run update
     - name: Run update
-      run: bazel run //:auto_update
+      run: bazel run //:auto_update --noenable_bzlmod --enable_workspace
 {%- endraw %}
       working-directory: {{"rules" if "rules" in group.repo_name else "libraries"}}/{{group.repo_name}}/generate
 {%- raw %}
