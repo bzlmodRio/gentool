@@ -8,7 +8,16 @@ bazel_dep(name = "rules_python", version = "1.7.0")
 
 python = use_extension("@rules_python//python/extensions:python.bzl", "python")
 python.toolchain(
+    python_version = "3.11",
+)
+python.toolchain(
     python_version = "3.12",
+)
+python.toolchain(
+    python_version = "3.13",
+)
+python.toolchain(
+    python_version = "3.14",
 )
 use_repo(python, "python_versions")
 
@@ -19,7 +28,22 @@ register_toolchains(
 pip = use_extension("@rules_python//python/extensions:pip.bzl", "pip")
 pip.parse(
     hub_name = "bzlmodrio-gentool-pip",
+    python_version = "3.11",
+    requirements_lock = "//:requirements_lock_311.txt",
+)
+pip.parse(
+    hub_name = "bzlmodrio-gentool-pip",
     python_version = "3.12",
-    requirements_lock = "//:requirements_lock.txt",
+    requirements_lock = "//:requirements_lock_312.txt",
+)
+pip.parse(
+    hub_name = "bzlmodrio-gentool-pip",
+    python_version = "3.13",
+    requirements_lock = "//:requirements_lock_313.txt",
+)
+pip.parse(
+    hub_name = "bzlmodrio-gentool-pip",
+    python_version = "3.14",
+    requirements_lock = "//:requirements_lock_314.txt",
 )
 use_repo(pip, "bzlmodrio-gentool-pip")

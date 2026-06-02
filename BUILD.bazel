@@ -1,8 +1,19 @@
 load("@rules_python//python:pip.bzl", "compile_pip_requirements")
 
-compile_pip_requirements(
-    name = "requirements",
-    extra_args = ["--allow-unsafe"],
-    requirements_in = "requirements.txt",
-    requirements_txt = "requirements_lock.txt",
-)
+SUPPORTED_VERSIONS = [
+    "3.11",
+    "3.12",
+    "3.13",
+    "3.14",
+]
+
+[
+    compile_pip_requirements(
+        name = "requirements_{}".format(version.replace(".", "")),
+        extra_args = ["--allow-unsafe"],
+        python_version = version,
+        requirements_in = "requirements.txt",
+        requirements_txt = "requirements_lock_{}.txt".format(version.replace(".", "")),
+    )
+    for version in SUPPORTED_VERSIONS
+]

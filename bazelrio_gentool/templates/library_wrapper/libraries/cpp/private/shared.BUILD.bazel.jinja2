@@ -1,6 +1,6 @@
 load("@rules_cc//cc:defs.bzl", "cc_library")
 
-JNI_PATTERN=[
+JNI_PATTERN = [
     "**/*jni.dll",
     "**/*jni.so*",
     "**/*jni.dylib",
@@ -9,24 +9,31 @@ JNI_PATTERN=[
     "**/lib*_java*.so",
 ]
 
-static_srcs = glob([
+static_srcs = glob(
+    [
         "**/*.lib",
-        "**/*.a"
+        "**/*.a",
     ],
-    exclude=["**/*jni.lib"],
-    allow_empty=True,
+    allow_empty = True,
+    exclude = ["**/*jni.lib"],
 )
-shared_srcs = glob([
+
+shared_srcs = glob(
+    [
         "**/*.dll",
         "**/*.so*",
         "**/*.dylib",
     ],
-    exclude=JNI_PATTERN + ["**/*.so.debug"],
     allow_empty = True,
+    exclude = JNI_PATTERN + ["**/*.so.debug"],
 )
-shared_jni_srcs = glob(JNI_PATTERN, exclude=["**/*.so.debug"], allow_empty=True)
 
-{%- if target.get_shared_library_interface_select() != "," %}
+shared_jni_srcs = glob(
+    JNI_PATTERN,
+    allow_empty = True,
+    exclude = ["**/*.so.debug"],
+)
+{% if target.get_shared_library_interface_select() != "," %}
 filegroup(
     name = "shared_interface",
     srcs = static_srcs,
@@ -50,4 +57,3 @@ filegroup(
     visibility = ["@{{group.repo_name}}//:__subpackages__"],
 )
 {%- endif %}
-
