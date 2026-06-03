@@ -427,6 +427,9 @@ rules_wpiformat:
   '2025.68':
     sha: ac055f723802c2bfcdaf2c46e3426e0dc685988561173ba8d4f6ad55f6e65a99
     commitish: b465032ed343d1a58d5ef712bd5e2266c8add7d5
+  '2026.57':
+    sha: 4fca485e2e950b7ae4281c8a1adaddab83ac9ae260ccb5302a7cd34563ac191e
+    commitish: fbb3bf3ffe2844df34258d8fd2bc2454f69fd222
 bzlmodrio-photonlib:
   v2023.4.2:
     sha: 8b0ba57902f9922fef21916737fae55904ea44bb3f87a4297792863aa5119a55
