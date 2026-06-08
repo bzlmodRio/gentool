@@ -12,13 +12,6 @@ jobs:
       fail-fast: false
       matrix:
         include:
-        # Build non-bzlmod, native
-        - { name: "windows     - native",    os: windows-2022,   java_arch: "x64",     command: "test",   config: "--noenable_bzlmod --enable_workspace --config=windows",     bazel_options: "--output_user_root=C:\\bazelroot", }
-        {%- endraw %}{% if include_windows_arm_compiler %}
-        - { name: "windows arm - native",    os: windows-11-arm, java_arch: "aarch64", command: "build",  config: "--noenable_bzlmod --enable_workspace --config=windows_arm", bazel_options: "--output_user_root=C:\\bazelroot", }{%endif%}{%raw%}
-        - { name: "ubuntu      - native",    os: ubuntu-24.04,   java_arch: "x64",     command: "test",   config: "--noenable_bzlmod --enable_workspace --config=linux",       bazel_options: "",                                 }
-        - { name: "macos       - native",    os: macos-14,       java_arch: "aarch64", command: "test",   config: "--noenable_bzlmod --enable_workspace --config=macos",       bazel_options: "",                                 }
-
         # Build bzlmod, native
         - { name: "windows     - bzlmod native", os: windows-2022,   java_arch: "x64",     command: "test",   config: "--enable_bzlmod --config=windows",     bazel_options: "--output_user_root=C:\\bazelroot", }
         {%- endraw %}{% if include_windows_arm_compiler %}
@@ -56,11 +49,6 @@ jobs:
       fail-fast: false
       matrix:
         include:
-        # Build non-bzlmod, roborio
-        - { name: "windows - roborio",         os: windows-2022, java_arch: "x64",     command: "build", config: "--noenable_bzlmod --enable_workspace --config=roborio", bazel_options: "--output_user_root=C:\\bazelroot", }
-        - { name: "ubuntu  - roborio",         os: ubuntu-24.04, java_arch: "x64",     command: "build", config: "--noenable_bzlmod --enable_workspace --config=roborio", bazel_options: "",                                 }
-        - { name: "macos   - roborio",         os: macos-14,     java_arch: "aarch64", command: "build", config: "--noenable_bzlmod --enable_workspace --config=roborio", bazel_options: "",                                 }
-
         # Build bzlmod, roborio
       # - { name: "windows - bzlmod roborio",  os: windows-2022, java_arch: "x64",     command: "build", config: "--enable_bzlmod --config=roborio", bazel_options: "--output_user_root=C:\\bazelroot", }
         - { name: "ubuntu  - bzlmod roborio",  os: ubuntu-24.04, java_arch: "x64",     command: "build", config: "--enable_bzlmod --config=roborio", bazel_options: "",                                 }
@@ -95,11 +83,6 @@ jobs:
       fail-fast: false
       matrix:
         include:
-        # Build non-bzlmod, systemcore
-        - { name: "windows - systemcore",         os: windows-2022, java_arch: "x64",     command: "build", config: "--noenable_bzlmod --enable_workspace --config=systemcore", bazel_options: "--output_user_root=C:\\bazelroot", }
-        - { name: "ubuntu  - systemcore",         os: ubuntu-24.04, java_arch: "x64",     command: "build", config: "--noenable_bzlmod --enable_workspace --config=systemcore", bazel_options: "",                                 }
-        - { name: "macos   - systemcore",         os: macos-14,     java_arch: "aarch64", command: "build", config: "--noenable_bzlmod --enable_workspace --config=systemcore", bazel_options: "",                                 }
-
         # Build bzlmod, systemcore
         - { name: "windows - bzlmod systemcore",  os: windows-2022, java_arch: "x64",     command: "build", config: "--enable_bzlmod --config=systemcore", bazel_options: "--output_user_root=C:\\bazelroot", }
         - { name: "ubuntu  - bzlmod systemcore",  os: ubuntu-24.04, java_arch: "x64",     command: "build", config: "--enable_bzlmod --config=systemcore", bazel_options: "",                                 }
@@ -136,11 +119,6 @@ jobs:
       fail-fast: false
       matrix:
         include:
-        # Build non-bzlmod, linuxarm32
-        - { name: "windows - linuxarm32",         os: windows-2022, java_arch: "x64",     command: "build", config: "--noenable_bzlmod --enable_workspace --config=linuxarm32", bazel_options: "--output_user_root=C:\\bazelroot", }
-        - { name: "ubuntu  - linuxarm32",         os: ubuntu-24.04, java_arch: "x64",     command: "build", config: "--noenable_bzlmod --enable_workspace --config=linuxarm32", bazel_options: "",                                 }
-        - { name: "macos   - linuxarm32",         os: macos-14,     java_arch: "aarch64", command: "build", config: "--noenable_bzlmod --enable_workspace --config=linuxarm32", bazel_options: "",                                 }
-
         # Build bzlmod, linuxarm32
         # - { name: "windows - bzlmod linuxarm32",  os: windows-2022, java_arch: "x64",     command: "build", config: "--enable_bzlmod --config=linuxarm32", bazel_options: "--output_user_root=C:\\bazelroot", }
         - { name: "ubuntu  - bzlmod linuxarm32",  os: ubuntu-24.04, java_arch: "x64",     command: "build", config: "--enable_bzlmod --config=linuxarm32", bazel_options: "",                                 }
@@ -178,11 +156,6 @@ jobs:
       fail-fast: false
       matrix:
         include:
-        # Build non-bzlmod, linuxarm64
-        - { name: "windows - linuxarm64",         os: windows-2022, java_arch: "x64",     command: "build", config: "--noenable_bzlmod --enable_workspace --config=linuxarm64", bazel_options: "--output_user_root=C:\\bazelroot", }
-        - { name: "ubuntu  - linuxarm64",         os: ubuntu-24.04, java_arch: "x64",     command: "build", config: "--noenable_bzlmod --enable_workspace --config=linuxarm64", bazel_options: "",                                 }
-        - { name: "macos   - linuxarm64",         os: macos-14,     java_arch: "aarch64", command: "build", config: "--noenable_bzlmod --enable_workspace --config=linuxarm64", bazel_options: "",                                 }
-
         # Build bzlmod, linuxarm64
         - { name: "windows - bzlmod linuxarm64",  os: windows-2022, java_arch: "x64",     command: "build", config: "--enable_bzlmod --config=linuxarm64", bazel_options: "--output_user_root=C:\\bazelroot", }
         - { name: "ubuntu  - bzlmod linuxarm64",  os: ubuntu-24.04, java_arch: "x64",     command: "build", config: "--enable_bzlmod --config=linuxarm64", bazel_options: "",                                 }

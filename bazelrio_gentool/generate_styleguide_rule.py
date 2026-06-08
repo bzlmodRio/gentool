@@ -38,9 +38,6 @@ def generate_styleguide_rule(
         ".github/workflows/lint.yml",
         ".bazelrc-java",
         "MODULE.bazel",
-        "WORKSPACE",
-        "dependencies/BUILD.bazel",
-        "dependencies/load_dependencies.bzl",
     ]
 
     if group.is_python:

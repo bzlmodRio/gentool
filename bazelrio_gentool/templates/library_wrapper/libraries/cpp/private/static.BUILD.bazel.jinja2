@@ -1,7 +1,14 @@
+load("@rules_cc//cc:cc_library.bzl", "cc_library")
 
 cc_library(
     name = "static_libs",
-    srcs = glob(["**/*.lib", "**/*.a"], allow_empty=True),
+    srcs = glob(
+        [
+            "**/*.lib",
+            "**/*.a",
+        ],
+        allow_empty = True,
+    ),
     visibility = {{ visibility }},
     deps = [
       {%- for dep in target.get_sorted_dependencies() %}
@@ -9,3 +16,4 @@ cc_library(
       {%- endfor %}
     ],
 )
+

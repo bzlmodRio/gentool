@@ -1,5 +1,3 @@
-load("@rules_cc//cc:defs.bzl", "cc_library")
-
 JNI_PATTERN = [
     "**/*jni.dll",
     "**/*jni.so*",
@@ -50,10 +48,9 @@ filegroup(
 )
 {%+ endif %}
 {%- if target.has_jni %}
-
 filegroup(
     name = "jni",
     srcs = shared_jni_srcs,
     visibility = ["@{{group.repo_name}}//:__subpackages__"],
 )
-{%- endif %}
+{%+ endif %}

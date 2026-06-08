@@ -115,7 +115,7 @@ def create_default_mandatory_settings(generic_cli: GenericCliArgs):
     )
     default_rules_wpiformat = MandetoryDependencySetting(
         "rules_wpiformat",
-        "2025.68",
+        "2026.57",
         generic_cli.use_local_rules_wpiformat,
     )
     default_rules_wpi_styleguide = MandetoryDependencySetting(
@@ -199,12 +199,8 @@ def generate_module_project_files(
     template_files = [
         "maven_cpp_deps.bzl",
         "MODULE.bazel",
-        "WORKSPACE",
         ".bazelrc-java",
-        "private/non_bzlmod_dependencies/BUILD.bazel",
-        "private/non_bzlmod_dependencies/setup_dependencies.bzl",
         "tests/MODULE.bazel",
-        "tests/WORKSPACE",
         "tests/.bazelrc-java",
     ]
 

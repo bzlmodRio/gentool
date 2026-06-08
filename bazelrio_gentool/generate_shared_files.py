@@ -35,7 +35,6 @@ def write_shared_root_files(
         ".gitignore",
         "BUILD.bazel",
         "README.md",
-        "WORKSPACE.bzlmod",
         ".clang-format",
         ".wpiformat",
         ".wpiformat-license",
@@ -64,7 +63,6 @@ def write_shared_test_files(module_directory, group):
         ".bazelversion",
         ".bazelrc",
         ".bazelrc-cc",
-        "WORKSPACE.bzlmod",
     ]
 
     render_templates(
@@ -187,13 +185,13 @@ def get_bazel_dependencies():
     )
     add_dep(
         repo_name="rules_cc",
-        version="0.1.4",
+        version="0.1.5",
         needs_stripped_prefix=True,
         sha="0d3b4f984c4c2e1acfd1378e0148d35caf2ef1d9eb95b688f8e19ce0c41bdf5b",
     )
     add_dep(
         repo_name="rules_java",
-        version="8.12.0",
+        version="8.14.0",
         sha="1558508fc6c348d7f99477bd21681e5746936f15f0436b5f4233e30832a590f9",
         # use_long_form=True,
     )
