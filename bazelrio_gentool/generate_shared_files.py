@@ -175,7 +175,7 @@ def get_bazel_dependencies():
     )
     add_dep(
         repo_name="googletest",
-        version="1.14.0.bcr.1",
+        version="1.17.0",
         sha="8ad598c73ad796e0d8280b082cebd82a630d73e73cd3c70057938a6501bba5d7",
     )
     add_dep(
@@ -185,19 +185,19 @@ def get_bazel_dependencies():
     )
     add_dep(
         repo_name="rules_cc",
-        version="0.1.5",
+        version="0.2.13",
         needs_stripped_prefix=True,
         sha="0d3b4f984c4c2e1acfd1378e0148d35caf2ef1d9eb95b688f8e19ce0c41bdf5b",
     )
     add_dep(
         repo_name="rules_java",
-        version="8.14.0",
+        version="8.16.1",
         sha="1558508fc6c348d7f99477bd21681e5746936f15f0436b5f4233e30832a590f9",
         # use_long_form=True,
     )
     add_dep(
         repo_name="rules_jvm_external",
-        version="6.3",
+        version="6.8",
         sha="c18a69d784bcd851be95897ca0eca0b57dc86bb02e62402f15736df44160eb02",
         needs_stripped_prefix=True,
         # use_zip=True,

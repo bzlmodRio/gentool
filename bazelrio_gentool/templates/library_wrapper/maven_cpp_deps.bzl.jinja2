@@ -104,9 +104,6 @@ def __setup_{{group.sanitized_repo_name}}_cpp_dependencies(mctx):
     {%- endfor %}
     {%- endfor %}
 
-def setup_legacy_{{group.sanitized_repo_name}}_cpp_dependencies():
-    __setup_{{group.sanitized_repo_name}}_cpp_dependencies(None)
-
 setup_{{group.sanitized_repo_name}}_cpp_dependencies = module_extension(
     __setup_{{group.sanitized_repo_name}}_cpp_dependencies,
 )

@@ -88,7 +88,7 @@ def create_default_mandatory_settings(generic_cli: GenericCliArgs):
         "696c423fd86e9dd0dfbf17fb151295ddf1a03468",
         "sha256-45EV1waPl/X8S1LocEDpYD6W3XMsX5W3f/1cLPS/VK8=",
         "rules_bzlmodrio_toolchains",
-        "2025-1.bcr5",
+        "2025-2",
         generic_cli.use_local_toolchains,
         url_base="https://github.com/wpilibsuite",
     )
@@ -176,7 +176,7 @@ def generate_module_project_files(
     module_directory,
     group,
     mandatory_dependencies,
-    no_roborio=False,
+    no_toolchains=False,
     test_macos=True,
     include_windows_arm_compiler=True,
     include_linuxarm32_compiler=True,
@@ -220,7 +220,7 @@ def generate_module_project_files(
         group=group,
         mandatory_dependencies=mandatory_dependencies,
         bazel_dependencies=get_bazel_dependencies(),
-        no_roborio=no_roborio,
+        no_toolchains=no_toolchains,
         include_styleguide=include_styleguide,
     )
 
@@ -231,5 +231,5 @@ def generate_module_project_files(
             os.path.join(TEMPLATE_BASE_DIR, "library_wrapper"),
             group=group,
             mandatory_dependencies=mandatory_dependencies,
-            no_roborio=no_roborio,
+            no_toolchains=no_toolchains,
         )

@@ -1,7 +1,6 @@
 module(
     name = "{{group.repo_name}}",
     version = "{{group.sanitized_version}}{{group.patch}}",
-    compatibility_level = {{group.year}},
 )
 
 {{bazel_dependencies.platforms.module_dep()}}
@@ -13,7 +12,7 @@ module(
 {%- if group.has_direct_maven_deps() %}
 {{bazel_dependencies.rules_jvm_external.module_dep()}}
 {%- endif %}
-{%- if not no_roborio %}
+{%- if not no_toolchains %}
 {{mandatory_dependencies.rules_bzlmodrio_toolchain.module_dep()}}
 {%- endif %}
 {%- if group.java_deps %}
